@@ -1,4 +1,4 @@
-# Sommaire Projet Robot HELMS
+# 🤖 Projet Robot HELMS
 
 ## Sommaire
 
