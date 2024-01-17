@@ -1,6 +1,8 @@
 # 🤖 Projet Robot HELMS
 
 ## Sommaire
+**Fiche de renseignement sur l'equipe**
+- [Fiche](fiche_renseignement.md)
 
 **Réunions**
 - [Reunions Mercredi](Reunions/Reunions_mercredi/)
