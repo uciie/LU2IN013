@@ -5,7 +5,7 @@ Vous trouverez des tutoriels/exercices pour apprendre à utiliser Git.
 
 Sarah : 
 
-Lucie : done
+Lucie : test done
 
 Eric :
 
