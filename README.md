@@ -16,4 +16,3 @@
 
 **Projet Robot**
 - [Code src](Robot/src)
-- [Code bin](Robot/bin)
