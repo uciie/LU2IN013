@@ -1,2 +1,0 @@
-# @autors equipe HELMS
-
