@@ -2,7 +2,7 @@
 
 ## Notes en vrac :
 
-- Chaque semaine, avoir un **objectif** sur ce qui va être présenter le mercredi prochain (Penser à la **relation client**).
+- Chaque semaine, avoir un **objectif** sur ce qui va être présenté le mercredi prochain (Penser à la **relation client**).
 
 - L'apprentissage et les formations doivent toujours **servir le projet**. Donc lorsqu'on fait des exercices d'apprentissage, il faut les faire **directement sur le projet**.
 
