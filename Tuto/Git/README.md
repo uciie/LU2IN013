@@ -7,6 +7,6 @@ Sarah :
 
 Lucie : test done
 
-Eric :
+Eric : done
 
 Michaël : done
