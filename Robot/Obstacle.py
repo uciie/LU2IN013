@@ -19,8 +19,3 @@ class Obstacle:
       for y in range(self.posY, self.longueur):
         (self.grille).viderCase()
       (self.grille).viderCase()
-<<<<<<< HEAD
-  
-=======
-  
->>>>>>> bd95e43e801e8dff4d3780bb5b7b4b123b815f16
