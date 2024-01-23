@@ -1,5 +1,4 @@
 # @autors equipe HELMS
-from Exceptions import BorneException
 
 
 class Robot:
@@ -56,8 +55,10 @@ class Robot:
           self.grille.setCase(self.posX,self.posY, "R")
         else :
           break
-      except BorneException as e : 
-        print(e)
+      except IndexError as e :
+        print("Mur touché")
+        break
+  
       
 
   def back(self, distance):
