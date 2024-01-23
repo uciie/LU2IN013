@@ -1,2 +1,2 @@
-class BorneException(ValueError):
+class BorneException(IndexError):
     pass    
