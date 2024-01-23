@@ -15,8 +15,8 @@ class Obstacle:
       (self.grille).addObstacle(1,i,y)
   
   def removeObstacle(self):
-    for i in range(self.posX, self.posX + self.largeur):
-      for y in range(self.posY, self.posY +self.longueur):
-        (self.grille).viderCase()
-      (self.grille).viderCase()
+    for i in range(self.posX, self.posX + self.largeur + 1):
+      for y in range(self.posY, self.posY +self.longueur + 1):
+        (self.grille).viderCase(i, y)
+      (self.grille).viderCase(i, y)
   

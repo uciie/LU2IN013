@@ -8,6 +8,7 @@ def main():
     r = Robot("Dexter", 2, 2, 1, 1, g)
     o = Obstacle(0,3,1,1,g)
     o.addObstacle()
+    
     try:
         print("Etat initial")
         g.addRobot(r)
@@ -18,6 +19,8 @@ def main():
         g.affiche() 
     except IndexError as e :
         pass
-    
+    print("On enlève l'obstacle")
+    o.removeObstacle()
+    g.affiche()
     
 main()
