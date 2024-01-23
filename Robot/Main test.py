@@ -1,6 +1,6 @@
 from Robot import *
 from Grille import *
-import Exceptions
+from Exceptions import BorneException
 
 
 
