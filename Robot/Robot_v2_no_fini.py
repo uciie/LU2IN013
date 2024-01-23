@@ -2,8 +2,11 @@
 from Exceptions.BorneException import BorneException
 import sys
 
+# Supposons que les robot sont en forme de rectangle/carre
+# Supposons que la position du robot (x,y) correspond a l'extremite en haut à gauche 
+
 class Robot:
-  def __init__(self, name, posX, posY, dimLength, dimWidth,grille):
+  def __init__(self, name, posX, posY, dimLength, dimWidth, grille):
     """ str x double x double x Grille-> Robot
     Precondition: dimLength % 2 = 1 and dimWidth % 2 = 1
     Initialisation du robot 
@@ -13,6 +16,10 @@ class Robot:
 
     #Environnement du robot
     self.grille = grille
+
+    #Dimention du robot
+    self.length = dimLength 
+    self.width = dimWidth
 
     #Position du robot
     # Tentative de positionnement du robot
@@ -39,10 +46,6 @@ class Robot:
     # Direction
     self.direction = "UP" #on suppose qu'au debut le robot est dirigé vers le haut 
     self.angle = 0 # angle en degre
-
-    #Dimention du robot
-    self.length = dimLength 
-    self.width = dimWidth
 
     #Composant du robot
     #self.roue_r = Roue("right") #Roue droite du robot
@@ -88,6 +91,8 @@ class Robot:
     """ str x double -> None
     Bouge d'une case selon d'une direction
     """
+    self.direction = direction 
+    
     try : 
       new_x, new_y = self.posX, self.posY
       if direction == "UP" and self.grille.isEmptyCase(self.posX, self.posY - 1) :
@@ -115,8 +120,9 @@ class Robot:
     #Tant qu'il n'y a pas d'obstacle à la case suivante et qu'on n'est pas arrivée à la nvlle position
     while i != distance:
       self.move_one(direction, angle) 
-      self.grille.affiche()
       i += 1
+    
+    self.grille.affiche()
       
   
   def goToPos(self, posX, posY):

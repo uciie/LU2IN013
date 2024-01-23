@@ -1,4 +1,9 @@
 # @autors equipe HELMS
+
+# affichage en couleur 
+from colorama import init, Fore 
+init(autoreset=True) # initilisation pour couleur
+
 from Robot_v2_no_fini import Robot 
 from Exceptions.BorneException import BorneException
 
@@ -6,13 +11,14 @@ from Exceptions.BorneException import BorneException
 #Une grille peut contenir au moins un robot
 
 class Grille:
-  def __init__(self, maxX, maxY):
-    """ double x double -> Grille
+  def __init__(self, maxX, maxY, echelle):
+    """ double x double x double -> Grille
     Initialisation de l'environnement 
     """
+    self.echelle = echelle
     self.maxX = maxX
     self.maxY = maxY
-    self.grille = [["0" for case in range(self.maxX)] for ligne in range(self.maxY)]
+    self.grille = [["0" for case in range(self.maxY)] for ligne in range(self.maxX)]
 
   def addRobot(self, robot):
     """ Robot -> None
@@ -26,34 +32,38 @@ class Grille:
     """
     self.grille[posY][posX] = obstacle
   
+  def inBorne(self, posX, posY):
+    """ double x double -> bool
+    Verifie la position (posX, posY) est dans la grille
+    """
+    return 0 <= posX < self.maxX and 0 <= posY < self.maxY
+
   def isEmptyCase(self, posX, posY):
     """ double x double -> bool
     Renvoie true si la case en (posX,posY) est vide, sinon false 
     """
-    if posX > self.maxX or posX < 0 or posY > self.maxY or posY < 0:
-      raise BorneException("On sort de la borne") #lever une exception si on sort de la grille
-    else :
+    if self.inBorne(posX, posY):
       return self.grille[posY][posX] == "0"
-    
+    else : 
+      raise BorneException("On sort de la borne") #lever une exception si on sort de la grille
+
   def viderCase(self, posX, posY):
     """ double x double -> None
     Vide la case (posX, posY) de la grille
     """
-    if posX > self.maxX or posX < 0 or posY > self.maxY or posY < 0:
-      #print() # supprimer cette ligne quand class BorneException sera finie
-      raise BorneException("On sort de la borne") #lever une exception si on sort de la grille
-    else :
+    if self.inBorne(posX, posY):
       self.grille[posY][posX] = "0"
+    else : 
+      raise BorneException("On sort de la borne") #lever une exception si on sort de la grille
   
   def setCase(self,posX, posY, contenu):
     """double x double x str -> None
-    Modifie la case (posX, posY) de la grille
+    Modifie la case (posX, posY) de la grille par contenu 
     """
-    if posX > self.maxX or posX < 0 or posY > self.maxY or posY < 0:
-      print() # supprimer cette ligne quand class BorneException sera finie
-      #raise BorneException("On sort de la borne") #lever une exception si on sort de la grille
-    else :
+    if self.inBorne(posX, posY):
       self.grille[posY][posX] = contenu
+    else :
+      raise BorneException("On sort de la borne") #lever une exception si on sort de la grille
   
   
 
@@ -66,8 +76,15 @@ class Grille:
     for ligne in self.grille:
       print("|", end='')
       for contenu in ligne:
-        print(contenu, end='')
+        if contenu == "R" : 
+          print(Fore.RED + contenu, end='')
+        else : 
+          print(contenu, end='')
       print("|")
 
     print("-"*self.maxX+2*"-")
 
+
+grille = Grille(5,5,1)
+robot1 = Robot("R1", 0, 0, 3, 2, grille)
+grille.affiche()
