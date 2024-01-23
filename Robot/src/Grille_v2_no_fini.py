@@ -7,7 +7,7 @@ from Robot_v2_no_fini import Robot
 
 class Grille:
   def __init__(self, maxX, maxY):
-    """ -> Grille
+    """ double x double -> Grille
     Initialisation de l'environnement 
     """
     self.maxX = maxX
@@ -21,13 +21,13 @@ class Grille:
     self.grille[robot.posY][robot.posX] = "R" 
 
   def addObstacle(self, obstacle, posX, posY):
-    """ Obstacle x int x int -> None
+    """ Obstacle x double x double -> None
     Mise en place d'un obstacle 
     """
     self.grille[posY][posX] = obstacle
   
   def isEmptyCase(self, posX, posY):
-    """ int x int -> bool
+    """ double x double -> bool
     Renvoie true si la case en (posX,posY) est vide, sinon false 
     """
     if posX > self.maxX or posX < 0 or posY > self.maxY or posY < 0:
@@ -74,8 +74,8 @@ class Grille:
 
 grille = Grille(8,8)
 robot = Robot("R", 0, 0, 1, 1, grille)
-#grille.affiche()
+grille.affiche()
 for i in range(2):
-  robot.move_one("DOWN", 0)
-  print (robot.getPos())
+  robot.move_one("UP", 0)
+  robot.move_one("RIGHT", 0)
   grille.affiche()
