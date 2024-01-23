@@ -11,12 +11,12 @@ class Obstacle:
   def addObstacle(self):
     for i in range(self.posX, self.largeur):
       for y in range(self.posY, self.longueur):
-        grille.addObstacle(1, i, y)
-      grille.addObstacle(1,i,y)
+        (self.grille).addObstacle(1, i, y)
+      (self.grille).addObstacle(1,i,y)
   
   def removeObstacle(self):
     for i in range(self.posX, self.largeur):
       for y in range(self.posY, self.longueur):
-        grille.viderCase()
-      grille.viderCase()
+        (self.grille).viderCase()
+      (self.grille).viderCase()
   
