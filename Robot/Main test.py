@@ -1,5 +1,6 @@
 from Robot import *
 from Grille import *
+import Exceptions
 
 
 
@@ -12,7 +13,7 @@ def main():
     g.affiche()
 
     print("Etat final")
-    r.go(2)
+    r.go(10)
     g.affiche()
 
 main()
