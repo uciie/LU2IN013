@@ -1,5 +1,5 @@
 # @autors equipe HELMS
-from Robot_v2 import Robot 
+from Robot_v2_no_fini import Robot 
 #import Exceptions
 
 #On admettra que la dimension de la grille est forcement plus grande que le robot
