@@ -9,14 +9,14 @@ class Obstacle:
     self.grille = grille
   
   def addObstacle(self):
-    for i in range(self.posX, self.largeur):
-      for y in range(self.posY, self.longueur):
-        grille.addObstacle(1, i, y)
-      grille.addObstacle(1,i,y)
+    for i in range(self.posX, self.posX + self.largeur+1):
+      for y in range(self.posY, self.posY +self.longueur+1):
+        (self.grille).addObstacle(1, i, y)
+      (self.grille).addObstacle(1,i,y)
   
   def removeObstacle(self):
-    for i in range(self.posX, self.largeur):
-      for y in range(self.posY, self.longueur):
-        grille.viderCase()
-      grille.viderCase()
+    for i in range(self.posX, self.posX + self.largeur + 1):
+      for y in range(self.posY, self.posY +self.longueur + 1):
+        (self.grille).viderCase(i, y)
+      (self.grille).viderCase(i, y)
   
