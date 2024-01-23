@@ -1,5 +1,6 @@
-from Grille import *
 from Robot import *
+from Grille import *
+
 
 
 def main():
@@ -7,3 +8,5 @@ def main():
     r = Robot("Dexter", 1, 1, 1, 1, g)
     
     g.affiche()
+
+main()
