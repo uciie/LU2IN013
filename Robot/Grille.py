@@ -31,8 +31,8 @@ class Grille:
     Renvoie true si la case en (posX,posY) est vide, sinon false 
     """
     if posX > self.maxX or posX < 0 or posY > self.maxY or posY < 0:
-      return False 
-      #raise BorneException("On sort de la borne") #lever une exception si on sort de la grille
+      #return False 
+      raise BorneException("On sort de la borne") #lever une exception si on sort de la grille
     else :
       return self.grille[posY][posX] == "0"
     
