@@ -1,6 +1,6 @@
 # @autors equipe HELMS
-#import Exceptions
-
+from Exceptions.BorneException import BorneException
+import sys
 
 class Robot:
   def __init__(self, name, posX, posY, dimLength, dimWidth,grille):
@@ -11,9 +11,25 @@ class Robot:
     # Nom du robot
     self.name = name 
 
+    #Environnement du robot
+    self.grille = grille
+
     #Position du robot
-    self.posX = posX
-    self.posY = posY
+    # Tentative de positionnement du robot
+    while True:
+      try:
+        if self.grille.isEmptyCase(posX, posY):
+          self.posX = posX
+          self.posY = posY
+          break  # Sortir de la boucle si la position est valide
+      except BorneException as e:
+        print(f"Erreur : {e}")
+    
+        # Si une exception est levée, redemander les coordonnées
+        posX = int(input("Entrez une nouvelle coordonnée X : "))
+        posY = int(input("Entrez une nouvelle coordonnée Y : "))
+    
+    self.grille.addRobot(self)
 
     #Ancienne position du robot
     #Initilise l'ancienne position à la position actuelle
@@ -32,11 +48,7 @@ class Robot:
     #self.roue_r = Roue("right") #Roue droite du robot
     #self.roue_l = Roue("left") #Roue left du robot
 
-    #Environnement du robot
-    self.grille = grille
-    self.grille.addRobot(self)
-
-    self.vitesse = 0.
+    self.vitesse = 0.0
 
     ## A IGNORER POUR L'INSTANT###
     #self.batteries = batteries
@@ -76,20 +88,20 @@ class Robot:
     """ str x double -> None
     Bouge d'une case selon d'une direction
     """
-    #try : 
-    new_x, new_y = self.posX, self.posY
-    if direction == "UP" and self.grille.isEmptyCase(self.posX, self.posY - 1) :
-      new_y -= 1
-    elif direction == "DOWN" and self.grille.isEmptyCase(self.posX, self.posY + 1) :
-      new_y += 1
-    elif direction == "LEFT" and self.grille.isEmptyCase(self.posX - 1, self.posY) :
-      new_x -= 1
-    elif direction == "RIGHT" and self.grille.isEmptyCase(self.posX + 1, self.posY) :
-      new_x += 1
-    else : 
-      print ("La saisie n'etait pas correcte")
-      return 
-    #except BorneException as e: 
+    try : 
+      new_x, new_y = self.posX, self.posY
+      if direction == "UP" and self.grille.isEmptyCase(self.posX, self.posY - 1) :
+        new_y -= 1
+      elif direction == "DOWN" and self.grille.isEmptyCase(self.posX, self.posY + 1) :
+        new_y += 1
+      elif direction == "LEFT" and self.grille.isEmptyCase(self.posX - 1, self.posY) :
+        new_x -= 1
+      elif direction == "RIGHT" and self.grille.isEmptyCase(self.posX + 1, self.posY) :
+        new_x += 1
+      else : 
+        print("La saisie n'etait pas correcte")
+    except BorneException as e: 
+      print (f"Erreur attrapée : {e}")
     #update 
     self.update(new_x, new_y)
 

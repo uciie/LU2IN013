@@ -1,6 +1,6 @@
 # @autors equipe HELMS
 from Robot_v2_no_fini import Robot 
-#import Exceptions
+from Exceptions.BorneException import BorneException
 
 #On admettra que la dimension de la grille est forcement plus grande que le robot
 #Une grille peut contenir au moins un robot
@@ -31,8 +31,7 @@ class Grille:
     Renvoie true si la case en (posX,posY) est vide, sinon false 
     """
     if posX > self.maxX or posX < 0 or posY > self.maxY or posY < 0:
-      return False 
-      #raise BorneException("On sort de la borne") #lever une exception si on sort de la grille
+      raise BorneException("On sort de la borne") #lever une exception si on sort de la grille
     else :
       return self.grille[posY][posX] == "0"
     
@@ -41,8 +40,8 @@ class Grille:
     Vide la case (posX, posY) de la grille
     """
     if posX > self.maxX or posX < 0 or posY > self.maxY or posY < 0:
-      print() # supprimer cette ligne quand class BorneException sera finie
-      #raise BorneException("On sort de la borne") #lever une exception si on sort de la grille
+      #print() # supprimer cette ligne quand class BorneException sera finie
+      raise BorneException("On sort de la borne") #lever une exception si on sort de la grille
     else :
       self.grille[posY][posX] = "0"
   
@@ -72,10 +71,3 @@ class Grille:
 
     print("-"*self.maxX+2*"-")
 
-grille = Grille(8,8)
-robot = Robot("R", 0, 0, 1, 1, grille)
-grille.affiche()
-for i in range(2):
-  robot.move_one("UP", 0)
-  robot.move_one("RIGHT", 0)
-  grille.affiche()
