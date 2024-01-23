@@ -94,7 +94,7 @@ class Robot:
     self.update(new_x, new_y)
 
   def go(self, direction, angle, distance):
-    """ double -> None
+    """ str x double x int -> None
     Precondition : distance >= 0
     Avancer d'une distance
     """
@@ -111,4 +111,4 @@ class Robot:
     """
     Se deplacer à la position (x,y) 
     """
-
+    
