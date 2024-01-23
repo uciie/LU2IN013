@@ -76,20 +76,21 @@ class Robot:
     """ str x double -> None
     Bouge d'une case selon d'une direction
     """
-    #try : 
-    new_x, new_y = self.posX, self.posY
-    if direction == "UP" and self.grille.isEmptyCase(self.posX, self.posY - 1) :
-      new_y -= 1
-    elif direction == "DOWN" and self.grille.isEmptyCase(self.posX, self.posY + 1) :
-      new_y += 1
-    elif direction == "LEFT" and self.grille.isEmptyCase(self.posX - 1, self.posY) :
-      new_x -= 1
-    elif direction == "RIGHT" and self.grille.isEmptyCase(self.posX + 1, self.posY) :
-      new_x += 1
-    else : 
-      print ("La saisie n'etait pas correcte")
-      return 
-    #except BorneException as e: 
+    try : 
+      new_x, new_y = self.posX, self.posY
+      if direction == "UP" and self.grille.isEmptyCase(self.posX, self.posY - 1) :
+        new_y -= 1
+      elif direction == "DOWN" and self.grille.isEmptyCase(self.posX, self.posY + 1) :
+        new_y += 1
+      elif direction == "LEFT" and self.grille.isEmptyCase(self.posX - 1, self.posY) :
+        new_x -= 1
+      elif direction == "RIGHT" and self.grille.isEmptyCase(self.posX + 1, self.posY) :
+        new_x += 1
+      else : 
+        print ("La saisie n'etait pas correcte")
+        return 
+    except IndexError as e:
+      print("Mur touché") 
     #update 
     self.update(new_x, new_y)
 

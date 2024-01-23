@@ -11,7 +11,7 @@ def main():
     print("Etat initial")
     g.affiche()
 
-    for i in range(2):
+    for i in range(3):
         r.move_one("UP", 0)
         r.move_one("RIGHT", 0)
         print(str(i+1) + "e itération")
