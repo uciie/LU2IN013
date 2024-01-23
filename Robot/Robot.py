@@ -49,15 +49,15 @@ class Robot:
     
     #Tant qu'il n'y a pas d'obstacle à la case suivante et qu'on n'est pas arrivée à la nvlle position
     while self.posY != new_posY:
-      #try :
-      if self.grille.isEmptyCase(self.posX, self.posY - 1):
+      try :
+        if self.grille.isEmptyCase(self.posX, self.posY - 1):
           self.grille.viderCase(self.posX, self.posY) 
           self.posY -= 1
           self.grille.setCase(self.posX,self.posY, "R")
-      else :
-        break
-      #except BorneException as e : 
-      #  print(e)
+        else :
+          break
+      except BorneException as e : 
+        print(e)
       
 
   def back(self, distance):
