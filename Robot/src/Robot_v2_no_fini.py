@@ -54,7 +54,7 @@ class Robot:
     """-> Tuple(double, double)
     Renvoie la position actuelle du robot
     """
-    return (self.posX,self.posY)
+    return (self.lastPosX,self.lastPosY)
   
   def update(self, new_x, new_y):
     """ -> None
@@ -62,7 +62,8 @@ class Robot:
     """
     #mise à jour les positions
     self.lastPosX = self.posX
-    self.lastPosX = self.posX
+    self.lastPosY = self.posY
+
     self.posX = new_x
     self.posY = new_y
 
@@ -86,15 +87,14 @@ class Robot:
     elif direction == "RIGHT" and self.grille.isEmptyCase(self.posX + 1, self.posY) :
       new_x += 1
     else : 
-      print ("La saisie n'était pas correcte")
+      print ("La saisie n'etait pas correcte")
       return 
     #except BorneException as e: 
-
     #update 
     self.update(new_x, new_y)
 
   def go(self, direction, angle, distance):
-    """ double -> None
+    """ str x double x int -> None
     Precondition : distance >= 0
     Avancer d'une distance
     """
@@ -111,4 +111,4 @@ class Robot:
     """
     Se deplacer à la position (x,y) 
     """
-
+    
