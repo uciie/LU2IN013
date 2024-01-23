@@ -1,5 +1,5 @@
 # @autors equipe HELMS
-import Exceptions
+from Exceptions import BorneException
 
 
 class Robot:
