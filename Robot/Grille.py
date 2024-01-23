@@ -1,6 +1,5 @@
 # @autors equipe HELMS
 from Robot import Robot
-from Exceptions import BorneException
 
 #On admettra que la dimension de la grille est forcement plus grande que le robot
 #Une grille peut contenir au moins un robot
