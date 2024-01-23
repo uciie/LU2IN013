@@ -50,7 +50,7 @@ class Grille:
     Modifie la case (posX, posY) de la grille
     """
     if posX > self.maxX or posX < 0 or posY > self.maxY or posY < 0:
-      raise BorneException("On sort de la borne") #lever une exception si on sort de la grille
+      raise IndexError #lever une exception si on sort de la grille
     else :
       self.grille[posY][posX] = contenu
 
