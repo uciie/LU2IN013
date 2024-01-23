@@ -6,7 +6,7 @@ from Obstacle import *
 def main():
     g = Grille(5,5)
     r = Robot("Dexter", 2, 2, 1, 1, g)
-    o = Obstacle(0,3,1,1,g)
+    o = Obstacle(2,1,0,0,g)
     o.addObstacle()
     
     try:
