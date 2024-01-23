@@ -4,9 +4,10 @@ from Grille import *
 
 
 def main():
-    g = Grille(20,20)
+    g = Grille(5,5)
     r = Robot("Dexter", 1, 1, 1, 1, g)
     
+    g.addRobot(r)
     g.affiche()
 
 main()
