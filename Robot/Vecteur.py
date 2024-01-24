@@ -10,7 +10,6 @@ class Vecteur():
         #Composantes du vecteur
         self.composantes = ((xb-xa), (yb-ya))
 
-        
         #Norme du vecteur
         self.norme = math.sqrt((xb-xa)**2+(yb-ya)**2)
     
@@ -18,4 +17,6 @@ class Vecteur():
         """Vecteur vecteur -> Vecteur
         Additionne deux vecteurs"""
 
-        self.xa += vecteur.xa
+        a, b = self.composantes
+        c, d = vecteur.composantes
+        self.composantes = ((a+c), (b+d))
