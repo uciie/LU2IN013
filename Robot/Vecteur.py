@@ -6,16 +6,16 @@ class Vecteur():
         
         # Nom du vecteur
         self.nom = nom
+        
+        #Composantes du vecteur
+        self.composantes = ((xb-xa), (yb-ya))
 
-        # Coordonnées du premier point
-        self.xa = xa
-        self.ya = ya
-
-        # Coordonées du second point
-        self.xb = xb
-        self.yb = yb
-
+        
         #Norme du vecteur
         self.norme = math.sqrt((xb-xa)**2+(yb-ya)**2)
     
-    
+    def add(self, vecteur):
+        """Vecteur vecteur -> Vecteur
+        Additionne deux vecteurs"""
+
+        self.xa += vecteur.xa
