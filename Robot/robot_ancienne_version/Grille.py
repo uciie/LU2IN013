@@ -1,5 +1,5 @@
 # @autors equipe HELMS
-from Robot import Robot
+from Robot.robot_ancienne_version import Robot
 
 #On admettra que la dimension de la grille est forcement plus grande que le robot
 #Une grille peut contenir au moins un robot
