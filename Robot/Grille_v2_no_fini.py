@@ -83,8 +83,3 @@ class Grille:
       print("|")
 
     print("-"*self.maxX+2*"-")
-
-
-grille = Grille(5,5,1)
-robot1 = Robot("R1", 0, 0, 3, 2, grille)
-grille.affiche()

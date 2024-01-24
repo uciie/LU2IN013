@@ -7,6 +7,8 @@ nb_dir = 4
 def main():
   list_dir = ["DOWN", "UP", "RIGHT", "LEFT"]
   grille = Grille(8,8,1)
+  a = 1.2/1
+  print(list_dir[a] + " de " + str(dis))
 
   #Test de la borne LEFT
   print("Test de la borne LEFT")
@@ -40,8 +42,9 @@ def main():
   g.affiche()
   time.sleep(2)
   dis = 2
+  
   for i in range(nb_dir):
-    print(list_dir[i] + " de " + str(dis))
+    print(list_dir[1.2] + " de " + str(dis))
     r.go(list_dir[i], 0, dis)
     print("Robot est desormais en " + str(r.getCurrPos()))
     time.sleep(3)
