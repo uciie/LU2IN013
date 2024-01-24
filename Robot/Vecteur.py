@@ -34,4 +34,12 @@ class Vecteur():
         Fait une rotation vectorielle"""
 
         #Conversion degrés en radians
+        rad = degre * (math.pi / 180)
+
+        #Calcul du sinus
+        sin = math.sin(rad)
+
+        #Calcul du cosinus
+        cos = math.cos(rad)
+
         
