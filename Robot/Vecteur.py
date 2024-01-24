@@ -28,3 +28,10 @@ class Vecteur():
         a, b = self.composantes
         c, d = vecteur.composantes
         self.composantes = ((a-c), (b-d))
+    
+    def rotation(self, degre):
+        """float degre -> None
+        Fait une rotation vectorielle"""
+
+        #Conversion degrés en radians
+        
