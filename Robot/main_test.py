@@ -1,13 +1,9 @@
 from Robot import *
 from Robot.robot_ancienne_version.Grille import *
-from Obstacle import *
-
 
 def main():
     g = Grille(5,5)
     r = Robot("Dexter", 2, 2, 1, 1, g)
-    o = Obstacle(2,1,0,0,g)
-    o.addObstacle()
     
     try:
         print("Etat initial")
@@ -19,8 +15,6 @@ def main():
         g.affiche() 
     except IndexError as e :
         pass
-    print("On enlève l'obstacle")
-    o.removeObstacle()
-    g.affiche()
+    
     
 main()
