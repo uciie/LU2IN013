@@ -14,9 +14,17 @@ class Vecteur():
         self.norme = math.sqrt((xb-xa)**2+(yb-ya)**2)
     
     def add(self, vecteur):
-        """Vecteur vecteur -> Vecteur
+        """Vecteur vecteur -> None
         Additionne deux vecteurs"""
 
         a, b = self.composantes
         c, d = vecteur.composantes
         self.composantes = ((a+c), (b+d))
+    
+    def soustraction(self, vecteur):
+        """Vecteur vecteur -> None
+        Soustrait deux vecteurs"""
+
+        a, b = self.composantes
+        c, d = vecteur.composantes
+        self.composantes = ((a-c), (b-d))
