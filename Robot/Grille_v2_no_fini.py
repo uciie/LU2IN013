@@ -71,11 +71,3 @@ class Grille:
       print("|")
 
     print("-"*self.maxX+2*"-")
-
-grille = Grille(8,8)
-robot = Robot("R", 0, 0, 1, 1, grille)
-grille.affiche()
-for i in range(2):
-  robot.move_one("UP", 0)
-  robot.move_one("RIGHT", 0)
-  grille.affiche()
