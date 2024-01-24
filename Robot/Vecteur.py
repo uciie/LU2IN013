@@ -42,4 +42,8 @@ class Vecteur():
         #Calcul du cosinus
         cos = math.cos(rad)
 
-        
+        #Nouvelles composantes
+        new_x = x * cos - y * sin
+        new_y = x * sin + y * cos
+
+        self.composantes = (new_x, new_y)
