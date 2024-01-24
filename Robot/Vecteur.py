@@ -1,51 +1,48 @@
-from math import *
+import math
+
 class Vecteur():
-    def __init__(self, composantes):
-        """tuple composantes -> vecteur
+    def __init__(self, x, y):
+        """double double double-> vecteur
         Initialisation d'un vecteur"""
         
-        # Nom du vecteur
-        self.nom = nom
-        
-        #Composantes du vecteur
-        self.composantes = composantes
+        # Composantes du vecteur
+        self.x = x
+        self.y = y
 
-        #Norme du vecteur
-        self.norme = math.sqrt((xb-xa)**2+(yb-ya)**2)
+        # Norme du vecteur
+        self.norme = math.sqrt(self.x**2 + self.y**2 )
     
     def add(self, vecteur):
         """Vecteur vecteur -> Vecteur
         Additionne deux vecteurs"""
+        return Vecteur(self.x + vecteur.x, self.y + vecteur.y)
 
-        a, b = self.composantes
-        c, d = vecteur.composantes
-        return Vecteur((a+c), (b+d))
-    
     def soustraction(self, vecteur):
         """Vecteur vecteur -> Vecteur
         Soustrait deux vecteurs"""
-
-        a, b = self.composantes
-        c, d = vecteur.composantes
-        return Vecteur((a-c), (b-d))
+        return Vecteur(self.x - vecteur.x, self.y - vecteur.y)
 
     def rotation(self, degre):
         """float degre -> Vecteur
         Fait une rotation vectorielle"""
 
-        #Conversion degrés en radians
+        # Conversion degrés en radians
         rad = degre * (math.pi / 180)
 
-        #Calcul du sinus
-        sin = math.sin(rad)
-
-        #Calcul du cosinus
-        cos = math.cos(rad)
-
-        #Nouvelles composantes
-        new_x = x * cos - y * sin
-        new_y = x * sin + y * cos
-
-
+        # Nouvelles composantes
+        new_x = self.x * math.cos(rad) - self.y * math.sin(rad)
+        new_y = self.x * math.sin(rad) + self.y * math.cos(rad)
 
         return Vecteur(new_x, new_y)
+    
+    def getCoor(self):
+        """ -> Tuple[double, double]
+        renvoie les coordonnees du vecteur sous forme de tuple
+        """
+        return (self.x, self.y)
+    
+    def produit_scalaire(self, autre_vecteur):
+        """
+        """
+        
+
