@@ -46,4 +46,8 @@ class Vecteur():
         renvoie le produit scalaire entre deux vecteurs
         """
         return self.x * autre_vecteur.x + self.y * autre_vecteur.y
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 66dfb02df09c61e4cf7f7f8a92ee4e6765214dbe
 
