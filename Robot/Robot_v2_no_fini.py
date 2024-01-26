@@ -1,7 +1,7 @@
 # @autors equipe HELMS
 from Exceptions.BorneException import BorneException
 import sys
-
+import time 
 # Supposons que les robot sont en forme de rectangle/carre
 # Supposons que la position du robot (x,y) correspond a l'extremite en haut à gauche 
 
