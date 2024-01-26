@@ -32,7 +32,7 @@ class Vecteur():
         # Nouvelles composantes
         new_x = self.x * math.cos(rad) - self.y * math.sin(rad)
         new_y = self.x * math.sin(rad) + self.y * math.cos(rad)
-
+        print(1,new_x,new_y)
         return Vecteur(new_x, new_y)
     
     def getCoor(self):
@@ -42,7 +42,8 @@ class Vecteur():
         return (self.x, self.y)
     
     def produit_scalaire(self, autre_vecteur):
+        """ Vecteur -> double
+        renvoie le produit scalaire entre deux vecteurs
         """
-        """
-        
+        return self.x * autre_vecteur.x + self.y * autre_vecteur.y
 

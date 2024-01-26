@@ -1,5 +1,5 @@
 #### TESTER LA ROTATION DE DU VECTEURS ###
-from vecteur import Vecteur
+from vecteur import *
 
 
 
