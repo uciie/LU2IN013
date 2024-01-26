@@ -4,8 +4,8 @@
 from colorama import init, Fore 
 init(autoreset=True) # initilisation pour couleur
 
-from Robot_v2 import Robot 
-from Exceptions.BorneException import BorneException
+
+from exceptions import *
 
 #On admettra que la dimension de la grille est forcement plus grande que le robot
 #Une grille peut contenir au moins un robot

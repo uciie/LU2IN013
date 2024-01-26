@@ -1,5 +1,5 @@
 # @autors equipe HELMS
-from Exceptions.BorneException import BorneException
+from exceptions import *
 import sys
 
 # Supposons que les robot sont en forme de rectangle/carre

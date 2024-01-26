@@ -1,5 +1,6 @@
 # @autors equipe HELMS
-from Robot.robot_ancienne_version.Grille import Grille
+from grille import *
+
 class Obstacle:
   def __init__(self, posX, posY, longueur, largeur, grille):
     self.posX = posX
