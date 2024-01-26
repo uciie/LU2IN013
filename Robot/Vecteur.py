@@ -42,7 +42,8 @@ class Vecteur():
         return (self.x, self.y)
     
     def produit_scalaire(self, autre_vecteur):
+        """ Vecteur -> float
         """
-        """
+        return self.x * autre_vecteur.x + self.y * autre_vecteur.y
         
 
