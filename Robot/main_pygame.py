@@ -43,9 +43,9 @@ while True :
 
     # Appel correct de la méthode go2
     if occ1 == 0: 
-      for i in range(1):
+      for i in range(4):
         #print(robot.vectDir.x,robot.vectDir.y)
-        robot.go(0, distance, vitesse)
+        robot.go(90, distance, vitesse)
         #print(robot.vectDir.x,robot.vectDir.y)
       occ1 += 1
 
