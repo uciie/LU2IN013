@@ -142,8 +142,14 @@ class Robot:
     
     #tant qu'on n'a pas fini de parcourrir tte la distance on effectue un d_OM
     while cpt_dis < distance :
-      
-      # Mettre à jour la position du robot
+      new_x = self.posX + d_OM.x
+      new_y = self.posY + d_OM.y
+
+      # Mettre à jour l'ancienne position du robot
+      self.lastPosX = self.posX
+      self.lastPosY = self.posY
+
+      # Mettre à jour de la position du robot
       self.posX += d_OM.x
       self.posY += d_OM.y
       cpt_dis += d_OM.norme
