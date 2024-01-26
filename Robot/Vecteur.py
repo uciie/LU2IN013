@@ -42,7 +42,8 @@ class Vecteur():
         return (self.x, self.y)
     
     def produit_scalaire(self, autre_vecteur):
-        """ Vecteur -> float
+        """ Vecteur -> double
+        renvoie le produit scalaire entre deux vecteurs
         """
         return self.x * autre_vecteur.x + self.y * autre_vecteur.y
         
