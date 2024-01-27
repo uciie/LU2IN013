@@ -1,4 +1,4 @@
-from Vecteur import *
+from vecteur import *
 
 def main():
     """Création de deux vecteurs
