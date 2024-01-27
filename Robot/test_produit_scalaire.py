@@ -8,4 +8,13 @@ def main():
 
     """Produit scalaire entre ces deux vecteurs
     """
-    v3 = v1.produit_scalaire(v2)
+    print("Produit scalaire : " + str(v1.produit_scalaire(v2)))
+
+    """Nouveau vecteur
+    """
+    v3 = Vecteur(7,1)
+
+    """Produit scalaire entre v1 et v2
+    """
+    print("Produit scalaire : " + str(v1.produit_scalaire(v3)))
+main()
