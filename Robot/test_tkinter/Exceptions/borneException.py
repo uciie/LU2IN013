@@ -1,0 +1,2 @@
+class BorneException(IndexError):
+    pass    

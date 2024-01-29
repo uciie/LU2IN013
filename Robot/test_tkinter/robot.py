@@ -2,17 +2,19 @@
 
 from Exceptions.borneException import *
 from vecteur import *
-from robot import *
-
+from math import atan2, degrees, cos, sin
 import sys
-import pygame 
+import tkinter as tk
 
 
 # Supposons que les robot sont en forme de rectangle/carre
 # Supposons que la position du robot (x,y) correspond a l'extremite en haut à gauche
 
+#FPS
+dt = 1 / 30
+
 class Robot:
-  def __init__(self, name, posX, posY, dimLength, dimWidth, grille, vectDirecteur, fenetre, blanc, rouge ):
+  def __init__(self, name, posX, posY, dimLength, dimWidth, grille, vectDirecteur, canvas, color ):
     """ str x double x double x Grille x Vecteur -> Robot
     Precondition: dimLength % 2 = 1 and dimWidth % 2 = 1
     Initialisation du robot 
@@ -21,23 +23,24 @@ class Robot:
     self.name = name 
 
     # Fenetre graphique 
-    self.fenetre = fenetre
-    self.blanc= blanc # Grille
-    self.rouge = rouge # Robot
+    self.canvas = canvas
+    self.rect = None # le robot 
+    self.arrow = None # vecteur directeur
+    self.color = color # couleur du robot 
 
     #Environnement du robot
     self.grille = grille
 
-    #Dimention du robot
-    self.length = dimLength 
-    self.width = dimWidth
+    #Dimention du robot sur la fenetre 
+    self.length = dimLength #/self.grille.echelle
+    self.width = dimWidth #/self.grille.echelle
 
     # Tentative de positionnement du robot
     while True:
       try:
         assez_espace = True
-        for ligne in range(self.length):
-          for col in range(self.width):
+        for ligne in range(int(self.length)):
+          for col in range(int(self.width)):
             #print((posX+ligne, posY+col))
             if not self.grille.isEmptyCase(posX+ligne, posY+col):
               raise PosNonValideException #leve une exception car la case est occupee
@@ -66,7 +69,7 @@ class Robot:
     self.vitesse = 5.0 # m/s
 
     # Calculer le temps écoulé depuis la dernière mise à jour
-    self.dt = pygame.time.Clock().tick(30) / 1000.0  # convertir en secondes
+    #self.dt = pygame.time.Clock().tick(30) / 1000.0  # convertir en secondes
 
     #Composant du robot
     #self.roue_r = Roue("right") #Roue droite du robot
@@ -94,20 +97,29 @@ class Robot:
     """ -> None
     Mettre à jour la grille et la position du robot
     """
-    #mise à jour les positions
-    self.lastPosX = self.posX
-    self.lastPosY = self.posY
+    print()
 
-    for ligne in range(self.length):
-      for col in range(self.width):
-        self.grille.viderCase(self.lastPosX, self.lastPosY)
+  def draw(self):
+    #Efface le robot 
+    #Efface le vect directeur
+    if self.rect and self.arrow: 
+      self.canvas.delete(self.rect)
+      self.canvas.delete(self.arrow)
 
-    self.posX = new_x
-    self.posY = new_y
+    #Redessine le robot
+    self.rect = self.canvas.create_rectangle( 
+      self.posX - self.width/2, self.posY - self.length/2, 
+      self.posX+self.width/2, self.posY+self.length/2, fill=self.color
+    )
+    #Redessine le vecteur directeur du robot 
+    print("position : ", self.posX,self.posY)
+    self.arrow = self.canvas.create_line(self.posX, self.posY, self.posX + self.vectDir.x*self.length,self.posY+self.vectDir.y*self.length, arrow=tk.LAST)
+    
+    # Trace d'ou le robot est allee
+    self.line = self.canvas.create_line(self.lastPosX,self.lastPosY,self.posX,self.posY,fill='blue', width=3)
+    self.canvas.update()  # Mettre à jour l'affichage
+    self.canvas.after(75)  # Attendre 60 millisecondes (30 images par seconde)
 
-    #mise à jour de la grille
-    self.grille.viderCase(self.lastPosX, self.lastPosY) 
-    self.grille.setCase(self.posX,self.posY, "R")
       
   def go(self, angle, distance, vitesse):
     """ str x double x double -> None
@@ -135,14 +147,14 @@ class Robot:
     cpt_dis = 0
 
     #Coordonnee de vecteur de deplacement 
-    d_OM_x = self.vectDir.x*vitesse * self.dt/self.grille.echelle 
-    d_OM_y = self.vectDir.y*vitesse * self.dt/self.grille.echelle 
+    d_OM_x = self.vectDir.x*vitesse*dt /self.grille.echelle 
+    d_OM_y = self.vectDir.y*vitesse*dt /self.grille.echelle 
     d_OM = Vecteur(d_OM_x, d_OM_y)
     
     #tant qu'on n'a pas fini de parcourrir tte la distance on effectue un d_OM
-    while cpt_dis < distance :
-      new_x = self.posX + d_OM.x
-      new_y = self.posY + d_OM.y
+    while cpt_dis < distance/self.grille.echelle :
+      #new_x = self.posX + d_OM.x
+      #new_y = self.posY + d_OM.y
 
       # Mettre à jour l'ancienne position du robot
       self.lastPosX = self.posX
@@ -152,21 +164,7 @@ class Robot:
       self.posX += d_OM.x
       self.posY += d_OM.y
       cpt_dis += d_OM.norme
-      print(self.vectDir.x,self.vectDir.y)
+      #print(self.vectDir.x,self.vectDir.y)
 
       #### Mise à jour de la fenetre ####
-      # Effacer l'écran
-      self.fenetre.fill(self.blanc)
-
-      # Dessiner le robot
-      pygame.draw.rect(self.fenetre, self.rouge, (self.posX, self.posY, self.length/self.grille.echelle, self.width/self.grille.echelle))
-
-      # Mettre à jour l'affichage
-      pygame.display.flip()
-
-
-  def goToPos(self, posX, posY):
-    """
-    Se deplacer à la position (x,y) 
-    """
-
+      self.draw()

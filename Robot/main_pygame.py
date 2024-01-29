@@ -22,7 +22,7 @@ rouge = (255, 0, 0)
 x_robot, y_robot = int(largeur / 3), int(hauteur / 3)
 
 # Assurez-vous que la grille est correctement initialisée
-grille = Grille(largeur, hauteur, 1)
+grille = Grille(largeur, hauteur, 5)
 
 # Créez un objet Robot avec la grille correcte
 robot = Robot("r", x_robot, y_robot, x_robot, y_robot, grille, Vecteur(1, 1), fenetre, blanc, rouge )
@@ -32,14 +32,14 @@ distance = 50
 angle = 90
 occ1 = 0
 # Boucle principale
-while True :
+run = True
+while run :
     #permet de fermer la fenetre 
     for event in pygame.event.get():
-        if event.type == pygame.QUIT: 
+        if event.type == pygame.QUIT:
+            run = False  
             pygame.quit()
             sys.exit()
-
-    robot.vectDir = robot.vectDir.rotation(angle)
 
     # Appel correct de la méthode go2
     if occ1 == 0: 
@@ -53,7 +53,7 @@ while True :
     fenetre.fill(blanc)
 
     # Dessiner le robot
-    pygame.draw.rect(fenetre, rouge, (robot.posX, robot.posY, robot.length, robot.width))
+    pygame.draw.rect(fenetre, rouge, (robot.posX, robot.posY, robot.length/grille.echelle, robot.width/grille.echelle))
 
     # Mettre à jour l'affichage
     pygame.display.flip()
