@@ -1,5 +1,5 @@
 #### TESTER LES OPERATIONS ELEMENTAIRE DE DU VECTEURS ###
-from Vecteur import Vecteur
+from vecteur import *
 
 
 

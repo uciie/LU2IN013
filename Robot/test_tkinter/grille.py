@@ -13,18 +13,20 @@ class Grille:
   def __init__(self, maxX, maxY, echelle):
     """ double x double x double -> Grille
     Initialisation de l'environnement 
+    maxX et maxY sont les dimensions reelles de l'environnement exprimees en m
     """
+
     self.echelle = echelle
-    self.maxX = maxX
-    self.maxY = maxY
+    self.maxX = int(maxX) # self.maxX est la taille maximun en x  de la fenetre 
+    self.maxY = int(maxY) # self.maxX est la taille maximun en y de la fenetre
     self.grille = [["0" for case in range(self.maxY)] for ligne in range(self.maxX)]
 
   def addRobot(self, robot, dimX, dimY):
     """ Robot -> None
     Ajouter le robot dans la grille 
     """
-    for ligne in range(dimY):
-      for col in range(dimX):
+    for ligne in range(int(dimY)):
+      for col in range(int(dimX)):
         self.grille[robot.posY+ligne][robot.posX+col] = "R" 
 
   def addObstacle(self, obstacle, posX, posY):
@@ -39,6 +41,26 @@ class Grille:
     Verifie la position (posX, posY) est dans la grille
     """
     return 0 <= posX < self.maxX and 0 <= posY < self.maxY
+  
+  def inGrille2D(self, new_x, new_y, length, width):
+    """
+    Si une des extremite de l'objet n'est pas dans la grille renvoyer false
+    """
+    #Vérifier les extremité droite et gauche de l'objet
+    for ligne in range(length): 
+      y= new_y - length/2+ligne
+      print(new_x-length/2,y)
+      if (not self.inGrille(new_x-length/2, y)) or (not self.inGrille(new_x+length/2,y)) : 
+        return False
+
+    #Vérifier les extremité haut et bas de l'objet
+    for col in range(width): 
+      x = new_x - length/2+col
+      if (not self.inGrille(x , new_y-width/2)) or (not self.inGrille(x, new_y+width/2)) : 
+        return False
+    return True
+
+
 
   def isEmptyCase(self, posX, posY):
     """ double x double -> bool
