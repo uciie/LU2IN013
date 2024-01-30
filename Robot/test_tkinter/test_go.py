@@ -1,5 +1,7 @@
 from robot import *
-
+from grille import *
+from tkinter import *
+from math import *
 def main():
 
     """Création grille"""
@@ -9,6 +11,12 @@ def main():
     vecteur = Vecteur(0, 1)
 
     """Création canvas"""
-    canvas = Canvas(10, 10, "white")
+    root=Tk()
+    cnv=Canvas(root, width=20, height=20, bg="ivory")
     """Création robot"""
-    robot = Robot(r, 10, 10, 1, 1 ,grille, vecteur)
+    robot = Robot("r", 10, 10, 1, 1 ,grille, vecteur, cnv, "red")
+    robot.draw()
+
+    """Déplacement robot"""
+    robot.go(90, 5, 1)
+main()
