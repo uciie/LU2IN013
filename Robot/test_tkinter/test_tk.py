@@ -27,9 +27,9 @@ def main():
         """
         Le robot trace un carre 
         """
-        distance = 400 # metre
+        distance = 100 # metre
         angle = 90
-        vitesse = 50 # m/s
+        vitesse = -50 # m/s
         for i in range(4):
             robot.go(angle, distance, vitesse)
     

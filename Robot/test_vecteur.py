@@ -1,7 +1,5 @@
 import unittest
-from Robot import Robot
-from Grille import Grille
-from Vecteur import Vecteur
+from vecteur import Vecteur
 
 class TestVecteur(unittest.TestCase):
 
