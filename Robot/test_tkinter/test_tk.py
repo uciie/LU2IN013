@@ -27,10 +27,10 @@ def main():
         """
         Le robot trace un carre 
         """
-        distance = 300 # metre
+        distance = 400 # metre
         angle = 90
         vitesse = 50 # m/s
-        for i in range(1):
+        for i in range(4):
             robot.go(angle, distance, vitesse)
     
     start_button = tk.Button(root, text="Démarrer la simulation", command=start_simulation)

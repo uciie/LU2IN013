@@ -47,18 +47,18 @@ class Grille:
     Si une des extremite de l'objet n'est pas dans la grille renvoyer false
     """
     #Vérifier les extremité droite et gauche de l'objet
-    print("dim grille", self.maxX, self.maxY )
     for ligne in range(length): 
       y= new_y - length/2+ligne
-      print(new_x-length/2,)
+      print(new_x-length/2,y)
       if (not self.inGrille(new_x-length/2, y)) or (not self.inGrille(new_x+length/2,y)) : 
         return False
 
     #Vérifier les extremité haut et bas de l'objet
-    #for col in range(width): 
-    #  x = new_x - length/2+col
-    #  if (not self.inGrille(x , new_y-width/2)) or (not self.inGrille(x, new_y+width/2)) : 
-    #    return False
+    for col in range(width): 
+      x = new_x - length/2+col
+      if (not self.inGrille(x , new_y-width/2)) or (not self.inGrille(x, new_y+width/2)) : 
+        return False
+    return True
 
 
 
