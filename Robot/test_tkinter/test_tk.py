@@ -30,7 +30,7 @@ def main():
         distance = 300 # metre
         angle = 90
         vitesse = 50 # m/s
-        for i in range(4):
+        for i in range(1):
             robot.go(angle, distance, vitesse)
     
     start_button = tk.Button(root, text="Démarrer la simulation", command=start_simulation)

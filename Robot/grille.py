@@ -34,7 +34,7 @@ class Grille:
     ### A corriger plsu tard ###
     self.grille[posY][posX] = obstacle
   
-  def inBorne(self, posX, posY):
+  def inGrille(self, posX, posY):
     """ double x double -> bool
     Verifie la position (posX, posY) est dans la grille
     """
@@ -45,7 +45,7 @@ class Grille:
     Renvoie true si la case en (posX,posY) est vide, sinon false 
     Lever une exception si on sort de la grille
     """
-    if self.inBorne(posX, posY):
+    if self.inGrille(posX, posY):
       return self.grille[posY][posX] == "0"
     raise BorneException("On sort de la borne") 
 
@@ -54,7 +54,7 @@ class Grille:
     Vider la case (x,y)
     Lever une exception si on sort de la grille
     """
-    if self.inBorne(posX, posY):
+    if self.inGrille(posX, posY):
       self.grille[posY][posX] = "0"
     raise BorneException("On sort de la borne") 
   
@@ -63,7 +63,7 @@ class Grille:
     Modifie la case (posX, posY) de la grille
     Lever une exception si on sort de la grille
     """
-    if self.inBorne(posX, posY):
+    if self.inGrille(posX, posY):
       self.grille[posY][posX] = contenu
     else :
       raise BorneException("On sort de la borne") 

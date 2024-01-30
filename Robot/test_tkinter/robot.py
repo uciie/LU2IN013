@@ -155,8 +155,8 @@ class Robot:
     while cpt_dis < distance : #/self.grille.echelle :
       
       new_x, new_y = self.posX + d_OM.x, self.posY + d_OM.y
-      if not self.grille.inBorne(new_x, new_y):
-        print(self.name, " est à la borne : ",new_x, new_y)
+      if not self.grille.inGrille2D(new_x, new_y,self.length, self.width):
+        print(self.name, " est a la borne : ",new_x, new_y)
         break
 
       # Mettre à jour l'ancienne position du robot

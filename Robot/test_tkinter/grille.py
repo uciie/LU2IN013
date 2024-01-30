@@ -36,18 +36,38 @@ class Grille:
     ### A corriger plsu tard ###
     self.grille[posY][posX] = obstacle
   
-  def inBorne(self, posX, posY):
+  def inGrille(self, posX, posY):
     """ double x double -> bool
     Verifie la position (posX, posY) est dans la grille
     """
     return 0 <= posX < self.maxX and 0 <= posY < self.maxY
+  
+  def inGrille2D(self, new_x, new_y, length, width):
+    """
+    Si une des extremite de l'objet n'est pas dans la grille renvoyer false
+    """
+    #Vérifier les extremité droite et gauche de l'objet
+    print("dim grille", self.maxX, self.maxY )
+    for ligne in range(length): 
+      y= new_y - length/2+ligne
+      print(new_x-length/2,)
+      if (not self.inGrille(new_x-length/2, y)) or (not self.inGrille(new_x+length/2,y)) : 
+        return False
+
+    #Vérifier les extremité haut et bas de l'objet
+    #for col in range(width): 
+    #  x = new_x - length/2+col
+    #  if (not self.inGrille(x , new_y-width/2)) or (not self.inGrille(x, new_y+width/2)) : 
+    #    return False
+
+
 
   def isEmptyCase(self, posX, posY):
     """ double x double -> bool
     Renvoie true si la case en (posX,posY) est vide, sinon false 
     Lever une exception si on sort de la grille
     """
-    if self.inBorne(posX, posY):
+    if self.inGrille(posX, posY):
       return self.grille[posY][posX] == "0"
     raise BorneException("On sort de la borne") 
 
@@ -56,7 +76,7 @@ class Grille:
     Vider la case (x,y)
     Lever une exception si on sort de la grille
     """
-    if self.inBorne(posX, posY):
+    if self.inGrille(posX, posY):
       self.grille[posY][posX] = "0"
     raise BorneException("On sort de la borne") 
   
@@ -65,7 +85,7 @@ class Grille:
     Modifie la case (posX, posY) de la grille
     Lever une exception si on sort de la grille
     """
-    if self.inBorne(posX, posY):
+    if self.inGrille(posX, posY):
       self.grille[posY][posX] = contenu
     else :
       raise BorneException("On sort de la borne") 
