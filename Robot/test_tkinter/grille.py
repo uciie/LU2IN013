@@ -13,10 +13,12 @@ class Grille:
   def __init__(self, maxX, maxY, echelle):
     """ double x double x double -> Grille
     Initialisation de l'environnement 
+    maxX et maxY sont les dimensions reelles de l'environnement exprimees en m
     """
+
     self.echelle = echelle
-    self.maxX = maxX
-    self.maxY = maxY
+    self.maxX = int(maxX) # self.maxX est la taille maximun en x  de la fenetre 
+    self.maxY = int(maxY) # self.maxX est la taille maximun en y de la fenetre
     self.grille = [["0" for case in range(self.maxY)] for ligne in range(self.maxX)]
 
   def addRobot(self, robot, dimX, dimY):

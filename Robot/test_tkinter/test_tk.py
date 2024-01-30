@@ -21,21 +21,20 @@ def main():
     grille = Grille(largeur, hauteur, 5)
     
     #Creation du robot 
-    robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, grille, Vecteur(1, 1), canvas,color="red")
+    robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, grille, Vecteur(0, -1), canvas,color="red")
 
-    def tracer_carre():
+    def start_simulation():
         """
         Le robot trace un carre 
         """
-        distance = 500 # metre
+        distance = 300 # metre
         angle = 90
-        vitesse = 100 # m/s
+        vitesse = 50 # m/s
         for i in range(4):
             robot.go(angle, distance, vitesse)
     
-    #tracer_carre(distance)
-    carre_button = tk.Button(root, text="Tracer un carre", command=tracer_carre)
-    carre_button.pack()
+    start_button = tk.Button(root, text="Démarrer la simulation", command=start_simulation)
+    start_button.pack()
 
     root.mainloop()
 

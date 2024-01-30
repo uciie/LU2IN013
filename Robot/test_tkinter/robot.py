@@ -62,7 +62,7 @@ class Robot:
     self.lastPosY = posY
 
     # Direction
-    self.vectDir = Vecteur(0,-1)#on suppose qu'au debut le robot est dirigé vers le haut 
+    self.vectDir = vectDirecteur#on suppose qu'au debut le robot est dirigé vers le haut 
     self.angle = 0 # angle en degre
     
     # Vitesse
@@ -112,7 +112,7 @@ class Robot:
       self.posX+self.width/2, self.posY+self.length/2, fill=self.color
     )
     #Redessine le vecteur directeur du robot 
-    print("position : ", self.posX,self.posY)
+    #print("position : ", self.posX,self.posY)
     self.arrow = self.canvas.create_line(self.posX, self.posY, self.posX + self.vectDir.x*self.length,self.posY+self.vectDir.y*self.length, arrow=tk.LAST)
     
     # Trace d'ou le robot est allee
@@ -147,22 +147,25 @@ class Robot:
     cpt_dis = 0
 
     #Coordonnee de vecteur de deplacement 
-    d_OM_x = self.vectDir.x*vitesse*dt /self.grille.echelle 
-    d_OM_y = self.vectDir.y*vitesse*dt /self.grille.echelle 
+    d_OM_x = self.vectDir.x*vitesse*dt #/self.grille.echelle 
+    d_OM_y = self.vectDir.y*vitesse*dt #/self.grille.echelle 
     d_OM = Vecteur(d_OM_x, d_OM_y)
     
     #tant qu'on n'a pas fini de parcourrir tte la distance on effectue un d_OM
-    while cpt_dis < distance/self.grille.echelle :
-      #new_x = self.posX + d_OM.x
-      #new_y = self.posY + d_OM.y
+    while cpt_dis < distance : #/self.grille.echelle :
+      
+      new_x, new_y = self.posX + d_OM.x, self.posY + d_OM.y
+      if not self.grille.inBorne(new_x, new_y):
+        print(self.name, " est à la borne : ",new_x, new_y)
+        break
 
       # Mettre à jour l'ancienne position du robot
       self.lastPosX = self.posX
       self.lastPosY = self.posY
 
       # Mettre à jour de la position du robot
-      self.posX += d_OM.x
-      self.posY += d_OM.y
+      self.posX = new_x
+      self.posY = new_y
       cpt_dis += d_OM.norme
       #print(self.vectDir.x,self.vectDir.y)
 
