@@ -1,39 +1,47 @@
+import unittest
 from Robot import Robot
 from Grille import Grille
 from Vecteur import Vecteur
 
-def main():
-    
-    # On definit deux vecteurs
-    v1 = Vecteur(2, 3)
-    v2 = Vecteur(1, 4)
+class TestVecteur(unittest.TestCase):
 
-    print("Coordonnées du vecteur 1 :", v1.getCoor())
-    print("Coordonnées du vecteur 2 :", v2.getCoor())
+    def setUp(self):
+        #initialisation des vecteurs
+        self.v1 = Vecteur(2, 3)
+        self.v2 = Vecteur(1, 4)
 
-    # Addition de deux vecteurs
-    resultat_addition = v1.add(v2)
-    print("Résultat de l'addition :", resultat_addition.getCoor())
+    def test_add(self):
+        #addition
+        resultat_addition = self.v1.add(self.v2)
+        self.assertEqual(resultat_addition.x, 3)
+        self.assertEqual(resultat_addition.y, 7)
 
-    # Soustraction de deux vecteurs
-    resultat_soustraction = v1.soustraction(v2)
-    print("Résultat de la soustraction :", resultat_soustraction.getCoor())
+    def test_soustraction(self):
+        #soustraction
+        resultat_soustraction = self.v1.soustraction(self.v2)
+        self.assertEqual(resultat_soustraction.x, 1)
+        self.assertEqual(resultat_soustraction.y, -1)
 
-    # Rotation d'un vecteur
-    vecteur_rotation = v1.rotation(90)
-    print("Résultat de la rotation de 90 degrés :", vecteur_rotation.getCoor())
+    def test_rotation(self):
+        #rotation
+        vecteur_rotation = self.v1.rotation(90)
+        self.assertEqual(vecteur_rotation.x, -3)
+        self.assertEqual(vecteur_rotation.y, 2)
 
-    # Retourne les coordonnee d'un vecteur
-    v = v1.getCoor()
-    print("Les coordonnees d'un vecteur:", v)
-    
-    # Produit scalaire de deux vecteurs
-    produit_scalaire = v1.produit_scalaire(v2)
-    print("Produit scalaire entre les deux vecteurs :", produit_scalaire)
+    def test_get_coordonnees(self):
+        #récupération des coordonnées
+        coordonnees = self.v1.getCoor()
+        self.assertEqual(coordonnees, (2, 3))
 
-    # Vérification si deux vecteurs sont égaux
-    are_equal = v1.equals(v2)
-    print("Est-ce que les vecteurs sont égaux ?", are_equal)
+    def test_produit_scalaire(self):
+        #produit scalaire
+        produit_scalaire = self.v1.produit_scalaire(self.v2)
+        self.assertEqual(produit_scalaire, 14)
 
-if __name__ == "__main__":
-    main()
+    def test_equals(self):
+        #égalité de deux vecteurs
+        are_equal = self.v1.equals(self.v2)
+        self.assertFalse(are_equal)
+
+if __name__ == '__main__':
+    unittest.main()
