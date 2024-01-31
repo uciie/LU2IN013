@@ -46,12 +46,4 @@ class Vecteur():
         renvoie le produit scalaire entre deux vecteurs
         """
         return self.x * autre_vecteur.x + self.y * autre_vecteur.y
-    
-    def equals(self, autre_vecteur):
-        """Vecteur -> bool 
-        Renvoie true si les deux vecteurs sont egaux 
-        """
-        return autre_vecteur.x == self.x and autre_vecteur.y == self.y
-    
-
 
