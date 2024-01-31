@@ -157,7 +157,7 @@ class Robot:
       new_x, new_y = self.posX + d_OM.x, self.posY + d_OM.y
       if not self.grille.inGrille2D(new_x, new_y,self.length, self.width):
         print(self.name, " est a la borne : ",new_x, new_y)
-        break
+        sys.exit()
 
       # Mettre à jour l'ancienne position du robot
       self.lastPosX = self.posX
