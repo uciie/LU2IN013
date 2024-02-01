@@ -1,6 +1,6 @@
 # @autors equipe HELMS
 
-from Exceptions.borneException import *
+from exceptions import *
 from vecteur import *
 from math import atan2, degrees, cos, sin
 import sys

@@ -2,7 +2,7 @@ import tkinter as tk
 from vecteur import *
 from robot import *
 from grille import *
-from Exceptions.borneException import *
+from exceptions import *
 
 def main():
     root = tk.Tk()

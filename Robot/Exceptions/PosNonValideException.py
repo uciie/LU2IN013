@@ -1,2 +1,0 @@
-class PosNonValideException(Exception):
-  pass

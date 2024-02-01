@@ -1,6 +1,6 @@
 # @autors equipe HELMS
 
-from Exceptions.borneException import *
+from exceptions import *
 
 # Bibliotheque de la couleur du print
 from colorama import init, Fore 
