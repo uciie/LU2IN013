@@ -1,10 +1,11 @@
 import tkinter as tk
-from vecteur import *
-from robot import *
-from grille import *
-from exceptions import *
+from Robot.vecteur import *
+from Robot.robot import *
+from Robot.grille import *
 
 def main():
+    """ Teste de simulation du robot en mouvement continue
+    """
     root = tk.Tk()
     root.title("Simulation de déplacement du robot")
 
