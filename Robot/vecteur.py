@@ -2,8 +2,10 @@ import math
 
 class Vecteur():
     def __init__(self, x, y):
-        """double double double-> vecteur
-        Initialisation d'un vecteur"""
+        """Initialisation d'un vecteur
+        :param x: coordonnee x du vecteur
+        :param y: coordonnee y du vecteur
+        :returns: retourne le vecteur (x,y)de longueur norme """
         
         # Composantes du vecteur
         self.x = x
@@ -13,19 +15,25 @@ class Vecteur():
         self.norme = math.sqrt(self.x**2 + self.y**2 )
     
     def add(self, vecteur):
-        """Vecteur vecteur -> Vecteur
-        Additionne deux vecteurs"""
+        """Additionne deux vecteurs
+        :param vecteur: on donne un vecteur (x,y) a la methode
+        :returns: elle renvoie l'addition entre le vecteur self et le vecteur en parametre"""
+        
         return Vecteur(self.x + vecteur.x, self.y + vecteur.y)
 
     def soustraction(self, vecteur):
-        """Vecteur vecteur -> Vecteur
-        Soustrait deux vecteurs"""
+        """Soustrait deux vecteurs
+        :param vecteur: on donne un vecteur (x,y) a la methode
+        :returns: elle renvoie la soustraction entre le vecteur self et le vecteur en parametre"""
+        
         return Vecteur(self.x - vecteur.x, self.y - vecteur.y)
 
     def rotation(self, degre):
-        """float degre -> Vecteur
-        Fait une rotation vectorielle"""
-
+        """Effectue une rotation vectorielle
+        :param degre: Angle de rotation en degrés
+        :returns: Nouveau vecteur résultant de la rotation du vecteur self selon l'angle spécifié
+        """
+        
         # Conversion degrés en radians
         rad = degre * (math.pi / 180)
 
@@ -36,14 +44,24 @@ class Vecteur():
         return Vecteur(new_x, new_y)
     
     def getCoor(self):
-        """ -> Tuple[double, double]
-        renvoie les coordonnees du vecteur sous forme de tuple
+        """Renvoie les coordonnées du vecteur sous forme de tuple
+        :returns: Tuple (double, double) représentant les coordonnées (x, y) du vecteur
         """
         return (self.x, self.y)
     
     def produit_scalaire(self, autre_vecteur):
-        """ Vecteur -> double
-        renvoie le produit scalaire entre deux vecteurs
+        """Calcule le produit scalaire entre deux vecteurs
+        :param autre_vecteur: Vecteur avec lequel calculer le produit scalaire
+        :returns: Valeur du produit scalaire entre le vecteur self et le vecteur en paramètre
         """
         return self.x * autre_vecteur.x + self.y * autre_vecteur.y
+    
+    def equals(self, autre_vecteur):
+        """Vérifie l'égalité entre deux vecteurs
+        :param autre_vecteur: Vecteur avec lequel vérifier l'égalité
+        :returns: True si les deux vecteurs sont égaux, False sinon
+        """
+        return autre_vecteur.x == self.x and autre_vecteur.y == self.y
+    
+
 
