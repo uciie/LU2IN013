@@ -31,19 +31,26 @@ class Interface:
         :param Objet: Objet à dessiner.
         :return: Identifiant unique de l'objet sur le canevas.
         """
-        rect_id = self.canvas.create_rectangle( 
-            Objet.posX - Objet.width/2, Objet.posY - Objet.length/2, 
-            Objet.posX + Objet.width/2, Objet.posY + Objet.length/2, fill=Objet.color)
-        
+        # Coordonnées des sommets du polygone
+        x1, y1 = Objet.posX - Objet.width/2, Objet.posY - Objet.length/2
+        x2, y2 = Objet.posX + Objet.width/2, Objet.posY - Objet.length/2
+        x3, y3 = Objet.posX + Objet.width/2, Objet.posY + Objet.length/2
+        x4, y4 = Objet.posX - Objet.width/2, Objet.posY + Objet.length/2
+
+        poly_coords = [x1, y1, x2, y2, x3, y3, x4, y4]
+
+        poly_id = self.canvas.create_polygon(poly_coords, fill=Objet.color)
+
         if hasattr(Objet, 'vectDir'):
             arrow_id = self.canvas.create_line(
                 Objet.posX, Objet.posY,
                 Objet.posX + Objet.vectDir.x * Objet.length, Objet.posY + Objet.vectDir.y * Objet.length,
                 arrow=tk.LAST)
-            
-            return rect_id, arrow_id
+
+            return poly_id, arrow_id
         else:
-            return rect_id
+            return poly_id
+
     
     def draw_parcours(self, Objet: Any) -> int:
         """ Trace le parcours de l'objet

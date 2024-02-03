@@ -66,7 +66,6 @@ def update(interface: Interface, robot: Robot):
     tracer_parcours(interface, robot)
     interface.root.update()
 
-
 def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vitesse: int, dt):
     """  Faire avancer le robot d'une distance avec une vitesse
 
