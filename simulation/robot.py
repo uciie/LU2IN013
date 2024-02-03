@@ -77,6 +77,7 @@ class Roue:
 
         # Vitesse de la roue
         self.nom = nom
+        self.vecteur = vecteur
         self.vitesse = vitesse
     
     def avancer(self):
