@@ -47,7 +47,27 @@ def inGrille2D(grille : Grille, new_x, new_y, length, width):
             return False
     return True
 
-def go(grille: Grille, robot : Robot, distance: float, vitesse: int):
+def tracer_parcours(interface: Interface, robot: Robot):
+    """ Trace le parcours du robot
+
+    :param interface: L'interface graphique
+    :param robot: Le robot
+    """
+    interface.draw_parcours(robot)
+
+def update(interface: Interface, robot: Robot):
+    """ Mettre à jour l'interface graphique 
+
+    :param interface: L'interface graphique
+    :param robot: Le robot
+    """
+    interface.delete_draw(robot.rect_id, robot.arrow_id)
+    robot.rect_id, robot.arrow_id = interface.draw_obj(robot)
+    tracer_parcours(interface, robot)
+    interface.root.update()
+
+
+def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vitesse: int, dt):
     """  Faire avancer le robot d'une distance avec une vitesse
 
     :param robot: Robot
@@ -78,29 +98,32 @@ def go(grille: Grille, robot : Robot, distance: float, vitesse: int):
         robot.move_dOM(dOM_x, dOM_y)
 
         cpt_dis += dOM.norme
-    print(robot.posX,robot.posY)
-    print("fin")
+        print(robot.posX, robot.posY)
+        update(interface, robot)
+    print("Final:")
+    print(robot.posX, robot.posY)
 
     
 if __name__ == "__main__":
-    # Dimension de la fenetre 
+    dt = 1/30
     largeur, hauteur = 300, 300
     bg = "white"
     interface = Interface("Simulation de déplacement du robot", largeur, hauteur, bg)
 
-    # Position initiale du robot
     dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
 
-    # Assurez-vous que la grille est correctement initialisée
     grille = Grille(largeur, hauteur, 5)
-    
-    #Creation du robot 
-    robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y,Vecteur(0,-1),color="red")
-    print("Ini")
-    print(robot.posX,robot.posY)
-    distance = 10
-    vitesse = 1
-    go(grille, robot, distance, vitesse)
+    robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, Vecteur(0, -1), color="red")
 
+    update(interface, robot)
+
+    print("Initial:")
+    print(robot.posX, robot.posY)
+
+    distance = 1000
+    vitesse = 1
+    go(interface,grille, robot, distance, vitesse, dt)
+
+    update(interface, robot)
 
     interface.root.mainloop()

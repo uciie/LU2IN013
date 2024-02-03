@@ -15,21 +15,6 @@ class Interface:
         self.canvas = tk.Canvas(self.root, width=width, height=height, bg=color)
         self.canvas.pack()
 
-    def draw_obj(self, Objet: Any) -> None:
-        """ Dessine un objet sur le canevas de l'interface.
-
-        :param Objet: Objet à dessiner.
-        """
-        self.canvas.create_rectangle( 
-            Objet.posX - Objet.width/2, Objet.posY - Objet.length/2, 
-            Objet.posX + Objet.width/2, Objet.posY + Objet.length/2, fill=Objet.color)
-        
-        if hasattr(Objet, 'vectDir') :
-            self.canvas.create_line(
-                Objet.posX, Objet.posY,
-                Objet.posX + Objet.vectDir.x * Objet.length, Objet.posY + Objet.vectDir.y * Objet.length,
-                arrow=tk.LAST)
-
     def draw_roue(self, Roue: Any) -> None:
         """Dessine une roue sur le canevas de l'interface.
 
@@ -40,13 +25,43 @@ class Interface:
             Roue.posX + Roue.vectDir.x * 5, Roue.posY + Roue.vectDir.y * 5,
             arrow=tk.LAST)
 
-    def delete_draw(self, Objet: Any) -> None:
-        """Supprime un dessin de l'interface.
+    def draw_obj(self, Objet: Any) -> int:
+        """Dessine un objet sur le canevas de l'interface.
 
-        :param Objet: Objet à supprimer du canevas.
+        :param Objet: Objet à dessiner.
+        :return: Identifiant unique de l'objet sur le canevas.
         """
-        if Objet:
-            self.canvas.delete(Objet)
+        rect_id = self.canvas.create_rectangle( 
+            Objet.posX - Objet.width/2, Objet.posY - Objet.length/2, 
+            Objet.posX + Objet.width/2, Objet.posY + Objet.length/2, fill=Objet.color)
+        
+        if hasattr(Objet, 'vectDir'):
+            arrow_id = self.canvas.create_line(
+                Objet.posX, Objet.posY,
+                Objet.posX + Objet.vectDir.x * Objet.length, Objet.posY + Objet.vectDir.y * Objet.length,
+                arrow=tk.LAST)
+            
+            return rect_id, arrow_id
+        else:
+            return rect_id
+    
+    def draw_parcours(self, Objet: Any) -> int:
+        """ Trace le parcours de l'objet
+
+        :param Objet: Objet 
+        :return: Identifiant unique de l'objet sur le canevas.
+        """
+        return self.canvas.create_line(Objet.lastPosX,Objet.lastPosY,Objet.posX,Objet.posY,fill='blue', width=3)
+
+    def delete_draw(self, *obj_ids: int) -> None:
+        """Supprime un ou plusieurs dessins de l'interface.
+
+        :param obj_ids: Identifiants des objets à supprimer du canevas.
+        """
+        for obj_id in obj_ids:
+            if obj_id:
+                self.canvas.delete(obj_id)
+    
     
     def creer_button(self, name: str, command: callable) -> tk.Button:
         """Crée un bouton dans l'interface.

@@ -23,8 +23,10 @@ class Robot:
         self.name = name
 
         # Fenêtre graphique
-        self.rect = None  # le robot
-        self.arrow = None  # vecteur directeur
+        # Identifiants des objets graphiques dans l'interface
+        self.rect_id = None  # Identifiant du rectangle
+        self.arrow_id = None  # Identifiant de la flèche
+        self.line_id = None  # Identifiant de sa tracabilite
         self.color = color  # couleur du robot
 
         self.vectDir = vectDir
