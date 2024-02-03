@@ -82,4 +82,4 @@ class Roue:
     
     def avancer(self):
         """Fait avancer la roue"""
-        print("La roue ",nom," tourne à ",vitesse,"RPM")
+        print("La roue ",nom," tourne à ",vitesse,"RPM, suivant le vecteur directeur ", vecteur)
