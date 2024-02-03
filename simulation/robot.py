@@ -72,7 +72,7 @@ class Robot:
         self.posX, self.posY = self.posX + dOM_x, self.posY + dOM_y
 
 class Roue:
-    def __init__(self,nom, vitesse : float):
+    def __init__(self, nom : str , vecteur : Vecteur , vitesse : float):
         """Initialisation de la roue"""
 
         # Vitesse de la roue
