@@ -1,5 +1,5 @@
 # @authors Équipe HELMS
-
+from .vecteur import Vecteur
 # Supposons que les robots sont en forme de rectangle/carré
 # Supposons que la position du robot (x, y) correspond à l'extrémité en haut à gauche
 
@@ -7,12 +7,13 @@
 dt = 1 / 30
 
 class Robot:
-    def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, color: str):
+    def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, vectDir : Vecteur, color: str):
         """Initialisation du robot.
 
         :param name: Nom du robot (str).
         :param posX: Coordonnée x du robot (float).
         :param posY: Coordonnée y du robot (float).
+        :param vectDir: Vecteur directeur du robot (Vecteur).
         :param dimLength: Longueur de la pièce en mètres (float).
         :param dimWidth: Largeur de la pièce en mètres (float).
         :param color: Couleur du robot (str).
@@ -26,9 +27,15 @@ class Robot:
         self.arrow = None  # vecteur directeur
         self.color = color  # couleur du robot
 
+        self.vectDir = vectDir
+
         # Dimension du robot sur la fenêtre
         self.length = dimLength  # /self.grille.echelle
         self.width = dimWidth  # /self.grille.echelle
+
+        #Initisalisation de la position du robot
+        self.posX = posX
+        self.posY = posY
 
         # Ancienne position du robot
         # Initialise l'ancienne position à la position actuelle

@@ -4,5 +4,5 @@ LU2IN013
 .. toctree::
    :maxdepth: 4
 
-   Robot
+   simulation
    test_unitaire

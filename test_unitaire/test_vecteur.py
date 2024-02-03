@@ -1,5 +1,5 @@
 import unittest
-from Robot.vecteur import Vecteur
+from simulation.vecteur import Vecteur
 
 class TestVecteur(unittest.TestCase):
 

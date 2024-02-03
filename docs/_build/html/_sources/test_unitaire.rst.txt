@@ -23,7 +23,7 @@ test\_unitaire.test\_tk module
 Module contents
 ---------------
 
-.. automodule:: test_unitaire
+.. automodule:: simulation
    :members:
    :undoc-members:
    :show-inheritance:

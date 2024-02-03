@@ -50,22 +50,10 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">LU2IN013</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Robot package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-Robot.grille">Robot.grille module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#Robot.grille.Grille"><code class="docutils literal notranslate"><span class="pre">Grille</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#module-Robot.interface_graph">Robot.interface_graph module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#Robot.interface_graph.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#module-Robot.robot">Robot.robot module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#Robot.robot.Robot"><code class="docutils literal notranslate"><span class="pre">Robot</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#module-Robot.vecteur">Robot.vecteur module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#Robot.vecteur.Vecteur"><code class="docutils literal notranslate"><span class="pre">Vecteur</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="#robot-grille-module">Robot.grille module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robot-interface-graph-module">Robot.interface_graph module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robot-robot-module">Robot.robot module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robot-vecteur-module">Robot.vecteur module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="test_unitaire.html">test_unitaire package</a></li>
@@ -103,200 +91,17 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
-<section id="module-Robot.grille">
-<span id="robot-grille-module"></span><h2>Robot.grille module<a class="headerlink" href="#module-Robot.grille" title="Link to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="Robot.grille.Grille">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Robot.grille.</span></span><span class="sig-name descname"><span class="pre">Grille</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maxX</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxY</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">echelle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Robot.grille.Grille" title="Link to this definition"></a></dt>
-<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="Robot.grille.Grille.affiche">
-<span class="sig-name descname"><span class="pre">affiche</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Robot.grille.Grille.affiche" title="Link to this definition"></a></dt>
-<dd><p>Affiche la grille avec son contenu (obstacles, robots, etc.).</p>
-</dd></dl>
-
-</dd></dl>
-
+<section id="robot-grille-module">
+<h2>Robot.grille module<a class="headerlink" href="#robot-grille-module" title="Link to this heading"></a></h2>
 </section>
-<section id="module-Robot.interface_graph">
-<span id="robot-interface-graph-module"></span><h2>Robot.interface_graph module<a class="headerlink" href="#module-Robot.interface_graph" title="Link to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="Robot.interface_graph.Interface">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Robot.interface_graph.</span></span><span class="sig-name descname"><span class="pre">Interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Robot.interface_graph.Interface" title="Link to this definition"></a></dt>
-<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="Robot.interface_graph.Interface.creer_button">
-<span class="sig-name descname"><span class="pre">creer_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">callable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Button</span></span></span><a class="headerlink" href="#Robot.interface_graph.Interface.creer_button" title="Link to this definition"></a></dt>
-<dd><p>Crée un bouton dans l’interface.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – Nom du bouton.</p></li>
-<li><p><strong>command</strong> – Fonction à exécuter lorsque le bouton est cliqué.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Renvoie<span class="colon">:</span></dt>
-<dd class="field-even"><p>Objet tk.Button créé.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="Robot.interface_graph.Interface.delete_draw">
-<span class="sig-name descname"><span class="pre">delete_draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Objet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#Robot.interface_graph.Interface.delete_draw" title="Link to this definition"></a></dt>
-<dd><p>Supprime un dessin de l’interface.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Objet</strong> – Objet à supprimer du canevas.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="Robot.interface_graph.Interface.draw_obj">
-<span class="sig-name descname"><span class="pre">draw_obj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Objet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#Robot.interface_graph.Interface.draw_obj" title="Link to this definition"></a></dt>
-<dd><p>Dessine un objet sur le canevas de l’interface.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Objet</strong> – Objet à dessiner.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="Robot.interface_graph.Interface.draw_roue">
-<span class="sig-name descname"><span class="pre">draw_roue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Roue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#Robot.interface_graph.Interface.draw_roue" title="Link to this definition"></a></dt>
-<dd><p>Dessine une roue sur le canevas de l’interface.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Roue</strong> – Roue à dessiner.</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+<section id="robot-interface-graph-module">
+<h2>Robot.interface_graph module<a class="headerlink" href="#robot-interface-graph-module" title="Link to this heading"></a></h2>
 </section>
-<section id="module-Robot.robot">
-<span id="robot-robot-module"></span><h2>Robot.robot module<a class="headerlink" href="#module-Robot.robot" title="Link to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="Robot.robot.Robot">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Robot.robot.</span></span><span class="sig-name descname"><span class="pre">Robot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posX</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posY</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimLength</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimWidth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Robot.robot.Robot" title="Link to this definition"></a></dt>
-<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="Robot.robot.Robot.getCurrPos">
-<span class="sig-name descname"><span class="pre">getCurrPos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#Robot.robot.Robot.getCurrPos" title="Link to this definition"></a></dt>
-<dd><p>Renvoie la position actuelle du robot.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Renvoie les coordonnées du robot (tuple).</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="Robot.robot.Robot.getLastPos">
-<span class="sig-name descname"><span class="pre">getLastPos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#Robot.robot.Robot.getLastPos" title="Link to this definition"></a></dt>
-<dd><p>Renvoie l’ancienne position du robot.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Renvoie l’avant-dernière coordonnée du robot (tuple).</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+<section id="robot-robot-module">
+<h2>Robot.robot module<a class="headerlink" href="#robot-robot-module" title="Link to this heading"></a></h2>
 </section>
-<section id="module-Robot.vecteur">
-<span id="robot-vecteur-module"></span><h2>Robot.vecteur module<a class="headerlink" href="#module-Robot.vecteur" title="Link to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="Robot.vecteur.Vecteur">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Robot.vecteur.</span></span><span class="sig-name descname"><span class="pre">Vecteur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Robot.vecteur.Vecteur" title="Link to this definition"></a></dt>
-<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="Robot.vecteur.Vecteur.add">
-<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vecteur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#Robot.vecteur.Vecteur" title="Robot.vecteur.Vecteur"><span class="pre">Vecteur</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#Robot.vecteur.Vecteur" title="Robot.vecteur.Vecteur"><span class="pre">Vecteur</span></a></span></span><a class="headerlink" href="#Robot.vecteur.Vecteur.add" title="Link to this definition"></a></dt>
-<dd><p>Additionne deux vecteurs.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>vecteur</strong> – Vecteur (x, y) à ajouter.</p>
-</dd>
-<dt class="field-even">Renvoie<span class="colon">:</span></dt>
-<dd class="field-even"><p>Renvoie la somme entre le vecteur self et le vecteur en paramètre.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="Robot.vecteur.Vecteur.equals">
-<span class="sig-name descname"><span class="pre">equals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">autre_vecteur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#Robot.vecteur.Vecteur" title="Robot.vecteur.Vecteur"><span class="pre">Vecteur</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#Robot.vecteur.Vecteur.equals" title="Link to this definition"></a></dt>
-<dd><p>Vérifie l’égalité entre deux vecteurs.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>autre_vecteur</strong> – Vecteur avec lequel vérifier l’égalité.</p>
-</dd>
-<dt class="field-even">Renvoie<span class="colon">:</span></dt>
-<dd class="field-even"><p>True si les deux vecteurs sont égaux, False sinon.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="Robot.vecteur.Vecteur.getCoor">
-<span class="sig-name descname"><span class="pre">getCoor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#Robot.vecteur.Vecteur.getCoor" title="Link to this definition"></a></dt>
-<dd><p>Renvoie les coordonnées du vecteur sous forme de tuple.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple (double, double) représentant les coordonnées (x, y) du vecteur.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="Robot.vecteur.Vecteur.produit_scalaire">
-<span class="sig-name descname"><span class="pre">produit_scalaire</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">autre_vecteur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#Robot.vecteur.Vecteur" title="Robot.vecteur.Vecteur"><span class="pre">Vecteur</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#Robot.vecteur.Vecteur.produit_scalaire" title="Link to this definition"></a></dt>
-<dd><p>Calcule le produit scalaire entre deux vecteurs.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>autre_vecteur</strong> – Vecteur avec lequel calculer le produit scalaire.</p>
-</dd>
-<dt class="field-even">Renvoie<span class="colon">:</span></dt>
-<dd class="field-even"><p>Valeur du produit scalaire entre le vecteur self et le vecteur en paramètre.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="Robot.vecteur.Vecteur.rotation">
-<span class="sig-name descname"><span class="pre">rotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">degre</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#Robot.vecteur.Vecteur" title="Robot.vecteur.Vecteur"><span class="pre">Vecteur</span></a></span></span><a class="headerlink" href="#Robot.vecteur.Vecteur.rotation" title="Link to this definition"></a></dt>
-<dd><p>Effectue une rotation vectorielle.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>degre</strong> – Angle de rotation en degrés.</p>
-</dd>
-<dt class="field-even">Renvoie<span class="colon">:</span></dt>
-<dd class="field-even"><p>Nouveau vecteur résultant de la rotation du vecteur self selon l’angle spécifié.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="Robot.vecteur.Vecteur.soustraction">
-<span class="sig-name descname"><span class="pre">soustraction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vecteur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#Robot.vecteur.Vecteur" title="Robot.vecteur.Vecteur"><span class="pre">Vecteur</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#Robot.vecteur.Vecteur" title="Robot.vecteur.Vecteur"><span class="pre">Vecteur</span></a></span></span><a class="headerlink" href="#Robot.vecteur.Vecteur.soustraction" title="Link to this definition"></a></dt>
-<dd><p>Soustrait deux vecteurs.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>vecteur</strong> – Vecteur (x, y) à soustraire.</p>
-</dd>
-<dt class="field-even">Renvoie<span class="colon">:</span></dt>
-<dd class="field-even"><p>Renvoie la différence entre le vecteur self et le vecteur en paramètre.</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+<section id="robot-vecteur-module">
+<h2>Robot.vecteur module<a class="headerlink" href="#robot-vecteur-module" title="Link to this heading"></a></h2>
 </section>
 </section>
 

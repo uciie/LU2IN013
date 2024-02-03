@@ -1,7 +1,7 @@
 import tkinter as tk
-from Robot.vecteur import *
-from Robot.robot import *
-from Robot.grille import *
+from simulation.vecteur import *
+from simulation.robot import *
+from simulation.grille import *
 
 def main():
     """ Teste de simulation du robot en mouvement continue
