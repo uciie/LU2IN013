@@ -25,4 +25,8 @@ class TestRobot(unittest.TestCase):
         """
         ancienne_pos = (self.r.posX; self.r.posY)
         self.r.move_dOM(1,1)
-        resultat_
+        resultat_getLastPos = self.r.getLastPos()
+        self.assertEqual(resultat_getLastPos, ancienne_pos)
+    
+if __name__ == '__main__':
+    unittest.main()
