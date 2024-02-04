@@ -12,3 +12,6 @@ class TestGrille(unittest.TestCase) :
         """Teste l'affichage
         """
         self.g.affiche()
+
+if __name__ == '__main__':
+    unittest.main()
