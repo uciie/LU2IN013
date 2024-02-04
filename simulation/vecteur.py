@@ -30,6 +30,14 @@ class Vecteur():
         :returns: Renvoie la différence entre le vecteur self et le vecteur en paramètre.
         """
         return Vecteur(self.x - vecteur.x, self.y - vecteur.y)
+    
+    def multiplication(self, n: float) -> 'Vecteur':
+        """ Soustrait deux vecteurs.
+
+        :param vecteur: Vecteur (x, y) à soustraire.
+        :returns: Renvoie la différence entre le vecteur self et le vecteur en paramètre.
+        """
+        return Vecteur(n*self.x, n*self.y)
 
     def rotation(self, degre: float) -> 'Vecteur':
         """ Effectue une rotation vectorielle.
@@ -45,6 +53,13 @@ class Vecteur():
         new_y: float = self.x * math.sin(rad) + self.y * math.cos(rad)
         
         return Vecteur(new_x, new_y)
+    
+    def getAngle(self) -> float: 
+        """ Renvoie l'angle du vecteur
+
+        :returns: double représentant l'angle en radian du vecteur.
+        """
+        return 1/(math.cos(self.x/self.norme))
     
     def getCoor(self) -> tuple[float, float]:
         """ Renvoie les coordonnées du vecteur sous forme de tuple.
