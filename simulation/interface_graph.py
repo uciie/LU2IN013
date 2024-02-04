@@ -12,8 +12,33 @@ class Interface:
         """
         self.root = tk.Tk()
         self.root.title(name)
+
+        # Créer des variables Tkinter pour la vitesse et la distance
+        self.vitesse_var = tk.DoubleVar(value=100)
+        self.distance_var = tk.DoubleVar(value=100)
+        self.angle_var = tk.DoubleVar(value=90)
+
+        # Entrée pour la vitesse
+        self.vitesse_label = tk.Label(self.root, text="Vitesse:")
+        self.vitesse_entry = tk.Entry(self.root, textvariable=self.vitesse_var)
+        self.vitesse_label.grid(row=0, column=0)
+        self.vitesse_entry.grid(row=0, column=1)
+
+        # Entrée pour la distance
+        self.distance_label = tk.Label(self.root, text="Distance:")
+        self.distance_entry = tk.Entry(self.root, textvariable=self.distance_var)
+        self.distance_label.grid(row=1, column=0)
+        self.distance_entry.grid(row=1, column=1)
+
+        # Entrée pour l'angle
+        self.angle_label = tk.Label(self.root, text="Angle:")
+        self.angle_entry = tk.Entry(self.root, textvariable=self.angle_var)
+        self.angle_label.grid(row=2, column=0)
+        self.angle_entry.grid(row=2, column=1)
+        
         self.canvas = tk.Canvas(self.root, width=width, height=height, bg=color)
-        self.canvas.pack()
+        self.canvas.grid(row=4, column=0, columnspan=2)
+        #self.canvas.pack()
 
     def draw_roue(self, Roue: Any) -> None:
         """Dessine une roue sur le canevas de l'interface.
@@ -51,7 +76,6 @@ class Interface:
         else:
             return poly_id
 
-    
     def draw_parcours(self, Objet: Any) -> int:
         """ Trace le parcours de l'objet
 
@@ -69,7 +93,6 @@ class Interface:
             if obj_id:
                 self.canvas.delete(obj_id)
     
-    
     def creer_button(self, name: str, command: callable) -> tk.Button:
         """Crée un bouton dans l'interface.
 
@@ -78,3 +101,14 @@ class Interface:
         :returns: Objet tk.Button créé.
         """
         return tk.Button(self.root, text=name, command=command)
+    
+    def creer_var_tk(self, value: int) -> tk.DoubleVar:
+        """ Crée une variable Tkinter
+
+        :param value: La valeur initiale de la variable 
+        :returns: Variable tk.DoubleVar cree
+        """
+        return tk.DoubleVar(value=value)
+    
+
+
