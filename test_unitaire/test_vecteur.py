@@ -26,6 +26,14 @@ class TestVecteur(unittest.TestCase):
         self.assertEqual(resultat_soustraction.x, 1)
         self.assertEqual(resultat_soustraction.y, -1)
 
+    def test_multiplication(self):
+        """
+        Teste la soustraction de deux vecteurs.
+        """
+        resultat_multiplication = self.v1.multiplication(2)
+        self.assertEqual(resultat_multiplication.x, 4)
+        self.assertEqual(resultat_multiplication.y, 6)
+
     def test_rotation(self):
         """
         Teste la rotation d'un vecteur.

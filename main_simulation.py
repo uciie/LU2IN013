@@ -66,6 +66,30 @@ def update(interface: Interface, robot: Robot):
     tracer_parcours(interface, robot)
     interface.root.update()
 
+def set_vitesse(robot: Robot, vitesse, angle: int = 0):
+    """ Modifier les vitesse des roues pour faire un virage d'un certain angle
+    
+    :param robot: Le robot 
+    :param vitesse: La vitesse de pirage souhaitee
+    :param angle: L'angle qu'on souhaite tourner en radian
+    """
+    #Mettre à jour la vitesse du robot
+    robot.vitesse=vitesse
+
+    #Mettre à 0 l'une des roues
+    # tourner à droite
+    if angle > 0 : 
+        robot.roue_gauche.set_vitesse_angulaire(2.*vitesse/robot.roue_gauche.rayon)
+        robot.roue_droite.set_vitesse_angulaire(0.0)
+    # tourner à gauche 
+    elif angle < 0 : 
+        robot.roue_gauche.set_vitesse_angulaire(0.0)
+        robot.roue_droite.set_vitesse_angulaire(2.*vitesse/robot.roue_droite.rayon)
+    # aller tout droit
+    else : 
+        robot.roue_gauche.set_vitesse_angulaire(vitesse/robot.roue_gauche.rayon)
+        robot.roue_droite.set_vitesse_angulaire(vitesse/robot.roue_droite.rayon)
+
 def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vitesse: int, dt):
     """  Faire avancer le robot d'une distance avec une vitesse
 
@@ -74,7 +98,7 @@ def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vit
     :param vitesse: La vitesse du robot en m/s (int)
     """
     # on modifie la vitesse du robot
-    robot.vitesse = vitesse
+    set_vitesse(robot, vitesse)
 
     # compteur de distance parcourrue
     cpt_dis = 0
@@ -87,7 +111,7 @@ def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vit
     #tant qu'on n'a pas fini de parcourrir tte la distance on effectue un dOM
     while cpt_dis < distance : #/robot.grille.echelle :
         
-        # Si on sort de la fenetre, le robot cras
+        # Si on sort de la fenetre, le robot crash
         # Il n'y a pas encore de capteur
         if not inGrille2D(grille, robot.posX, robot.posY,robot.length, robot.width):
             print(robot.name, " est a la borne : ",robot.posX, robot.posY)
@@ -97,10 +121,65 @@ def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vit
         robot.move_dOM(dOM_x, dOM_y)
 
         cpt_dis += dOM.norme
-        print(robot.posX, robot.posY)
+        print(robot.posX, robot.posY, robot.theta)
         update(interface, robot)
     print("Final:")
-    print(robot.posX, robot.posY)
+    print(robot.posX, robot.posY, robot.theta)
+
+def turn(interface, grille, robot: Robot, vitesse, angle: int, dt):
+    """ Tourner le robot d'un angle 
+
+    :param robot: Le robot 
+    :param angle: L'angle qu'on souhaite tourner en degree
+    """
+    # Conversion degrés en radians
+    angle_radians = math.radians(angle)
+    print("deg rad", angle_radians)
+
+    #Modifier les vitesse angulaires des roues et robot 
+    set_vitesse(robot, vitesse, angle_radians)
+    
+    #Un pas de rotation 
+    dOM_theta = robot.getVitesse_angulaire()*dt
+    print("dOM_theta", dOM_theta)
+    
+    # compteur d'angle parcourrue
+    cpt_angle = 0
+
+    #tant qu'on n'a pas atteint l'angle on effectue un d_theta
+    while cpt_angle < angle_radians : #/robot.grille.echelle :
+
+        # Si on sort de la fenetre, le robot crash
+        # Il n'y a pas encore de capteur
+        if not inGrille2D(grille, robot.posX, robot.posY,robot.length, robot.width):
+            print(robot.name, " est a la borne : ",robot.posX, robot.posY)
+            sys.exit()
+
+        print(robot.vectDir.getCoor())
+
+        #Coordonnee de vecteur de deplacement 
+        dOM_x = robot.vectDir.x*robot.vitesse*dt #/robot.grille.echelle 
+        dOM_y = robot.vectDir.y*robot.vitesse*dt #/robot.grille.echelle 
+        
+        #Bouger le robot d'un dOM avec un angle
+        robot.move_dOM(dOM_x, dOM_y, dOM_theta)
+
+        cpt_angle += dOM_theta
+        update(interface, robot)
+        #print(robot.posX, robot.posY, robot.theta)
+
+    #Remettre à jour la vitesse angulaire des roues
+    #robot.roue_gauche.vitesse_angulaire = vitesse/robot.roue_gauche.rayon
+    #robot.roue_droite.vitesse_angulaire = vitesse/robot.roue_droite.rayon
+
+def faire_carre(interface, grille, robot: Robot, vitesse, angle: int, dt):
+    """
+    """
+    tours = 4
+    for i in range(tours):
+        turn(interface,grille, robot, vitesse, angle, dt)
+        go(interface,grille, robot, distance, vitesse, dt)
+
 
     
 if __name__ == "__main__":
@@ -112,17 +191,20 @@ if __name__ == "__main__":
     dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
 
     grille = Grille(largeur, hauteur, 5)
-    robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, Vecteur(0, -1), color="red")
+    robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, Vecteur(0, -1), 10, color="red")
 
     update(interface, robot)
 
     print("Initial:")
-    print(robot.posX, robot.posY)
+    print(robot.posX, robot.posY, robot.theta)
 
-    distance = 1000
-    vitesse = 1
-    go(interface,grille, robot, distance, vitesse, dt)
+    distance = 50
+    vitesse = 5
+    angle = 90
+    faire_carre(interface,grille, robot, vitesse, angle, dt)
 
-    update(interface, robot)
+    print("Final:")
+    print(robot.posX, robot.posY, robot.theta)
+    print("vitesse angulaire ", robot.roue_droite.vitesse_angulaire, robot.roue_droite.vitesse_angulaire)
 
     interface.root.mainloop()

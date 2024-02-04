@@ -1,13 +1,29 @@
 # @authors Équipe HELMS
 from .vecteur import Vecteur
+import math
 # Supposons que les robots sont en forme de rectangle/carré
 # Supposons que la position du robot (x, y) correspond à l'extrémité en haut à gauche
 
-# FPS
-dt = 1 / 30
+class Roue:
+    def __init__(self, rayon:float):
+        """Initialisation d'une roue
+
+        :param rayon: Le rayon de la roue
+        :returns: Retourne une instance de la classe Roue.
+        """
+        self.rayon = rayon #m
+        self.vitesse_angulaire = 0.0 #rad/s
+
+    def set_vitesse_angulaire(self, vitesse_angulaire: float):
+        """Modifier la vitesse angulaire lors d'un virage 
+
+        :param vitesse_angulaire: Nouvelle vitesse angulaire de la roue
+        """
+        self.vitesse_angulaire = vitesse_angulaire
+
 
 class Robot:
-    def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, vectDir : Vecteur, color: str):
+    def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, vectDir : Vecteur, rayon_roue, color: str):
         """Initialisation du robot.
 
         :param name: Nom du robot (str).
@@ -46,10 +62,13 @@ class Robot:
 
         # Direction
         #self.vectDir = vectDirecteur  # on suppose qu'au début le robot est dirigé vers le haut
-        self.angle = 0  # angle en degré
+        self.theta = 0  # angle en degré
 
         # Vitesse
         self.vitesse = 5.0  # m/s
+
+        self.roue_gauche = Roue(rayon_roue)
+        self.roue_droite = Roue(rayon_roue)
 
     def getCurrPos(self) -> tuple[float, float]:
         """Renvoie la position actuelle du robot.
@@ -65,11 +84,20 @@ class Robot:
         """
         return (self.lastPosX, self.lastPosY)
     
-    def move_dOM(self, dOM_x, dOM_y):
+    def getVitesse_angulaire(self):
+        """ Donne la vitesse angulaire du robot en fonction des vitesses angulaires des roues
+
+        :returns: Renvoie la vitesse angulaire du robot
+        """
+        return (self.roue_droite.rayon /self.length)* (math.fabs(self.roue_droite.vitesse_angulaire-self.roue_gauche.vitesse_angulaire))
+    
+    def move_dOM(self, dOM_x, dOM_y, dOM_theta = 0):
         """ Robot avance d'un petit pas
 
         :param dOM: Vecteur de deplacement pour un dt.
         """
         self.lastPosX, self.lastPosY = self.posX, self.posY
         self.posX, self.posY = self.posX + dOM_x, self.posY + dOM_y
+        self.theta = (self.theta + math.degrees(dOM_theta))%360
+        self.vectDir = self.vectDir.rotation(math.degrees(dOM_theta))
 
