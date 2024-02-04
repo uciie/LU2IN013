@@ -90,58 +90,24 @@ def set_vitesse(robot: Robot, vitesse, angle: int = 0):
         robot.roue_gauche.set_vitesse_angulaire(vitesse/robot.roue_gauche.rayon)
         robot.roue_droite.set_vitesse_angulaire(vitesse/robot.roue_droite.rayon)
 
-def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vitesse: int, dt):
-    """  Faire avancer le robot d'une distance avec une vitesse
-
-    :param robot: Robot
-    :param distance: La distance que le robot doit parcourir (float) 
-    :param vitesse: La vitesse du robot en m/s (int)
-    """
-    # on modifie la vitesse du robot
-    set_vitesse(robot, vitesse)
-
-    # compteur de distance parcourrue
-    cpt_dis = 0
-
-    #Coordonnee de vecteur de deplacement 
-    dOM_x = robot.vectDir.x*vitesse*dt #/robot.grille.echelle 
-    dOM_y = robot.vectDir.y*vitesse*dt #/robot.grille.echelle 
-    dOM = Vecteur(dOM_x, dOM_y)
-    
-    #tant qu'on n'a pas fini de parcourrir tte la distance on effectue un dOM
-    while cpt_dis < distance : #/robot.grille.echelle :
-        
-        # Si on sort de la fenetre, le robot crash
-        # Il n'y a pas encore de capteur
-        if not inGrille2D(grille, robot.posX, robot.posY,robot.length, robot.width):
-            print(robot.name, " est a la borne : ",robot.posX, robot.posY)
-            sys.exit()
-        
-        #Bouger le robot d'un dOM
-        robot.move_dOM(dOM_x, dOM_y)
-
-        cpt_dis += dOM.norme
-        print(robot.posX, robot.posY, robot.theta)
-        update(interface, robot)
-    print("Final:")
-    print(robot.posX, robot.posY, robot.theta)
-
 def turn(interface, grille, robot: Robot, vitesse, angle: int, dt):
     """ Tourner le robot d'un angle 
 
     :param robot: Le robot 
     :param angle: L'angle qu'on souhaite tourner en degree
     """
+    
     # Conversion degrés en radians
     angle_radians = math.radians(angle)
-    print("deg rad", angle_radians)
+    #print("deg rad", angle_radians)
 
     #Modifier les vitesse angulaires des roues et robot 
     set_vitesse(robot, vitesse, angle_radians)
-    
+
     #Un pas de rotation 
     dOM_theta = robot.getVitesse_angulaire()*dt
-    print("dOM_theta", dOM_theta)
+    #robot.roue_droite.rayon *(robot.roue_droite.vitesse_angulaire + robot.roue_gauche.vitesse_angulaire) *dt/robot.width
+    #print("dOM_theta", dOM_theta)
     
     # compteur d'angle parcourrue
     cpt_angle = 0
@@ -155,8 +121,6 @@ def turn(interface, grille, robot: Robot, vitesse, angle: int, dt):
             print(robot.name, " est a la borne : ",robot.posX, robot.posY)
             sys.exit()
 
-        print(robot.vectDir.getCoor())
-
         #Coordonnee de vecteur de deplacement 
         dOM_x = robot.vectDir.x*robot.vitesse*dt #/robot.grille.echelle 
         dOM_y = robot.vectDir.y*robot.vitesse*dt #/robot.grille.echelle 
@@ -169,42 +133,78 @@ def turn(interface, grille, robot: Robot, vitesse, angle: int, dt):
         #print(robot.posX, robot.posY, robot.theta)
 
     #Remettre à jour la vitesse angulaire des roues
-    #robot.roue_gauche.vitesse_angulaire = vitesse/robot.roue_gauche.rayon
-    #robot.roue_droite.vitesse_angulaire = vitesse/robot.roue_droite.rayon
+    set_vitesse(robot, vitesse)
 
-def faire_carre(interface, grille, robot: Robot, vitesse, angle: int, dt):
+def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vitesse: int, dt):
+    """  Faire avancer le robot d'une distance avec une vitesse
+
+    :param robot: Robot
+    :param distance: La distance que le robot doit parcourir (float) 
+    :param vitesse: La vitesse du robot en m/s (int)
     """
-    """
+    # Si la distance est negative on fait demi tour puis on avance
+    if distance < 0:
+        turn(interface, grille, robot, vitesse, 180, dt)
+    # on modifie la vitesse du robot
+    set_vitesse(robot, vitesse)
+
+    # compteur de distance parcourrue
+    cpt_dis = 0
+    
+    #Coordonnee de vecteur de deplacement 
+    dOM_x = robot.vectDir.x*vitesse*dt #/robot.grille.echelle 
+    dOM_y = robot.vectDir.y*vitesse*dt #/robot.grille.echelle 
+    dOM = Vecteur(dOM_x, dOM_y)
+        
+    #tant qu'on n'a pas fini de parcourrir tte la distance on effectue un dOM
+    while cpt_dis < math.fabs(distance) : #/robot.grille.echelle :
+        
+        # Si on sort de la fenetre, le robot crash
+        # Il n'y a pas encore de capteur
+        if not inGrille2D(grille, robot.posX, robot.posY,robot.length, robot.width):
+            print(robot.name, " est a la borne : ",robot.posX, robot.posY)
+            sys.exit()
+        
+        #Bouger le robot d'un dOM
+        robot.move_dOM(dOM_x, dOM_y)
+
+        cpt_dis += dOM.norme
+        print(robot.posX, robot.posY)
+        
+        update(interface, robot)
+    #print("Final:")
+    #print(robot.posX, robot.posY, robot.theta)
+
+def faire_carre():
     tours = 4
     for i in range(tours):
-        turn(interface,grille, robot, vitesse, angle, dt)
         go(interface,grille, robot, distance, vitesse, dt)
+        turn(interface,grille, robot, vitesse, angle, dt)
 
-
+def avance():
+    go(interface,grille, robot, distance, vitesse, dt)
     
 if __name__ == "__main__":
-    dt = 1/30
+    dt = 1/300
     largeur, hauteur = 300, 300
     bg = "white"
     interface = Interface("Simulation de déplacement du robot", largeur, hauteur, bg)
+
+    vitesse = interface.vitesse_var.get()
+    distance = interface.distance_var.get()
+    angle = interface.angle_var.get()
 
     dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
 
     grille = Grille(largeur, hauteur, 5)
     robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, Vecteur(0, -1), 10, color="red")
 
+    interface.go_button = interface.creer_button("Avance", avance)
+    interface.go_button.grid(row=5, column=0)
+    
+    interface.start_button = interface.creer_button("Tracer carre", faire_carre)
+    interface.start_button.grid(row=6, column=0)
+    
     update(interface, robot)
-
-    print("Initial:")
-    print(robot.posX, robot.posY, robot.theta)
-
-    distance = 50
-    vitesse = 5
-    angle = 90
-    faire_carre(interface,grille, robot, vitesse, angle, dt)
-
-    print("Final:")
-    print(robot.posX, robot.posY, robot.theta)
-    print("vitesse angulaire ", robot.roue_droite.vitesse_angulaire, robot.roue_droite.vitesse_angulaire)
 
     interface.root.mainloop()

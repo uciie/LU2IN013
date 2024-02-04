@@ -49,7 +49,6 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">LU2IN013</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="simulation.html">simulation package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="test_unitaire.html">test_unitaire package</a></li>
 </ul>
 </li>
 </ul>
@@ -96,6 +95,7 @@
 <li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.interface_graph.Interface.creer_button"><code class="docutils literal notranslate"><span class="pre">Interface.creer_button()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.interface_graph.Interface.delete_draw"><code class="docutils literal notranslate"><span class="pre">Interface.delete_draw()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.interface_graph.Interface.draw_obj"><code class="docutils literal notranslate"><span class="pre">Interface.draw_obj()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.interface_graph.Interface.draw_parcours"><code class="docutils literal notranslate"><span class="pre">Interface.draw_parcours()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.interface_graph.Interface.draw_roue"><code class="docutils literal notranslate"><span class="pre">Interface.draw_roue()</span></code></a></li>
 </ul>
 </li>
@@ -105,6 +105,12 @@
 <li class="toctree-l3"><a class="reference internal" href="simulation.html#simulation.robot.Robot"><code class="docutils literal notranslate"><span class="pre">Robot</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.robot.Robot.getCurrPos"><code class="docutils literal notranslate"><span class="pre">Robot.getCurrPos()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.robot.Robot.getLastPos"><code class="docutils literal notranslate"><span class="pre">Robot.getLastPos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.robot.Robot.getVitesse_angulaire"><code class="docutils literal notranslate"><span class="pre">Robot.getVitesse_angulaire()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.robot.Robot.move_dOM"><code class="docutils literal notranslate"><span class="pre">Robot.move_dOM()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="simulation.html#simulation.robot.Roue"><code class="docutils literal notranslate"><span class="pre">Roue</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.robot.Roue.set_vitesse_angulaire"><code class="docutils literal notranslate"><span class="pre">Roue.set_vitesse_angulaire()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -113,7 +119,9 @@
 <li class="toctree-l3"><a class="reference internal" href="simulation.html#simulation.vecteur.Vecteur"><code class="docutils literal notranslate"><span class="pre">Vecteur</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.vecteur.Vecteur.add"><code class="docutils literal notranslate"><span class="pre">Vecteur.add()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.vecteur.Vecteur.equals"><code class="docutils literal notranslate"><span class="pre">Vecteur.equals()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.vecteur.Vecteur.getAngle"><code class="docutils literal notranslate"><span class="pre">Vecteur.getAngle()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.vecteur.Vecteur.getCoor"><code class="docutils literal notranslate"><span class="pre">Vecteur.getCoor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.vecteur.Vecteur.multiplication"><code class="docutils literal notranslate"><span class="pre">Vecteur.multiplication()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.vecteur.Vecteur.produit_scalaire"><code class="docutils literal notranslate"><span class="pre">Vecteur.produit_scalaire()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.vecteur.Vecteur.rotation"><code class="docutils literal notranslate"><span class="pre">Vecteur.rotation()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="simulation.html#simulation.vecteur.Vecteur.soustraction"><code class="docutils literal notranslate"><span class="pre">Vecteur.soustraction()</span></code></a></li>
@@ -122,28 +130,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="simulation.html#module-simulation">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="test_unitaire.html">test_unitaire package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="test_unitaire.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="test_unitaire.html#module-test_unitaire.test_vecteur">test_unitaire.test_vecteur module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="test_unitaire.html#test_unitaire.test_vecteur.TestVecteur"><code class="docutils literal notranslate"><span class="pre">TestVecteur</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="test_unitaire.html#test_unitaire.test_vecteur.TestVecteur.setUp"><code class="docutils literal notranslate"><span class="pre">TestVecteur.setUp()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="test_unitaire.html#test_unitaire.test_vecteur.TestVecteur.test_add"><code class="docutils literal notranslate"><span class="pre">TestVecteur.test_add()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="test_unitaire.html#test_unitaire.test_vecteur.TestVecteur.test_equals"><code class="docutils literal notranslate"><span class="pre">TestVecteur.test_equals()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="test_unitaire.html#test_unitaire.test_vecteur.TestVecteur.test_get_coordonnees"><code class="docutils literal notranslate"><span class="pre">TestVecteur.test_get_coordonnees()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="test_unitaire.html#test_unitaire.test_vecteur.TestVecteur.test_produit_scalaire"><code class="docutils literal notranslate"><span class="pre">TestVecteur.test_produit_scalaire()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="test_unitaire.html#test_unitaire.test_vecteur.TestVecteur.test_rotation"><code class="docutils literal notranslate"><span class="pre">TestVecteur.test_rotation()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="test_unitaire.html#test_unitaire.test_vecteur.TestVecteur.test_soustraction"><code class="docutils literal notranslate"><span class="pre">TestVecteur.test_soustraction()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="test_unitaire.html#module-test_unitaire.test_tk">test_unitaire.test_tk module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="test_unitaire.html#test_unitaire.test_tk.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="test_unitaire.html#module-simulation">Module contents</a></li>
 </ul>
 </li>
 </ul>

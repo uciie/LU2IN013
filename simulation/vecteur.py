@@ -1,7 +1,7 @@
 import math
 
 class Vecteur():
-    def __init__(self, x: float, y: float) -> None:
+    def __init__(self, x: int, y: int) -> None:
         """ Initialise un vecteur.
 
         :param x: Coordonnée x du vecteur.
@@ -9,8 +9,8 @@ class Vecteur():
         :returns: Retourne le vecteur (x, y) de longueur norme.
         """
         # Composantes du vecteur
-        self.x: float = x
-        self.y: float = y
+        self.x: int = x
+        self.y: int = y
 
         # Norme du vecteur
         self.norme: float = math.sqrt(self.x**2 + self.y**2 )
@@ -49,8 +49,8 @@ class Vecteur():
         rad: float = degre * (math.pi / 180)
 
         # Nouvelles composantes
-        new_x: float = self.x * math.cos(rad) - self.y * math.sin(rad)
-        new_y: float = self.x * math.sin(rad) + self.y * math.cos(rad)
+        new_x: int = self.x * math.cos(rad) - self.y * math.sin(rad)
+        new_y: int = self.x * math.sin(rad) + self.y * math.cos(rad)
         
         return Vecteur(new_x, new_y)
     
@@ -61,10 +61,10 @@ class Vecteur():
         """
         return 1/(math.cos(self.x/self.norme))
     
-    def getCoor(self) -> tuple[float, float]:
+    def getCoor(self) -> tuple[int, int]:
         """ Renvoie les coordonnées du vecteur sous forme de tuple.
 
-        :returns: tuple (double, double) représentant les coordonnées (x, y) du vecteur.
+        :returns: tuple (int, ints) représentant les coordonnées (x, y) du vecteur.
         """
         return (self.x, self.y)
     

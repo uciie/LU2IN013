@@ -5,4 +5,3 @@ LU2IN013
    :maxdepth: 4
 
    simulation
-   test_unitaire

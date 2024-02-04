@@ -21,7 +21,8 @@
         <script src="_static/translations.js?v=d99ca74e"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Recherche" href="search.html" /> 
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="prev" title="LU2IN013" href="modules.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,8 +45,32 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">LU2IN013</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">LU2IN013</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">simulation package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-simulation.grille">simulation.grille module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#simulation.grille.Grille"><code class="docutils literal notranslate"><span class="pre">Grille</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-simulation.interface_graph">simulation.interface_graph module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#simulation.interface_graph.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-simulation.robot">simulation.robot module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#simulation.robot.Robot"><code class="docutils literal notranslate"><span class="pre">Robot</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#simulation.robot.Roue"><code class="docutils literal notranslate"><span class="pre">Roue</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-simulation.vecteur">simulation.vecteur module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#simulation.vecteur.Vecteur"><code class="docutils literal notranslate"><span class="pre">Vecteur</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-simulation">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -62,6 +87,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">LU2IN013</a></li>
       <li class="breadcrumb-item active">simulation package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/simulation.rst.txt" rel="nofollow"> Afficher la source de la page</a>
@@ -117,22 +143,39 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="simulation.interface_graph.Interface.delete_draw">
-<span class="sig-name descname"><span class="pre">delete_draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Objet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#simulation.interface_graph.Interface.delete_draw" title="Link to this definition"></a></dt>
-<dd><p>Supprime un dessin de l’interface.</p>
+<span class="sig-name descname"><span class="pre">delete_draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">obj_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#simulation.interface_graph.Interface.delete_draw" title="Link to this definition"></a></dt>
+<dd><p>Supprime un ou plusieurs dessins de l’interface.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Objet</strong> – Objet à supprimer du canevas.</p>
+<dd class="field-odd"><p><strong>obj_ids</strong> – Identifiants des objets à supprimer du canevas.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="simulation.interface_graph.Interface.draw_obj">
-<span class="sig-name descname"><span class="pre">draw_obj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Objet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#simulation.interface_graph.Interface.draw_obj" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">draw_obj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Objet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simulation.interface_graph.Interface.draw_obj" title="Link to this definition"></a></dt>
 <dd><p>Dessine un objet sur le canevas de l’interface.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>Objet</strong> – Objet à dessiner.</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Identifiant unique de l’objet sur le canevas.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simulation.interface_graph.Interface.draw_parcours">
+<span class="sig-name descname"><span class="pre">draw_parcours</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Objet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simulation.interface_graph.Interface.draw_parcours" title="Link to this definition"></a></dt>
+<dd><p>Trace le parcours de l’objet</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Objet</strong> – Objet</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Identifiant unique de l’objet sur le canevas.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -155,7 +198,7 @@
 <span id="simulation-robot-module"></span><h2>simulation.robot module<a class="headerlink" href="#module-simulation.robot" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="simulation.robot.Robot">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">simulation.robot.</span></span><span class="sig-name descname"><span class="pre">Robot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posX</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posY</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimLength</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimWidth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simulation.robot.Robot" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">simulation.robot.</span></span><span class="sig-name descname"><span class="pre">Robot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posX</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posY</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimLength</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimWidth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vectDir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#simulation.vecteur.Vecteur" title="simulation.vecteur.Vecteur"><span class="pre">Vecteur</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rayon_roue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simulation.robot.Robot" title="Link to this definition"></a></dt>
 <dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="simulation.robot.Robot.getCurrPos">
@@ -175,6 +218,45 @@
 <dl class="field-list simple">
 <dt class="field-odd">Renvoie<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Renvoie l’avant-dernière coordonnée du robot (tuple).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simulation.robot.Robot.getVitesse_angulaire">
+<span class="sig-name descname"><span class="pre">getVitesse_angulaire</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simulation.robot.Robot.getVitesse_angulaire" title="Link to this definition"></a></dt>
+<dd><p>Donne la vitesse angulaire du robot en fonction des vitesses angulaires des roues</p>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Renvoie la vitesse angulaire du robot</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simulation.robot.Robot.move_dOM">
+<span class="sig-name descname"><span class="pre">move_dOM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dOM_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dOM_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dOM_theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simulation.robot.Robot.move_dOM" title="Link to this definition"></a></dt>
+<dd><p>Robot avance d’un petit pas</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dOM</strong> – Vecteur de deplacement pour un dt.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="simulation.robot.Roue">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">simulation.robot.</span></span><span class="sig-name descname"><span class="pre">Roue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rayon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simulation.robot.Roue" title="Link to this definition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="simulation.robot.Roue.set_vitesse_angulaire">
+<span class="sig-name descname"><span class="pre">set_vitesse_angulaire</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vitesse_angulaire</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simulation.robot.Roue.set_vitesse_angulaire" title="Link to this definition"></a></dt>
+<dd><p>Modifier la vitesse angulaire lors d’un virage</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vitesse_angulaire</strong> – Nouvelle vitesse angulaire de la roue</p>
 </dd>
 </dl>
 </dd></dl>
@@ -217,12 +299,37 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="simulation.vecteur.Vecteur.getAngle">
+<span class="sig-name descname"><span class="pre">getAngle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#simulation.vecteur.Vecteur.getAngle" title="Link to this definition"></a></dt>
+<dd><p>Renvoie l’angle du vecteur</p>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>double représentant l’angle en radian du vecteur.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="simulation.vecteur.Vecteur.getCoor">
 <span class="sig-name descname"><span class="pre">getCoor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#simulation.vecteur.Vecteur.getCoor" title="Link to this definition"></a></dt>
 <dd><p>Renvoie les coordonnées du vecteur sous forme de tuple.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Renvoie<span class="colon">:</span></dt>
 <dd class="field-odd"><p>tuple (double, double) représentant les coordonnées (x, y) du vecteur.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simulation.vecteur.Vecteur.multiplication">
+<span class="sig-name descname"><span class="pre">multiplication</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#simulation.vecteur.Vecteur" title="simulation.vecteur.Vecteur"><span class="pre">Vecteur</span></a></span></span><a class="headerlink" href="#simulation.vecteur.Vecteur.multiplication" title="Link to this definition"></a></dt>
+<dd><p>Soustrait deux vecteurs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vecteur</strong> – Vecteur (x, y) à soustraire.</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Renvoie la différence entre le vecteur self et le vecteur en paramètre.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -280,7 +387,9 @@
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="modules.html" class="btn btn-neutral float-left" title="LU2IN013" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+    </div>
 
   <hr/>
 
