@@ -57,10 +57,18 @@ class Interface:
         :return: Identifiant unique de l'objet sur le canevas.
         """
         # Coordonnées des sommets du polygone
-        x1, y1 = Objet.posX - Objet.width/2, Objet.posY - Objet.length/2
-        x2, y2 = Objet.posX + Objet.width/2, Objet.posY - Objet.length/2
-        x3, y3 = Objet.posX + Objet.width/2, Objet.posY + Objet.length/2
-        x4, y4 = Objet.posX - Objet.width/2, Objet.posY + Objet.length/2
+        u_x = Objet.vectDir.rotation(90).multiplication(Objet.width/2)
+        u_y = Objet.vectDir.multiplication(Objet.length/2)
+
+        OA = u_x.multiplication(-1).soustraction(u_y)
+        OB = u_x.multiplication(-1).add(u_y)
+        OC = u_x.add(u_y)
+        OD = u_x.soustraction(u_y)
+
+        x1, y1 = Objet.posX + OA.x , Objet.posY + OA.y
+        x2, y2 = Objet.posX + OB.x , Objet.posY + OB.y
+        x3, y3 = Objet.posX + OC.x , Objet.posY + OC.y
+        x4, y4 = Objet.posX + OD.x , Objet.posY + OD.y
 
         poly_coords = [x1, y1, x2, y2, x3, y3, x4, y4]
 
