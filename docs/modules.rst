@@ -5,3 +5,6 @@ LU2IN013
    :maxdepth: 4
 
    simulation
+   test_grille
+   test_robot
+   test_vecteur

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>main_simulation module &mdash; Documentation Projet Robot HELMS 3.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=99824b11"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=d99ca74e"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Projet Robot HELMS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">LU2IN013</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Projet Robot HELMS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">main_simulation module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/main_simulation.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-main_simulation">
+<span id="main-simulation-module"></span><h1>main_simulation module<a class="headerlink" href="#module-main_simulation" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="main_simulation.addRobot">
+<span class="sig-prename descclassname"><span class="pre">main_simulation.</span></span><span class="sig-name descname"><span class="pre">addRobot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grille</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="simulation.html#simulation.robot.Robot" title="simulation.robot.Robot"><span class="pre">Robot</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimX</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimY</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main_simulation.addRobot" title="Link to this definition"></a></dt>
+<dd><p>Ajouter le robot dans la grille.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>robot</strong> – Instance de la classe Robot à ajouter.</p></li>
+<li><p><strong>dimX</strong> – Largeur du robot dans la grille.</p></li>
+<li><p><strong>dimY</strong> – Hauteur du robot dans la grille.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main_simulation.avance">
+<span class="sig-prename descclassname"><span class="pre">main_simulation.</span></span><span class="sig-name descname"><span class="pre">avance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main_simulation.avance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main_simulation.faire_carre">
+<span class="sig-prename descclassname"><span class="pre">main_simulation.</span></span><span class="sig-name descname"><span class="pre">faire_carre</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main_simulation.faire_carre" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main_simulation.go">
+<span class="sig-prename descclassname"><span class="pre">main_simulation.</span></span><span class="sig-name descname"><span class="pre">go</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="simulation.html#simulation.interface_graph.Interface" title="simulation.interface_graph.Interface"><span class="pre">Interface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">grille</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="simulation.html#simulation.grille.Grille" title="simulation.grille.Grille"><span class="pre">Grille</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="simulation.html#simulation.robot.Robot" title="simulation.robot.Robot"><span class="pre">Robot</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vitesse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main_simulation.go" title="Link to this definition"></a></dt>
+<dd><p>Faire avancer le robot d’une distance avec une vitesse</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>robot</strong> – Robot</p></li>
+<li><p><strong>distance</strong> – La distance que le robot doit parcourir (float)</p></li>
+<li><p><strong>vitesse</strong> – La vitesse du robot en m/s (int)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main_simulation.inGrille">
+<span class="sig-prename descclassname"><span class="pre">main_simulation.</span></span><span class="sig-name descname"><span class="pre">inGrille</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grille</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="simulation.html#simulation.grille.Grille" title="simulation.grille.Grille"><span class="pre">Grille</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">posX</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posY</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main_simulation.inGrille" title="Link to this definition"></a></dt>
+<dd><p>Verifie si la position (posX, posY) est dans la grille</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grille</strong> – La fenetre</p></li>
+<li><p><strong>posX</strong> – Coordonnee en x</p></li>
+<li><p><strong>posY</strong> – Coordonnee en y</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retruns bool<span class="colon">:</span></dt>
+<dd class="field-even"><p>Renvoie true si (x,y) est dans la grille, sinon false</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main_simulation.inGrille2D">
+<span class="sig-prename descclassname"><span class="pre">main_simulation.</span></span><span class="sig-name descname"><span class="pre">inGrille2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grille</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="simulation.html#simulation.grille.Grille" title="simulation.grille.Grille"><span class="pre">Grille</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main_simulation.inGrille2D" title="Link to this definition"></a></dt>
+<dd><p>Si une des extremite de l’objet n’est pas dans la grille renvoyer false</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grille</strong> – La fenetre</p></li>
+<li><p><strong>new_x</strong> – Coordonnee en x</p></li>
+<li><p><strong>new_y</strong> – Coordonnee en y</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retruns bool<span class="colon">:</span></dt>
+<dd class="field-even"><p>Renvoie true si l’objet de dim length*width est dans la grille, sinon false</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main_simulation.set_vitesse">
+<span class="sig-prename descclassname"><span class="pre">main_simulation.</span></span><span class="sig-name descname"><span class="pre">set_vitesse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">robot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="simulation.html#simulation.robot.Robot" title="simulation.robot.Robot"><span class="pre">Robot</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">vitesse</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main_simulation.set_vitesse" title="Link to this definition"></a></dt>
+<dd><p>Modifier les vitesse des roues pour faire un virage d’un certain angle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>robot</strong> – Le robot</p></li>
+<li><p><strong>vitesse</strong> – La vitesse de pirage souhaitee</p></li>
+<li><p><strong>angle</strong> – L’angle qu’on souhaite tourner en radian</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main_simulation.tracer_parcours">
+<span class="sig-prename descclassname"><span class="pre">main_simulation.</span></span><span class="sig-name descname"><span class="pre">tracer_parcours</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="simulation.html#simulation.interface_graph.Interface" title="simulation.interface_graph.Interface"><span class="pre">Interface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="simulation.html#simulation.robot.Robot" title="simulation.robot.Robot"><span class="pre">Robot</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main_simulation.tracer_parcours" title="Link to this definition"></a></dt>
+<dd><p>Trace le parcours du robot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interface</strong> – L’interface graphique</p></li>
+<li><p><strong>robot</strong> – Le robot</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main_simulation.turn">
+<span class="sig-prename descclassname"><span class="pre">main_simulation.</span></span><span class="sig-name descname"><span class="pre">turn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grille</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="simulation.html#simulation.robot.Robot" title="simulation.robot.Robot"><span class="pre">Robot</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">vitesse</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main_simulation.turn" title="Link to this definition"></a></dt>
+<dd><p>Tourner le robot d’un angle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>robot</strong> – Le robot</p></li>
+<li><p><strong>angle</strong> – L’angle qu’on souhaite tourner en degree</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main_simulation.update">
+<span class="sig-prename descclassname"><span class="pre">main_simulation.</span></span><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="simulation.html#simulation.interface_graph.Interface" title="simulation.interface_graph.Interface"><span class="pre">Interface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="simulation.html#simulation.robot.Robot" title="simulation.robot.Robot"><span class="pre">Robot</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main_simulation.update" title="Link to this definition"></a></dt>
+<dd><p>Mettre à jour l’interface graphique</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interface</strong> – L’interface graphique</p></li>
+<li><p><strong>robot</strong> – Le robot</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, HELMS.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
