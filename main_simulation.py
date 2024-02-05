@@ -176,12 +176,21 @@ def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vit
     #print(robot.posX, robot.posY, robot.theta)
 
 def faire_carre():
+    
+    vitesse = interface.vitesse_var.get()
+    distance = interface.distance_var.get()
+    angle = 90
+
     tours = 4
     for i in range(tours):
         go(interface,grille, robot, distance, vitesse, dt)
         turn(interface,grille, robot, vitesse, angle, dt)
 
 def avance():
+    
+    vitesse = interface.vitesse_var.get()
+    distance = interface.distance_var.get()
+    
     go(interface,grille, robot, distance, vitesse, dt)
     
 if __name__ == "__main__":
@@ -190,9 +199,6 @@ if __name__ == "__main__":
     bg = "white"
     interface = Interface("Simulation de déplacement du robot", largeur, hauteur, bg)
 
-    vitesse = interface.vitesse_var.get()
-    distance = interface.distance_var.get()
-    angle = interface.angle_var.get()
 
     dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
 

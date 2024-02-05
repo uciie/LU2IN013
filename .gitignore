@@ -3,5 +3,5 @@
 Robot/test_a_ignore/
 Robot/ancien_au_cas_ou/
 Robot/robot_ancienne_version/
-Robot/__pycache__
+simulation/__pycache__
 test_unitaire/__pycache__
