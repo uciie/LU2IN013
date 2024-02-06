@@ -195,6 +195,10 @@ def avance():
 
 def raytracing(capteur : Capteur, robot : Robot, interface : Interface):
     """Renvoie la distance de l'obstacle devant le capteur
+    :param capteur : Capteur
+    :param robot: Robot
+    :param interface: Interface
+    :returns : Distance entre le capteur et l'obstacle
     """
 
     #Initialisation des coordonnées
