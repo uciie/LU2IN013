@@ -66,7 +66,7 @@ def update(interface: Interface, robot: Robot):
     tracer_parcours(interface, robot)
     interface.root.update()
 
-def set_vitesse(robot: Robot, vitesse : float, angle: int = 0):
+def set_vitesse(robot: Robot, vitesse, angle: int = 0):
     """ Modifier les vitesse des roues pour faire un virage d'un certain angle
     
     :param robot: Le robot 
@@ -74,10 +74,7 @@ def set_vitesse(robot: Robot, vitesse : float, angle: int = 0):
     :param angle: L'angle qu'on souhaite tourner en radian
     """
     #Mettre à jour la vitesse du robot
-    if (vitesse > robot.roue_gauche.vmax * robot.roue_gauche.rayon):
-        robot.vitesse=(robot.roue_gauche.vmax + robot.roue_droite.vmax) * robot.roue_gauche.rayon
-    else:
-        robot.vitesse=vitesse
+    robot.vitesse = min(vitesse,  robot.roue_droite.vmax* robot.roue_gauche.rayon)
 
     #Mettre à 0 l'une des roues
     # tourner à droite
@@ -92,6 +89,30 @@ def set_vitesse(robot: Robot, vitesse : float, angle: int = 0):
     else : 
         robot.roue_gauche.set_vitesse_angulaire(vitesse/robot.roue_gauche.rayon)
         robot.roue_droite.set_vitesse_angulaire(vitesse/robot.roue_droite.rayon)
+
+
+def raytracing(capteur : Capteur, robot : Robot, grille : Grille):
+    """Renvoie la distance de l'obstacle devant le capteur
+    
+    :param capteur : Capteur
+    :param robot: Robot
+    :param interface: Interface
+    :returns : Distance entre le capteur et l'obstacle
+    """
+
+    #Initialisation des coordonnées
+    coordonnee_x = robot.posX
+    coordonnee_y = robot.posY
+    nb_rayons = 0
+
+    #Envoie un vecteur tant qu'il n'y a pas d'obstacle
+    while(inGrille(grille, coordonnee_x, coordonnee_y)):
+        coordonnee_x += capteur.vecteur.x
+        coordonnee_y += capteur.vecteur.y
+        nb_rayons+=1
+    
+    #Renvoie la distance
+    return capteur.vecteur.norme * nb_rayons
 
 def turn(interface, grille, robot: Robot, vitesse, angle: int, dt):
     """ Tourner le robot d'un angle 
@@ -119,7 +140,7 @@ def turn(interface, grille, robot: Robot, vitesse, angle: int, dt):
     while cpt_angle < angle_radians : #/robot.grille.echelle :
 
         # Si on sort de la fenetre, le robot crash
-
+        # Il n'y a pas encore de capteur
         if (raytracing(robot.capteur, robot, grille) <= math.sqrt(robot.length**2 + robot.width**2)/2):
             break
         elif not inGrille2D(grille, robot.posX, robot.posY,robot.length, robot.width):
@@ -133,41 +154,23 @@ def turn(interface, grille, robot: Robot, vitesse, angle: int, dt):
         #Bouger le robot d'un dOM avec un angle
         robot.move_dOM(dOM_x, dOM_y, dOM_theta)
 
+        #Bouger la capteur à chaque pas
+        robot.capteur.vecteur= robot.vectDir
+
         cpt_angle += dOM_theta
         update(interface, robot)
-        #print(robot.posX, robot.posY, robot.theta)
+        print(robot.posX, robot.posY, robot.theta)
+        #print(robot.roue_droite.vitesse_angulaire,robot.roue_droite.vitesse_angulaire)
 
     #Remettre à jour la vitesse angulaire des roues
     set_vitesse(robot, vitesse)
 
-def raytracing(capteur : Capteur, robot : Robot, grille : Grille):
-    """Renvoie la distance de l'obstacle devant le capteur
-    :param capteur : Capteur
-    :param robot: Robot
-    :param interface: Interface
-    :returns : Distance entre le capteur et l'obstacle
-    """
-
-    #Initialisation des coordonnées
-    coordonnee_x = robot.posX
-    coordonnee_y = robot.posY
-    nb_rayons = 0
-
-    #Envoie un vecteur tant qu'il n'y a pas d'obstacle
-    while(inGrille(grille, coordonnee_x, coordonnee_y)):
-        coordonnee_x += capteur.vecteur.x
-        coordonnee_y += capteur.vecteur.y
-        nb_rayons+=1
-    
-    #Renvoie la distance
-    return capteur.vecteur.norme * nb_rayons
-
-def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vitesse: float, dt):
+def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vitesse: int, dt):
     """  Faire avancer le robot d'une distance avec une vitesse
 
     :param robot: Robot
     :param distance: La distance que le robot doit parcourir (float) 
-    :param vitesse: La vitesse du robot en m/s (float)
+    :param vitesse: La vitesse du robot en m/s (int)
     """
     # Si la distance est negative on fait demi tour puis on avance
     if distance < 0:
@@ -182,25 +185,26 @@ def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vit
     dOM_x = robot.vectDir.x*vitesse*dt #/robot.grille.echelle 
     dOM_y = robot.vectDir.y*vitesse*dt #/robot.grille.echelle 
     dOM = Vecteur(dOM_x, dOM_y)
+
+    robot.capteur.vecteur= robot.vectDir
         
     #tant qu'on n'a pas fini de parcourrir tte la distance on effectue un dOM
     while cpt_dis < math.fabs(distance) : #/robot.grille.echelle :
         
         # Si on sort de la fenetre, le robot crash
-
-        
+        # Il n'y a pas encore de capteur
         if (raytracing(robot.capteur, robot, grille) <= math.sqrt(robot.length**2 + robot.width**2)/2):
             break
         elif not inGrille2D(grille, robot.posX, robot.posY,robot.length, robot.width):
-                    print(robot.name, " est a la borne : ",robot.posX, robot.posY)
-                    sys.exit()
+            print(robot.name, " est a la borne : ",robot.posX, robot.posY)
+            sys.exit()
         
         #Bouger le robot d'un dOM
         robot.move_dOM(dOM_x, dOM_y)
-        robot.capteur.vecteur= robot.vectDir
+
         cpt_dis += dOM.norme
         print(robot.posX, robot.posY)
-        print("Distance",raytracing(robot.capteur, robot, grille))
+        
         update(interface, robot)
     #print("Final:")
     #print(robot.posX, robot.posY, robot.theta)
@@ -209,7 +213,7 @@ def faire_carre():
     
     vitesse = interface.vitesse_var.get()
     distance = interface.distance_var.get()
-    angle = interface.angle_var.get()#90
+    angle = 90
 
     tours = 4
     for i in range(tours):
@@ -222,12 +226,7 @@ def avance():
     distance = interface.distance_var.get()
     
     go(interface,grille, robot, distance, vitesse, dt)
-
-
     
-    
-
-
 if __name__ == "__main__":
     dt = 1/300
     largeur, hauteur = 300, 300
@@ -236,10 +235,10 @@ if __name__ == "__main__":
 
 
     dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
-    capteur = Capteur(Vecteur(0, -1))
+
     grille = Grille(largeur, hauteur, 5)
-    robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, capteur ,Vecteur(0, -1), 10, 1, color="red")
-    
+    capteur = Capteur(Vecteur(0, -1))
+    robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, capteur, Vecteur(0, -1), 10, 150, color="red")
 
     interface.go_button = interface.creer_button("Avance", avance)
     interface.go_button.grid(row=5, column=0)

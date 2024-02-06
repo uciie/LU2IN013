@@ -9,7 +9,6 @@ class Roue:
         """Initialisation d'une roue
 
         :param rayon: Le rayon de la roue
-        :param vmax : Vitesse maximale de la roue
         :returns: Retourne une instance de la classe Roue.
         """
         self.rayon = rayon #m
@@ -21,14 +20,12 @@ class Roue:
 
         :param vitesse_angulaire: Nouvelle vitesse angulaire de la roue
         """
-        if vitesse_angulaire > self.vmax :
-            self.vitesse_angulaire = self.vmax
-        else:
-            self.vitesse_angulaire = vitesse_angulaire
+        self.vitesse_angulaire = min(vitesse_angulaire, self.vmax)
 
 class Capteur:
     def __init__(self, vecteur : Vecteur):
         """Initialisation du capteur
+
         :param vecteur : Vecteur directeur envoyé
         :param vitesse : Vitesse du rayon
         :returns : Retourne une instance de la classe Capteur
@@ -36,14 +33,11 @@ class Capteur:
         # Vecteur directeur
         self.vecteur = vecteur
 
-
     def rotation(self, angle):
         self.vecteur = self.vecteur.rotation(angle)
 
-
-
 class Robot:
-    def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, capteur : Capteur ,vectDir : Vecteur, rayon_roue, vmax : float,color: str):
+    def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, capteur : Capteur , vectDir : Vecteur, rayon_roue:int , vmax : float, color: str):
         """Initialisation du robot.
 
         :param name: Nom du robot (str).
@@ -52,7 +46,6 @@ class Robot:
         :param vectDir: Vecteur directeur du robot (Vecteur).
         :param dimLength: Longueur de la pièce en mètres (float).
         :param dimWidth: Largeur de la pièce en mètres (float).
-        :param capteur: Capteur du robot
         :param color: Couleur du robot (str).
         :returns: Retourne une instance de la classe Robot.
         """
