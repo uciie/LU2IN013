@@ -75,7 +75,6 @@ def set_vitesse(robot: Robot, vitesse : float, angle: int = 0):
     """
     #Mettre à jour la vitesse du robot
     if (vitesse > robot.roue_gauche.vmax * robot.roue_gauche.rayon):
-
         robot.vitesse=robot.roue_gauche.vmax * robot.roue_gauche.rayon
     else:
         robot.vitesse=vitesse
@@ -196,7 +195,7 @@ def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vit
         
         #Bouger le robot d'un dOM
         robot.move_dOM(dOM_x, dOM_y)
-
+        robot.capteur.vecteur= robot.vectDir
         cpt_dis += dOM.norme
         print(robot.posX, robot.posY)
         print("Distance",raytracing(robot.capteur, robot, grille))
