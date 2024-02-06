@@ -184,7 +184,7 @@ def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vit
         # Si on sort de la fenetre, le robot crash
         # Il n'y a pas encore de capteur
         
-        if (raytracing(robot.capteur, robot, grille) <= 20):
+        if (raytracing(robot.capteur, robot, grille) <= robot.length/2):
             break
             
         elif not inGrille2D(grille, robot.posX, robot.posY,robot.length, robot.width):
