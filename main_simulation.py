@@ -75,7 +75,7 @@ def set_vitesse(robot: Robot, vitesse : float, angle: int = 0):
     """
     #Mettre à jour la vitesse du robot
     if (vitesse > robot.roue_gauche.vmax * robot.roue_gauche.rayon):
-        robot.vitesse=robot.roue_gauche.vmax * robot.roue_gauche.rayon
+        robot.vitesse=(robot.roue_gauche.vmax + robot.roue_droite.vmax) * robot.roue_gauche.rayon
     else:
         robot.vitesse=vitesse
 
@@ -187,7 +187,7 @@ def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vit
         # Si on sort de la fenetre, le robot crash
         # Il n'y a pas encore de capteur
         
-        if (raytracing(robot.capteur, robot, grille) <= math.sqrt(robot.length**2 + robot.width**2)):
+        if (raytracing(robot.capteur, robot, grille) <= math.sqrt(robot.length**2 + robot.width**2)/2):
             break
         elif not inGrille2D(grille, robot.posX, robot.posY,robot.length, robot.width):
                     print(robot.name, " est a la borne : ",robot.posX, robot.posY)
