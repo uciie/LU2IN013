@@ -135,6 +135,27 @@ def turn(interface, grille, robot: Robot, vitesse, angle: int, dt):
     #Remettre à jour la vitesse angulaire des roues
     set_vitesse(robot, vitesse)
 
+def raytracing(capteur : Capteur, robot : Robot, interface : Interface):
+    """Renvoie la distance de l'obstacle devant le capteur
+    :param capteur : Capteur
+    :param robot: Robot
+    :param interface: Interface
+    :returns : Distance entre le capteur et l'obstacle
+    """
+
+    #Initialisation des coordonnées
+    coordonnees = (robot.posX, robot.posY)
+    nb_rayons = 0
+
+    #Envoie un vecteur tant qu'il n'y a pas d'obstacle
+    while(inGrille(interface, coordonnees[0], coordonnees[1])):
+        coordonnees[0] += capteur.vecteur.x
+        coordonnees[1] += capteur.vecteur.y
+        nb_rayons+=1
+    
+    #Renvoie la distance
+    return capteur.vecteur.norme * nb_rayons
+    
 def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vitesse: int, dt):
     """  Faire avancer le robot d'une distance avec une vitesse
 
@@ -193,26 +214,7 @@ def avance():
     
     go(interface,grille, robot, distance, vitesse, dt)
 
-def raytracing(capteur : Capteur, robot : Robot, interface : Interface):
-    """Renvoie la distance de l'obstacle devant le capteur
-    :param capteur : Capteur
-    :param robot: Robot
-    :param interface: Interface
-    :returns : Distance entre le capteur et l'obstacle
-    """
 
-    #Initialisation des coordonnées
-    coordonnees = (robot.posX, robot.posY)
-    nb_rayons = 0
-
-    #Envoie un vecteur tant qu'il n'y a pas d'obstacle
-    while(inGrille(interface, coordonnees[0], coordonnees[1])):
-        coordonnees[0] += capteur.vecteur.x
-        coordonnees[1] += capteur.vecteur.y
-        nb_rayons+=1
-    
-    #Renvoie la distance
-    return capteur.vecteur.norme * nb_rayons
     
     
 
