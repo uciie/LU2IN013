@@ -38,7 +38,7 @@ class Capteur:
 
 
 class Robot:
-    def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, vectDir : Vecteur, rayon_roue, color: str):
+    def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, capteur : Capteur ,vectDir : Vecteur, rayon_roue, color: str):
         """Initialisation du robot.
 
         :param name: Nom du robot (str).
@@ -47,6 +47,7 @@ class Robot:
         :param vectDir: Vecteur directeur du robot (Vecteur).
         :param dimLength: Longueur de la pièce en mètres (float).
         :param dimWidth: Largeur de la pièce en mètres (float).
+        :param capteur: Capteur du robot
         :param color: Couleur du robot (str).
         :returns: Retourne une instance de la classe Robot.
         """
