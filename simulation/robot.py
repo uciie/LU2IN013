@@ -5,13 +5,15 @@ import math
 # Supposons que la position du robot (x, y) correspond à l'extrémité en haut à gauche
 
 class Roue:
-    def __init__(self, rayon:float):
+    def __init__(self, rayon:float, vmax:float):
         """Initialisation d'une roue
 
         :param rayon: Le rayon de la roue
+        :param vmax : Vitesse maximale de la roue
         :returns: Retourne une instance de la classe Roue.
         """
         self.rayon = rayon #m
+        self.vmax = vmax #rad/s
         self.vitesse_angulaire = 0.0 #rad/s
 
     def set_vitesse_angulaire(self, vitesse_angulaire: float):
@@ -19,7 +21,10 @@ class Roue:
 
         :param vitesse_angulaire: Nouvelle vitesse angulaire de la roue
         """
-        self.vitesse_angulaire = vitesse_angulaire
+        if vitesse_angulaire > self.vmax :
+            self.vitesse_angulaire = self.vmax
+        else:
+            self.vitesse_angulaire = vitesse_angulaire
 
 class Capteur:
     def __init__(self, vecteur : Vecteur):
