@@ -135,7 +135,7 @@ def turn(interface, grille, robot: Robot, vitesse, angle: int, dt):
     #Remettre à jour la vitesse angulaire des roues
     set_vitesse(robot, vitesse)
 
-def raytracing(capteur : Capteur, robot : Robot, interface : Interface):
+def raytracing(capteur : Capteur, robot : Robot, grille : Grille):
     """Renvoie la distance de l'obstacle devant le capteur
     :param capteur : Capteur
     :param robot: Robot
@@ -144,18 +144,19 @@ def raytracing(capteur : Capteur, robot : Robot, interface : Interface):
     """
 
     #Initialisation des coordonnées
-    coordonnees = (robot.posX, robot.posY)
+    coordonnee_x = robot.posX
+    coordonnee_y = robot.posY
     nb_rayons = 0
 
     #Envoie un vecteur tant qu'il n'y a pas d'obstacle
-    while(inGrille(interface, coordonnees[0], coordonnees[1])):
-        coordonnees[0] += capteur.vecteur.x
-        coordonnees[1] += capteur.vecteur.y
+    while(inGrille(grille, coordonnee_x, coordonnee_y)):
+        coordonnee_x += capteur.vecteur.x
+        coordonnee_y += capteur.vecteur.y
         nb_rayons+=1
     
     #Renvoie la distance
     return capteur.vecteur.norme * nb_rayons
-    
+
 def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vitesse: int, dt):
     """  Faire avancer le robot d'une distance avec une vitesse
 
@@ -185,6 +186,9 @@ def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vit
         if not inGrille2D(grille, robot.posX, robot.posY,robot.length, robot.width):
             print(robot.name, " est a la borne : ",robot.posX, robot.posY)
             sys.exit()
+        elif (raytracing(robot.capteur, robot, grille) <= 5):
+            set_vitesse(robot, 0)
+
         
         #Bouger le robot d'un dOM
         robot.move_dOM(dOM_x, dOM_y)
@@ -227,9 +231,10 @@ if __name__ == "__main__":
 
 
     dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
-
+    capteur = Capteur(Vecteur(0, -1))
     grille = Grille(largeur, hauteur, 5)
-    robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, Vecteur(0, -1), 10, color="red")
+    robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, capteur ,Vecteur(0, -1), 10, color="red")
+    
 
     interface.go_button = interface.creer_button("Avance", avance)
     interface.go_button.grid(row=5, column=0)
