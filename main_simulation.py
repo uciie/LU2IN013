@@ -183,19 +183,20 @@ def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vit
         
         # Si on sort de la fenetre, le robot crash
         # Il n'y a pas encore de capteur
-        if not inGrille2D(grille, robot.posX, robot.posY,robot.length, robot.width):
-            print(robot.name, " est a la borne : ",robot.posX, robot.posY)
-            sys.exit()
-        elif (raytracing(robot.capteur, robot, grille) <= 5):
-            set_vitesse(robot, 0)
-
+        
+        if (raytracing(robot.capteur, robot, grille) <= 20):
+            break
+            
+        elif not inGrille2D(grille, robot.posX, robot.posY,robot.length, robot.width):
+                    print(robot.name, " est a la borne : ",robot.posX, robot.posY)
+                    sys.exit()
         
         #Bouger le robot d'un dOM
         robot.move_dOM(dOM_x, dOM_y)
 
         cpt_dis += dOM.norme
         print(robot.posX, robot.posY)
-        
+        print("Distance",raytracing(robot.capteur, robot, grille))
         update(interface, robot)
     #print("Final:")
     #print(robot.posX, robot.posY, robot.theta)
