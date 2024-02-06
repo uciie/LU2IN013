@@ -192,7 +192,15 @@ def avance():
     distance = interface.distance_var.get()
     
     go(interface,grille, robot, distance, vitesse, dt)
+
+def raytracing(capteur : Capteur, robot : Robot):
+    """Renvoie la distance de l'obstacle devant le capteur
+    """
+    coordonnées = (robot.posX, robot.posY)
+    nb_rayons = 0 
     
+
+
 if __name__ == "__main__":
     dt = 1/300
     largeur, hauteur = 300, 300
