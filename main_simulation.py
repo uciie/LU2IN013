@@ -207,7 +207,7 @@ def faire_carre():
     
     vitesse = interface.vitesse_var.get()
     distance = interface.distance_var.get()
-    angle = interface.distance_var.get()#90
+    angle = interface.angle_var.get()#90
 
     tours = 4
     for i in range(tours):
