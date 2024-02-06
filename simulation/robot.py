@@ -122,3 +122,15 @@ class Robot:
         self.theta = (self.theta + math.degrees(dOM_theta))%360
         self.vectDir = self.vectDir.rotation(math.degrees(dOM_theta))
 
+class Roue:
+    def __init__(self, nom : str , vecteur : Vecteur , vitesse : float):
+        """Initialisation de la roue"""
+
+        # Vitesse de la roue
+        self.nom = nom
+        self.vecteur = vecteur
+        self.vitesse = vitesse
+    
+    def avancer(self):
+        """Fait avancer la roue"""
+        print("La roue ",nom," tourne à ",vitesse,"RPM, suivant le vecteur directeur ", vecteur)
