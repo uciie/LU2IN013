@@ -21,7 +21,13 @@ class Roue:
         """
         self.vitesse_angulaire = vitesse_angulaire
 
-
+class Capteur:
+    def __init__(self, vecteur : Vecteur, vitesse : float):
+        """Initialisation du capteur
+        :param vecteur : Vecteur directeur envoyé
+        :param vitesse : Vitesse du rayon
+        :returns : Retourne une instance de la classe Capteur
+        """
 class Robot:
     def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, vectDir : Vecteur, rayon_roue, color: str):
         """Initialisation du robot.
