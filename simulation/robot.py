@@ -43,7 +43,7 @@ class Capteur:
 
 
 class Robot:
-    def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, capteur : Capteur ,vectDir : Vecteur, rayon_roue, color: str):
+    def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, capteur : Capteur ,vectDir : Vecteur, rayon_roue, vmax : float,color: str):
         """Initialisation du robot.
 
         :param name: Nom du robot (str).
@@ -88,8 +88,8 @@ class Robot:
         # Vitesse
         self.vitesse = 5.0  # m/s
 
-        self.roue_gauche = Roue(rayon_roue)
-        self.roue_droite = Roue(rayon_roue)
+        self.roue_gauche = Roue(rayon_roue, vmax)
+        self.roue_droite = Roue(rayon_roue, vmax)
 
         self.capteur = capteur
 

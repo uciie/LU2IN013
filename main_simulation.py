@@ -74,7 +74,10 @@ def set_vitesse(robot: Robot, vitesse, angle: int = 0):
     :param angle: L'angle qu'on souhaite tourner en radian
     """
     #Mettre à jour la vitesse du robot
-    robot.vitesse=vitesse
+    if (vitesse > robot.roue_gauche.vmax * robot.roue_gauche.rayon):
+        robot.vitesse=robot.roue_gauche.vmax * robot.roue_gauche.rayon
+    else:
+        robot.vitesse=vitesse
 
     #Mettre à 0 l'une des roues
     # tourner à droite
@@ -234,7 +237,7 @@ if __name__ == "__main__":
     dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
     capteur = Capteur(Vecteur(0, -1))
     grille = Grille(largeur, hauteur, 5)
-    robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, capteur ,Vecteur(0, -1), 10, color="red")
+    robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, capteur ,Vecteur(0, -1), 10, 1, color="red")
     
 
     interface.go_button = interface.creer_button("Avance", avance)
