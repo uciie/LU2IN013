@@ -119,8 +119,10 @@ def turn(interface, grille, robot: Robot, vitesse, angle: int, dt):
     while cpt_angle < angle_radians : #/robot.grille.echelle :
 
         # Si on sort de la fenetre, le robot crash
-        # Il n'y a pas encore de capteur
-        if not inGrille2D(grille, robot.posX, robot.posY,robot.length, robot.width):
+
+        if (raytracing(robot.capteur, robot, grille) <= math.sqrt(robot.length**2 + robot.width**2)/2):
+            break
+        elif not inGrille2D(grille, robot.posX, robot.posY,robot.length, robot.width):
             print(robot.name, " est a la borne : ",robot.posX, robot.posY)
             sys.exit()
 
@@ -185,7 +187,7 @@ def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vit
     while cpt_dis < math.fabs(distance) : #/robot.grille.echelle :
         
         # Si on sort de la fenetre, le robot crash
-        # Il n'y a pas encore de capteur
+
         
         if (raytracing(robot.capteur, robot, grille) <= math.sqrt(robot.length**2 + robot.width**2)/2):
             break
