@@ -66,7 +66,7 @@ def update(interface: Interface, robot: Robot):
     tracer_parcours(interface, robot)
     interface.root.update()
 
-def set_vitesse(robot: Robot, vitesse, angle: int = 0):
+def set_vitesse(robot: Robot, vitesse : float, angle: int = 0):
     """ Modifier les vitesse des roues pour faire un virage d'un certain angle
     
     :param robot: Le robot 
@@ -75,6 +75,7 @@ def set_vitesse(robot: Robot, vitesse, angle: int = 0):
     """
     #Mettre à jour la vitesse du robot
     if (vitesse > robot.roue_gauche.vmax * robot.roue_gauche.rayon):
+
         robot.vitesse=robot.roue_gauche.vmax * robot.roue_gauche.rayon
     else:
         robot.vitesse=vitesse
@@ -160,12 +161,12 @@ def raytracing(capteur : Capteur, robot : Robot, grille : Grille):
     #Renvoie la distance
     return capteur.vecteur.norme * nb_rayons
 
-def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vitesse: int, dt):
+def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vitesse: float, dt):
     """  Faire avancer le robot d'une distance avec une vitesse
 
     :param robot: Robot
     :param distance: La distance que le robot doit parcourir (float) 
-    :param vitesse: La vitesse du robot en m/s (int)
+    :param vitesse: La vitesse du robot en m/s (float)
     """
     # Si la distance est negative on fait demi tour puis on avance
     if distance < 0:
@@ -187,9 +188,8 @@ def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vit
         # Si on sort de la fenetre, le robot crash
         # Il n'y a pas encore de capteur
         
-        if (raytracing(robot.capteur, robot, grille) <= robot.length/2):
+        if (raytracing(robot.capteur, robot, grille) <= math.sqrt(robot.length**2 + robot.width**2)):
             break
-            
         elif not inGrille2D(grille, robot.posX, robot.posY,robot.length, robot.width):
                     print(robot.name, " est a la borne : ",robot.posX, robot.posY)
                     sys.exit()
