@@ -32,10 +32,10 @@ class Capteur:
         self.vecteur = vecteur
 
 
-    def raytracing(self):
-        """ Renvoie la distance du premier obstacle devant le capteur
-        """
-        
+    def rotation(self, angle):
+        self.vecteur = self.vecteur.rotation(angle)
+
+
 
 class Robot:
     def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, vectDir : Vecteur, rayon_roue, color: str):
