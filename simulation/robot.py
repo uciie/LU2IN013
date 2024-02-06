@@ -28,6 +28,13 @@ class Capteur:
         :param vitesse : Vitesse du rayon
         :returns : Retourne une instance de la classe Capteur
         """
+        # Vecteur directeur
+        self.vecteur = vecteur
+
+        # Vitesse du rayon
+        self.vitesse = vitesse
+
+    
 class Robot:
     def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, vectDir : Vecteur, rayon_roue, color: str):
         """Initialisation du robot.
