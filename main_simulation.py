@@ -201,7 +201,7 @@ def raytracing(capteur : Capteur, robot : Robot, interface : Interface):
     coordonnees = (robot.posX, robot.posY)
     nb_rayons = 0
 
-    #Envoi un vecteur tant qu'il n'y a pas d'obstacle
+    #Envoie un vecteur tant qu'il n'y a pas d'obstacle
     while(inGrille(interface, coordonnees[0], coordonnees[1])):
         coordonnees[0] += capteur.vecteur.x
         coordonnees[1] += capteur.vecteur.y
