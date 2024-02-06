@@ -54,7 +54,7 @@ class Interface:
         """Dessine un objet sur le canevas de l'interface.
 
         :param Objet: Objet à dessiner.
-        :return: Identifiant unique de l'objet sur le canevas.
+        :returns: Identifiant unique de l'objet sur le canevas.
         """
         # Coordonnées des sommets du polygone
         u_x = Objet.vectDir.rotation(90).multiplication(Objet.width/2)
@@ -88,7 +88,7 @@ class Interface:
         """ Trace le parcours de l'objet
 
         :param Objet: Objet 
-        :return: Identifiant unique de l'objet sur le canevas.
+        :returns: Identifiant unique de l'objet sur le canevas.
         """
         return self.canvas.create_line(Objet.lastPosX,Objet.lastPosY,Objet.posX,Objet.posY,fill='blue', width=3)
 

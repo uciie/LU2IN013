@@ -10,7 +10,11 @@ Welcome to Projet Robot HELMS's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   modules
+   simulation
+   main_simulation
+   test_grille
+   test_robot
+   test_vecteur
 
 Indices and tables
 ==================

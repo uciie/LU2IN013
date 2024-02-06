@@ -5,14 +5,14 @@ import math
 # Supposons que la position du robot (x, y) correspond à l'extrémité en haut à gauche
 
 class Roue:
-    def __init__(self, rayon:float, vmax:float):
+    def __init__(self, rayon:float, vmax_ang:float):
         """Initialisation d'une roue
 
         :param rayon: Le rayon de la roue
         :returns: Retourne une instance de la classe Roue.
         """
         self.rayon = rayon #m
-        self.vmax = vmax #rad/s
+        self.vmax_ang = vmax_ang #rad/s
         self.vitesse_angulaire = 0.0 #rad/s
 
     def set_vitesse_angulaire(self, vitesse_angulaire: float):
@@ -20,7 +20,7 @@ class Roue:
 
         :param vitesse_angulaire: Nouvelle vitesse angulaire de la roue
         """
-        self.vitesse_angulaire = min(vitesse_angulaire, self.vmax)
+        self.vitesse_angulaire = min(vitesse_angulaire, self.vmax_ang)
 
 class Capteur:
     def __init__(self, vecteur : Vecteur):
@@ -37,15 +37,18 @@ class Capteur:
         self.vecteur = self.vecteur.rotation(angle)
 
 class Robot:
-    def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, capteur : Capteur , vectDir : Vecteur, rayon_roue:int , vmax : float, color: str):
+    def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, capteur : Capteur , vectDir : Vecteur, rayon_roue:int , vmax_ang : float, color: str):
         """Initialisation du robot.
 
         :param name: Nom du robot (str).
         :param posX: Coordonnée x du robot (float).
         :param posY: Coordonnée y du robot (float).
-        :param vectDir: Vecteur directeur du robot (Vecteur).
         :param dimLength: Longueur de la pièce en mètres (float).
         :param dimWidth: Largeur de la pièce en mètres (float).
+        :paarm capteur : Capteur de distance du robot 
+        :param vectDir: Vecteur directeur du robot (Vecteur).
+        :param rayon_roue: Rayon des roues du robot (int)
+        :param vmax_ang : Vitesse maximale angulaire du robot 
         :param color: Couleur du robot (str).
         :returns: Retourne une instance de la classe Robot.
         """
@@ -81,9 +84,11 @@ class Robot:
         # Vitesse
         self.vitesse = 5.0  # m/s
 
-        self.roue_gauche = Roue(rayon_roue, vmax)
-        self.roue_droite = Roue(rayon_roue, vmax)
+        # Roues du robot
+        self.roue_gauche = Roue(rayon_roue, vmax_ang)
+        self.roue_droite = Roue(rayon_roue, vmax_ang)
 
+        # Capteur du robot
         self.capteur = capteur
 
     def getCurrPos(self) -> tuple[float, float]:

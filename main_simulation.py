@@ -74,7 +74,7 @@ def set_vitesse(robot: Robot, vitesse, angle: int = 0):
     :param angle: L'angle qu'on souhaite tourner en radian
     """
     #Mettre à jour la vitesse du robot
-    robot.vitesse = min(vitesse,  robot.roue_droite.vmax* robot.roue_gauche.rayon)
+    robot.vitesse = min(vitesse,  robot.roue_droite.vmax_ang* robot.roue_gauche.rayon)
 
     #Mettre à 0 l'une des roues
     # tourner à droite
@@ -114,10 +114,13 @@ def raytracing(capteur : Capteur, robot : Robot, grille : Grille):
     #Renvoie la distance
     return capteur.vecteur.norme * nb_rayons
 
-def turn(interface, grille, robot: Robot, vitesse, angle: int, dt):
+def turn(interface: Interface, grille: Grille, robot: Robot,  vitesse: int, angle: int, dt):
     """ Tourner le robot d'un angle 
 
+    :param interface: L'interface graphique
+    :param grille: La grille
     :param robot: Le robot 
+    :param vitesse: La vitesse du robot en m/s
     :param angle: L'angle qu'on souhaite tourner en degree
     """
     
@@ -130,8 +133,6 @@ def turn(interface, grille, robot: Robot, vitesse, angle: int, dt):
 
     #Un pas de rotation 
     dOM_theta = robot.getVitesse_angulaire()*dt
-    #robot.roue_droite.rayon *(robot.roue_droite.vitesse_angulaire + robot.roue_gauche.vitesse_angulaire) *dt/robot.width
-    #print("dOM_theta", dOM_theta)
     
     # compteur d'angle parcourrue
     cpt_angle = 0
@@ -159,8 +160,7 @@ def turn(interface, grille, robot: Robot, vitesse, angle: int, dt):
 
         cpt_angle += dOM_theta
         update(interface, robot)
-        print(robot.posX, robot.posY, robot.theta)
-        #print(robot.roue_droite.vitesse_angulaire,robot.roue_droite.vitesse_angulaire)
+        print(robot.posX, robot.posY, robot.roue_droite.vitesse_angulaire,robot.roue_droite.vitesse_angulaire)
 
     #Remettre à jour la vitesse angulaire des roues
     set_vitesse(robot, vitesse)
@@ -168,6 +168,8 @@ def turn(interface, grille, robot: Robot, vitesse, angle: int, dt):
 def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vitesse: int, dt):
     """  Faire avancer le robot d'une distance avec une vitesse
 
+    :param interface: L'interface graphique
+    :param grille: La grille
     :param robot: Robot
     :param distance: La distance que le robot doit parcourir (float) 
     :param vitesse: La vitesse du robot en m/s (int)
@@ -203,17 +205,17 @@ def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vit
         robot.move_dOM(dOM_x, dOM_y)
 
         cpt_dis += dOM.norme
-        print(robot.posX, robot.posY)
+        print(robot.posX, robot.posY, robot.roue_droite.vitesse_angulaire,robot.roue_droite.vitesse_angulaire)
         
         update(interface, robot)
-    #print("Final:")
     #print(robot.posX, robot.posY, robot.theta)
 
 def faire_carre():
-    
-    vitesse = interface.vitesse_var.get()
-    distance = interface.distance_var.get()
-    angle = 90
+    """Le robot trace un carre distance * distance
+    """
+    vitesse = interface.vitesse_var.get() #recupere la valeur de la vitesse saisie
+    distance = interface.distance_var.get() #recupere la valeur de la distance saisie
+    angle = interface.distance_var.get() #90 recupere la valeur de l'angle de rotation saisie
 
     tours = 4
     for i in range(tours):
@@ -221,11 +223,19 @@ def faire_carre():
         turn(interface,grille, robot, vitesse, angle, dt)
 
 def avance():
-    
-    vitesse = interface.vitesse_var.get()
-    distance = interface.distance_var.get()
-    
+    """Le robot accélere avec une vitesse sur une distance sans toucher le mur 
+    """
+    vitesse = interface.vitesse_var.get() #recupere la valeur de la vitesse saisie
+    distance = interface.distance_var.get() #recupere la valeur de la distance saisie
     go(interface,grille, robot, distance, vitesse, dt)
+
+def accelerer_sans_colision():
+    """ Le robot accélere avec une vitesse max sans toucher le mur 
+    """
+    distance = largeur + hauteur
+    vitesse = robot.roue_droite.vmax_ang*robot.roue_droite.rayon
+    go(interface,grille, robot, distance, vitesse, dt)
+    
     
 if __name__ == "__main__":
     dt = 1/300
@@ -233,18 +243,21 @@ if __name__ == "__main__":
     bg = "white"
     interface = Interface("Simulation de déplacement du robot", largeur, hauteur, bg)
 
-
     dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
 
     grille = Grille(largeur, hauteur, 5)
     capteur = Capteur(Vecteur(0, -1))
     robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, capteur, Vecteur(0, -1), 10, 150, color="red")
 
+    #--------------------- CREATION DES BOUTTONS DE COMMANDE ---------------------#
     interface.go_button = interface.creer_button("Avance", avance)
     interface.go_button.grid(row=5, column=0)
     
-    interface.start_button = interface.creer_button("Tracer carre", faire_carre)
-    interface.start_button.grid(row=6, column=0)
+    interface.carre_button = interface.creer_button("Tracer carre", faire_carre)
+    interface.carre_button.grid(row=6, column=0)
+    
+    interface.acc_no_coli_button = interface.creer_button("Acceleration sans colision", accelerer_sans_colision)
+    interface.acc_no_coli_button.grid(row=7, column=0)
     
     update(interface, robot)
 
