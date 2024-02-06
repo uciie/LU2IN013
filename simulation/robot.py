@@ -86,6 +86,8 @@ class Robot:
         self.roue_gauche = Roue(rayon_roue)
         self.roue_droite = Roue(rayon_roue)
 
+        self.capteur = capteur
+
     def getCurrPos(self) -> tuple[float, float]:
         """Renvoie la position actuelle du robot.
 
