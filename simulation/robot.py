@@ -22,7 +22,7 @@ class Roue:
         self.vitesse_angulaire = vitesse_angulaire
 
 class Capteur:
-    def __init__(self, vecteur : Vecteur, vitesse : float):
+    def __init__(self, vecteur : Vecteur):
         """Initialisation du capteur
         :param vecteur : Vecteur directeur envoyé
         :param vitesse : Vitesse du rayon
@@ -31,10 +31,12 @@ class Capteur:
         # Vecteur directeur
         self.vecteur = vecteur
 
-        # Vitesse du rayon
-        self.vitesse = vitesse
 
-    
+    def raytracing(self):
+        """ Renvoie la distance du premier obstacle devant le capteur
+        """
+        
+
 class Robot:
     def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, vectDir : Vecteur, rayon_roue, color: str):
         """Initialisation du robot.
