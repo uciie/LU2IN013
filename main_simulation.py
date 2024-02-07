@@ -215,7 +215,7 @@ def faire_carre():
     """
     vitesse = interface.vitesse_var.get() #recupere la valeur de la vitesse saisie
     distance = interface.distance_var.get() #recupere la valeur de la distance saisie
-    angle = interface.distance_var.get() #90 recupere la valeur de l'angle de rotation saisie
+    angle = interface.angle_var.get() #90 recupere la valeur de l'angle de rotation saisie
 
     tours = 4
     for i in range(tours):
