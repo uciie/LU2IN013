@@ -117,6 +117,3 @@ class Interface:
         :returns: Variable tk.DoubleVar cree
         """
         return tk.DoubleVar(value=value)
-    
-
-

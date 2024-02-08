@@ -47,7 +47,7 @@ def inGrille2D(grille : Grille, new_x, new_y, length, width):
             return False
     return True
 
-def tracer_parcours(interface: Interface, robot: Robot):
+def tracer_parcours( robot: Robot):
     """ Trace le parcours du robot
 
     :param interface: L'interface graphique
@@ -55,7 +55,7 @@ def tracer_parcours(interface: Interface, robot: Robot):
     """
     interface.draw_parcours(robot)
 
-def update(interface: Interface, robot: Robot):
+def update( robot: Robot):
     """ Mettre à jour l'interface graphique 
 
     :param interface: L'interface graphique
@@ -63,7 +63,7 @@ def update(interface: Interface, robot: Robot):
     """
     interface.delete_draw(robot.rect_id, robot.arrow_id)
     robot.rect_id, robot.arrow_id = interface.draw_obj(robot)
-    tracer_parcours(interface, robot)
+    tracer_parcours(robot)
     interface.root.update()
 
 def set_vitesse(robot: Robot, vitesse, angle: int = 0):
@@ -114,7 +114,7 @@ def raytracing(capteur : Capteur, robot : Robot, grille : Grille):
     #Renvoie la distance
     return capteur.vecteur.norme * nb_rayons
 
-def turn(interface: Interface, grille: Grille, robot: Robot,  vitesse: int, angle: int, dt):
+def turn(grille: Grille, robot: Robot,  vitesse: int, angle: int, dt):
     """ Tourner le robot d'un angle 
 
     :param interface: L'interface graphique
@@ -159,13 +159,13 @@ def turn(interface: Interface, grille: Grille, robot: Robot,  vitesse: int, angl
         robot.capteur.vecteur= robot.vectDir
 
         cpt_angle += dOM_theta
-        update(interface, robot)
+        #update(robot)
         print(robot.posX, robot.posY, robot.roue_droite.vitesse_angulaire,robot.roue_droite.vitesse_angulaire)
 
     #Remettre à jour la vitesse angulaire des roues
     set_vitesse(robot, vitesse)
 
-def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vitesse: int, dt):
+def go(grille: Grille, robot : Robot, distance: float, vitesse: int, dt):
     """  Faire avancer le robot d'une distance avec une vitesse
 
     :param interface: L'interface graphique
@@ -176,7 +176,7 @@ def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vit
     """
     # Si la distance est negative on fait demi tour puis on avance
     if distance < 0:
-        turn(interface, grille, robot, vitesse, 180, dt)
+        turn(grille, robot, vitesse, 180, dt)
     # on modifie la vitesse du robot
     set_vitesse(robot, vitesse)
 
@@ -207,7 +207,7 @@ def go(interface: Interface, grille: Grille, robot : Robot, distance: float, vit
         cpt_dis += dOM.norme
         print(robot.posX, robot.posY, robot.roue_droite.vitesse_angulaire,robot.roue_droite.vitesse_angulaire)
         
-        update(interface, robot)
+        #update(robot)
     #print(robot.posX, robot.posY, robot.theta)
 
 def faire_carre():
@@ -219,22 +219,22 @@ def faire_carre():
 
     tours = 4
     for i in range(tours):
-        go(interface,grille, robot, distance, vitesse, dt)
-        turn(interface,grille, robot, vitesse, angle, dt)
+        go(grille, robot, distance, vitesse, dt)
+        turn(grille, robot, vitesse, angle, dt)
 
 def avance():
     """Le robot accélere avec une vitesse sur une distance sans toucher le mur 
     """
     vitesse = interface.vitesse_var.get() #recupere la valeur de la vitesse saisie
     distance = interface.distance_var.get() #recupere la valeur de la distance saisie
-    go(interface,grille, robot, distance, vitesse, dt)
+    go(grille, robot, distance, vitesse, dt)
 
 def accelerer_sans_colision():
     """ Le robot accélere avec une vitesse max sans toucher le mur 
     """
     distance = largeur + hauteur
     vitesse = robot.roue_droite.vmax_ang*robot.roue_droite.rayon
-    go(interface,grille, robot, distance, vitesse, dt)
+    go(grille, robot, distance, vitesse, dt)
     
     
 if __name__ == "__main__":
@@ -259,6 +259,6 @@ if __name__ == "__main__":
     interface.acc_no_coli_button = interface.creer_button("Acceleration sans colision", accelerer_sans_colision)
     interface.acc_no_coli_button.grid(row=7, column=0)
     
-    update(interface, robot)
+    update(robot)
 
     interface.root.mainloop()
