@@ -1,5 +1,5 @@
 import unittest
-from simulation.robot import Roue,Robot, Vecteur
+from modele.robot import Roue,Robot, Vecteur
 
 class TestRoue(unittest.TestCase):
 

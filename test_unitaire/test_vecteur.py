@@ -1,5 +1,5 @@
 import unittest
-from simulation.vecteur import Vecteur
+from modele.vecteur import Vecteur
 
 class TestVecteur(unittest.TestCase):
 

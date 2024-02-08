@@ -1,6 +1,6 @@
 import tkinter as tk
-from simulation.vecteur import *
-from simulation.robot import *
+from modele.vecteur import *
+from modele.robot import *
 from simulation.grille import *
 
 def main():

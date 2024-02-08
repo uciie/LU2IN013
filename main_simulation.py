@@ -1,6 +1,6 @@
 #from simulation.vecteur import *
-from simulation.interface_graph import * 
-from simulation.robot import *
+from view.affichage import * 
+from modele.robot import *
 from simulation.grille import *
 
 import sys
