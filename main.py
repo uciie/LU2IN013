@@ -16,14 +16,10 @@ class App():
         arene.addRobot(robot)
 
         self.view = Affichage(arene)
-        controller = Controleur(robot, self.view, dt)
+        controller = Controleur(robot, dt)
     
-        controller.go(100, -10, 10)
         self.view.set_controller(controller)
         self.view.root.mainloop()
 
-        
-
 if __name__ == '__main__':
     app = App()
-    #app.mainloop()  
