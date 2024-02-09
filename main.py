@@ -18,17 +18,20 @@ class App():
         arene.addRobot(robot)
 
         #Creation du module View
-        view = Affichage(arene)
+        view = False #Affichage(arene)
 
         #Creation du module Controller
         controller = Controleur(robot, dt)
 
-        # Ajoute du lien de communication entre controller et view s
-        controller.set_view(view)
+        # Ajoute du lien de communication entre controller et view
     
         # Ajoute du lien de communication entre view et controller 
-        view.set_controller(controller)
-        view.root.mainloop()
+        if view :
+            controller.set_view(view)
+            view.set_controller(controller)
+            view.root.mainloop()
+        else :
+            controller.go(10, 10, -10)
 
 if __name__ == '__main__':
     app = App()
