@@ -10,16 +10,25 @@ class App():
         largeur, hauteur = 300, 300
         dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
 
+        # initilisation de l'arene et robot
         arene = Arene("Simulation de déplacement du robot", largeur, hauteur, echelle)
-
         robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, 10, 150, color="red")
+        
+        # ajouter un robot dans l'arene 
         arene.addRobot(robot)
 
-        self.view = Affichage(arene)
+        #Creation du module View
+        view = Affichage(arene)
+
+        #Creation du module Controller
         controller = Controleur(robot, dt)
+
+        # Ajoute du lien de communication entre controller et view s
+        controller.set_view(view)
     
-        self.view.set_controller(controller)
-        self.view.root.mainloop()
+        # Ajoute du lien de communication entre view et controller 
+        view.set_controller(controller)
+        view.root.mainloop()
 
 if __name__ == '__main__':
     app = App()

@@ -24,7 +24,6 @@ class Affichage():#tk.Tk):
         self.v_ang_d_var = tk.DoubleVar(value=50)
         self.v_ang_g_var = tk.DoubleVar(value=-50)
         self.distance_var = tk.DoubleVar(value=100)
-        self.angle_var = tk.DoubleVar(value=20)
 
         # Entrée pour la vitesse angulaire de roue droit
         self.v_ang_d_label = tk.Label(self.root, text="Vitesse angulaire Droite:")
@@ -43,12 +42,6 @@ class Affichage():#tk.Tk):
         self.distance_entry = tk.Entry(self.root, textvariable=self.distance_var)
         self.distance_label.grid(row=2, column=0)
         self.distance_entry.grid(row=2, column=1)
-
-        # Entrée pour l'angle
-        self.angle_label = tk.Label(self.root, text="Angle:")
-        self.angle_entry = tk.Entry(self.root, textvariable=self.angle_var)
-        self.angle_label.grid(row=3, column=0)
-        self.angle_entry.grid(row=3, column=1)
 
         # Go Button 
         self.go_button = tk.Button(self.root, text="Go", command=self.go_button_clicked)

@@ -7,10 +7,7 @@ class Arene():
         :param name: Nom de l'Arene
         :param maxX: La longeur maximale de l'Arene
         :param maxY: La largeur maximale de l'Arene
-        :param echelle: L'echelle entre le plan et le IRL
-        :param color: La couleur de l'Arene
-        :param
-        :param
+        :param echelle: L'echelle entre le plan et le IRLs
         """
         self.name = name
         self.maxX = maxX

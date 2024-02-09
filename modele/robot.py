@@ -129,46 +129,24 @@ class Robot:
 
 class Go(): 
     def __init__(self, robot: Robot, distance : int, v_ang_d, v_ang_g, dt) -> None:
-        self.robot = robot
-        self.distance = distance
-
-        self.robot.roue_droite.set_vitesse_angulaire(v_ang_d)  # Vitesse angulaire droite
-        self.robot.roue_gauche.set_vitesse_angulaire(v_ang_g)  # Vitesse angulaire gauche
-
-        self.v_ang_d, self.v_ang_g = v_ang_d, v_ang_g
-
-        self.parcouru = 0
-
-        #Coordonnee de vecteur de deplacement 
-        self.dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
-        self.dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
-        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
-
-        print("x, y", robot.vectDir.x, robot.vectDir.y)
-        print(self.distance, self.v_ang_d, self.v_ang_g, self.dOM_x, self.dOM_y)
-
-    def stop(self):
-        """ Arret
         """
-        return self.parcouru > self.distance
-
-    def step(self):
-        #Incrémenter la distance parcourru
-        self.parcouru += self.dOM.norme
-        if self.stop(): return
-        #Bouger le robot d'un dOM
-        self.robot.move_dOM(self.dOM_x, self.dOM_y)
         
-class Turn():
-    def __init__(self, robot: Robot, distance : int, v_ang_d, v_ang_g, dt) -> None:
+        :param robot: Le robot qui va faire le deplacement 
+        :param distance: La distance que le robot doit parcourir (float) 
+        :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
+        :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
+        :param dt: Le fps
+        """
         self.robot = robot
         self.distance = distance
 
+        # Modifier les vitesses angulaire les roues
         self.robot.roue_droite.set_vitesse_angulaire(v_ang_d)  # Vitesse angulaire droite
         self.robot.roue_gauche.set_vitesse_angulaire(v_ang_g)  # Vitesse angulaire gauche
 
         self.v_ang_d, self.v_ang_g = v_ang_d, v_ang_g
 
+        #compteur de distance deja parcouru
         self.parcouru = 0
 
         #Coordonnee de vecteur de deplacement 
@@ -180,11 +158,15 @@ class Turn():
         print(self.distance, self.v_ang_d, self.v_ang_g, self.dOM_x, self.dOM_y)
 
     def stop(self):
-        """ Arret
+        """ Savoir le parcour est fini ou non
+
+        :return : Retourne vrai si on fini de parcourir la distance  
         """
         return self.parcouru > self.distance
 
     def step(self):
+        """ Faire un deplacement de dOM 
+        """
         #Incrémenter la distance parcourru
         self.parcouru += self.dOM.norme
         if self.stop(): return
