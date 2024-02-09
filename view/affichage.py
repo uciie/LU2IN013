@@ -21,9 +21,9 @@ class Affichage():#tk.Tk):
         self.root.title(arene.name)
 
         # Créer des variables Tkinter pour la vitesse et la distance
-        self.v_ang_d_var = tk.DoubleVar(value=50)
-        self.v_ang_g_var = tk.DoubleVar(value=-50)
-        self.distance_var = tk.DoubleVar(value=100)
+        self.v_ang_d_var = tk.DoubleVar(value=-50)
+        self.v_ang_g_var = tk.DoubleVar(value=50)
+        self.distance_var = tk.DoubleVar(value=50)
 
         # Entrée pour la vitesse angulaire de roue droit
         self.v_ang_d_label = tk.Label(self.root, text="Vitesse angulaire Droite:")
@@ -71,9 +71,9 @@ class Affichage():#tk.Tk):
             print("reception\n")
             self.controller.go(self.distance_var.get(), self.v_ang_d_var.get(), self.v_ang_g_var.get())
 
-
     def draw_obj(self, Objet: Any) -> int:
-        """Dessine un objet sur le canevas de l'Affichage.
+        """Dessine un objet sur le canevas de l'Affichage. 
+
 
         :param Objet: Objet à dessiner.
         :returns: Identifiant unique de l'objet sur le canevas.

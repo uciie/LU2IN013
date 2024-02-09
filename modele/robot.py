@@ -108,7 +108,7 @@ class Robot:
         
         """
         print(math.fabs(self.roue_gauche.vitesse_angulaire-self.roue_droite.vitesse_angulaire))
-        return (self.roue_droite.rayon /2)* math.fabs(self.roue_gauche.vitesse_angulaire-self.roue_droite.vitesse_angulaire)
+        return (self.roue_droite.rayon /2)* (self.roue_gauche.vitesse_angulaire-self.roue_droite.vitesse_angulaire)
     
     def getVitesse_angulaire(self):
         """ Donne la vitesse angulaire du robot en fonction des vitesses angulaires des roues
@@ -129,7 +129,7 @@ class Robot:
 
 class Go(): 
     def __init__(self, robot: Robot, distance : int, v_ang_d, v_ang_g, dt) -> None:
-        """
+        """/!!\\ robot ne comprends pas distance negative
         
         :param robot: Le robot qui va faire le deplacement 
         :param distance: La distance que le robot doit parcourir (float) 
@@ -152,8 +152,10 @@ class Go():
         #Coordonnee de vecteur de deplacement 
         self.dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
         self.dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
-        self.dOM = Vecteur(self.dOM_x, self.dOM_y, self.dOM_theta)
 
+        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+
+        self.dt = dt
         print("x, y", robot.vectDir.x, robot.vectDir.y)
         print(self.distance, self.v_ang_d, self.v_ang_g, self.dOM_x, self.dOM_y)
 
@@ -170,5 +172,15 @@ class Go():
         #Incrémenter la distance parcourru
         self.parcouru += self.dOM.norme
         if self.stop(): return
+        
+        self.dOM_theta = 0
         #Bouger le robot d'un dOM
-        self.robot.move_dOM(self.dOM_x, self.dOM_y)
+        if -self.v_ang_d != self.v_ang_g: #si veut tourner 
+            self.dOM_theta = -self.robot.roue_droite.rayon*(self.v_ang_g+self.v_ang_d)/self.robot.length * self.dt
+            self.dOM_x = self.robot.vectDir.x*self.robot.vitesse()*self.dt #/robot.grille.echelle 
+            self.dOM_y = self.robot.vectDir.y*self.robot.vitesse()*self.dt #/robot.grille.echelle 
+
+            self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+
+            print(self.dOM_theta)
+        self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
