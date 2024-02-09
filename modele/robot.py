@@ -15,6 +15,7 @@ class Roue:
         self.vmax_ang = vmax_ang #rad/s
         self.vitesse_angulaire = 0.0 #rad/s
 
+
     def set_vitesse_angulaire(self, vitesse_angulaire: float):
         """Modifier la vitesse angulaire lors d'un virage 
 
@@ -37,7 +38,7 @@ class Capteur:
         self.vecteur = self.vecteur.rotation(angle)
 
 class Robot:
-    def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, capteur : Capteur , vectDir : Vecteur, rayon_roue:int , vmax_ang : float, color: str):
+    def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, rayon_roue:int , vmax_ang : float, color: str):
         """Initialisation du robot.
 
         :param name: Nom du robot (str).
@@ -62,7 +63,7 @@ class Robot:
         self.line_id = None  # Identifiant de sa tracabilite
         self.color = color  # couleur du robot
 
-        self.vectDir = vectDir
+        self.vectDir = Vecteur(0,-1) #vectDir
 
         # Dimension du robot sur la fenêtre
         self.length = dimLength  # /self.grille.echelle
@@ -81,15 +82,12 @@ class Robot:
         #self.vectDir = vectDirecteur  # on suppose qu'au début le robot est dirigé vers le haut
         self.theta = 0  # angle en degré
 
-        # Vitesse
-        self.vitesse = 5.0  # m/s
-
         # Roues du robot
         self.roue_gauche = Roue(rayon_roue, vmax_ang)
         self.roue_droite = Roue(rayon_roue, vmax_ang)
 
         # Capteur du robot
-        self.capteur = capteur
+        self.capteur = Capteur(self.vectDir)
 
     def getCurrPos(self) -> tuple[float, float]:
         """Renvoie la position actuelle du robot.
@@ -105,12 +103,19 @@ class Robot:
         """
         return (self.lastPosX, self.lastPosY)
     
+    def vitesse(self):
+        """Donne la vitesse du robot
+        
+        """
+        print(math.fabs(self.roue_gauche.vitesse_angulaire-self.roue_droite.vitesse_angulaire))
+        return (self.roue_droite.rayon /2)* math.fabs(self.roue_gauche.vitesse_angulaire-self.roue_droite.vitesse_angulaire)
+    
     def getVitesse_angulaire(self):
         """ Donne la vitesse angulaire du robot en fonction des vitesses angulaires des roues
 
         :returns: Renvoie la vitesse angulaire du robot
         """
-        return (self.roue_droite.rayon /self.length)* (math.fabs(self.roue_droite.vitesse_angulaire-self.roue_gauche.vitesse_angulaire))
+        return (self.roue_droite.rayon /self.length)* ((self.roue_droite.vitesse_angulaire-self.roue_gauche.vitesse_angulaire))
     
     def move_dOM(self, dOM_x, dOM_y, dOM_theta = 0):
         """ Robot avance d'un petit pas
@@ -121,3 +126,67 @@ class Robot:
         self.posX, self.posY = self.posX + dOM_x, self.posY + dOM_y
         self.theta = (self.theta + math.degrees(dOM_theta))%360
         self.vectDir = self.vectDir.rotation(math.degrees(dOM_theta))
+
+class Go(): 
+    def __init__(self, robot: Robot, distance : int, v_ang_d, v_ang_g, dt) -> None:
+        self.robot = robot
+        self.distance = distance
+
+        self.robot.roue_droite.set_vitesse_angulaire(v_ang_d)  # Vitesse angulaire droite
+        self.robot.roue_gauche.set_vitesse_angulaire(v_ang_g)  # Vitesse angulaire gauche
+
+        self.v_ang_d, self.v_ang_g = v_ang_d, v_ang_g
+
+        self.parcouru = 0
+
+        #Coordonnee de vecteur de deplacement 
+        self.dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
+        self.dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
+        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+
+        print("x, y", robot.vectDir.x, robot.vectDir.y)
+        print(self.distance, self.v_ang_d, self.v_ang_g, self.dOM_x, self.dOM_y)
+
+    def stop(self):
+        """ Arret
+        """
+        return self.parcouru > self.distance
+
+    def step(self):
+        #Incrémenter la distance parcourru
+        self.parcouru += self.dOM.norme
+        if self.stop(): return
+        #Bouger le robot d'un dOM
+        self.robot.move_dOM(self.dOM_x, self.dOM_y)
+        
+class Turn():
+    def __init__(self, robot: Robot, distance : int, v_ang_d, v_ang_g, dt) -> None:
+        self.robot = robot
+        self.distance = distance
+
+        self.robot.roue_droite.set_vitesse_angulaire(v_ang_d)  # Vitesse angulaire droite
+        self.robot.roue_gauche.set_vitesse_angulaire(v_ang_g)  # Vitesse angulaire gauche
+
+        self.v_ang_d, self.v_ang_g = v_ang_d, v_ang_g
+
+        self.parcouru = 0
+
+        #Coordonnee de vecteur de deplacement 
+        self.dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
+        self.dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
+        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+
+        print("x, y", robot.vectDir.x, robot.vectDir.y)
+        print(self.distance, self.v_ang_d, self.v_ang_g, self.dOM_x, self.dOM_y)
+
+    def stop(self):
+        """ Arret
+        """
+        return self.parcouru > self.distance
+
+    def step(self):
+        #Incrémenter la distance parcourru
+        self.parcouru += self.dOM.norme
+        if self.stop(): return
+        #Bouger le robot d'un dOM
+        self.robot.move_dOM(self.dOM_x, self.dOM_y)

@@ -1,7 +1,7 @@
 from .robot import Robot
     
 class Arene(): 
-    def __init__(self, name: str, maxX: int, maxY: int, echelle: float, color: str):
+    def __init__(self, name: str, maxX: int, maxY: int, echelle: float):
         """ Initisalisation d'une Arene 
         
         :param name: Nom de l'Arene
@@ -23,27 +23,8 @@ class Arene():
         # Ensemble d'obstacle dans l'Arene
         self.ensObstacles = set()
 
-        self.color = color
+        self.color = "white"
     
-    @property
-    def name(self):
-        return self.__name
-
-    @property
-    def maxX(self):
-        return self.__maxX
-    
-    @property
-    def maxY(self):
-        return self.__maxY
-    
-    @property
-    def echelle(self):
-        return self.__echelle
-    
-    @property
-    def robot(self):
-        return self.__robot
 
     def inArene(self, posX, posY):
         """ Verifie si la position (posX, posY) est dans la grille
@@ -59,4 +40,5 @@ class Arene():
         """ Ajouter un robot dans l'arene 
         
         """
-        self.robot = robot
+        if not self.robot: 
+            self.robot = robot

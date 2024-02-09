@@ -1,7 +1,0 @@
-main\_simulation module
-=======================
-
-.. automodule:: .main_simulation
-   :members:
-   :undoc-members:
-   :show-inheritance:

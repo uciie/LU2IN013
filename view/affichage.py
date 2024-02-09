@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
 from typing import Any
-from ..modele.arene import Arene
+from modele.arene import Arene
 from threading import Thread
 
-class Affichage(ttk.Frame):
+class Affichage():#tk.Tk):
     def __init__(self, arene : Arene) -> None:
         """Initialise un Affichage graphique.
 
@@ -13,6 +13,7 @@ class Affichage(ttk.Frame):
         :param height: Hauteur de l'Affichage.
         :param color: Couleur de fond de l'Affichage.
         """
+        #super().__init__()
         self.arene = arene
         self.robot = arene.robot
 
@@ -20,21 +21,21 @@ class Affichage(ttk.Frame):
         self.root.title(arene.name)
 
         # Créer des variables Tkinter pour la vitesse et la distance
-        self.v_ang_d_var = tk.DoubleVar(value=None)
-        self.v_ang_g_var = tk.DoubleVar(value=None)
-        self.distance_var = tk.DoubleVar(value=None)
-        self.angle_var = tk.DoubleVar(value=None)
+        self.v_ang_d_var = tk.DoubleVar(value=50)
+        self.v_ang_g_var = tk.DoubleVar(value=-50)
+        self.distance_var = tk.DoubleVar(value=100)
+        self.angle_var = tk.DoubleVar(value=20)
 
         # Entrée pour la vitesse angulaire de roue droit
         self.v_ang_d_label = tk.Label(self.root, text="Vitesse angulaire Droite:")
-        self.v_ang_d_var_entry = tk.Entry(self.root, textvariable=self.v_ang_d_var_var)
-        self.v_ang_d_var_label.grid(row=0, column=0)
+        self.v_ang_d_var_entry = tk.Entry(self.root, textvariable=self.v_ang_d_var)
+        self.v_ang_d_label.grid(row=0, column=0)
         self.v_ang_d_var_entry.grid(row=0, column=1)
 
         # Entrée pour la vitesse angulaire de roue gauche
         self.v_ang_g_label = tk.Label(self.root, text="Vitesse angulaire Gauche:")
-        self.v_ang_g_var_entry = tk.Entry(self.root, textvariable=self.v_ang_g_var_var)
-        self.v_ang_g_var_label.grid(row=1, column=0)
+        self.v_ang_g_var_entry = tk.Entry(self.root, textvariable=self.v_ang_g_var)
+        self.v_ang_g_label.grid(row=1, column=0)
         self.v_ang_g_var_entry.grid(row=1, column=1)
 
         # Entrée pour la distance
@@ -74,7 +75,9 @@ class Affichage(ttk.Frame):
         :return:
         """
         if self.controller:
+            print("reception\n")
             self.controller.go(self.distance_var.get(), self.v_ang_d_var.get(), self.v_ang_g_var.get())
+
 
     def draw_obj(self, Objet: Any) -> int:
         """Dessine un objet sur le canevas de l'Affichage.
@@ -130,6 +133,6 @@ class Affichage(ttk.Frame):
     def update(self):
         if self.robot.rect_id and  self.robot.arrow_id: 
             self.delete_draw(self.robot.rect_id, self.robot.arrow_id)
-        self.robot.rect_id, self.robot.arrow_id = self.draw_obj(self.robot)
         self.draw_parcours(self.robot)
+        self.robot.rect_id, self.robot.arrow_id = self.draw_obj(self.robot)
         self.root.update()
