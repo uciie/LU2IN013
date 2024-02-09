@@ -152,7 +152,7 @@ class Go():
         #Coordonnee de vecteur de deplacement 
         self.dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
         self.dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
-        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+        self.dOM = Vecteur(self.dOM_x, self.dOM_y, self.dOM_theta)
 
         print("x, y", robot.vectDir.x, robot.vectDir.y)
         print(self.distance, self.v_ang_d, self.v_ang_g, self.dOM_x, self.dOM_y)

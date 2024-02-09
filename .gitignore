@@ -1,8 +1,6 @@
 #.gitignore
 
-Robot/test_a_ignore/
-Robot/ancien_au_cas_ou/
-Robot/robot_ancienne_version/
-simulation/__pycache__
-test_unitaire/__pycache__
+modele/__pycache__
+controller/__pycache__
+view/__pycache__
 __pycache__

@@ -18,7 +18,7 @@ class App():
         arene.addRobot(robot)
 
         #Creation du module View
-        view = False #Affichage(arene)
+        view = Affichage(arene)
 
         #Creation du module Controller
         controller = Controleur(robot, dt)
@@ -30,6 +30,7 @@ class App():
             controller.set_view(view)
             view.set_controller(controller)
             view.root.mainloop()
+        # si View n'existe pas 
         else :
             controller.go(10, 10, -10)
 
