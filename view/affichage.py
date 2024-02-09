@@ -4,7 +4,7 @@ from typing import Any
 from modele.arene import Arene
 from threading import Thread
 
-class Affichage():#tk.Tk):
+class Affichage():
     def __init__(self, arene : Arene) -> None:
         """Initialise un Affichage graphique.
 
@@ -13,7 +13,6 @@ class Affichage():#tk.Tk):
         :param height: Hauteur de l'Affichage.
         :param color: Couleur de fond de l'Affichage.
         """
-        #super().__init__()
         self.arene = arene
         self.robot = arene.robot
 
