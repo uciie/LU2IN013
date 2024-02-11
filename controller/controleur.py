@@ -1,7 +1,7 @@
 from time import sleep
 from modele.robot import *
 from view.affichage import *
-
+import math
 class Controleur:
     def __init__(self, robot: Robot, dt):
         """
@@ -60,7 +60,7 @@ class Controleur:
                 self.view.update()
             sleep(self.dt)
 
-    def tourner_gauche(self, v_ang_d):
+    def tourner_droite(self, v_ang_d):
         """ Faire tourner le robot vers la droite
 
         :param distance: La distance que le robot doit parcourir (float) 
@@ -80,7 +80,17 @@ class Controleur:
     def tracer_carre(self, distance, v_ang_d, v_ang_g):
         """ Faire un carrée avec le robot
 
-        :param distance: La distance que le robot doit parcourir (float)
+        :param distance: La distance que le robot doit parcourir, 
+        dans notre cas la longueur du carré (float)
         :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
         :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
         """
+        # On calcule la distance pour faire une rotation de 90 degrés
+        distance_rotation = (self.robot.width * math.pi)/4
+
+        for i in range(4):
+            #On avance jusqu'à la longueur du carré
+            self.go(distance, v_ang_d, v_ang_g)
+            # On tourne de 90 degrés vers la droite
+            self.tourner_droite(distance_rotation,v_ang_d)
+
