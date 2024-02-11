@@ -47,11 +47,27 @@ class Controleur:
         """ Faire tourner le robot vers la gauche
 
         :param distance: La distance que le robot doit parcourir (float) 
-        :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
         :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
         """
         print("gauche GO\n")
         mouvement = Go(self.robot,distance, 0, v_ang_g, self.dt)
+
+        # Boucle pour avancer le robot jusqu'à ce qu'il atteigne la distance spécifiée
+        while not mouvement.stop():
+            mouvement.step()
+            print(self.robot.posX, self.robot.posY, self.robot.roue_droite.vitesse_angulaire, self.robot.roue_gauche.vitesse_angulaire)
+            if self.view: # si on a un module View
+                self.view.update()
+            sleep(self.dt)
+
+    def tourner_gauche(self, v_ang_d):
+        """ Faire tourner le robot vers la droite
+
+        :param distance: La distance que le robot doit parcourir (float) 
+        :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
+        """
+        print("droite GO\n")
+        mouvement = Go(self.robot,distance, v_ang_d, 0, self.dt)
 
         # Boucle pour avancer le robot jusqu'à ce qu'il atteigne la distance spécifiée
         while not mouvement.stop():
