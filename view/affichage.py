@@ -19,10 +19,15 @@ class Affichage():
         self.root = tk.Tk()
         self.root.title(arene.name)
 
+        # Set the initial values for the variables
+        self.initial_v_ang_d = -50
+        self.initial_v_ang_g = 50
+        self.initial_distance = 50
+
         # Créer des variables Tkinter pour la vitesse et la distance
-        self.v_ang_d_var = tk.DoubleVar(value=-50)
-        self.v_ang_g_var = tk.DoubleVar(value=50)
-        self.distance_var = tk.DoubleVar(value=50)
+        self.v_ang_d_var = tk.DoubleVar(value=self.initial_v_ang_d)
+        self.v_ang_g_var = tk.DoubleVar(value=self.initial_v_ang_g)
+        self.distance_var = tk.DoubleVar(value=self.initial_distance)
 
         # Entrée pour la vitesse angulaire de roue droit
         self.v_ang_d_label = tk.Label(self.root, text="Vitesse angulaire Droite:")
@@ -46,6 +51,10 @@ class Affichage():
         self.go_button = tk.Button(self.root, text="Go", command=self.go_button_clicked)
         self.go_button.grid(row=5, column=0)
 
+        # Reset Button 
+        self.reset_button = tk.Button(self.root, text="Reset", command=self.reset_button_clicked)
+        self.reset_button.grid(row=6, column=0)
+
         self.canvas = tk.Canvas(self.root, width=self.arene.maxX, height=self.arene.maxY, bg=self.arene.color)
         self.canvas.grid(row=4, column=0, columnspan=2)
         #self.canvas.pack()
@@ -61,10 +70,14 @@ class Affichage():
         """
         self.controller = controller
 
+    def reset_button_clicked(self):
+        """ remettre à zero l'interface graphique 
+        """
+        new_affichage = Affichage(self.arene)
+        self.controller.set_view(new_affichage)
+
     def go_button_clicked(self):
         """ Handle go button click
-
-        :return:
         """
         if self.controller:
             print("reception\n")

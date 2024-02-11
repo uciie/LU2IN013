@@ -23,7 +23,17 @@ class Controleur:
         
         :param view: Le module View
         """
+        if self.view : 
+            self.reset_robot()
+            self.view.root.destroy()  # Destroy the current window
         self.view = view
+        self.view.set_controller(self)
+
+    def reset_robot(self):
+        """ Mettre robot au mileu du plan
+        """
+        self.robot.vectDir = Vecteur(0, -1)
+        self.robot.posX, self.robot.posY = self.view.arene.maxX/2, self.view.arene.maxY /2
 
     def go(self, distance, v_ang_d, v_ang_g):
         """ Faire avancer le robot 
