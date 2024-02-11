@@ -53,7 +53,7 @@ class Controleur:
                 self.view.update()
             sleep(self.dt)
 
-    def tourner_gauche(self, v_ang_g):
+    def tourner_gauche(self, distance, v_ang_g):
         """ Faire tourner le robot vers la gauche
 
         :param distance: La distance que le robot doit parcourir (float) 
@@ -70,7 +70,7 @@ class Controleur:
                 self.view.update()
             sleep(self.dt)
 
-    def tourner_droite(self, v_ang_d):
+    def tourner_droite(self, distance, v_ang_d):
         """ Faire tourner le robot vers la droite
 
         :param distance: La distance que le robot doit parcourir (float) 
