@@ -134,3 +134,16 @@ class Tracer_carre():
                         ,Go(self.robot, self.distance, v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
                         ,Go(self.robot, self.distance, v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
                         ,]
+        self.cur = -1
+    
+    def step(self):
+        """Fait avancer le traçage du carré
+        """
+        if self.stop(): return
+
+        #Avance d'une étape
+        if self.cur <0 or self.etapes[self.cur].stop():
+            self.cur+=1
+        
+        #Exécute l'étape
+        self.etapes[self.cur].step()
