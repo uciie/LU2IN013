@@ -51,7 +51,7 @@ class Controleur:
         d = self.robot.capteur.raytracing(self.robot, self.view.arene.maxX, self.view.arene.maxY)
 
         # Boucle pour avancer le robot jusqu'à ce qu'il atteigne la distance spécifiée
-        while not mouvement.stop() or d == 0:
+        while not mouvement.stop() and d == 0:
             d = self.robot.capteur.raytracing(self.robot, self.view.arene.maxX, self.view.arene.maxY)
             mouvement.step()
             print(self.robot.posX, self.robot.posY, self.robot.roue_droite.vitesse_angulaire, self.robot.roue_gauche.vitesse_angulaire)
@@ -68,7 +68,7 @@ class Controleur:
             print("gauche GO\n")
         else:
             print("droite GO\n")
-        mouvement = Tourner(self, angle, v_ang, self.dt)
+        mouvement = Tourner_deg(self, self.robot, angle, v_ang, self.dt)
 
         #Savoir si on a un obstacle devant robot
         d = self.robot.capteur.raytracing(self.robot, self.view.arene.maxX, self.view.arene.maxY)
