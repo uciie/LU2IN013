@@ -72,9 +72,9 @@ class Tourner_deg():
 
         # Modifier les vitesses angulaire les roues
         if angle > 0:
-            self.robot.roue_droite.set_vitesse_angulaire(v_ang)  # Vitesse angulaire droite
+            self.robot.roue_droite.set_vitesse_angulaire(-v_ang)  # Vitesse angulaire droite
             self.robot.roue_gauche.set_vitesse_angulaire(0)  # Vitesse angulaire gauche
-            self.v_ang_d, self.v_ang_g = v_ang, 0
+            self.v_ang_d, self.v_ang_g = -v_ang, 0
         else:
             self.robot.roue_droite.set_vitesse_angulaire(0)  # Vitesse angulaire droite
             self.robot.roue_gauche.set_vitesse_angulaire(v_ang) 
@@ -98,13 +98,14 @@ class Tourner_deg():
 
         :return : Retourne vrai si on fini de parcourir la distance  
         """
-        return self.parcouru > self.angle
+        return self.parcouru == self.angle
 
     def step(self):
         """ Faire un deplacement de dOM 
         """
         #Incrémenter la distance parcourru
-        self.parcouru += self.dOM_theta
+        self.parcouru += -self.robot.roue_droite.rayon*(self.v_ang_g+self.v_ang_d)/self.robot.length * self.dt
+        print("PARCOURU",self.parcouru)
         if self.stop(): return
         
         self.dOM_theta = 0
@@ -116,7 +117,7 @@ class Tourner_deg():
 
             self.dOM = Vecteur(self.dOM_x, self.dOM_y)
 
-            print(self.dOM_theta)
+            print("THETA",self.dOM_theta)
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
 class Tracer_carre():
