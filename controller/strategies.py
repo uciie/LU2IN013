@@ -62,7 +62,7 @@ class Go():
 class Tourner_deg(): 
     def __init__(self, robot: Robot,  angle : int, v_ang, dt) -> None:
         """"
-        :param controleur: Le controleur qui donne l'ordre 
+        :param robot: Le controleur qui donne l'ordre 
         :param angle: L'angle que le robot doit parcourir (float) 
         :param v_ang: La vitesse angulaire de la roue droite ou gauche du robot en rad/s 
         :param dt: Le fps
@@ -118,3 +118,43 @@ class Tourner_deg():
 
             print(self.dOM_theta)
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
+
+class Tracer_carre():
+    def __init__(self, robot : Robot, distance : int, v_ang : float, dt):
+        """Trace un carré
+        :param robot: Le robot qui reçoit l'ordre
+        :param distance: La distance que le robot parcours, dans notre cas longueur du carré
+        :param vang: La vitesse angulaire des roues du robot
+        """
+
+        #Longueur/Distance du carré
+        self.distance = distance
+        self.robot = robot
+
+        #Vitesse angulaire des roues pour tracer le carré
+        self.v_ang = v_ang
+
+        #Les étapes à faire
+        self.etapes = [Go(self.robot, self.distance, v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
+                        ,Go(self.robot, self.distance, v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
+                        ,Go(self.robot, self.distance, v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
+                        ,Go(self.robot, self.distance, v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
+                        ,]
+        self.cur = -1
+    
+    def step(self):
+        """Fait avancer le traçage du carré
+        """
+        if self.stop(): return
+
+        #Avance d'une étape
+        if self.cur <0 or self.etapes[self.cur].stop():
+            self.cur+=1
+        
+        #Exécute l'étape
+        self.etapes[self.cur].step()
+    
+    def stop():
+        """Vérifie si toutes les étapes sont terminées
+        """
+        return self.cur == len(self.etapes)-1 and self.etapes[self.cur].stop()

@@ -23,42 +23,7 @@ class Roue:
         """
         self.vitesse_angulaire = min(vitesse_angulaire, self.vmax_ang)
 
-class Capteur:
-    def __init__(self, vecteur : Vecteur):
-        """Initialisation du capteur
 
-        :param vecteur : Vecteur directeur envoyé
-        :param vitesse : Vitesse du rayon
-        :returns : Retourne une instance de la classe Capteur
-        """
-        # Vecteur directeur
-        self.vecteur = vecteur
-
-    def rotation(self, angle):
-        self.vecteur = self.vecteur.rotation(angle)
-    
-    def raytracing(capteur : Capteur, robot : Robot, maxX : int, maxY : int):
-        """Renvoie la distance de l'obstacle devant le capteur
-    
-        :param capteur : Capteur
-        :param robot: Robot
-        :param interface: Interface
-        :returns : Distance entre le capteur et l'obstacle
-        """
-
-        #Initialisation des coordonnées
-        coordonnee_x = robot.posX
-        coordonnee_y = robot.posY
-        nb_rayons = 0
-
-        #Envoie un vecteur tant qu'il n'y a pas d'obstacle
-        while(coordonnee_x > maxX or coordonnee_y > maxY or coordonnee_x<0 or coordonnee_y<0):
-            coordonnee_x += capteur.vecteur.x
-            coordonnee_y += capteur.vecteur.y
-            nb_rayons+=1
-    
-        #Renvoie la distance entre robot et obstacle 
-        return capteur.vecteur.norme * nb_rayons
 
 class Robot:
     def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, rayon_roue:int , vmax_ang : float, color: str):
@@ -150,60 +115,39 @@ class Robot:
         self.theta = (self.theta + math.degrees(dOM_theta))%360
         self.vectDir = self.vectDir.rotation(math.degrees(dOM_theta))
 
-class Go(): 
-    def __init__(self, robot: Robot, distance : int, v_ang_d, v_ang_g, dt) -> None:
-        """/!!\\ robot ne comprends pas distance negative
-        
-        :param robot: Le robot qui va faire le deplacement 
-        :param distance: La distance que le robot doit parcourir (float) 
-        :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
-        :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
-        :param dt: Le fps
+class Capteur:
+    def __init__(self, vecteur : Vecteur):
+        """Initialisation du capteur
+
+        :param vecteur : Vecteur directeur envoyé
+        :param vitesse : Vitesse du rayon
+        :returns : Retourne une instance de la classe Capteur
         """
-        self.robot = robot
-        self.distance = distance
+        # Vecteur directeur
+        self.vecteur = vecteur
 
-        # Modifier les vitesses angulaire les roues
-        self.robot.roue_droite.set_vitesse_angulaire(v_ang_d)  # Vitesse angulaire droite
-        self.robot.roue_gauche.set_vitesse_angulaire(v_ang_g)  # Vitesse angulaire gauche
-
-        self.v_ang_d, self.v_ang_g = v_ang_d, v_ang_g
-
-        #compteur de distance deja parcouru
-        self.parcouru = 0
-
-        #Coordonnee de vecteur de deplacement 
-        self.dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
-        self.dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
-
-        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
-
-        self.dt = dt
-        print("x, y", robot.vectDir.x, robot.vectDir.y)
-        print(self.distance, self.v_ang_d, self.v_ang_g, self.dOM_x, self.dOM_y)
-
-    def stop(self):
-        """ Savoir le parcour est fini ou non
-
-        :return : Retourne vrai si on fini de parcourir la distance  
+    def rotation(self, angle):
+        self.vecteur = self.vecteur.rotation(angle)
+    
+    def raytracing(self, robot : Robot, maxX : int, maxY : int):
+        """Renvoie la distance de l'obstacle devant le capteur
+    
+        :param capteur : Capteur
+        :param robot: Robot
+        :param interface: Interface
+        :returns : Distance entre le capteur et l'obstacle
         """
-        return self.parcouru > self.distance
 
-    def step(self):
-        """ Faire un deplacement de dOM 
-        """
-        #Incrémenter la distance parcourru
-        self.parcouru += self.dOM.norme
-        if self.stop(): return
-        
-        self.dOM_theta = 0
-        #Bouger le robot d'un dOM
-        if -self.v_ang_d != self.v_ang_g: #si veut tourner 
-            self.dOM_theta = -self.robot.roue_droite.rayon*(self.v_ang_g+self.v_ang_d)/self.robot.length * self.dt
-            self.dOM_x = self.robot.vectDir.x*self.robot.vitesse()*self.dt #/robot.grille.echelle 
-            self.dOM_y = self.robot.vectDir.y*self.robot.vitesse()*self.dt #/robot.grille.echelle 
+        #Initialisation des coordonnées
+        coordonnee_x = robot.posX
+        coordonnee_y = robot.posY
+        nb_rayons = 0
 
-            self.dOM = Vecteur(self.dOM_x, self.dOM_y)
-
-            print(self.dOM_theta)
-        self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
+        #Envoie un vecteur tant qu'il n'y a pas d'obstacle
+        while(coordonnee_x > maxX or coordonnee_y > maxY or coordonnee_x<0 or coordonnee_y<0):
+            coordonnee_x += self.vecteur.x
+            coordonnee_y += self.vecteur.y
+            nb_rayons+=1
+    
+        #Renvoie la distance entre robot et obstacle 
+        return self.vecteur.norme * nb_rayons
