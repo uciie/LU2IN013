@@ -68,7 +68,7 @@ class Controleur:
             print("gauche GO\n")
         else:
             print("droite GO\n")
-        mouvement = Tourner(self, angle, v_ang, self.dt)
+        mouvement = Tourner_deg(self.robot, angle, v_ang, self.dt)
 
         #Savoir si on a un obstacle devant robot
         d = self.robot.capteur.raytracing(self.robot, self.view.arene.maxX, self.view.arene.maxY)
