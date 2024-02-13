@@ -31,6 +31,13 @@ class Go():
         self.dt = dt
         print("x, y", robot.vectDir.x, robot.vectDir.y)
         print(self.distance, self.v_ang_d, self.v_ang_g, self.dOM_x, self.dOM_y)
+    
+    def actualise(self, robot : Robot, dt):
+        self.robot = robot
+        self.dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
+        self.dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
+        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+
 
     def stop(self):
         """ Savoir le parcour est fini ou non
@@ -103,12 +110,14 @@ class Tourner_deg():
         else:
             return self.parcouru < self.angle
 
+    def actualise(self, robot : Robot, dt):
+        return        
     def step(self):
         """ Faire un deplacement de dOM 
         """
         #Incrémenter la distance parcourru
         self.parcouru += (-self.robot.roue_droite.rayon*(self.v_ang_g+self.v_ang_d)/self.robot.length * self.dt)*180/math.pi
-        print("PARCOURU",self.parcouru)
+
         if self.stop(): return
         
         self.dOM_theta = 0
@@ -120,7 +129,6 @@ class Tourner_deg():
 
             self.dOM = Vecteur(self.dOM_x, self.dOM_y)
 
-            print("THETA",self.dOM_theta)
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
 class Tracer_carre():
@@ -134,27 +142,27 @@ class Tracer_carre():
         #Longueur/Distance du carré
         self.distance = distance
         self.robot = robot
-
+        self.dt =dt
         #Vitesse angulaire des roues pour tracer le carré
         self.v_ang = v_ang
 
         #Les étapes à faire
-        self.etapes = [Go(self.robot, self.distance, -v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt),
-                        Go(self.robot, 0, -v_ang, v_ang, dt)
-                        ,Go(self.robot, self.distance, -v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
-                        ,Go(self.robot, self.distance, -v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
-                        ,Go(self.robot, self.distance, -v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
-                        ,]
+        self.etapes = [Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt), 
+                    Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt),
+                    Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt),
+                    Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt)]
         self.cur = -1
     
     def step(self):
         """Fait avancer le traçage du carré
         """
         if self.stop(): return
-        print("CURRENT : ",self.cur)
         #Avance d'une étape
         if self.cur <0 or self.etapes[self.cur].stop():
             self.cur+=1
+            self.etapes[self.cur].actualise(self.robot, self.dt)
+
+
         
         #Exécute l'étape
         self.etapes[self.cur].step()

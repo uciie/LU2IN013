@@ -93,6 +93,7 @@ class Controleur:
         while not mouvement.stop():
             #if mouvement.etapes[mouvement.cur]
             mouvement.step()
+            print("VECTEUR DIR :",self.robot.vectDir.x, self.robot.vectDir.y)
             #print(self.robot.posX, self.robot.posY, self.robot.roue_droite.vitesse_angulaire, self.robot.roue_gauche.vitesse_angulaire)
             if self.view: # si on a un module View
                 self.view.update()
