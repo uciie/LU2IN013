@@ -42,20 +42,6 @@ class TestVecteur(unittest.TestCase):
         self.assertEqual(vecteur_rotation.x, -3)
         self.assertEqual(vecteur_rotation.y, 2)
 
-    def test_get_coordonnees(self):
-        """
-        Teste la récupération des coordonnées d'un vecteur.
-        """
-        coordonnees = self.v1.getCoor()
-        self.assertEqual(coordonnees, (2, 3))
-
-    def test_produit_scalaire(self):
-        """
-        Teste le produit scalaire entre deux vecteurs.
-        """
-        produit_scalaire = self.v1.produit_scalaire(self.v2)
-        self.assertEqual(produit_scalaire, 14)
-
     def test_equals(self):
         """
         Teste l'égalité de deux vecteurs.

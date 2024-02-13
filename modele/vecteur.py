@@ -61,21 +61,6 @@ class Vecteur():
         """
         return 1/(math.cos(self.x/self.norme))
     
-    def getCoor(self) -> tuple[int, int]:
-        """ Renvoie les coordonnées du vecteur sous forme de tuple.
-
-        :returns: tuple (int, ints) représentant les coordonnées (x, y) du vecteur.
-        """
-        return (self.x, self.y)
-    
-    def produit_scalaire(self, autre_vecteur: 'Vecteur') -> float:
-        """ Calcule le produit scalaire entre deux vecteurs.
-
-        :param autre_vecteur: Vecteur avec lequel calculer le produit scalaire.
-        :returns: Valeur du produit scalaire entre le vecteur self et le vecteur en paramètre.
-        """
-        return self.x * autre_vecteur.x + self.y * autre_vecteur.y
-    
     def equals(self, autre_vecteur: 'Vecteur') -> bool:
         """ Vérifie l'égalité entre deux vecteurs.
 
