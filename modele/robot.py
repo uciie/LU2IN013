@@ -139,15 +139,16 @@ class Capteur:
         """
 
         #Initialisation des coordonnées
-        coordonnee_x = robot.posX
-        coordonnee_y = robot.posY
-        nb_rayons = 0
+        coordonnee_x = robot.posX + self.vecteur.x
+        coordonnee_y = robot.posY + self.vecteur.y
+        nb_rayons = 1
 
-        #Envoie un vecteur tant qu'il n'y a pas d'obstacle
-        while(coordonnee_x > maxX or coordonnee_y > maxY or coordonnee_x<0 or coordonnee_y<0):
+        #Envoie un vecteur tant qu'il n'y a pas d'obstacles
+        while(0 <= coordonnee_x < maxX and 0 <= coordonnee_y < maxY):
             coordonnee_x += self.vecteur.x
             coordonnee_y += self.vecteur.y
             nb_rayons+=1
-    
+            
+        nb_rayons -=1
         #Renvoie la distance entre robot et obstacle 
-        return self.vecteur.norme * nb_rayons
+        return self.vecteur.norme * nb_rayons # + robot.length/2
