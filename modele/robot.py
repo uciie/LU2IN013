@@ -114,7 +114,7 @@ class Robot:
         self.posX, self.posY = self.posX + dOM_x, self.posY + dOM_y
         self.theta = (self.theta + math.degrees(dOM_theta))%360
         self.vectDir = self.vectDir.rotation(math.degrees(dOM_theta))
-        
+
 class Capteur:
     def __init__(self, vecteur : Vecteur):
         """Initialisation du capteur
@@ -145,9 +145,9 @@ class Capteur:
 
         #Envoie un vecteur tant qu'il n'y a pas d'obstacle
         while(coordonnee_x > maxX or coordonnee_y > maxY or coordonnee_x<0 or coordonnee_y<0):
-            coordonnee_x += capteur.vecteur.x
-            coordonnee_y += capteur.vecteur.y
+            coordonnee_x += self.vecteur.x
+            coordonnee_y += self.vecteur.y
             nb_rayons+=1
     
         #Renvoie la distance entre robot et obstacle 
-        return capteur.vecteur.norme * nb_rayons
+        return self.vecteur.norme * nb_rayons
