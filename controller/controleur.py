@@ -55,54 +55,66 @@ class Controleur:
                 self.view.update()
             sleep(self.dt)
 
-    def tourner_gauche(self, distance, v_ang_g):
-        """ Faire tourner le robot vers la gauche
 
-        :param distance: La distance que le robot doit parcourir (float) 
-        :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
-        """
-        print("gauche GO\n")
-        mouvement = Go(self.robot,distance, 0, v_ang_g, self.dt)
-
-        # Boucle pour avancer le robot jusqu'à ce qu'il atteigne la distance spécifiée
-        while not mouvement.stop():
-            mouvement.step()
-            print(self.robot.posX, self.robot.posY, self.robot.roue_droite.vitesse_angulaire, self.robot.roue_gauche.vitesse_angulaire)
-            if self.view: # si on a un module View
-                self.view.update()
-            sleep(self.dt)
-
-    def tourner_droite(self, distance, v_ang_d):
-        """ Faire tourner le robot vers la droite
-
+class Tourner(): 
+    def __init__(self, controleur : Controleur, angle : int, v_ang, dt) -> None:
+        """/!!\\ robot ne comprends pas distance negative
+        
+        :param robot: Le robot qui va faire le deplacement 
         :param distance: La distance que le robot doit parcourir (float) 
         :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
-        """
-        print("droite GO\n")
-        mouvement = Go(self.robot,distance, v_ang_d, 0, self.dt)
-
-        # Boucle pour avancer le robot jusqu'à ce qu'il atteigne la distance spécifiée
-        while not mouvement.stop():
-            mouvement.step()
-            print(self.robot.posX, self.robot.posY, self.robot.roue_droite.vitesse_angulaire, self.robot.roue_gauche.vitesse_angulaire)
-            if self.view: # si on a un module View
-                self.view.update()
-            sleep(self.dt)
-    
-    def tracer_carre(self, distance, v_ang_d, v_ang_g):
-        """ Faire un carrée avec le robot
-
-        :param distance: La distance que le robot doit parcourir, 
-        dans notre cas la longueur du carré (float)
-        :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
         :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
+        :param dt: Le fps
         """
-        # On calcule la distance pour faire une rotation de 90 degrés
-        distance_rotation = (self.robot.width * math.pi)/4
+        self.controleur = controleur
+        self.angle = angle
 
-        for i in range(4):
-            #On avance jusqu'à la longueur du carré
-            self.go(distance, v_ang_d, v_ang_g)
-            # On tourne de 90 degrés vers la droite
-            self.tourner_droite(distance_rotation,v_ang_d)
+        # Modifier les vitesses angulaire les roues
+        if angle > 0:
+            self.controleur.robot.roue_droite.set_vitesse_angulaire(v_ang)  # Vitesse angulaire droite
+            self.controleur.robot.roue_gauche.set_vitesse_angulaire(0)  # Vitesse angulaire gauche
+            self.v_ang_d, self.v_ang_g = v_ang, 0
+        else:
+            self.controleur.robot.roue_droite.set_vitesse_angulaire(0)  # Vitesse angulaire droite
+            self.controleur.robot.roue_gauche.set_vitesse_angulaire(v_ang) 
+            self.v_ang_d, self.v_ang_g = 0, v_ang
+
+        #compteur de distance deja parcouru
+        self.parcouru = 0
+
+        #Coordonnee de vecteur de deplacement 
+        self.dOM_x = controleur.robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
+        self.dOM_y = controleur.robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
+
+        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+
+        self.dt = dt
+        print("x, y", robot.vectDir.x, robot.vectDir.y)
+        print(self.angle, self.v_ang_d, self.v_ang_g, self.dOM_x, self.dOM_y)
+
+    def stop(self):
+        """ Savoir le parcour est fini ou non
+
+        :return : Retourne vrai si on fini de parcourir la distance  
+        """
+        return self.parcouru > self.angle
+
+    def step(self):
+        """ Faire un deplacement de dOM 
+        """
+        #Incrémenter la distance parcourru
+        self.parcouru += self.dOM_theta
+        if self.stop(): return
+        
+        self.dOM_theta = 0
+        #Bouger le robot d'un dOM
+        if -self.v_ang_d != self.v_ang_g: #si veut tourner 
+            self.dOM_theta = -self.robot.roue_droite.rayon*(self.v_ang_g+self.v_ang_d)/self.robot.length * self.dt
+            self.dOM_x = self.robot.vectDir.x*self.robot.vitesse()*self.dt #/robot.grille.echelle 
+            self.dOM_y = self.robot.vectDir.y*self.robot.vitesse()*self.dt #/robot.grille.echelle 
+
+            self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+
+            print(self.dOM_theta)
+        self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
