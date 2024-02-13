@@ -91,9 +91,12 @@ class TestCapteur(unittest.TestCase):
         """ Teste du capteur de distance 
         """
         maxX, maxY = 10, 10
-        r = Robot("r", 5, 5 ,2, 2, 10, 10, "red")
-        distance = self.cap1.raytracing(r, maxX, maxY)
-        self.assertEqual(distance, 5)
+        r1 = Robot("r", 5, 1 ,2, 2, 10, 10, "red")
+        r2 = Robot("r", 5, 5 ,2, 2, 10, 10, "red")
+        distance1 = self.cap1.raytracing(r1, maxX, maxY)
+        distance2 = self.cap1.raytracing(r2, maxX, maxY)
+        self.assertEqual(distance1, 1)
+        self.assertEqual(distance2, 5)
 
         
     
