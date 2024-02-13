@@ -120,9 +120,17 @@ class Tourner_deg():
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
 class Tracer_carre():
-    def __init__(self, robot : Robot, distance : int, v_ang : float):
+    def __init__(self, robot : Robot, distance : int, v_ang : float, dt):
         """Trace un carré
         :param robot: Le robot qui reçoit l'ordre
         :param distance: La distance que le robot parcours, dans notre cas longueur du carré
         :param vang: La vitesse angulaire des roues du robot
         """
+        self.distance = distance
+        self.robot = robot
+        self.v_ang = v_ang
+        self.etapes = [Go(self.robot, self.distance, v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
+                        ,Go(self.robot, self.distance, v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
+                        ,Go(self.robot, self.distance, v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
+                        ,Go(self.robot, self.distance, v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
+                        ,]
