@@ -59,6 +59,9 @@ class Affichage():
         self.go_button = tk.Button(self.root, text="Go", command=self.go_button_clicked)
         self.go_button.grid(row=5, column=0)
 
+        # Bouton tourner en angle
+        self.turn_button = tk.Button(self.root, text="Tourner", command=self.go_button_clicked)
+        self.turn_button.grid(row=5,column=1)
         # Reset Button 
         self.reset_button = tk.Button(self.root, text="Reset", command=self.reset_button_clicked)
         self.reset_button.grid(row=6, column=0)
