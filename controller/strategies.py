@@ -1,5 +1,5 @@
 from modele.robot import * 
-
+import math
 class Go(): 
     def __init__(self, robot: Robot, distance : int, v_ang_d, v_ang_g, dt) -> None:
         """/!!\\ robot ne comprends pas distance negative
@@ -98,13 +98,16 @@ class Tourner_deg():
 
         :return : Retourne vrai si on fini de parcourir la distance  
         """
-        return self.parcouru == self.angle
+        if self.angle > 0:
+            return self.parcouru > self.angle
+        else:
+            return self.parcouru < self.angle
 
     def step(self):
         """ Faire un deplacement de dOM 
         """
         #Incrémenter la distance parcourru
-        self.parcouru += -self.robot.roue_droite.rayon*(self.v_ang_g+self.v_ang_d)/self.robot.length * self.dt
+        self.parcouru += (-self.robot.roue_droite.rayon*(self.v_ang_g+self.v_ang_d)/self.robot.length * self.dt)*180/math.pi
         print("PARCOURU",self.parcouru)
         if self.stop(): return
         
