@@ -115,7 +115,7 @@ class Affichage():
             self.controller.tourner(self.angle_var.get(), self.v_ang_var.get())
     
     def tracer_carre_button_clicked(self):
-        """ Handle turn button click
+        """ Handle tracer_carre button click
         """
         if self.controller:
             print("reception\n")
