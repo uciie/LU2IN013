@@ -71,6 +71,10 @@ class Affichage():
         self.turn_button = tk.Button(self.root, text="Tourner", command=self.turn_button_clicked)
         self.turn_button.grid(row=5,column=1)
 
+        # Bouton tracer carré
+        self.tracer_carre = tk.Button(self.root, text="Tracer carré", command=self.tracer_carre_button_clicked)
+        self.tracer_carre.grid(row=6,column=1)
+
         # Reset Button 
         self.reset_button = tk.Button(self.root, text="Reset", command=self.reset_button_clicked)
         self.reset_button.grid(row=6, column=0)
@@ -109,6 +113,13 @@ class Affichage():
         if self.controller:
             print("reception\n")
             self.controller.tourner(self.angle_var.get(), self.v_ang_var.get())
+    
+    def tracer_carre_button_clicked(self):
+        """ Handle turn button click
+        """
+        if self.controller:
+            print("reception\n")
+            self.controller.tracer_carre(self.distance_var.get(), self.v_ang_var.get())
 
     def draw_obj(self, Objet: Any) -> int:
         """Dessine un objet sur le canevas de l'Affichage. 
