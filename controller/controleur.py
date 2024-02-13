@@ -58,12 +58,11 @@ class Controleur:
 
 class Tourner(): 
     def __init__(self, controleur : Controleur, angle : int, v_ang, dt) -> None:
-        """/!!\\ robot ne comprends pas distance negative
+        """
         
-        :param robot: Le robot qui va faire le deplacement 
-        :param distance: La distance que le robot doit parcourir (float) 
-        :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
-        :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
+        :param controleur: Le controleur qui donne l'ordre 
+        :param angle: L'angle que le robot doit parcourir (float) 
+        :param v_ang: La vitesse angulaire de la roue droite ou gauche du robot en rad/s 
         :param dt: Le fps
         """
         self.controleur = controleur
@@ -79,7 +78,7 @@ class Tourner():
             self.controleur.robot.roue_gauche.set_vitesse_angulaire(v_ang) 
             self.v_ang_d, self.v_ang_g = 0, v_ang
 
-        #compteur de distance deja parcouru
+        #compteur d'angle deja parcouru
         self.parcouru = 0
 
         #Coordonnee de vecteur de deplacement 
@@ -93,7 +92,7 @@ class Tourner():
         print(self.angle, self.v_ang_d, self.v_ang_g, self.dOM_x, self.dOM_y)
 
     def stop(self):
-        """ Savoir le parcour est fini ou non
+        """ Savoir le parcours est fini ou non
 
         :return : Retourne vrai si on fini de parcourir la distance  
         """
