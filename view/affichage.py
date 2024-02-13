@@ -22,11 +22,13 @@ class Affichage():
         # Set the initial values for the variables
         self.initial_v_ang_d = -50
         self.initial_v_ang_g = 50
+        self.initial_v_ang = 50
         self.initial_distance = 50
 
         # Créer des variables Tkinter pour la vitesse et la distance
         self.v_ang_d_var = tk.DoubleVar(value=self.initial_v_ang_d)
         self.v_ang_g_var = tk.DoubleVar(value=self.initial_v_ang_g)
+        self.v_ang = tk.DoubleVar(value=self.initial_v_ang)
         self.distance_var = tk.DoubleVar(value=self.initial_distance)
 
         # Entrée pour la vitesse angulaire de roue droit
@@ -40,6 +42,12 @@ class Affichage():
         self.v_ang_g_var_entry = tk.Entry(self.root, textvariable=self.v_ang_g_var)
         self.v_ang_g_label.grid(row=1, column=0)
         self.v_ang_g_var_entry.grid(row=1, column=1)
+
+        #Entrée pour la vitesse de rotation
+        self.v_ang_label = tk.Label(self.root, text = "Vitesse angulaire pour la rotation:")
+        self.v_ang_var_entry = tk.Entry(self.root, textvariable=self.v_ang)
+        self.v_ang_label.grid(row=3, column=0)
+        self.v_ang_var_entry.grid(row=3, column=1)
 
         # Entrée pour la distance
         self.distance_label = tk.Label(self.root, text="Distance:")
