@@ -90,10 +90,10 @@ class Controleur:
 
         mouvement = Tracer_carre(self.robot, distance, v_ang, self.dt)
 
-        while not mouvement.stop:
+        while not mouvement.stop():
             #if mouvement.etapes[mouvement.cur]
             mouvement.step()
-            print(self.robot.posX, self.robot.posY, self.robot.roue_droite.vitesse_angulaire, self.robot.roue_gauche.vitesse_angulaire)
+            #print(self.robot.posX, self.robot.posY, self.robot.roue_droite.vitesse_angulaire, self.robot.roue_gauche.vitesse_angulaire)
             if self.view: # si on a un module View
                 self.view.update()
             sleep(self.dt)
