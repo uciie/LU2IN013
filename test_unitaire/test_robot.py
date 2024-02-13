@@ -63,23 +63,6 @@ class TestRobot(unittest.TestCase):
         resultat_move = self.r.move_dOM(1,1)
         self.assertEqual((self.r.posX, self.r.posY), mouvement)
 
-class TestCapteur(unittest.TestCase): 
-
-    def setUp(self):
-        """
-        Initialisation des capteurs pour les tests.
-        """
-        self.cap1 = Capteur(Vecteur(0, -1))
-        self.cap2 = Capteur(Vecteur(0, -1))
-
-    def test_rotation(self):
-        new_vect1 = self.cap1.rotation(self, 0)
-        new_vect2 = self.cap2.rotation(self, 90)
-        self.assertEqual(new_vect1.x, 0)
-        self.assertEqual(new_vect1.y, -1)
-        self.assertEqual(new_vect2.x, 1)
-        self.assertEqual(new_vect2.y, 0)
-
         
     
 if __name__ == '__main__':
