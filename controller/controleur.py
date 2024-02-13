@@ -55,6 +55,18 @@ class Controleur:
                 self.view.update()
             sleep(self.dt)
 
+    def tourner(self, angle, v_ang):
+        """ Faire tourner le robot
+        :param angle: L'angle que le robot doit parcourir (float)
+        :param v_ang: La vitesse angulaire de la roue gauche ou droite en rad/s
+        """
+        if (angle > 0):
+            print("gauche GO\n")
+        else:
+            print("droite GO\n")
+        mouvement = Tourner(self, angle, v_ang, self.dt)
+
+        #Boucle
 
 class Tourner(): 
     def __init__(self, controleur : Controleur, angle : int, v_ang, dt) -> None:
