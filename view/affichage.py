@@ -23,12 +23,14 @@ class Affichage():
         self.initial_v_ang_d = -50
         self.initial_v_ang_g = 50
         self.initial_v_ang = 50
+        self.initial_angle = 90
         self.initial_distance = 50
 
         # Créer des variables Tkinter pour la vitesse et la distance
         self.v_ang_d_var = tk.DoubleVar(value=self.initial_v_ang_d)
         self.v_ang_g_var = tk.DoubleVar(value=self.initial_v_ang_g)
         self.v_ang = tk.DoubleVar(value=self.initial_v_ang)
+        self.angle = tk.DoubleVar(value=self.initial_angle)
         self.distance_var = tk.DoubleVar(value=self.initial_distance)
 
         # Entrée pour la vitesse angulaire de roue droit
@@ -49,6 +51,12 @@ class Affichage():
         self.v_ang_label.grid(row=3, column=0)
         self.v_ang_var_entry.grid(row=3, column=1)
 
+        #Entrée pour l'angle
+        self.angle = tk.Label(self.root, text="Angle")
+        self.angle_entry = tk.Entry(self.root, textvariable=self.angle)
+        self.angle.grid(row=5, column=2)
+        self.angle_entry.grid(row=5, column=3)
+
         # Entrée pour la distance
         self.distance_label = tk.Label(self.root, text="Distance:")
         self.distance_entry = tk.Entry(self.root, textvariable=self.distance_var)
@@ -62,6 +70,7 @@ class Affichage():
         # Bouton tourner en angle
         self.turn_button = tk.Button(self.root, text="Tourner", command=self.go_button_clicked)
         self.turn_button.grid(row=5,column=1)
+
         # Reset Button 
         self.reset_button = tk.Button(self.root, text="Reset", command=self.reset_button_clicked)
         self.reset_button.grid(row=6, column=0)
