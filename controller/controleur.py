@@ -66,7 +66,15 @@ class Controleur:
             print("droite GO\n")
         mouvement = Tourner(self, angle, v_ang, self.dt)
 
-        #Boucle
+        #Boucle pour tourner le robot jusqu'à ce qu'il ateingne l'angle spécifiée
+        d = self.robot.capteur.raytracing(self.robot, self.view.arene.maxX, self.view.arene.maxY)
+        while not mouvement.stop() or d = 0:
+            d = self.robot.capteur.raytracing(self.robot, self.view.arene.maxX, self.view.arene.maxY)
+            mouvement.step()
+            print(self.robot.posX, self.robot.posY, self.robot.roue_droite.vitesse_angulaire, self.robot.roue_gauche.vitesse_angulaire)
+            if self.view: # si on a un module View
+                self.view.update()
+            sleep(self.dt)
 
 class Tourner(): 
     def __init__(self, controleur : Controleur, angle : int, v_ang, dt) -> None:
