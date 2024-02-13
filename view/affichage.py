@@ -29,8 +29,8 @@ class Affichage():
         # Créer des variables Tkinter pour la vitesse et la distance
         self.v_ang_d_var = tk.DoubleVar(value=self.initial_v_ang_d)
         self.v_ang_g_var = tk.DoubleVar(value=self.initial_v_ang_g)
-        self.v_ang = tk.DoubleVar(value=self.initial_v_ang)
-        self.angle = tk.DoubleVar(value=self.initial_angle)
+        self.v_ang_var = tk.DoubleVar(value=self.initial_v_ang)
+        self.angle_var = tk.DoubleVar(value=self.initial_angle)
         self.distance_var = tk.DoubleVar(value=self.initial_distance)
 
         # Entrée pour la vitesse angulaire de roue droit
@@ -47,13 +47,13 @@ class Affichage():
 
         #Entrée pour la vitesse de rotation
         self.v_ang_label = tk.Label(self.root, text = "Vitesse angulaire pour la rotation:")
-        self.v_ang_var_entry = tk.Entry(self.root, textvariable=self.v_ang)
+        self.v_ang_var_entry = tk.Entry(self.root, textvariable=self.v_ang_var)
         self.v_ang_label.grid(row=3, column=0)
         self.v_ang_var_entry.grid(row=3, column=1)
 
         #Entrée pour l'angle
         self.angle = tk.Label(self.root, text="Angle")
-        self.angle_entry = tk.Entry(self.root, textvariable=self.angle)
+        self.angle_entry = tk.Entry(self.root, textvariable=self.angle_var)
         self.angle.grid(row=5, column=2)
         self.angle_entry.grid(row=5, column=3)
 
@@ -68,7 +68,7 @@ class Affichage():
         self.go_button.grid(row=5, column=0)
 
         # Bouton tourner en angle
-        self.turn_button = tk.Button(self.root, text="Tourner", command=self.go_button_clicked)
+        self.turn_button = tk.Button(self.root, text="Tourner", command=self.turn_button_clicked)
         self.turn_button.grid(row=5,column=1)
 
         # Reset Button 
@@ -102,6 +102,13 @@ class Affichage():
         if self.controller:
             print("reception\n")
             self.controller.go(self.distance_var.get(), self.v_ang_d_var.get(), self.v_ang_g_var.get())
+
+    def turn_button_clicked(self):
+        """ Handle turn button click
+        """
+        if self.controller:
+            print("reception\n")
+            self.controller.tourner(self.angle_var.get(), self.v_ang_var.get())
 
     def draw_obj(self, Objet: Any) -> int:
         """Dessine un objet sur le canevas de l'Affichage. 
