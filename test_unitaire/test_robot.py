@@ -63,6 +63,38 @@ class TestRobot(unittest.TestCase):
         resultat_move = self.r.move_dOM(1,1)
         self.assertEqual((self.r.posX, self.r.posY), mouvement)
 
+class TestCapteur(unittest.TestCase): 
+
+    def setUp(self):
+        """
+        Initialisation des capteurs pour les tests.
+        """
+        self.cap1 = Capteur(Vecteur(0, -1))
+        self.cap2 = Capteur(Vecteur(0, -1))
+        
+
+    def test_rotation(self):
+        """Teste la rotation du capteur 
+        """
+        # Capteur 1 rotation de 0° (pas de rotation)
+        self.cap1.rotation(0)
+        # Capteur 2 rotation de 90°
+        self.cap2.rotation(90)
+        # Test du capteur 1
+        self.assertEqual(self.cap1.vecteur.x, 0)
+        self.assertEqual(self.cap1.vecteur.y, -1)
+        # Test du capteur 2
+        self.assertEqual(self.cap2.vecteur.x, 1)
+        self.assertAlmostEqual(self.cap2.vecteur.y, 0)
+
+    def test_raytracing(self):
+        """ Teste du capteur de distance 
+        """
+        maxX, maxY = 10, 10
+        r = Robot("r", 5, 5 ,2, 2, 10, 10, "red")
+        distance = self.cap1.raytracing(r, maxX, maxY)
+        self.assertEqual(distance, 5)
+
         
     
 if __name__ == '__main__':
