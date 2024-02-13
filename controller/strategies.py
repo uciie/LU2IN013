@@ -147,3 +147,8 @@ class Tracer_carre():
         
         #Exécute l'étape
         self.etapes[self.cur].step()
+    
+    def stop():
+        """Vérifie si toutes les étapes sont terminées
+        """
+        return self.cur == len(self.etapes)-1 a,d self.etapes[self.cur].stop()
