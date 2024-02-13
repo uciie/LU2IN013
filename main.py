@@ -5,9 +5,9 @@ from modele.robot import *
 
 class App():
     def __init__(self):
-        dt = 1/300
+        dt = 1/500
         echelle = 5
-        largeur, hauteur = 300, 300
+        largeur, hauteur = 500, 500
         dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
 
         # initilisation de l'arene et robot
