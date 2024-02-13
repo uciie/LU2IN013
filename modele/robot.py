@@ -144,7 +144,9 @@ class Capteur:
         nb_rayons = 1
 
         #Envoie un vecteur tant qu'il n'y a pas d'obstacles
-        while(0 <= coordonnee_x < maxX and 0 <= coordonnee_y < maxY):
+    
+        while(math.sqrt(robot.length**2 + robot.width**2) <= coordonnee_x < maxX - math.sqrt(robot.length**2 + robot.width**2) and \
+            math.sqrt(robot.length**2 + robot.width**2) <= coordonnee_y < maxY - math.sqrt(robot.length**2 + robot.width**2)):
             coordonnee_x += self.vecteur.x
             coordonnee_y += self.vecteur.y
             nb_rayons+=1
