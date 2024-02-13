@@ -126,9 +126,15 @@ class Tracer_carre():
         :param distance: La distance que le robot parcours, dans notre cas longueur du carré
         :param vang: La vitesse angulaire des roues du robot
         """
+
+        #Longueur/Distance du carré
         self.distance = distance
         self.robot = robot
+
+        #Vitesse angulaire des roues pour tracer le carré
         self.v_ang = v_ang
+
+        #Les étapes à faire
         self.etapes = [Go(self.robot, self.distance, v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
                         ,Go(self.robot, self.distance, v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
                         ,Go(self.robot, self.distance, v_ang, v_ang, dt), Tourner_deg(self.robot, 90, v_ang, dt)
