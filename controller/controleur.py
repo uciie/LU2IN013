@@ -81,3 +81,10 @@ class Controleur:
             if self.view: # si on a un module View
                 self.view.update()
             sleep(self.dt)
+    
+    def tracer_carre(self, distance, v_ang):
+        """Tracer un carré avec le robot
+        :param distance: La distance que le robot doit parcourir
+        :param v_ang : La vitesse angulaire des roues du robot
+        """
+        
