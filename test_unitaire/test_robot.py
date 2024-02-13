@@ -25,20 +25,16 @@ class TestRobot(unittest.TestCase):
 
     def setUp(self):
         """Initialisation du robot"""
-        self.r = Robot("r", 5, 5 ,2, 2, Vecteur(1,1) ,10, "red")
+        self.r = Robot("r", 5, 5 ,2, 2, 10, "red")
+        # initialise les vitesses roues
+        self.r.roue_droite.set_vitesse_angulaire(-1)
+        self.r.roue_gauche.set_vitesse_angulaire(1)
     
     def test_getCurrPos(self):
         """Teste les coordonnées actuelles du robot
         """
         resultat_pos = self.r.getCurrPos()
         self.assertEqual(resultat_pos, (self.r.posX, self.r.posY))
-    
-    def test_move_dOm(self):
-        """Teste le mouvement du robot
-        """
-        mouvement = (self.r.posX + 1, self.r.posY + 1)
-        resultat_move = self.r.move_dOM(1,1)
-        self.assertEqual((self.r.posX, self.r.posY), mouvement)
 
     def test_getLasPos(self):
         """Teste les anciennes coordonnées du robot
@@ -47,6 +43,25 @@ class TestRobot(unittest.TestCase):
         self.r.move_dOM(1,1)
         resultat_getLastPos = self.r.getLastPos()
         self.assertEqual(resultat_getLastPos, ancienne_pos)
+
+    def test_vitesse(self):
+        """Teste la vitesse du robot
+        """
+        vitesse = self.r.vitesse()
+        self.assertEqual(vitesse, 0.)
+
+    def test_getVitesse_angulaire(self):
+        """Teste la vitesse angulaire du robot
+        """
+        vitesse_ang = self.r.getVitesse_angulaire()
+        self.assertEqual(vitesse_ang, 10)
+    
+    def test_move_dOm(self):
+        """Teste le mouvement du robot
+        """
+        mouvement = (self.r.posX + 1, self.r.posY + 1)
+        resultat_move = self.r.move_dOM(1,1)
+        self.assertEqual((self.r.posX, self.r.posY), mouvement)
     
 if __name__ == '__main__':
     unittest.main()
