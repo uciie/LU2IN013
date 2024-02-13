@@ -23,42 +23,7 @@ class Roue:
         """
         self.vitesse_angulaire = min(vitesse_angulaire, self.vmax_ang)
 
-class Capteur:
-    def __init__(self, vecteur : Vecteur):
-        """Initialisation du capteur
 
-        :param vecteur : Vecteur directeur envoyé
-        :param vitesse : Vitesse du rayon
-        :returns : Retourne une instance de la classe Capteur
-        """
-        # Vecteur directeur
-        self.vecteur = vecteur
-
-    def rotation(self, angle):
-        self.vecteur = self.vecteur.rotation(angle)
-    
-    def raytracing(capteur : Capteur, robot : Robot, maxX : int, maxY : int):
-        """Renvoie la distance de l'obstacle devant le capteur
-    
-        :param capteur : Capteur
-        :param robot: Robot
-        :param interface: Interface
-        :returns : Distance entre le capteur et l'obstacle
-        """
-
-        #Initialisation des coordonnées
-        coordonnee_x = robot.posX
-        coordonnee_y = robot.posY
-        nb_rayons = 0
-
-        #Envoie un vecteur tant qu'il n'y a pas d'obstacle
-        while(coordonnee_x > maxX or coordonnee_y > maxY or coordonnee_x<0 or coordonnee_y<0):
-            coordonnee_x += capteur.vecteur.x
-            coordonnee_y += capteur.vecteur.y
-            nb_rayons+=1
-    
-        #Renvoie la distance entre robot et obstacle 
-        return capteur.vecteur.norme * nb_rayons
 
 class Robot:
     def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, rayon_roue:int , vmax_ang : float, color: str):
@@ -149,3 +114,40 @@ class Robot:
         self.posX, self.posY = self.posX + dOM_x, self.posY + dOM_y
         self.theta = (self.theta + math.degrees(dOM_theta))%360
         self.vectDir = self.vectDir.rotation(math.degrees(dOM_theta))
+        
+class Capteur:
+    def __init__(self, vecteur : Vecteur):
+        """Initialisation du capteur
+
+        :param vecteur : Vecteur directeur envoyé
+        :param vitesse : Vitesse du rayon
+        :returns : Retourne une instance de la classe Capteur
+        """
+        # Vecteur directeur
+        self.vecteur = vecteur
+
+    def rotation(self, angle):
+        self.vecteur = self.vecteur.rotation(angle)
+    
+    def raytracing(self, robot : Robot, maxX : int, maxY : int):
+        """Renvoie la distance de l'obstacle devant le capteur
+    
+        :param capteur : Capteur
+        :param robot: Robot
+        :param interface: Interface
+        :returns : Distance entre le capteur et l'obstacle
+        """
+
+        #Initialisation des coordonnées
+        coordonnee_x = robot.posX
+        coordonnee_y = robot.posY
+        nb_rayons = 0
+
+        #Envoie un vecteur tant qu'il n'y a pas d'obstacle
+        while(coordonnee_x > maxX or coordonnee_y > maxY or coordonnee_x<0 or coordonnee_y<0):
+            coordonnee_x += capteur.vecteur.x
+            coordonnee_y += capteur.vecteur.y
+            nb_rayons+=1
+    
+        #Renvoie la distance entre robot et obstacle 
+        return capteur.vecteur.norme * nb_rayons
