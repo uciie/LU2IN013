@@ -25,10 +25,7 @@ class TestRobot(unittest.TestCase):
 
     def setUp(self):
         """Initialisation du robot"""
-        self.r = Robot("r", 5, 5 ,2, 2, 10, "red")
-        # initialise les vitesses roues
-        self.r.roue_droite.set_vitesse_angulaire(-1)
-        self.r.roue_gauche.set_vitesse_angulaire(1)
+        self.r = Robot("r", 5, 5 ,2, 2, 10, 10, "red")
     
     def test_getCurrPos(self):
         """Teste les coordonnées actuelles du robot
@@ -53,8 +50,11 @@ class TestRobot(unittest.TestCase):
     def test_getVitesse_angulaire(self):
         """Teste la vitesse angulaire du robot
         """
+        self.r.roue_droite.set_vitesse_angulaire(-1)
+        self.r.roue_gauche.set_vitesse_angulaire(1)
+        # initialise les vitesses roues
         vitesse_ang = self.r.getVitesse_angulaire()
-        self.assertEqual(vitesse_ang, 10)
+        self.assertEqual(vitesse_ang, -10)
     
     def test_move_dOm(self):
         """Teste le mouvement du robot
@@ -62,6 +62,25 @@ class TestRobot(unittest.TestCase):
         mouvement = (self.r.posX + 1, self.r.posY + 1)
         resultat_move = self.r.move_dOM(1,1)
         self.assertEqual((self.r.posX, self.r.posY), mouvement)
+
+class TestCapteur(unittest.TestCase): 
+
+    def setUp(self):
+        """
+        Initialisation des capteurs pour les tests.
+        """
+        self.cap1 = Capteur(Vecteur(0, -1))
+        self.cap2 = Capteur(Vecteur(0, -1))
+
+    def test_rotation(self):
+        new_vect1 = self.cap1.rotation(self, 0)
+        new_vect2 = self.cap2.rotation(self, 90)
+        self.assertEqual(new_vect1.x, 0)
+        self.assertEqual(new_vect1.y, -1)
+        self.assertEqual(new_vect2.x, 1)
+        self.assertEqual(new_vect2.y, 0)
+
+        
     
 if __name__ == '__main__':
     unittest.main()
