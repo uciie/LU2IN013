@@ -74,7 +74,7 @@ class Controleur:
         d = self.robot.capteur.raytracing(self.robot, self.view.arene.maxX, self.view.arene.maxY)
 
         #Boucle pour tourner le robot jusqu'à ce qu'il ateingne l'angle spécifiée
-        while not mouvement.stop() or d >=1:
+        while not mouvement.stop() and d >=1:
             d = self.robot.capteur.raytracing(self.robot, self.view.arene.maxX, self.view.arene.maxY)
             mouvement.step()
             print(self.robot.posX, self.robot.posY, self.robot.roue_droite.vitesse_angulaire, self.robot.roue_gauche.vitesse_angulaire)

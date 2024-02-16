@@ -4,7 +4,7 @@ from typing import Any
 from modele.arene import Arene
 
 class Affichage():
-    def __init__(self, arene : Arene) -> None:
+    def __init__(self, arene:Arene):
         """Initialise un Affichage graphique.
 
         :param name: Nom de l'Affichage.
@@ -31,56 +31,77 @@ class Affichage():
         self.angle_var = tk.DoubleVar(value=self.initial_angle)
         self.distance_var = tk.DoubleVar(value=self.initial_distance)
 
+        # Creation du cadre pour les données du robot
+        self.robot_frame = tk.LabelFrame(self.root, text = " Données du robot ")
+        self.robot_frame.grid(row=0, column=0, padx=5, pady=5, sticky="new")
+
+        # Données du robot en temps réel
+        self.pos_label = tk.Label(self.robot_frame, text=f"Position : ({"%.2f" % self.arene.robot.posX}, {"%.2f" % self.arene.robot.posX})")
+        self.pos_label.grid(row=1, column=0, sticky="w", padx=5)
+        self.roueD_label = tk.Label(self.robot_frame, text=f"Roue droite : {self.arene.robot.roue_droite.vitesse_angulaire} rad/s")
+        self.roueD_label.grid(row=2, column=0, sticky="w", padx=5)
+        self.roueG_label = tk.Label(self.robot_frame, text=f"Roue gauche : {self.arene.robot.roue_gauche.vitesse_angulaire} rad/s")
+        self.roueG_label.grid(row=3, column=0, sticky="w", padx=5)
+
+        # Creation du cadre pour la commande basic
+        self.command_frame = tk.LabelFrame(self.root, text = " Commande Basic ")
+        self.command_frame.grid(row=1, column=0, padx = 5, pady = 5, sticky = "ew")
+        
         # Entrée pour la vitesse angulaire de roue droit
-        self.v_ang_d_label = tk.Label(self.root, text="Vitesse angulaire Droite:")
-        self.v_ang_d_var_entry = tk.Entry(self.root, textvariable=self.v_ang_d_var)
-        self.v_ang_d_label.grid(row=0, column=0)
-        self.v_ang_d_var_entry.grid(row=0, column=1)
+        self.v_ang_d_label = tk.Label(self.command_frame, text="Roue droite : ")
+        self.v_ang_d_var_entry = tk.Entry(self.command_frame, textvariable=self.v_ang_d_var)
+        self.v_ang_d_label.grid(row=1, column=0, sticky='e')
+        self.v_ang_d_var_entry.grid(row=1, column=1, sticky='w', padx=5)
 
         # Entrée pour la vitesse angulaire de roue gauche
-        self.v_ang_g_label = tk.Label(self.root, text="Vitesse angulaire Gauche:")
-        self.v_ang_g_var_entry = tk.Entry(self.root, textvariable=self.v_ang_g_var)
-        self.v_ang_g_label.grid(row=1, column=0)
-        self.v_ang_g_var_entry.grid(row=1, column=1)
+        self.v_ang_g_label = tk.Label(self.command_frame, text="Roue gauche : ")
+        self.v_ang_g_var_entry = tk.Entry(self.command_frame, textvariable=self.v_ang_g_var)
+        self.v_ang_g_label.grid(row=2, column=0, sticky='e')
+        self.v_ang_g_var_entry.grid(row=2, column=1, sticky='w', padx=5)
 
-        #Entrée pour la vitesse de rotation
-        self.v_ang_label = tk.Label(self.root, text = "Vitesse angulaire pour la rotation:")
-        self.v_ang_var_entry = tk.Entry(self.root, textvariable=self.v_ang_var)
-        self.v_ang_label.grid(row=3, column=0)
-        self.v_ang_var_entry.grid(row=3, column=1)
+        # Entree pour la distance de parcours
+        self.distance_label = tk.Label(self.command_frame, text = "Distance : " )
+        self.distance_var_entry = tk.Entry(self.command_frame, textvariable=self.distance_var)
+        self.distance_label.grid(row = 3, column= 0, sticky = "e", pady = 5)
+        self.distance_var_entry.grid(row = 3, column=1, sticky = "w", padx = 5, pady = 5)
 
-        #Entrée pour l'angle
-        self.angle = tk.Label(self.root, text="Angle")
-        self.angle_entry = tk.Entry(self.root, textvariable=self.angle_var)
-        self.angle.grid(row=5, column=2)
-        self.angle_entry.grid(row=5, column=3)
+        # Cadre pour la commande pour tourner
+        self.turn_frame = tk.LabelFrame(self.root, text=" Commande pour Tourner ")
+        self.turn_frame.grid(row=3, column=0, padx=5, pady=5, sticky="new")
+        
+        # Entree pour l'angle de parcours
+        self.angle_var_label = tk.Label(self.turn_frame, text="Angle : ")
+        self.angle_var_entry = tk.Entry(self.turn_frame, textvariable=self.distance_var)
+        self.angle_var_label.grid(row=1, column=0, sticky="e", padx=5)
+        self.angle_var_entry.grid(row=1, column=1, sticky="w", padx=5)
+        
+        # Entree pour la vitesse lors d'une rotation
+        self.v_ang_var_label = tk.Label(self.turn_frame, text="Vitesse : ")
+        self.v_ang_var_entry = tk.Entry(self.turn_frame, textvariable=self.distance_var)
+        self.v_ang_var_label.grid(row=2, column=0, sticky="e", padx=5)
+        self.v_ang_var_entry.grid(row=2, column=1, sticky="w", padx=5)
 
-        # Entrée pour la distance
-        self.distance_label = tk.Label(self.root, text="Distance:")
-        self.distance_entry = tk.Entry(self.root, textvariable=self.distance_var)
-        self.distance_label.grid(row=2, column=0)
-        self.distance_entry.grid(row=2, column=1)
+        # Creation du boutton Tourner 
+        self.turn_button = tk.Button(self.turn_frame, text = "Tourner", command=self.turn_button_clicked)
+        self.turn_button.grid(row = 3, column=1, pady = 5)
+        
+        # Creation du button Tracer Carre
+        self.tracer_carre = tk.Button(self.root, text = "Tracer carre", command=self.tracer_carre_button_clicked)
+        self.tracer_carre.grid(row=4, column = 0,sticky = "wsn", padx=5, pady=8)
 
-        # Go Button 
-        self.go_button = tk.Button(self.root, text="Go", command=self.go_button_clicked)
-        self.go_button.grid(row=5, column=0)
+        # Creation du boutton Go
+        self.go_button = tk.Button(self.root, text = "Go", command=self.go_button_clicked)
+        self.go_button.grid(row = 5, column = 0, sticky = "wsn", padx=5, pady=8)
 
-        # Bouton tourner en angle
-        self.turn_button = tk.Button(self.root, text="Tourner", command=self.turn_button_clicked)
-        self.turn_button.grid(row=5,column=1)
-
-        # Bouton tracer carré
-        self.tracer_carre = tk.Button(self.root, text="Tracer carré", command=self.tracer_carre_button_clicked)
-        self.tracer_carre.grid(row=6,column=1)
-
-        # Reset Button 
-        self.reset_button = tk.Button(self.root, text="Reset", command=self.reset_button_clicked)
-        self.reset_button.grid(row=6, column=0)
+        #Creation du button Reset
 
         self.canvas = tk.Canvas(self.root, width=self.arene.maxX, height=self.arene.maxY, bg=self.arene.color)
-        self.canvas.grid(row=4, column=0, columnspan=2)
-        #self.canvas.pack()
-
+        self.canvas.grid(row=0, column=1, rowspan=100, padx=10, pady=5,sticky="nsew")
+        
+        # Définir l'étirement des colonnes et des lignes
+        self.root.columnconfigure(0, weight=1)
+        self.root.columnconfigure(1, weight=1)
+        
         # set the controller
         self.controller = None
 
@@ -171,9 +192,20 @@ class Affichage():
             if obj_id:
                 self.canvas.delete(obj_id)
     
+    def update_donnee_robot(self):
+        """ Mettre à jour l'affichage des info du robot 
+        """
+        self.pos_label.config(text=f"Position : ({"%.2f" % self.arene.robot.posX}, {"%.2f" % self.arene.robot.posY})")
+        self.roueD_label.config(text=f"Roue droite : {"%.2f" %self.arene.robot.roue_droite.vitesse_angulaire} rad/s")
+        self.roueG_label.config(text=f"Roue gauche : {"%.2f" %self.arene.robot.roue_gauche.vitesse_angulaire} rad/s")
+       
     def update(self):
+        """Mettre à jour le modele
+        """
+        self.update_donnee_robot()
         if self.arene.robot.rect_id and  self.arene.robot.arrow_id: 
             self.delete_draw(self.arene.robot.rect_id, self.arene.robot.arrow_id)
         self.draw_parcours(self.arene.robot)
         self.arene.robot.rect_id, self.arene.robot.arrow_id = self.draw_obj(self.arene.robot)
+        
         self.root.update()
