@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Any
 from modele.arene import Arene
-from threading import Thread
 
 class Affichage():
     def __init__(self, arene : Arene) -> None:
@@ -14,7 +13,6 @@ class Affichage():
         :param color: Couleur de fond de l'Affichage.
         """
         self.arene = arene
-        self.robot = arene.robot
 
         self.root = tk.Tk()
         self.root.title(arene.name)
@@ -174,8 +172,8 @@ class Affichage():
                 self.canvas.delete(obj_id)
     
     def update(self):
-        if self.robot.rect_id and  self.robot.arrow_id: 
-            self.delete_draw(self.robot.rect_id, self.robot.arrow_id)
-        self.draw_parcours(self.robot)
-        self.robot.rect_id, self.robot.arrow_id = self.draw_obj(self.robot)
+        if self.arene.robot.rect_id and  self.arene.robot.arrow_id: 
+            self.delete_draw(self.arene.robot.rect_id, self.arene.robot.arrow_id)
+        self.draw_parcours(self.arene.robot)
+        self.arene.robot.rect_id, self.arene.robot.arrow_id = self.draw_obj(self.arene.robot)
         self.root.update()
