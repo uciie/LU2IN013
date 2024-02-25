@@ -71,13 +71,13 @@ class Affichage():
         
         # Entree pour l'angle de parcours
         self.angle_var_label = tk.Label(self.turn_frame, text="Angle : ")
-        self.angle_var_entry = tk.Entry(self.turn_frame, textvariable=self.distance_var)
+        self.angle_var_entry = tk.Entry(self.turn_frame, textvariable=self.angle_var)
         self.angle_var_label.grid(row=1, column=0, sticky="e", padx=5)
         self.angle_var_entry.grid(row=1, column=1, sticky="w", padx=5)
         
         # Entree pour la vitesse lors d'une rotation
         self.v_ang_var_label = tk.Label(self.turn_frame, text="Vitesse : ")
-        self.v_ang_var_entry = tk.Entry(self.turn_frame, textvariable=self.distance_var)
+        self.v_ang_var_entry = tk.Entry(self.turn_frame, textvariable=self.v_ang_var)
         self.v_ang_var_label.grid(row=2, column=0, sticky="e", padx=5)
         self.v_ang_var_entry.grid(row=2, column=1, sticky="w", padx=5)
 
