@@ -1,5 +1,22 @@
 from modele.robot import * 
 import math
+
+def calcul_dOM(robot: Robot, dt): 
+    """ Calcul les dOM pour lezs utiliser lors de appel de go_dOM
+
+    :param robot: Le robot qui va faire le deplacement 
+    :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
+    :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
+    :param dt: Le fps
+    """
+    dOM_theta = -robot.roue_droite.rayon*(robot.v_ang_g+robot.v_ang_d)/robot.length * dt
+    dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
+    dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
+
+    dOM = Vecteur(dOM_x, dOM_y)
+
+    return dOM_theta, dOM_x, dOM_y, dOM
+
 class Go(): 
     def __init__(self, robot: Robot, distance : int, v_ang_d, v_ang_g, dt) -> None:
         """/!!\\ robot ne comprends pas distance negative
@@ -17,27 +34,17 @@ class Go():
         self.robot.roue_droite.set_vitesse_angulaire(v_ang_d)  # Vitesse angulaire droite
         self.robot.roue_gauche.set_vitesse_angulaire(v_ang_g)  # Vitesse angulaire gauche
 
-        self.v_ang_d, self.v_ang_g = v_ang_d, v_ang_g
-
         #compteur de distance deja parcouru
         self.parcouru = 0
 
-        #Coordonnee de vecteur de deplacement 
-        self.dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
-        self.dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
-
-        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
-
         self.dt = dt
         print("x, y", robot.vectDir.x, robot.vectDir.y)
-        print(self.distance, self.v_ang_d, self.v_ang_g, self.dOM_x, self.dOM_y)
     
     def actualise(self, robot : Robot, dt):
         self.robot = robot
         self.dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
         self.dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
         self.dOM = Vecteur(self.dOM_x, self.dOM_y)
-
 
     def stop(self):
         """ Savoir le parcour est fini ou non
@@ -55,14 +62,10 @@ class Go():
         
         self.dOM_theta = 0
         #Bouger le robot d'un dOM
-        if -self.v_ang_d != self.v_ang_g: #si veut tourner 
-            self.dOM_theta = -self.robot.roue_droite.rayon*(self.v_ang_g+self.v_ang_d)/self.robot.length * self.dt
-            self.dOM_x = self.robot.vectDir.x*self.robot.vitesse()*self.dt #/robot.grille.echelle 
-            self.dOM_y = self.robot.vectDir.y*self.robot.vitesse()*self.dt #/robot.grille.echelle 
-
-            self.dOM = Vecteur(self.dOM_x, self.dOM_y)
-
+        if -self.robot.v_ang_d != self.robot.v_ang_g: #si veut tourner 
+            self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
             print(self.dOM_theta)
+
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
 
@@ -81,24 +84,15 @@ class Tourner_deg():
         if angle > 0:
             self.robot.roue_droite.set_vitesse_angulaire(-v_ang)  # Vitesse angulaire droite
             self.robot.roue_gauche.set_vitesse_angulaire(0)  # Vitesse angulaire gauche
-            self.v_ang_d, self.v_ang_g = -v_ang, 0
         else:
             self.robot.roue_droite.set_vitesse_angulaire(0)  # Vitesse angulaire droite
             self.robot.roue_gauche.set_vitesse_angulaire(v_ang) 
-            self.v_ang_d, self.v_ang_g = 0, v_ang
 
         #compteur d'angle deja parcouru
         self.parcouru = 0
 
-        #Coordonnee de vecteur de deplacement 
-        self.dOM_x = self.robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
-        self.dOM_y = self.robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
-
-        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
-
         self.dt = dt
         print("x, y", robot.vectDir.x, robot.vectDir.y)
-        print(self.angle, self.v_ang_d, self.v_ang_g, self.dOM_x, self.dOM_y)
 
     def stop(self):
         """ Savoir le parcours est fini ou non
@@ -111,23 +105,20 @@ class Tourner_deg():
             return self.parcouru < self.angle
 
     def actualise(self, robot : Robot, dt):
-        return        
+        return     
+       
     def step(self):
         """ Faire un deplacement de dOM 
         """
         #Incrémenter la distance parcourru
-        self.parcouru += (-self.robot.roue_droite.rayon*(self.v_ang_g+self.v_ang_d)/self.robot.length * self.dt)*180/math.pi
+        self.parcouru += (-self.robot.roue_droite.rayon*(self.robot.v_ang_g+self.robot.v_ang_d)/self.robot.length * self.dt)*180/math.pi
 
         if self.stop(): return
         
         self.dOM_theta = 0
         #Bouger le robot d'un dOM
         if -self.v_ang_d != self.v_ang_g: #si veut tourner 
-            self.dOM_theta = -self.robot.roue_droite.rayon*(self.v_ang_g+self.v_ang_d)/self.robot.length * self.dt
-            self.dOM_x = self.robot.vectDir.x*self.robot.vitesse()*self.dt #/robot.grille.echelle 
-            self.dOM_y = self.robot.vectDir.y*self.robot.vitesse()*self.dt #/robot.grille.echelle 
-
-            self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+            self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
 
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
@@ -162,8 +153,6 @@ class Tracer_carre():
             self.cur+=1
             self.etapes[self.cur].actualise(self.robot, self.dt)
 
-
-        
         #Exécute l'étape
         self.etapes[self.cur].step()
     
