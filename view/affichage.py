@@ -1,7 +1,7 @@
 import tkinter as tk
-from tkinter import ttk
 from typing import Any
 from modele.arene import Arene
+from controller.controleur import Go, Tourner_deg, Tracer_carre
 
 class Affichage():
     def __init__(self, arene:Arene):
@@ -122,23 +122,26 @@ class Affichage():
     def go_button_clicked(self):
         """ Handle go button click
         """
-        if self.controller:
+        if self.controller is not None :
             print("reception\n")
-            self.controller.go(self.distance_var.get(), self.v_ang_d_var.get(), self.v_ang_g_var.get())
+            strat = Go(self.controller.robot, self.distance_var.get(), self.v_ang_d_var.get(), self.v_ang_g_var.get(), self.controller.dt)
+            self.controller.add_strat(strat)
 
     def turn_button_clicked(self):
         """ Handle turn button click
         """
-        if self.controller:
+        if self.controller is not None :
             print("reception\n")
-            self.controller.tourner(self.angle_var.get(), self.v_ang_var.get())
+            strat = Tourner_deg(self.controller.robot, self.angle_var.get(), self.v_ang_var.get(), self.controller.dt)
+            self.controller.add_strat(strat)
     
     def tracer_carre_button_clicked(self):
         """ Handle tracer_carre button click
         """
-        if self.controller:
+        if self.controller is not None :
             print("reception\n")
-            self.controller.tracer_carre(self.distance_var.get(), self.v_ang_var.get())
+            strat = Tracer_carre(self.controller.robot,self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
+            self.controller.add_strat(strat)
 
     def draw_obj(self, Objet: Any) -> int:
         """Dessine un objet sur le canevas de l'Affichage. 
