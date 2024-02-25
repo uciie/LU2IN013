@@ -1,27 +1,27 @@
 from modele.robot import Robot, Vecteur
-from view.affichage import Affichage
+from time import sleep
 import math
+
+def calcul_dOM(robot: Robot, dt): 
+    """ Calcul les dOM pour lezs utiliser lors de appel de go_dOM
+
+    :param robot: Le robot qui va faire le deplacement 
+    :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
+    :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
+    :param dt: Le fps
+    """
+    dOM_theta = -robot.roue_droite.rayon*(robot.roue_droite.vitesse_angulaire+robot.roue_gauche.vitesse_angulaire)/robot.length * dt
+    dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
+    dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
+
+    dOM = Vecteur(dOM_x, dOM_y)
+
+    return dOM_theta, dOM_x, dOM_y, dOM
 
 class Strategie():
     def __init__(self):
         pass
-
-    def calcul_dOM(self, robot: Robot, dt): 
-        """ Calcul les dOM pour lezs utiliser lors de appel de go_dOM
-
-        :param robot: Le robot qui va faire le deplacement 
-        :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
-        :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
-        :param dt: Le fps
-        """
-        dOM_theta = -robot.roue_droite.rayon*(robot.roue_droite.vitesse_angulaire+robot.roue_gauche.vitesse_angulaire)/robot.length * dt
-        dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
-        dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
-
-        dOM = Vecteur(dOM_x, dOM_y)
-
-        return dOM_theta, dOM_x, dOM_y, dOM
-
+    
 class Go(Strategie): 
     def __init__(self, robot: Robot, distance : int, v_ang_d, v_ang_g, dt) -> None:
         """/!!\\ robot ne comprends pas distance negative
@@ -49,9 +49,9 @@ class Go(Strategie):
         self.dt = dt
 
         #Calcul des dOM
-        self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = super.calcul_dOM(self.robot, self.dt)
+        self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
 
-        print("x, y", robot.vectDir.x, robot.vectDir.y)
+       #print("x, y", robot.vectDir.x, robot.vectDir.y)
     
     def actualise(self, robot : Robot, dt):
         self.robot = robot
@@ -77,14 +77,16 @@ class Go(Strategie):
         """
         #Incrémenter la distance parcourru
         self.parcouru += self.dOM.norme
-        if self.stop(): return
+        if self.stop(): 
+            print("STOP")
+            return
         
         self.dOM_theta = 0
         #Bouger le robot d'un dOM
         if -self.v_ang_d != self.v_ang_g: #si veut tourner 
             #Calcul des dOM
-            self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = super.calcul_dOM(self.robot, self.dt)
-            print(self.dOM_theta)
+            self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
+            #print(self.dOM_theta)
 
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
@@ -117,8 +119,8 @@ class Tourner_deg(Strategie):
         self.dt = dt
 
         #Calcul des dOM
-        self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = super.calcul_dOM(self.robot, self.dt)
-        print("x, y", robot.vectDir.x, robot.vectDir.y)
+        self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
+        #print("x, y", robot.vectDir.x, robot.vectDir.y)
 
     def start(self):
         """ Commencer la strategie
@@ -145,12 +147,14 @@ class Tourner_deg(Strategie):
         #Incrémenter la distance parcourru
         self.parcouru += (-self.robot.roue_droite.rayon*(self.robot.roue_droite.vitesse_angulaire+self.robot.roue_gauche.vitesse_angulaire)/self.robot.length * self.dt)*180/math.pi
 
-        if self.stop(): return
+        if self.stop(): 
+            print("STOP")
+            return
         
         self.dOM_theta = 0
         #Bouger le robot d'un dOM
         if -self.v_ang_d != self.v_ang_g: #si veut tourner 
-            self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = super.calcul_dOM(self.robot, self.dt)
+            self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
 
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
@@ -184,7 +188,9 @@ class Tracer_carre(Strategie):
     def step(self):
         """Fait avancer le traçage du carré
         """
-        if self.stop(): return
+        if self.stop(): 
+            print("STOP")
+            return
         #Avance d'une étape
         if self.cur <0 or self.etapes[self.cur].stop():
             self.cur+=1
@@ -198,7 +204,7 @@ class Tracer_carre(Strategie):
         return self.cur == len(self.etapes)-1 and self.etapes[self.cur].stop()
 
 class Controleur:
-    def __init__(self, robot: Robot, listeStrat: list[Strategie], dt):
+    def __init__(self, robot: Robot, dt):
         """
         Initialise le contrôleur avec un robot, une vue et un intervalle de temps.
 
@@ -211,14 +217,14 @@ class Controleur:
         # Vues 
         self.view = None
 
-        #Liste des Strategie 
-        self.listeStrat = listeStrat
-        #position de la commande à faire
-        self.cur = -1
+        # liste strat
+        self.liste_strat = []
 
+        self.cur = -1
+        # Le fps
         self.dt = dt
 
-    def set_view(self, view: Affichage):
+    def set_view(self, view):
         """ L'ajout du View dans le controller
         
         :param view: Le module View
@@ -235,23 +241,28 @@ class Controleur:
         self.robot.vectDir = Vecteur(0, -1)
         self.robot.posX, self.robot.posY = self.view.arene.maxX/2, self.view.arene.maxY /2
 
-    def remove_strat(self):
-        """ enlever la stratégie fini de la liste, ie le premier element de la liste
+    def add_strat(self, strat):
+        """ Ajouter une strategie au conntroleur
+
+        :param strat: Une strategie 
         """
-        self.listeStrat.pop(0)
+        self.liste_strat.append(strat)
 
     def stop(self):
         """Vérifie si toutes les étapes sont terminées
         """
-        return self.cur == len(self.listeStrat)-1 and self.listeStrat[self.cur].stop()
+        if self.liste_strat == []: 
+            return True
+        return self.cur == len(self.liste_strat)-1 and self.liste_strat[self.cur].stop()
     
     def step(self):
         """Faire la commande suivante 
         """
         if self.stop(): return
-        #Avance d'une étape
-        if self.cur <0 or self.listeStrat[self.cur].stop():
+        #Faire la strtégie suivante 
+        if self.cur <0 or self.liste_strat[self.cur].stop():
             self.cur+=1
-            self.listeStrat[self.cur].start()
-            self.listeStrat[self.cur].actualise(self.robot, self.dt)
-        self.listeStrat[self.cur].step()
+            self.liste_strat[self.cur].start()
+        print(self.cur)
+        self.liste_strat[self.cur].step()
+
