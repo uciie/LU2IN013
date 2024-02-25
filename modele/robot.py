@@ -95,7 +95,7 @@ class Robot:
         """Donne la vitesse du robot
         
         """
-        print(math.fabs(self.roue_gauche.vitesse_angulaire-self.roue_droite.vitesse_angulaire))
+        #print(math.fabs(self.roue_gauche.vitesse_angulaire-self.roue_droite.vitesse_angulaire))
         return (self.roue_droite.rayon /2)* (self.roue_gauche.vitesse_angulaire-self.roue_droite.vitesse_angulaire)
     
     def getVitesse_angulaire(self):
