@@ -9,7 +9,7 @@ def calcul_dOM(robot: Robot, dt):
     :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
     :param dt: Le fps
     """
-    dOM_theta = -robot.roue_droite.rayon*(robot.v_ang_g+robot.v_ang_d)/robot.length * dt
+    dOM_theta = -robot.roue_droite.rayon*(robot.roue_droite.vitesse_angulaire+robot.roue_gauche.vitesse_angulaire)/robot.length * dt
     dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
     dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
 
@@ -34,10 +34,17 @@ class Go():
         self.robot.roue_droite.set_vitesse_angulaire(v_ang_d)  # Vitesse angulaire droite
         self.robot.roue_gauche.set_vitesse_angulaire(v_ang_g)  # Vitesse angulaire gauche
 
+        self.v_ang_d, self.v_ang_g = v_ang_d, v_ang_g
+
         #compteur de distance deja parcouru
         self.parcouru = 0
 
+        #le fps
         self.dt = dt
+
+        #Calcul des dOM
+        self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
+
         print("x, y", robot.vectDir.x, robot.vectDir.y)
     
     def actualise(self, robot : Robot, dt):
@@ -45,6 +52,12 @@ class Go():
         self.dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
         self.dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
         self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+
+    def start(self):
+        """ Commencer la strategie
+        """
+        #compteur de distance deja parcouru
+        self.parcouru = 0
 
     def stop(self):
         """ Savoir le parcour est fini ou non
@@ -62,7 +75,8 @@ class Go():
         
         self.dOM_theta = 0
         #Bouger le robot d'un dOM
-        if -self.robot.v_ang_d != self.robot.v_ang_g: #si veut tourner 
+        if -self.v_ang_d != self.v_ang_g: #si veut tourner 
+            #Calcul des dOM
             self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
             print(self.dOM_theta)
 
@@ -84,15 +98,23 @@ class Tourner_deg():
         if angle > 0:
             self.robot.roue_droite.set_vitesse_angulaire(-v_ang)  # Vitesse angulaire droite
             self.robot.roue_gauche.set_vitesse_angulaire(0)  # Vitesse angulaire gauche
+            self.v_ang_d, self.v_ang_g = -v_ang, 0
         else:
             self.robot.roue_droite.set_vitesse_angulaire(0)  # Vitesse angulaire droite
             self.robot.roue_gauche.set_vitesse_angulaire(v_ang) 
+            self.v_ang_d, self.v_ang_g = 0, v_ang
 
-        #compteur d'angle deja parcouru
+        #compteur de distance deja parcouru
         self.parcouru = 0
 
         self.dt = dt
         print("x, y", robot.vectDir.x, robot.vectDir.y)
+
+    def start(self):
+        """ Commencer la strategie
+        """
+        #compteur de distance deja parcouru
+        self.parcouru = 0        
 
     def stop(self):
         """ Savoir le parcours est fini ou non
@@ -111,7 +133,7 @@ class Tourner_deg():
         """ Faire un deplacement de dOM 
         """
         #Incrémenter la distance parcourru
-        self.parcouru += (-self.robot.roue_droite.rayon*(self.robot.v_ang_g+self.robot.v_ang_d)/self.robot.length * self.dt)*180/math.pi
+        self.parcouru += (-self.robot.roue_droite.rayon*(self.robot.roue_droite.vitesse_angulaire+self.robot.roue_gauche.vitesse_angulaire)/self.robot.length * self.dt)*180/math.pi
 
         if self.stop(): return
         
@@ -138,12 +160,15 @@ class Tracer_carre():
         self.v_ang = v_ang
 
         #Les étapes à faire
-        self.etapes = [Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt), 
+        self.etapes = [Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt),
                     Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt),
                     Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt),
                     Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt)]
         self.cur = -1
     
+    def start(self):
+        self.cur = -1
+
     def step(self):
         """Fait avancer le traçage du carré
         """
@@ -151,7 +176,9 @@ class Tracer_carre():
         #Avance d'une étape
         if self.cur <0 or self.etapes[self.cur].stop():
             self.cur+=1
+            self.etapes[self.cur].start()
             self.etapes[self.cur].actualise(self.robot, self.dt)
+        self.etapes[self.cur].step()
 
         #Exécute l'étape
         self.etapes[self.cur].step()
