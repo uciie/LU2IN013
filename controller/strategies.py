@@ -1,4 +1,4 @@
-from modele.robot import * 
+from modele.robot import Vecteur, Robot
 import math
 
 def calcul_dOM(robot: Robot, dt): 
@@ -57,7 +57,7 @@ class Go():
         """ Commencer la strategie
         """
         #compteur de distance deja parcouru
-        self.parcouru = 0
+        self.parcouru = 0      
 
     def stop(self):
         """ Savoir le parcour est fini ou non
@@ -108,13 +108,16 @@ class Tourner_deg():
         self.parcouru = 0
 
         self.dt = dt
+
+        #Calcul des dOM
+        self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
         print("x, y", robot.vectDir.x, robot.vectDir.y)
 
     def start(self):
         """ Commencer la strategie
         """
         #compteur de distance deja parcouru
-        self.parcouru = 0        
+        self.parcouru = 0      
 
     def stop(self):
         """ Savoir le parcours est fini ou non
@@ -165,8 +168,10 @@ class Tracer_carre():
                     Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt),
                     Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt)]
         self.cur = -1
-    
+
     def start(self):
+        """ Commencer la strategie
+        """
         self.cur = -1
 
     def step(self):
@@ -178,9 +183,6 @@ class Tracer_carre():
             self.cur+=1
             self.etapes[self.cur].start()
             self.etapes[self.cur].actualise(self.robot, self.dt)
-        self.etapes[self.cur].step()
-
-        #Exécute l'étape
         self.etapes[self.cur].step()
     
     def stop(self):
