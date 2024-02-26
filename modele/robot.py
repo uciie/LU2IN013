@@ -75,7 +75,27 @@ class Robot:
         self.roue_droite = Roue(rayon_roue, vmax_ang)
 
         # Capteur du robot
-        self.capteur = Capteur(self.vectDir)
+        self.capteur = Capteur(Vecteur(self.vectDir.x, self.vectDir.y - self.length/2))
+
+    def getCoins(self):
+        """ Renvoie les coord des 4 coins du robot 
+
+        :returns: list[float]
+        """
+        u_x = self.vectDir.rotation(90).multiplication(self.width/2)
+        u_y = self.vectDir.multiplication(self.length/2)
+
+        OA = u_x.multiplication(-1).soustraction(u_y)
+        OB = u_x.multiplication(-1).add(u_y)
+        OC = u_x.add(u_y)
+        OD = u_x.soustraction(u_y)
+
+        x1, y1 = self.posX + OA.x , self.posY + OA.y
+        x2, y2 = self.posX + OB.x , self.posY + OB.y
+        x3, y3 = self.posX + OC.x , self.posY + OC.y
+        x4, y4 = self.posX + OD.x , self.posY + OD.y
+
+        return [x1, y1, x2, y2, x3, y3, x4, y4]
 
     def getCurrPos(self) -> tuple[float, float]:
         """Renvoie la position actuelle du robot.
@@ -125,11 +145,13 @@ class Capteur:
         """
         # Vecteur directeur
         self.vecteur = vecteur
+        # Seuil de collision
+        self.seuil_collision = 2
 
     def rotation(self, angle):
         self.vecteur = self.vecteur.rotation(angle)
     
-    def raytracing(self, robot : Robot, maxX : int, maxY : int):
+    def raytracing(self, listeCoins, obstacles, maxX : int, maxY : int):
         """Renvoie la distance de l'obstacle devant le capteur
     
         :param capteur : Capteur
@@ -137,20 +159,19 @@ class Capteur:
         :param interface: Interface
         :returns : Distance entre le capteur et l'obstacle
         """
-
-        #Initialisation des coordonnées
-        coordonnee_x = robot.posX + self.vecteur.x
-        coordonnee_y = robot.posY + self.vecteur.y
-        nb_rayons = 1
-
-        #Envoie un vecteur tant qu'il n'y a pas d'obstacles
-    
-        while(math.sqrt(robot.length**2 + robot.width**2) <= coordonnee_x < maxX - math.sqrt(robot.length**2 + robot.width**2) and \
-            math.sqrt(robot.length**2 + robot.width**2) <= coordonnee_y < maxY - math.sqrt(robot.length**2 + robot.width**2)):
-            coordonnee_x += self.vecteur.x
-            coordonnee_y += self.vecteur.y
-            nb_rayons+=1
-            
-        nb_rayons -=1
-        #Renvoie la distance entre robot et obstacle 
-        return self.vecteur.norme * nb_rayons # + robot.length/2
+        
+        for coord in range(len(listeCoins), 2):
+            for obstacle in obstacles:
+                for vecteur_directeur in obstacle.vecteurs_directeurs:
+                    # Calcul de la direction du rayon du capteur vers l'obstacle
+                    ray_direction = Vecteur(obstacle.position[0] - listeCoins[coord], obstacle.position[1] - listeCoins[coord+1])
+                    # Calcul de l'angle entre le vecteur directeur du capteur et la direction du rayon
+                    angle = ray_direction.getAngle()*360/(2*math.pi)
+                    # Rotation du vecteur directeur du capteur pour pointer vers l'obstacle
+                    self.rotation(angle)
+                    # Calcul de la distance entre le coin du robot et l'obstacle
+                    distance = ray_direction.norme 
+                    # Si la distance est inférieure à une certaine valeur seuil, il y a collision
+                    if distance < self.seuil_collision:
+                        return True  # Collision détectée
+        return False  # Pas de collision détectée
