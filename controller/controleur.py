@@ -35,11 +35,7 @@ class Go(Strategie):
         super().__init__()  # Appel du constructeur de la classe parente 
         self.robot = robot
         self.distance = distance
-
-        # Modifier les vitesses angulaire les roues
-        self.robot.roue_droite.set_vitesse_angulaire(v_ang_d)  # Vitesse angulaire droite
-        self.robot.roue_gauche.set_vitesse_angulaire(v_ang_g)  # Vitesse angulaire gauche
-
+        
         self.v_ang_d, self.v_ang_g = v_ang_d, v_ang_g
 
         #compteur de distance deja parcouru
@@ -47,10 +43,6 @@ class Go(Strategie):
 
         #le fps
         self.dt = dt
-
-        #Calcul des dOM
-        self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
-
        #print("x, y", robot.vectDir.x, robot.vectDir.y)
     
     def actualise(self, robot : Robot, dt):
@@ -63,6 +55,11 @@ class Go(Strategie):
         """ Commencer la strategie
         """
         #compteur de distance deja parcouru
+        # Modifier les vitesses angulaire les roues
+        self.robot.roue_droite.set_vitesse_angulaire(self.v_ang_d)  # Vitesse angulaire droite
+        self.robot.roue_gauche.set_vitesse_angulaire(self.v_ang_g)  # Vitesse angulaire gauche
+        #Calcul des dOM
+        self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
         self.parcouru = 0      
 
     def stop(self):
@@ -103,19 +100,9 @@ class Tourner_deg(Strategie):
         self.angle = angle
         self.robot = robot
 
-        # Modifier les vitesses angulaire les roues
-        if angle > 0:
-            self.robot.roue_droite.set_vitesse_angulaire(-v_ang)  # Vitesse angulaire droite
-            self.robot.roue_gauche.set_vitesse_angulaire(0)  # Vitesse angulaire gauche
-            self.v_ang_d, self.v_ang_g = -v_ang, 0
-        else:
-            self.robot.roue_droite.set_vitesse_angulaire(0)  # Vitesse angulaire droite
-            self.robot.roue_gauche.set_vitesse_angulaire(v_ang) 
-            self.v_ang_d, self.v_ang_g = 0, v_ang
-
-        #compteur de distance deja parcouru
-        self.parcouru = 0
-
+        self.v_ang = v_ang #Vitesse angulaire 
+        self.parcouru = 0 #compteur de distance deja parcouru
+        self.angle = angle #angle à parcourir
         self.dt = dt
 
         #Calcul des dOM
@@ -125,6 +112,16 @@ class Tourner_deg(Strategie):
     def start(self):
         """ Commencer la strategie
         """
+        # Modifier les vitesses angulaire les roues
+        if self.angle > 0:
+            self.robot.roue_droite.set_vitesse_angulaire(-self.v_ang)  # Vitesse angulaire droite
+            self.robot.roue_gauche.set_vitesse_angulaire(0)  # Vitesse angulaire gauche
+            self.v_ang_d, self.v_ang_g = -self.v_ang, 0
+        else:
+            self.robot.roue_droite.set_vitesse_angulaire(0)  # Vitesse angulaire droite
+            self.robot.roue_gauche.set_vitesse_angulaire(self.v_ang) 
+            self.v_ang_d, self.v_ang_g = 0, self.v_ang
+
         #compteur de distance deja parcouru
         self.parcouru = 0      
 
@@ -156,7 +153,7 @@ class Tourner_deg(Strategie):
         if -self.v_ang_d != self.v_ang_g: #si veut tourner 
             self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
 
-        self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
+        self.robot.move_dOM(0, 0, self.dOM_theta)
 
 class Tracer_carre(Strategie):
     def __init__(self, robot : Robot, distance : int, v_ang : float, dt):
@@ -179,6 +176,8 @@ class Tracer_carre(Strategie):
                     Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt),
                     Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt)]
         self.cur = -1
+    def actualise(self, robot : Robot, dt):
+        return   
 
     def start(self):
         """ Commencer la strategie
@@ -263,6 +262,7 @@ class Controleur:
         if self.cur <0 or self.liste_strat[self.cur].stop():
             self.cur+=1
             self.liste_strat[self.cur].start()
+            self.liste_strat[self.cur].actualise(self.robot, self.dt)
         print(self.cur)
         self.liste_strat[self.cur].step()
 
