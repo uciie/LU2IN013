@@ -150,7 +150,3 @@ class Capteur:
         # Seuil de collision
         self.seuil_collision = 2
         self.deg_max = 10
-
-    def rotation(self, angle):
-        self.vecteur = self.vecteur.rotation(angle)
-    
