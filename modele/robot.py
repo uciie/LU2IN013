@@ -1,5 +1,6 @@
 # @authors Équipe HELMS
 from .vecteur import Vecteur
+
 import math
 # Supposons que les robots sont en forme de rectangle/carré
 # Supposons que la position du robot (x, y) correspond à l'extrémité en haut à gauche
@@ -75,7 +76,7 @@ class Robot:
         self.roue_droite = Roue(rayon_roue, vmax_ang)
 
         # Capteur du robot
-        self.capteur = Capteur(Vecteur(self.vectDir.x, self.vectDir.y - self.length/2))
+        self.capteur = Capteur(Vecteur(self.vectDir.x, self.vectDir.y/abs(self.vectDir.y)))
 
     def getCoins(self):
         """ Renvoie les coord des 4 coins du robot 
@@ -135,8 +136,9 @@ class Robot:
         self.theta = (self.theta + math.degrees(dOM_theta))%360
         self.vectDir = self.vectDir.rotation(math.degrees(dOM_theta))
 
+
 class Capteur:
-    def __init__(self, vecteur : Vecteur):
+    def __init__(self,vecteur : Vecteur):
         """Initialisation du capteur
 
         :param vecteur : Vecteur directeur envoyé
@@ -147,31 +149,8 @@ class Capteur:
         self.vecteur = vecteur
         # Seuil de collision
         self.seuil_collision = 2
+        self.deg_max = 10
 
     def rotation(self, angle):
         self.vecteur = self.vecteur.rotation(angle)
     
-    def raytracing(self, listeCoins, obstacles, maxX : int, maxY : int):
-        """Renvoie la distance de l'obstacle devant le capteur
-    
-        :param capteur : Capteur
-        :param robot: Robot
-        :param interface: Interface
-        :returns : Distance entre le capteur et l'obstacle
-        """
-        
-        for coord in range(len(listeCoins), 2):
-            for obstacle in obstacles:
-                for vecteur_directeur in obstacle.vecteurs_directeurs:
-                    # Calcul de la direction du rayon du capteur vers l'obstacle
-                    ray_direction = Vecteur(obstacle.position[0] - listeCoins[coord], obstacle.position[1] - listeCoins[coord+1])
-                    # Calcul de l'angle entre le vecteur directeur du capteur et la direction du rayon
-                    angle = ray_direction.getAngle()*360/(2*math.pi)
-                    # Rotation du vecteur directeur du capteur pour pointer vers l'obstacle
-                    self.rotation(angle)
-                    # Calcul de la distance entre le coin du robot et l'obstacle
-                    distance = ray_direction.norme 
-                    # Si la distance est inférieure à une certaine valeur seuil, il y a collision
-                    if distance < self.seuil_collision:
-                        return True  # Collision détectée
-        return False  # Pas de collision détectée
