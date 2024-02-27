@@ -2,6 +2,8 @@ from controller.controleur import Controleur
 from view.affichage import Affichage
 from modele.arene import Arene
 from modele.robot import Robot
+from modele.obstacle import Obstacle
+from modele.vecteur import Vecteur
 import time 
 
 class App():
@@ -11,12 +13,16 @@ class App():
         largeur, hauteur = 500, 500
         dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
 
+
         # initilisation de l'arene et robot
         self.arene = Arene("Simulation de déplacement du robot", largeur, hauteur, echelle)
         self.robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, 10, 150, color="red")
+        obs = Obstacle(30, 50, Vecteur(10, 0), Vecteur(0,20), Vecteur(10, 0), Vecteur(0,20))
         
         # ajouter un robot dans l'arene 
         self.arene.addRobot(self.robot)
+
+        self.arene.addObstacle(obs)
 
         #Creation du module View
         self.view = Affichage(self.arene)
