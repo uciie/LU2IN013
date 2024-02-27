@@ -8,7 +8,7 @@ import time
 
 class App():
     def __init__(self):
-        self.dt = 1/500
+        self.dt = 1/200
         echelle = 5
         largeur, hauteur = 500, 500
         dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)

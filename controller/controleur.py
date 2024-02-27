@@ -303,6 +303,7 @@ class Test_collision(Strategie):
     def start(self):
         """ Commencer la strategie
         """
+        self.robot.vectDir = Vecteur(0, -1)
         self.cur = -1
 
     def step(self):
