@@ -87,6 +87,76 @@ class Go(Strategie):
 
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
+class Go_cap(Strategie): 
+    def __init__(self, robot: Robot, distance : int, v_ang_d, v_ang_g, dt) -> None:
+        """/!!\\ robot ne comprends pas distance negative
+        
+        :param robot: Le robot qui va faire le deplacement 
+        :param distance: La distance que le robot doit parcourir (float) 
+        :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
+        :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
+        :param dt: Le fps
+        """
+        super().__init__()  # Appel du constructeur de la classe parente 
+        self.robot = robot
+        self.distance = distance
+        
+        self.v_ang_d, self.v_ang_g = v_ang_d, v_ang_g
+
+        #compteur de distance deja parcouru
+        self.parcouru = 0
+
+        #le fps
+        self.dt = dt
+       #print("x, y", robot.vectDir.x, robot.vectDir.y)
+    
+    def actualise(self, robot : Robot, dt):
+        self.robot = robot
+        self.dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
+        self.dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
+        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+
+    def start(self):
+        """ Commencer la strategie
+        """
+        #compteur de distance deja parcouru
+        # Modifier les vitesses angulaire les roues
+        self.robot.roue_droite.set_vitesse_angulaire(self.v_ang_d)  # Vitesse angulaire droite
+        self.robot.roue_gauche.set_vitesse_angulaire(self.v_ang_g)  # Vitesse angulaire gauche
+        #Calcul des dOM
+        self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
+        self.parcouru = 0  
+        #Verification de detection d'un mur ou obstacle     
+        self.danger = self.robot.arene.raytracing(self.robot) < 2 
+
+    def stop(self):
+        """ Savoir le parcour est fini ou non
+
+        :return : Retourne vrai si on fini de parcourir la distance  
+        """
+        return self.parcouru > self.distance or self.danger
+
+    def step(self):
+        """ Faire un deplacement de dOM 
+        """
+        #Incrémenter la distance parcourru
+        self.parcouru += self.dOM.norme
+        #Verification de detection d'un mur ou obstacle 
+        self.danger = self.robot.arene.raytracing(self.robot) < 2 
+
+        if self.stop(): 
+            print("STOP")
+            return
+        
+        self.dOM_theta = 0
+        #Bouger le robot d'un dOM
+        if -self.v_ang_d != self.v_ang_g: #si veut tourner 
+            #Calcul des dOM
+            self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
+            #print(self.dOM_theta)
+
+        self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
+
 
 class Tourner_deg(Strategie): 
     def __init__(self, robot: Robot,  angle : int, v_ang, dt) -> None:
@@ -257,7 +327,8 @@ class Controleur:
     def step(self):
         """Faire la commande suivante 
         """
-        if self.stop(): return
+        if self.stop(): 
+            return
         #Faire la strtégie suivante 
         if self.cur <0 or self.liste_strat[self.cur].stop():
             self.cur+=1
