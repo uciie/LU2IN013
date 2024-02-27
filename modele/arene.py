@@ -1,5 +1,6 @@
 from .robot import Robot
-    
+from .vecteur import Vecteur
+
 class Arene(): 
     def __init__(self, name: str, maxX: int, maxY: int, echelle: float):
         """ Initisalisation d'une Arene 
@@ -22,7 +23,6 @@ class Arene():
 
         self.color = "white"
     
-
     def inArene(self, posX, posY):
         """ Verifie si la position (posX, posY) est dans la grille
 
@@ -31,7 +31,7 @@ class Arene():
         :param posY: Coordonnee en y
         :retruns bool: Renvoie true si (x,y) est dans la grille, sinon false
         """
-        return 0 <= posX < self.width and 0 <= posY < self.height
+        return 0 <= posX < self.maxX and 0 <= posY < self.maxY
     
     def addRobot(self, robot:Robot ):
         """ Ajouter un robot dans l'arene 
@@ -39,3 +39,35 @@ class Arene():
         """
         if not self.robot: 
             self.robot = robot
+            self.robot.arene = self
+    
+    def isObstacle(self, posX, posY):
+        """ Renvoie vrai si (posX, posY) fait partie d'un obstacle
+        
+        :param posX: 
+        :param posY:
+        :return: bool
+        """
+        return False
+    
+    def raytracing(self, robot: Robot): 
+        """ Renvoie la distance entre l'osbtacle et le capteur
+
+        :return : la distance en float 
+        """
+        #rayon du capteur capteur du robot 
+        rayon = robot.capteur.vecteur
+
+        #position à verifier 
+        new_x, new_y= robot.posX + robot.vectDir.x*robot.width/2 + rayon.x, robot.posY + robot.vectDir.y*robot.length/2 + rayon.y
+
+        # Verifier chaque pas de rayon 
+        while self.inArene(new_x, new_y) and not self.isObstacle(new_x, new_y) :
+            new_x += rayon.x
+            new_y += rayon.y
+        new_x -= rayon.x 
+        new_y -= rayon.y
+
+        #renvoie la norme, ie la distance 
+        return Vecteur(robot.posX + robot.vectDir.x*robot.width/2 - new_x, robot.posY + robot.vectDir.y*robot.length/2  - new_y).norme
+    
