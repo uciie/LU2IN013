@@ -46,8 +46,7 @@ class Vecteur():
         :returns: Nouveau vecteur résultant de la rotation du vecteur self selon l'angle spécifié.
         """
         # Conversion degrés en radians
-        rad: float = degre * (math.pi / 180)
-
+        rad: float = -degre * (math.pi / 180)
         # Nouvelles composantes
         new_x: int = self.x * math.cos(rad) - self.y * math.sin(rad)
         new_y: int = self.x * math.sin(rad) + self.y * math.cos(rad)
