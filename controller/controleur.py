@@ -231,6 +231,7 @@ class Tracer_carre(Strategie):
         :param robot: Le robot qui reçoit l'ordre
         :param distance: La distance que le robot parcours, dans notre cas longueur du carré
         :param vang: La vitesse angulaire des roues du robot
+        :param dt: Le FPS
         """
         super().__init__()  # Appel du constructeur de la classe parente 
         #Longueur/Distance du carré
@@ -263,8 +264,8 @@ class Tracer_carre(Strategie):
         #Avance d'une étape
         if self.cur <0 or self.etapes[self.cur].stop():
             self.cur+=1
-            self.etapes[self.cur].start()
             self.etapes[self.cur].actualise(self.robot, self.dt)
+            self.etapes[self.cur].start()
         self.etapes[self.cur].step()
     
     def stop(self):
@@ -272,6 +273,59 @@ class Tracer_carre(Strategie):
         """
         return self.cur == len(self.etapes)-1 and self.etapes[self.cur].stop()
 
+class Test_collision(Strategie):
+    def __init__(self, robot : Robot, posX, posY,  distance : int, v_ang : float, dt):
+        """Trace un carré
+
+        :param robot: Le robot qui reçoit l'ordre
+        :param posX: position en x de depart du robot 
+        :param posY: position en y de depart du robot 
+        :param vang: La vitesse angulaire des roues du robot
+        :param distance: La distance que le robot parcours, dans notre cas longueur du carré
+        :param dt: Le FPS
+        """
+        super().__init__()  # Appel du constructeur de la classe parente 
+        
+        self.robot = robot
+        self.dt =dt
+        self.strat = Go_cap(self.robot, distance, -v_ang, v_ang, dt)
+
+        #Les listes des positions
+        self.list_pos = [(posX+distance, posY), (posX, posY-distance), (posX-distance, posY), (posX, posY+distance)]
+
+        self.cur = -1
+
+    def actualise(self, robot : Robot, dt):
+        """
+        """
+        return
+
+    def start(self):
+        """ Commencer la strategie
+        """
+        self.cur = -1
+
+    def step(self):
+        """Fait avancer le traçage du carré
+        """
+        if self.stop(): 
+            print("STOP")
+            return
+        #Avance d'une étape
+        if self.cur <0 or self.strat.stop():
+            self.cur+=1
+            self.robot.vectDir = self.robot.vectDir.rotation(90)
+            self.robot.posX, self.robot.posY = self.list_pos[self.cur]
+            self.strat.actualise(self.robot, self.dt)
+            self.strat.start()
+
+        self.strat.step()
+    
+    def stop(self):
+        """Vérifie si toutes les étapes sont terminées
+        """
+        return self.cur == len(self.list_pos)-1 and self.strat.stop()
+    
 class Controleur:
     def __init__(self, robot: Robot, dt):
         """
@@ -332,8 +386,8 @@ class Controleur:
         #Faire la strtégie suivante 
         if self.cur <0 or self.liste_strat[self.cur].stop():
             self.cur+=1
-            self.liste_strat[self.cur].start()
             self.liste_strat[self.cur].actualise(self.robot, self.dt)
+            self.liste_strat[self.cur].start()
         print(self.cur)
         self.liste_strat[self.cur].step()
 

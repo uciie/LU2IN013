@@ -1,7 +1,7 @@
 import tkinter as tk
 from typing import Any
 from modele.arene import Arene
-from controller.controleur import Go, Go_cap, Tourner_deg, Tracer_carre
+from controller.controleur import Go, Go_cap, Tourner_deg, Tracer_carre, Test_collision
 
 class Affichage():
     def __init__(self, arene:Arene):
@@ -93,9 +93,13 @@ class Affichage():
         self.go_button = tk.Button(self.root, text = "Go", command=self.go_button_clicked)
         self.go_button.grid(row = 5, column = 0, sticky = "wsn", padx=5, pady=8)
 
-        # Creation du boutton Go
+        # Creation du boutton Go avec un capteur de distance 
         self.go_cap_button = tk.Button(self.root, text = "Go avec Capteur", command=self.go_cap_button_clicked)
         self.go_cap_button.grid(row = 6, column = 0, sticky = "wsn", padx=5, pady=8)
+
+        # Creation du boutton Test osbtacle avec un capteur de distance 
+        self.test_collision_button = tk.Button(self.root, text = "Test de collision avec diff angle", command=self.test_collision_button_clicked)
+        self.test_collision_button.grid(row = 7, column = 0, sticky = "wsn", padx=5, pady=8)
 
         #Creation du button Reset
 
@@ -154,6 +158,15 @@ class Affichage():
             print("reception\n")
             strat = Tracer_carre(self.controller.robot,self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
             self.controller.add_strat(strat)
+
+    def test_collision_button_clicked(self):
+        """ Handle tracer_carre button click
+        """
+        if self.controller is not None :
+            print("reception\n")
+            strat = Test_collision(self.controller.robot, self.controller.robot.posX, self.controller.robot.posY, self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
+            self.controller.add_strat(strat)
+
 
     def draw_obj(self, Objet: Any) -> int:
         """Dessine un objet sur le canevas de l'Affichage. 
