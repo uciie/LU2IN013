@@ -19,8 +19,8 @@ class Arene():
         # robot dans l'Arene
         self.robot = None
 
-        # Ensemble d'obstacle dans l'Arene
-        self.ensObstacles = set()
+        # listed'obstacle dans l'Arene
+        self.liste_Obstacles = []
 
         self.color = "white"
     
@@ -46,7 +46,7 @@ class Arene():
         """Ajouter un obstacle dans l'arène
 
         """
-        self.ensObstacles.add(obstacle)
+        self.liste_Obstacles.append(obstacle)
 
 
     def isObstacle(self, posX, posY):
@@ -56,7 +56,7 @@ class Arene():
         :param posY:
         :return: bool
         """
-        for obstacle in self.ensObstacles:
+        for obstacle in self.liste_Obstacles:
             Lcoins = obstacle.getCoins()
             if ( posX >= Lcoins[0] and posX <= Lcoins[2]) and (posY >= Lcoins[1] and posY <= Lcoins[5]):
                 return True 
