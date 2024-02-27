@@ -1,5 +1,6 @@
 from .robot import Robot
 from .vecteur import Vecteur
+from .obstacle import Obstacle
 
 class Arene(): 
     def __init__(self, name: str, maxX: int, maxY: int, echelle: float):
@@ -41,6 +42,13 @@ class Arene():
             self.robot = robot
             self.robot.arene = self
     
+    def addObstacle(self, obstacle:Obstacle):
+        """Ajouter un obstacle dans l'arène
+
+        """
+        self.ensObstacles.add(obstacle)
+
+
     def isObstacle(self, posX, posY):
         """ Renvoie vrai si (posX, posY) fait partie d'un obstacle
         
