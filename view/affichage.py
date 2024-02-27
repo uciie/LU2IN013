@@ -18,7 +18,7 @@ class Affichage():
         self.root.title(arene.name)
 
         # Set the initial values for the variables
-        self.initial_v_ang_d = -50
+        self.initial_v_ang_d = 50
         self.initial_v_ang_g = 50
         self.initial_v_ang = 50
         self.initial_angle = 90
@@ -128,7 +128,7 @@ class Affichage():
         """
         if self.controller is not None :
             print("reception\n")
-            strat = Go(self.controller.robot, self.distance_var.get(), self.v_ang_d_var.get(), self.v_ang_g_var.get(), self.controller.dt)
+            strat = Go(self.controller.robot, self.distance_var.get(), -self.v_ang_d_var.get(), self.v_ang_g_var.get(), self.controller.dt)
             self.controller.add_strat(strat)
 
     def go_cap_button_clicked(self):
@@ -136,7 +136,7 @@ class Affichage():
         """
         if self.controller is not None :
             print("reception\n")
-            strat = Go_cap(self.controller.robot, self.distance_var.get(), self.v_ang_d_var.get(), self.v_ang_g_var.get(), self.controller.dt)
+            strat = Go_cap(self.controller.robot, self.distance_var.get(), -self.v_ang_d_var.get(), self.v_ang_g_var.get(), self.controller.dt)
             self.controller.add_strat(strat)
 
     def turn_button_clicked(self):
