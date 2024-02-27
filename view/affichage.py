@@ -197,7 +197,7 @@ class Affichage():
         """ Mettre à jour l'affichage des info du robot 
         """
         self.pos_label.config(text=f"Position: ({self.arene.robot.posX:.2f}, {self.arene.robot.posY:.2f})")
-        self.roueD_label.config(text=f"Roue droite : {self.arene.robot.roue_droite.vitesse_angulaire: .2f} rad/s")
+        self.roueD_label.config(text=f"Roue droite : {-self.arene.robot.roue_droite.vitesse_angulaire: .2f} rad/s")
         self.roueG_label.config(text=f"Roue gauche : {self.arene.robot.roue_gauche.vitesse_angulaire: .2f} rad/s")
        
     def update(self):
