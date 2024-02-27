@@ -36,7 +36,7 @@ class Affichage():
         self.robot_frame.grid(row=0, column=0, padx=5, pady=5, sticky="new")
 
         # Données du robot en temps réel
-        self.pos_label = tk.Label(self.robot_frame, text=f"Position : ({"%.2f" % self.arene.robot.posX}, {"%.2f" % self.arene.robot.posX})")
+        self.pos_label = tk.Label(self.robot_frame, text=f"Position: ({self.arene.robot.posX:.2f}, {self.arene.robot.posY:.2f})")
         self.pos_label.grid(row=1, column=0, sticky="w", padx=5)
         self.roueD_label = tk.Label(self.robot_frame, text=f"Roue droite : {self.arene.robot.roue_droite.vitesse_angulaire} rad/s")
         self.roueD_label.grid(row=2, column=0, sticky="w", padx=5)
@@ -196,9 +196,9 @@ class Affichage():
     def update_donnee_robot(self):
         """ Mettre à jour l'affichage des info du robot 
         """
-        self.pos_label.config(text=f"Position : ({"%.2f" % self.arene.robot.posX}, {"%.2f" % self.arene.robot.posY})")
-        self.roueD_label.config(text=f"Roue droite : {"%.2f" %self.arene.robot.roue_droite.vitesse_angulaire} rad/s")
-        self.roueG_label.config(text=f"Roue gauche : {"%.2f" %self.arene.robot.roue_gauche.vitesse_angulaire} rad/s")
+        self.pos_label.config(text=f"Position: ({self.arene.robot.posX:.2f}, {self.arene.robot.posY:.2f})")
+        self.roueD_label.config(text=f"Roue droite : {self.arene.robot.roue_droite.vitesse_angulaire: .2f} rad/s")
+        self.roueG_label.config(text=f"Roue gauche : {self.arene.robot.roue_gauche.vitesse_angulaire: .2f} rad/s")
        
     def update(self):
         """Mettre à jour le modele
