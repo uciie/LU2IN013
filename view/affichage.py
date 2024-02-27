@@ -212,7 +212,9 @@ class Affichage():
         self.pos_label.config(text=f"Position: ({self.arene.robot.posX:.2f}, {self.arene.robot.posY:.2f})")
         self.roueD_label.config(text=f"Roue droite : {-self.arene.robot.roue_droite.vitesse_angulaire: .2f} rad/s")
         self.roueG_label.config(text=f"Roue gauche : {self.arene.robot.roue_gauche.vitesse_angulaire: .2f} rad/s")
-       
+    
+    
+
     def update(self):
         """Mettre à jour le modele
         """
@@ -221,5 +223,6 @@ class Affichage():
             self.delete_draw(self.arene.robot.rect_id, self.arene.robot.arrow_id)
         self.draw_parcours(self.arene.robot)
         self.arene.robot.rect_id, self.arene.robot.arrow_id = self.draw_obj(self.arene.robot)
+        self.draw_obj(self.arene.liste_Obstacles[0])
         
         self.root.update()
