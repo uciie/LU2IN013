@@ -17,7 +17,7 @@ class App():
         # initilisation de l'arene , robot, obstacle
         self.arene = Arene("Simulation de déplacement du robot", largeur, hauteur, echelle)
         self.robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, 10, 150, color="red")
-        obs = Obstacle(30, 50, Vecteur(10, 0), Vecteur(0,20), Vecteur(10, 0), Vecteur(0,20), color="blue")
+        obs = Obstacle(100, 100, Vecteur(10, 0), Vecteur(0,20), Vecteur(10, 0), Vecteur(0,20), color="blue")
         
         # ajouter un robot dans l'arene 
         self.arene.addRobot(self.robot)
