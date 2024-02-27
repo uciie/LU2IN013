@@ -164,7 +164,8 @@ class Affichage():
         """
         if self.controller is not None :
             print("reception\n")
-            strat = Test_collision(self.controller.robot, self.controller.robot.posX, self.controller.robot.posY, self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
+            posX, posY = self.arene.liste_Obstacles[0].posX, self.arene.liste_Obstacles[0].posY
+            strat = Test_collision(self.controller.robot, posX, posY, self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
             self.controller.add_strat(strat)
 
 
@@ -214,13 +215,13 @@ class Affichage():
         self.roueG_label.config(text=f"Roue gauche : {self.arene.robot.roue_gauche.vitesse_angulaire: .2f} rad/s")
     
     
-
     def update(self):
         """Mettre à jour le modele
         """
         self.update_donnee_robot()
-        if self.arene.robot.rect_id and  self.arene.robot.arrow_id: 
+        if self.arene.robot.rect_id and self.arene.robot.arrow_id: 
             self.delete_draw(self.arene.robot.rect_id, self.arene.robot.arrow_id)
+            self.delete_draw(self.arene.liste_Obstacles[0])
         self.draw_parcours(self.arene.robot)
         self.arene.robot.rect_id, self.arene.robot.arrow_id = self.draw_obj(self.arene.robot)
         self.draw_obj(self.arene.liste_Obstacles[0])

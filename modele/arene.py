@@ -58,7 +58,7 @@ class Arene():
         """
         for obstacle in self.liste_Obstacles:
             Lcoins = obstacle.getCoins()
-            if ( posX >= Lcoins[0] and posX <= Lcoins[2]) and (posY >= Lcoins[1] and posY <= Lcoins[5]):
+            if (Lcoins[4] <= posX <= Lcoins[0]) and (Lcoins[1] <= posY <= Lcoins[5]):
                 return True 
         return False
     
@@ -75,11 +75,12 @@ class Arene():
 
         # Verifier chaque pas de rayon 
         while self.inArene(new_x, new_y) and not self.isObstacle(new_x, new_y) :
+            print(self.isObstacle(new_x, new_y))
             new_x += rayon.x
             new_y += rayon.y
         new_x -= rayon.x 
         new_y -= rayon.y
-
+        
         #renvoie la norme, ie la distance 
         return Vecteur(robot.posX + robot.vectDir.x*robot.width/2 - new_x, robot.posY + robot.vectDir.y*robot.length/2  - new_y).norme
     
