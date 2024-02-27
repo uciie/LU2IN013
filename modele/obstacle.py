@@ -1,7 +1,7 @@
 from .vecteur import Vecteur
 
 class Obstacle():
-    def __init__(self, posX : float, posY :float, v1 : Vecteur, v2 : Vecteur, v3 : Vecteur, v4 : Vecteur):
+    def __init__(self, posX : float, posY :float, v1 : Vecteur, v2 : Vecteur, v3 : Vecteur, v4 : Vecteur, color:str):
         """ Initialise un obstacle
 
         :param posX: Coordonnée X de l'obstacle (float)
@@ -11,6 +11,8 @@ class Obstacle():
         :param v3: Vecteur directeur de l'obstacle
         :param v4: Vecteur directeur de l'obstacle
         """
+        # couleur de obstacle
+        self.color = color 
 
         # Coordonnées du centre de l'obstacle
         self.posX = posX
