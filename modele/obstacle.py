@@ -28,9 +28,9 @@ class Obstacle():
         """ Renvoie les coordonnées des 4 coins de l'obstacle
         
         """
-        x1, y1 = self.posX - self.v1.x / 2, self.posY - self.v2.y / 2
-        x2, y2 = self.posX + self.v1.x / 2, self.posY - self.v2.y / 2
+        x1, y1 = self.posX + self.v1.x / 2, self.posY - self.v2.y / 2
+        x2, y2 = self.posX + self.v1.x / 2, self.posY + self.v2.y / 2
         x3, y3 = self.posX - self.v1.x / 2, self.posY + self.v2.y / 2
-        x4, y4 = self.posX + self.v1.x / 2, self.posY + self.v2.y / 2
+        x4, y4 = self.posX - self.v1.x / 2, self.posY - self.v2.y / 2
 
         return [x1, y1, x2, y2, x3, y3, x4, y4]
