@@ -22,7 +22,7 @@ class Obstacle():
         self.v3 = v3
         self.v4 = v4
 
-    def getCoins(self){
+    def getCoins(self):
         """ Renvoie les coordonnées des 4 coins de l'obstacle
         
         """
@@ -32,4 +32,3 @@ class Obstacle():
         x4, y4 = self.posX + self.v1.x / 2, self.posY + self.v2.y / 2
 
         return [x1, y1, x2, y2, x3, y3, x4, y4]
-    }
