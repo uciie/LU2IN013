@@ -51,11 +51,15 @@ class Arene():
 
     def isObstacle(self, posX, posY):
         """ Renvoie vrai si (posX, posY) fait partie d'un obstacle
-        
+    
         :param posX: 
         :param posY:
         :return: bool
         """
+        for obstacle in self.ensObstacles:
+            Lcoins = obstacle.getCoins()
+            if ( posX >= Lcoins[0] and posX <= Lcoins[2]) and (posY >= Lcoins[1] and posY <= Lcoins[5]):
+                return True 
         return False
     
     def raytracing(self, robot: Robot): 
