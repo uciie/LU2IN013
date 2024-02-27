@@ -75,7 +75,6 @@ class Arene():
 
         # Verifier chaque pas de rayon 
         while self.inArene(new_x, new_y) and not self.isObstacle(new_x, new_y) :
-            print(self.isObstacle(new_x, new_y))
             new_x += rayon.x
             new_y += rayon.y
         new_x -= rayon.x 
