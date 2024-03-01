@@ -1,4 +1,4 @@
-from modele.robot import Robot, Vecteur
+from MVC.modele.robot import Robot, Vecteur
 from time import sleep
 import math
 
