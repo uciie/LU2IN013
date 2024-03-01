@@ -50,6 +50,8 @@ class App():
             except ValueError as e:
                 self.view.show_erreur(e)
                 print("run")
+
+            time.sleep(.00001)
                 
                 
         
