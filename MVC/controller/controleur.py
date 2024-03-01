@@ -45,12 +45,7 @@ class Go(Strategie):
         self.dt = dt
        #print("x, y", robot.vectDir.x, robot.vectDir.y)
     
-<<<<<<< HEAD
-    
-    def start(self, robot: Robot):
-=======
     def start(self, robot : Robot):
->>>>>>> 631bcb741bf3e069ef9c862fa8b001d016d4f87e
         """ Commencer la strategie
         """
         #actualiser la position du robot 
@@ -114,16 +109,9 @@ class Go_cap(Strategie):
 
         #le fps
         self.dt = dt
-<<<<<<< HEAD
-       #print("x, y", robot.vectDir.x, robot.vectDir.y)
-    
-    
-    def start(self, robot: Robot):
-=======
         #print("x, y", robot.vectDir.x, robot.vectDir.y)
 
     def start(self, robot : Robot):
->>>>>>> 631bcb741bf3e069ef9c862fa8b001d016d4f87e
         """ Commencer la strategie
         """
         #actualiser la position du robot 
@@ -193,11 +181,7 @@ class Tourner_deg(Strategie):
         self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
         #print("x, y", robot.vectDir.x, robot.vectDir.y)
 
-<<<<<<< HEAD
-    def start(self, robot : Robot):
-=======
     def start(self, robot: Robot):
->>>>>>> 631bcb741bf3e069ef9c862fa8b001d016d4f87e
         """ Commencer la strategie
         """
         # Modifier les vitesses angulaire les roues
@@ -264,10 +248,6 @@ class Tracer_carre(Strategie):
                     Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt)]
         self.cur = -1
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 631bcb741bf3e069ef9c862fa8b001d016d4f87e
     def start(self, robot : Robot):
         """ Commencer la strategie
         """
@@ -312,11 +292,8 @@ class Test_collision(Strategie):
 
         self.cur = -1
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 631bcb741bf3e069ef9c862fa8b001d016d4f87e
     def start(self, robot: Robot):
         """ Commencer la strategie
         """
