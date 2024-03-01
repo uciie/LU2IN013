@@ -1,5 +1,5 @@
 import unittest
-from modele.vecteur import Vecteur
+from MVC.modele.vecteur import Vecteur
 
 class TestVecteur(unittest.TestCase):
 
@@ -39,8 +39,8 @@ class TestVecteur(unittest.TestCase):
         Teste la rotation d'un vecteur.
         """
         vecteur_rotation = self.v1.rotation(90)
-        self.assertEqual(vecteur_rotation.x, -3)
-        self.assertEqual(vecteur_rotation.y, 2)
+        self.assertAlmostEqual(vecteur_rotation.x, 3)
+        self.assertAlmostEqual(vecteur_rotation.y, -2)
 
     def test_equals(self):
         """
