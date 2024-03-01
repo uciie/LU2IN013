@@ -6,24 +6,38 @@ import math
 # Supposons que la position du robot (x, y) correspond à l'extrémité en haut à gauche
 
 class Roue:
-    def __init__(self, rayon:float, vmax_ang:float):
+    def __init__(self, rayon: float, vmax_ang: float):
         """Initialisation d'une roue
 
         :param rayon: Le rayon de la roue
-        :returns: Retourne une instance de la classe Roue.
+        :param vmax_ang: La vitesse angulaire maximale de la roue
         """
-        self.rayon = rayon #m
-        self.vmax_ang = vmax_ang #rad/s
-        self.vitesse_angulaire = 0.0 #rad/s
+        self._rayon = rayon  # m
+        self._vmax_ang = vmax_ang  # rad/s
+        self._vitesse_angulaire = 0.0  # rad/s
 
+    @property
+    def rayon(self) -> float:
+        """Obtient le rayon de la roue."""
+        return self._rayon
 
-    def set_vitesse_angulaire(self, vitesse_angulaire: float):
-        """Modifier la vitesse angulaire lors d'un virage 
+    @property
+    def vmax_ang(self) -> float:
+        """Obtient la vitesse angulaire maximale de la roue."""
+        return self._vmax_ang
 
-        :param vitesse_angulaire: Nouvelle vitesse angulaire de la roue
+    @property
+    def vitesse_angulaire(self) -> float:
+        """Obtient la vitesse angulaire actuelle de la roue."""
+        return self._vitesse_angulaire
+
+    @vitesse_angulaire.setter
+    def vitesse_angulaire(self, value: float) -> None:
+        """Modifie la vitesse angulaire de la roue, en s'assurant qu'elle ne dépasse pas la vitesse maximale.
+
+        :param value: Nouvelle vitesse angulaire de la roue.
         """
-        self.vitesse_angulaire = min(vitesse_angulaire, self.vmax_ang)
-
+        self._vitesse_angulaire = min(value, self._vmax_ang)
 
 
 class Robot:
@@ -78,7 +92,35 @@ class Robot:
         # Capteur du robot
         self.capteur = Capteur(Vecteur(self.vectDir.x, self.vectDir.y/abs(self.vectDir.y)))
 
-    def getCoins(self):
+    # Propriété pour l'attribut posX
+    @property
+    def posX(self):
+        return self._posX
+
+    @posX.setter
+    def posX(self, value):
+        self._posX = value
+
+    # Propriété pour l'attribut posY
+    @property
+    def posY(self):
+        return self._posY
+
+    @posY.setter
+    def posY(self, value):
+        self._posY = value
+
+    # Propriété pour l'attribut theta
+    @property
+    def theta(self):
+        return self._theta
+
+    @theta.setter
+    def theta(self, value):
+        self._theta = value
+
+    @property
+    def coins(self):
         """ Renvoie les coord des 4 coins du robot 
 
         :returns: list[float]
@@ -98,14 +140,16 @@ class Robot:
 
         return [x1, y1, x2, y2, x3, y3, x4, y4]
 
-    def getCurrPos(self) -> tuple[float, float]:
+    @property
+    def curr_pos(self) -> tuple[float, float]:
         """Renvoie la position actuelle du robot.
 
         :returns: Renvoie les coordonnées du robot (tuple).
         """
         return (self.posX, self.posY)
 
-    def getLastPos(self) -> tuple[float, float]:
+    @property
+    def last_pos(self) -> tuple[float, float]:
         """Renvoie l'ancienne position du robot.
 
         :returns: Renvoie l'avant-dernière coordonnée du robot (tuple).
@@ -119,7 +163,8 @@ class Robot:
         #print(math.fabs(self.roue_gauche.vitesse_angulaire-self.roue_droite.vitesse_angulaire))
         return (self.roue_droite.rayon /2)* (self.roue_gauche.vitesse_angulaire-self.roue_droite.vitesse_angulaire)
     
-    def getVitesse_angulaire(self):
+    @property
+    def vitesse_angulaire(self):
         """ Donne la vitesse angulaire du robot en fonction des vitesses angulaires des roues
 
         :returns: Renvoie la vitesse angulaire du robot
@@ -138,7 +183,7 @@ class Robot:
 
 
 class Capteur:
-    def __init__(self,vecteur : Vecteur):
+    def __init__(self, vecteur: Vecteur):
         """Initialisation du capteur
 
         :param vecteur : Vecteur directeur envoyé
@@ -146,7 +191,22 @@ class Capteur:
         :returns : Retourne une instance de la classe Capteur
         """
         # Vecteur directeur
-        self.vecteur = vecteur
+        self._vecteur = vecteur
         # Seuil de collision
-        self.seuil_collision = 2
-        self.deg_max = 10
+        self._seuil_collision = 2
+        self._deg_max = 10
+
+    @property
+    def vecteur(self):
+        """Propriété pour l'attribut vecteur"""
+        return self._vecteur
+
+    @property
+    def seuil_collision(self):
+        """Propriété pour l'attribut seuil_collision"""
+        return self._seuil_collision
+
+    @property
+    def deg_max(self):
+        """Propriété pour l'attribut deg_max"""
+        return self._deg_max

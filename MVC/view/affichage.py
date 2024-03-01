@@ -1,7 +1,7 @@
 import tkinter as tk
 from typing import Any
 from MVC.modele.arene import Arene
-from MVC.controller.controleur import Go, Go_cap, Tourner_deg, Tracer_carre, Test_collision
+from MVC.controller.controleur import Controleur, Go, Go_cap, Tourner_deg, Tracer_carre, Test_collision
 
 class Affichage():
     def __init__(self, arene:Arene):
@@ -111,15 +111,17 @@ class Affichage():
         self.root.columnconfigure(1, weight=1)
         
         # set the controller
-        self.controller = None
+        self._controller = None
 
-    def set_controller(self, controller):
-        """ Set le controleur
+    @property
+    def controller(self):
+        """Renvoie le contrôleur associé."""
+        return self._controller
 
-        :param controller: Le controleur
-        :return:
-        """
-        self.controller = controller
+    @controller.setter
+    def controller(self, controller):
+        """Définit le contrôleur associé."""
+        self._controller = controller
 
     def reset_button_clicked(self):
         """ remettre à zero l'interface graphique 
@@ -176,7 +178,7 @@ class Affichage():
         :param Objet: Objet à dessiner.
         :returns: Identifiant unique de l'objet sur le canevas.
         """
-        poly_coords = Objet.getCoins()
+        poly_coords = Objet.coins
 
         poly_id = self.canvas.create_polygon(poly_coords, fill=Objet.color)
 

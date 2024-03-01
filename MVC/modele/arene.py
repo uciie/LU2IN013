@@ -57,7 +57,7 @@ class Arene():
         :return: bool
         """
         for obstacle in self.liste_Obstacles:
-            Lcoins = obstacle.getCoins()
+            Lcoins = obstacle.coins
             if (Lcoins[4] <= posX <= Lcoins[0]) and (Lcoins[1] <= posY <= Lcoins[5]):
                 return True 
         return False

@@ -34,7 +34,7 @@ class App():
     
         # Ajoute du lien de communication entre view et controller 
         if self.view :
-            self.view.set_controller(self.controller)
+            self.view.controller = self.controller
             self.runCtrl()
             self.view.root.mainloop()
         # si View n'existe pas 

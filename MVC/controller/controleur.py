@@ -55,8 +55,8 @@ class Go(Strategie):
         self.dOM = Vecteur(self.dOM_x, self.dOM_y)
 
         # Modifier les vitesses angulaire les roues
-        self.robot.roue_droite.set_vitesse_angulaire(self.v_ang_d)  # Vitesse angulaire droite
-        self.robot.roue_gauche.set_vitesse_angulaire(self.v_ang_g)  # Vitesse angulaire gauche
+        self.robot.roue_droite.vitesse_angulaire = self.v_ang_d # Vitesse angulaire droite
+        self.robot.roue_gauche.vitesse_angulaire = self.v_ang_g # Vitesse angulaire gauche
         #Calcul des dOM
         self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
 
@@ -121,8 +121,8 @@ class Go_cap(Strategie):
         self.dOM = Vecteur(self.dOM_x, self.dOM_y)
 
         # Modifier les vitesses angulaire les roues
-        self.robot.roue_droite.set_vitesse_angulaire(self.v_ang_d)  # Vitesse angulaire droite
-        self.robot.roue_gauche.set_vitesse_angulaire(self.v_ang_g)  # Vitesse angulaire gauche
+        self.robot.roue_droite.vitesse_angulaire = self.v_ang_d  # Vitesse angulaire droite
+        self.robot.roue_gauche.vitesse_angulaire = self.v_ang_g  # Vitesse angulaire gauche
         #Calcul des dOM
         self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
         
@@ -186,12 +186,12 @@ class Tourner_deg(Strategie):
         """
         # Modifier les vitesses angulaire les roues
         if self.angle > 0:
-            self.robot.roue_droite.set_vitesse_angulaire(-self.v_ang)  # Vitesse angulaire droite
-            self.robot.roue_gauche.set_vitesse_angulaire(0)  # Vitesse angulaire gauche
+            self.robot.roue_droite.vitesse_angulaire = -self.v_ang  # Vitesse angulaire droite
+            self.robot.roue_gauche.vitesse_angulaire = 0  # Vitesse angulaire gauche
             self.v_ang_d, self.v_ang_g = -self.v_ang, 0
         else:
-            self.robot.roue_droite.set_vitesse_angulaire(0)  # Vitesse angulaire droite
-            self.robot.roue_gauche.set_vitesse_angulaire(self.v_ang) 
+            self.robot.roue_droite.vitesse_angulaire = 0  # Vitesse angulaire droite
+            self.robot.roue_gauche.vitesse_angulaire = self.v_ang 
             self.v_ang_d, self.v_ang_g = 0, self.v_ang
 
         #compteur de distance deja parcouru
