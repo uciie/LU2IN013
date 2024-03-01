@@ -42,6 +42,8 @@ class Affichage():
         self.roueD_label.grid(row=2, column=0, sticky="w", padx=5)
         self.roueG_label = tk.Label(self.robot_frame, text=f"Roue gauche : {self.arene.robot.roue_gauche.vitesse_angulaire} rad/s")
         self.roueG_label.grid(row=3, column=0, sticky="w", padx=5)
+        self.vectDir_label = tk.Label(self.robot_frame, text=f"Vecteur directeur : ({self.arene.robot.vectDir.x:.2f}, {self.arene.robot.vectDir.y:.2f})")
+        self.vectDir_label.grid(row=4, column=0, sticky="w", padx=5)
         
         
         # Creation du cadre pour la commande basic
@@ -226,6 +228,7 @@ class Affichage():
         self.pos_label.config(text=f"Position: ({self.arene.robot.posX:.2f}, {self.arene.robot.posY:.2f})")
         self.roueD_label.config(text=f"Roue droite : {-self.arene.robot.roue_droite.vitesse_angulaire: .2f} rad/s")
         self.roueG_label.config(text=f"Roue gauche : {self.arene.robot.roue_gauche.vitesse_angulaire: .2f} rad/s")
+        self.vectDir_label.config(text=f"Vecteur directeur : ({self.arene.robot.vectDir.x:.2f}, {self.arene.robot.vectDir.y:.2f}) ")
     
     
     def update(self):
