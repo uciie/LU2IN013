@@ -45,8 +45,13 @@ class Go(Strategie):
         self.dt = dt
        #print("x, y", robot.vectDir.x, robot.vectDir.y)
     
-    
-    def start(self, robot: Robot):
+    def actualise(self, robot : Robot, dt):
+        self.robot = robot
+        self.dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
+        self.dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
+        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+
+    def start(self):
         """ Commencer la strategie
         """
         #compteur de distance deja parcouru
@@ -55,6 +60,8 @@ class Go(Strategie):
         self.robot.roue_gauche.set_vitesse_angulaire(self.v_ang_g)  # Vitesse angulaire gauche
         #Calcul des dOM
         self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
+
+        #compteur de distance deja parcouru
         self.parcouru = 0      
 
     def stop(self):
@@ -105,8 +112,13 @@ class Go_cap(Strategie):
         self.dt = dt
        #print("x, y", robot.vectDir.x, robot.vectDir.y)
     
-    
-    def start(self, robot: Robot):
+    def actualise(self, robot : Robot, dt):
+        self.robot = robot
+        self.dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
+        self.dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
+        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+
+    def start(self):
         """ Commencer la strategie
         """
         #compteur de distance deja parcouru
@@ -115,6 +127,8 @@ class Go_cap(Strategie):
         self.robot.roue_gauche.set_vitesse_angulaire(self.v_ang_g)  # Vitesse angulaire gauche
         #Calcul des dOM
         self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
+        
+        #compteur de distance deja parcouru
         self.parcouru = 0  
         #Verification de detection d'un mur ou obstacle     
         self.danger = self.robot.arene.raytracing(self.robot) < 2 
@@ -169,7 +183,7 @@ class Tourner_deg(Strategie):
         self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
         #print("x, y", robot.vectDir.x, robot.vectDir.y)
 
-    def start(self, robot : Robot):
+    def start(self):
         """ Commencer la strategie
         """
         # Modifier les vitesses angulaire les roues
@@ -235,7 +249,8 @@ class Tracer_carre(Strategie):
                     Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt),
                     Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt)]
         self.cur = -1
-
+    def actualise(self, robot : Robot, dt):
+        return   
 
     def start(self, robot : Robot):
         """ Commencer la strategie
@@ -281,9 +296,12 @@ class Test_collision(Strategie):
 
         self.cur = -1
 
+    def actualise(self, robot : Robot, dt):
+        """
+        """
+        return
 
-
-    def start(self, robot: Robot):
+    def start(self):
         """ Commencer la strategie
         """
         self.robot.vectDir = Vecteur(0, -1)
