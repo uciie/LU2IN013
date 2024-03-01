@@ -77,6 +77,8 @@ class Go(Strategie):
         self.parcouru += self.dOM.norme
         if self.stop(): 
             print("STOP")
+            self.robot.roue_droite.vitesse_angulaire = 0
+            self.robot.roue_gauche.vitesse_angulaire = 0
             return
         
         self.dOM_theta = 0
@@ -148,6 +150,9 @@ class Go_cap(Strategie):
 
         if self.stop(): 
             print("STOP")
+            # Mettre à 0 les vitesses
+            self.robot.roue_droite.vitesse_angulaire = 0
+            self.robot.roue_gauche.vitesse_angulaire = 0
             return
         
         self.dOM_theta = 0
@@ -216,6 +221,9 @@ class Tourner_deg(Strategie):
 
         if self.stop(): 
             print("STOP")
+            # Mettre à 0 les vitesses
+            self.robot.roue_droite.vitesse_angulaire = 0
+            self.robot.roue_gauche.vitesse_angulaire = 0
             return
         
         self.dOM_theta = 0
@@ -248,6 +256,11 @@ class Tracer_carre(Strategie):
                     Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt)]
         self.cur = -1
 
+    def stop(self):
+        """Vérifie si toutes les étapes sont terminées
+        """
+        return self.cur == len(self.etapes)-1 and self.etapes[self.cur].stop()
+
     def start(self, robot : Robot):
         """ Commencer la strategie
         """
@@ -258,6 +271,9 @@ class Tracer_carre(Strategie):
         """
         if self.stop(): 
             print("STOP")
+            # Mettre à 0 les vitesses
+            self.robot.roue_droite.vitesse_angulaire = 0
+            self.robot.roue_gauche.vitesse_angulaire = 0
             return
         #Avance d'une étape
         if self.cur <0 or self.etapes[self.cur].stop():
@@ -265,10 +281,6 @@ class Tracer_carre(Strategie):
             self.etapes[self.cur].start(self.robot)
         self.etapes[self.cur].step()
     
-    def stop(self):
-        """Vérifie si toutes les étapes sont terminées
-        """
-        return self.cur == len(self.etapes)-1 and self.etapes[self.cur].stop()
 
 class Test_collision(Strategie):
     def __init__(self, robot : Robot, posX: float, posY: float,  distance : int, v_ang : float, dt: float):
@@ -292,8 +304,6 @@ class Test_collision(Strategie):
 
         self.cur = -1
 
-
-
     def start(self, robot: Robot):
         """ Commencer la strategie
         """
@@ -305,6 +315,9 @@ class Test_collision(Strategie):
         """
         if self.stop(): 
             print("STOP")
+            # Mettre à 0 les vitesses
+            self.robot.roue_droite.vitesse_angulaire = 0
+            self.robot.roue_gauche.vitesse_angulaire = 0
             return
         #Avance d'une étape
         if self.cur <0 or self.strat.stop():
@@ -365,6 +378,9 @@ class Controleur:
         """Faire la commande suivante 
         """
         if self.stop(): 
+            # Mettre à 0 les vitesses
+            self.robot.roue_droite.vitesse_angulaire = 0
+            self.robot.roue_gauche.vitesse_angulaire = 0
             return
         #Faire la strtégie suivante 
         if self.cur <0 or self.liste_strat[self.cur].stop():
