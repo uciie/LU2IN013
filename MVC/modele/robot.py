@@ -126,7 +126,7 @@ class Robot:
         """
         return (self.roue_droite.rayon /self.length)* ((self.roue_droite.vitesse_angulaire-self.roue_gauche.vitesse_angulaire))
     
-    def move_dOM(self, dOM_x, dOM_y, dOM_theta = 0):
+    def move_dOM(self, dOM_x: float, dOM_y: float, dOM_theta = 0.):
         """ Robot avance d'un petit pas
 
         :param dOM: Vecteur de deplacement pour un dt.

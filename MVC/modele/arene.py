@@ -24,7 +24,7 @@ class Arene():
 
         self.color = "white"
     
-    def inArene(self, posX, posY):
+    def inArene(self, posX: float, posY: float):
         """ Verifie si la position (posX, posY) est dans la grille
 
         :param grille: La fenetre 
@@ -49,7 +49,7 @@ class Arene():
         self.liste_Obstacles.append(obstacle)
 
 
-    def isObstacle(self, posX, posY):
+    def isObstacle(self, posX: float, posY: float):
         """ Renvoie vrai si (posX, posY) fait partie d'un obstacle
     
         :param posX: 
