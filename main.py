@@ -8,7 +8,8 @@ import time
 
 class App():
     def __init__(self):
-        self.dt = 1/200
+        self.dt_controller = 1/600
+        self.dt_affichage = 1/100
         echelle = 5
         largeur, hauteur = 500, 500
         dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
@@ -28,7 +29,7 @@ class App():
         self.view = Affichage(self.arene)
 
         #Creation du module Controller
-        self.controller = Controleur(self.robot, self.dt)
+        self.controller = Controleur(self.robot, self.dt_controller)
 
         # Ajoute du lien de communication entre controller et view
     
@@ -51,7 +52,7 @@ class App():
                 self.view.show_erreur(e)
                 print("run")
 
-            time.sleep(.00001)
+            time.sleep(self.dt_affichage)
                 
                 
         
