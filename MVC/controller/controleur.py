@@ -87,7 +87,6 @@ class Go(Strategie):
             #Calcul des dOM
             self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
             #print(self.dOM_theta)
-
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
 class Go_cap(Strategie): 
