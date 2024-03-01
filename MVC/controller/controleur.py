@@ -2,7 +2,7 @@ from MVC.modele.robot import Robot, Vecteur
 from time import sleep
 import math
 
-def calcul_dOM(robot: Robot, dt): 
+def calcul_dOM(robot: Robot, dt: float): 
     """ Calcul les dOM pour lezs utiliser lors de appel de go_dOM
 
     :param robot: Le robot qui va faire le deplacement 
@@ -23,7 +23,7 @@ class Strategie():
         pass
     
 class Go(Strategie): 
-    def __init__(self, robot: Robot, distance : int, v_ang_d, v_ang_g, dt) -> None:
+    def __init__(self, robot: Robot, distance : int, v_ang_d: float, v_ang_g: float, dt: float) -> None:
         """/!!\\ robot ne comprends pas distance negative
         
         :param robot: Le robot qui va faire le deplacement 
@@ -45,13 +45,8 @@ class Go(Strategie):
         self.dt = dt
        #print("x, y", robot.vectDir.x, robot.vectDir.y)
     
-    def actualise(self, robot : Robot, dt):
-        self.robot = robot
-        self.dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
-        self.dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
-        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
-
-    def start(self):
+    
+    def start(self, robot: Robot):
         """ Commencer la strategie
         """
         #compteur de distance deja parcouru
@@ -88,7 +83,7 @@ class Go(Strategie):
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
 class Go_cap(Strategie): 
-    def __init__(self, robot: Robot, distance : int, v_ang_d, v_ang_g, dt) -> None:
+    def __init__(self, robot: Robot, distance : int, v_ang_d: float, v_ang_g: float, dt: float) -> None:
         """/!!\\ robot ne comprends pas distance negative
         
         :param robot: Le robot qui va faire le deplacement 
@@ -110,13 +105,8 @@ class Go_cap(Strategie):
         self.dt = dt
        #print("x, y", robot.vectDir.x, robot.vectDir.y)
     
-    def actualise(self, robot : Robot, dt):
-        self.robot = robot
-        self.dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
-        self.dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
-        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
-
-    def start(self):
+    
+    def start(self, robot: Robot):
         """ Commencer la strategie
         """
         #compteur de distance deja parcouru
@@ -159,7 +149,7 @@ class Go_cap(Strategie):
 
 
 class Tourner_deg(Strategie): 
-    def __init__(self, robot: Robot,  angle : int, v_ang, dt) -> None:
+    def __init__(self, robot: Robot,  angle : int, v_ang: float, dt: float) -> None:
         """"
         :param robot: Le controleur qui donne l'ordre 
         :param angle: L'angle que le robot doit parcourir (float) 
@@ -179,7 +169,7 @@ class Tourner_deg(Strategie):
         self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
         #print("x, y", robot.vectDir.x, robot.vectDir.y)
 
-    def start(self):
+    def start(self, robot : Robot):
         """ Commencer la strategie
         """
         # Modifier les vitesses angulaire les roues
@@ -205,9 +195,7 @@ class Tourner_deg(Strategie):
         else:
             return self.parcouru < self.angle
 
-    def actualise(self, robot : Robot, dt):
-        return     
-       
+ 
     def step(self):
         """ Faire un deplacement de dOM 
         """
@@ -226,7 +214,7 @@ class Tourner_deg(Strategie):
         self.robot.move_dOM(0, 0, self.dOM_theta)
 
 class Tracer_carre(Strategie):
-    def __init__(self, robot : Robot, distance : int, v_ang : float, dt):
+    def __init__(self, robot : Robot, distance : int, v_ang : float, dt: float):
         """Trace un carré
         :param robot: Le robot qui reçoit l'ordre
         :param distance: La distance que le robot parcours, dans notre cas longueur du carré
@@ -247,10 +235,9 @@ class Tracer_carre(Strategie):
                     Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt),
                     Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt)]
         self.cur = -1
-    def actualise(self, robot : Robot, dt):
-        return   
 
-    def start(self):
+
+    def start(self, robot : Robot):
         """ Commencer la strategie
         """
         self.cur = -1
@@ -264,8 +251,7 @@ class Tracer_carre(Strategie):
         #Avance d'une étape
         if self.cur <0 or self.etapes[self.cur].stop():
             self.cur+=1
-            self.etapes[self.cur].actualise(self.robot, self.dt)
-            self.etapes[self.cur].start()
+            self.etapes[self.cur].start(self.robot)
         self.etapes[self.cur].step()
     
     def stop(self):
@@ -274,7 +260,7 @@ class Tracer_carre(Strategie):
         return self.cur == len(self.etapes)-1 and self.etapes[self.cur].stop()
 
 class Test_collision(Strategie):
-    def __init__(self, robot : Robot, posX, posY,  distance : int, v_ang : float, dt):
+    def __init__(self, robot : Robot, posX: float, posY: float,  distance : int, v_ang : float, dt: float):
         """Trace un carré
 
         :param robot: Le robot qui reçoit l'ordre
@@ -295,12 +281,9 @@ class Test_collision(Strategie):
 
         self.cur = -1
 
-    def actualise(self, robot : Robot, dt):
-        """
-        """
-        return
 
-    def start(self):
+
+    def start(self, robot: Robot):
         """ Commencer la strategie
         """
         self.robot.vectDir = Vecteur(0, -1)
@@ -317,8 +300,7 @@ class Test_collision(Strategie):
             self.cur+=1
             self.robot.vectDir = self.robot.vectDir.rotation(90)
             self.robot.posX, self.robot.posY = self.list_pos[self.cur]
-            self.strat.actualise(self.robot, self.dt)
-            self.strat.start()
+            self.strat.start(self.robot)
 
         self.strat.step()
     
@@ -328,7 +310,7 @@ class Test_collision(Strategie):
         return self.cur == len(self.list_pos)-1 and self.strat.stop()
     
 class Controleur:
-    def __init__(self, robot: Robot, dt):
+    def __init__(self, robot: Robot, dt: float):
         """
         Initialise le contrôleur avec un robot, une vue et un intervalle de temps.
 
@@ -348,24 +330,13 @@ class Controleur:
         # Le fps
         self.dt = dt
 
-    def set_view(self, view):
-        """ L'ajout du View dans le controller
-        
-        :param view: Le module View
-        """
-        if self.view : 
-            self.reset_robot()
-            self.view.root.destroy()  # Destroy the current window
-        self.view = view
-        self.view.set_controller(self)
-
     def reset_robot(self):
         """ Mettre robot au mileu du plan
         """
         self.robot.vectDir = Vecteur(0, -1)
         self.robot.posX, self.robot.posY = self.view.arene.maxX/2, self.view.arene.maxY /2
 
-    def add_strat(self, strat):
+    def add_strat(self, strat: Strategie):
         """ Ajouter une strategie au conntroleur
 
         :param strat: Une strategie 
@@ -387,8 +358,7 @@ class Controleur:
         #Faire la strtégie suivante 
         if self.cur <0 or self.liste_strat[self.cur].stop():
             self.cur+=1
-            self.liste_strat[self.cur].actualise(self.robot, self.dt)
-            self.liste_strat[self.cur].start()
+            self.liste_strat[self.cur].start(self.robot)
         print(self.cur)
         self.liste_strat[self.cur].step()
 
