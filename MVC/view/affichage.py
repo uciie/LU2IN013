@@ -22,7 +22,7 @@ class Affichage():
         self.initial_v_ang_g = 50
         self.initial_v_ang = 50
         self.initial_angle = 90
-        self.initial_distance = -50
+        self.initial_distance = 50
 
         # Créer des variables Tkinter pour la vitesse et la distance
         self.v_ang_d_var = tk.DoubleVar(value=self.initial_v_ang_d)
