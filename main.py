@@ -1,9 +1,9 @@
-from controller.controleur import Controleur
-from view.affichage import Affichage
-from modele.arene import Arene
-from modele.robot import Robot
-from modele.obstacle import Obstacle
-from modele.vecteur import Vecteur
+from MVC.controller.controleur import Controleur
+from MVC.view.affichage import Affichage
+from MVC.modele.arene import Arene
+from MVC.modele.robot import Robot
+from MVC.modele.obstacle import Obstacle
+from MVC.modele.vecteur import Vecteur
 import time 
 
 class App():

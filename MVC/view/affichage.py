@@ -1,7 +1,7 @@
 import tkinter as tk
 from typing import Any
-from modele.arene import Arene
-from controller.controleur import Go, Go_cap, Tourner_deg, Tracer_carre, Test_collision
+from MVC.modele.arene import Arene
+from MVC.controller.controleur import Go, Go_cap, Tourner_deg, Tracer_carre, Test_collision
 
 class Affichage():
     def __init__(self, arene:Arene):
