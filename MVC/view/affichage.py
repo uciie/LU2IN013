@@ -22,7 +22,7 @@ class Affichage():
         self.initial_v_ang_g = 50
         self.initial_v_ang = 50
         self.initial_angle = 90
-        self.initial_distance = 50
+        self.initial_distance = -50
 
         # Créer des variables Tkinter pour la vitesse et la distance
         self.v_ang_d_var = tk.DoubleVar(value=self.initial_v_ang_d)
@@ -42,7 +42,8 @@ class Affichage():
         self.roueD_label.grid(row=2, column=0, sticky="w", padx=5)
         self.roueG_label = tk.Label(self.robot_frame, text=f"Roue gauche : {self.arene.robot.roue_gauche.vitesse_angulaire} rad/s")
         self.roueG_label.grid(row=3, column=0, sticky="w", padx=5)
-
+        
+        
         # Creation du cadre pour la commande basic
         self.command_frame = tk.LabelFrame(self.root, text = " Commande Basic ")
         self.command_frame.grid(row=1, column=0, padx = 5, pady = 5, sticky = "ew")
@@ -65,6 +66,10 @@ class Affichage():
         self.distance_label.grid(row = 3, column= 0, sticky = "e", pady = 5)
         self.distance_var_entry.grid(row = 3, column=1, sticky = "w", padx = 5, pady = 5)
 
+        # Creation du label message erreur
+        self.message_label = tk.Label(self.command_frame, text='', foreground='red')
+        self.message_label.grid(row=4, column=0, sticky="w", padx=5)
+        
         # Cadre pour la commande pour tourner
         self.turn_frame = tk.LabelFrame(self.root, text=" Commande pour Tourner ")
         self.turn_frame.grid(row=3, column=0, padx=5, pady=5, sticky="new")
@@ -134,14 +139,20 @@ class Affichage():
         """
         if self.controller is not None :
             print("reception\n")
-            strat = Go(self.controller.robot, self.distance_var.get(), -self.v_ang_d_var.get(), self.v_ang_g_var.get(), self.controller.dt)
-            self.controller.add_strat(strat)
+            if self.distance_var.get() < 0.:
+                raise ValueError(f'Le robot ne comprend pas les distances négatives.')
+            else :
+                strat = Go(self.controller.robot, self.distance_var.get(), -self.v_ang_d_var.get(), self.v_ang_g_var.get(), self.controller.dt)
+                self.controller.add_strat(strat)
 
     def go_cap_button_clicked(self):
         """ Handle go button click
         """
         if self.controller is not None :
             print("reception\n")
+            if self.distance_var.get() < 0.:
+                raise ValueError("Le robot ne comprend pas les distances négatives.")
+        
             strat = Go_cap(self.controller.robot, self.distance_var.get(), -self.v_ang_d_var.get(), self.v_ang_g_var.get(), self.controller.dt)
             self.controller.add_strat(strat)
 
@@ -229,3 +240,14 @@ class Affichage():
         self.draw_obj(self.arene.liste_Obstacles[0])
         
         self.root.update()
+
+    def show_erreur(self, message: str):
+        """ Affiche les erreurs sur l'interface graphique 
+        
+        :param message:  
+        :return void
+        """
+        print("show")
+        self.message_label['text'] = message
+        self.message_label['foreground'] = 'red'
+        

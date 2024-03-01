@@ -161,7 +161,7 @@ class Go_cap(Strategie):
 
 
 class Tourner_deg(Strategie): 
-    def __init__(self, robot: Robot,  angle : int, v_ang, dt) -> None:
+    def __init__(self, robot: Robot,  angle : int, v_ang: float, dt: float) -> None:
         """"
         :param robot: Le controleur qui donne l'ordre 
         :param angle: L'angle que le robot doit parcourir (float) 
@@ -207,9 +207,7 @@ class Tourner_deg(Strategie):
         else:
             return self.parcouru < self.angle
 
-    def actualise(self, robot : Robot, dt):
-        return     
-       
+ 
     def step(self):
         """ Faire un deplacement de dOM 
         """
@@ -228,7 +226,7 @@ class Tourner_deg(Strategie):
         self.robot.move_dOM(0, 0, self.dOM_theta)
 
 class Tracer_carre(Strategie):
-    def __init__(self, robot : Robot, distance : int, v_ang : float, dt):
+    def __init__(self, robot : Robot, distance : int, v_ang : float, dt: float):
         """Trace un carré
         :param robot: Le robot qui reçoit l'ordre
         :param distance: La distance que le robot parcours, dans notre cas longueur du carré
@@ -273,7 +271,7 @@ class Tracer_carre(Strategie):
         return self.cur == len(self.etapes)-1 and self.etapes[self.cur].stop()
 
 class Test_collision(Strategie):
-    def __init__(self, robot : Robot, posX, posY,  distance : int, v_ang : float, dt):
+    def __init__(self, robot : Robot, posX: float, posY: float,  distance : int, v_ang : float, dt: float):
         """Trace un carré
 
         :param robot: Le robot qui reçoit l'ordre
@@ -293,6 +291,8 @@ class Test_collision(Strategie):
         self.list_pos = [(posX+distance, posY), (posX, posY-distance), (posX-distance, posY), (posX, posY+distance)]
 
         self.cur = -1
+
+
 
     def start(self, robot: Robot):
         """ Commencer la strategie
@@ -321,7 +321,7 @@ class Test_collision(Strategie):
         return self.cur == len(self.list_pos)-1 and self.strat.stop()
     
 class Controleur:
-    def __init__(self, robot: Robot, dt):
+    def __init__(self, robot: Robot, dt: float):
         """
         Initialise le contrôleur avec un robot, une vue et un intervalle de temps.
 
@@ -341,24 +341,13 @@ class Controleur:
         # Le fps
         self.dt = dt
 
-    def set_view(self, view):
-        """ L'ajout du View dans le controller
-        
-        :param view: Le module View
-        """
-        if self.view : 
-            self.reset_robot()
-            self.view.root.destroy()  # Destroy the current window
-        self.view = view
-        self.view.set_controller(self)
-
     def reset_robot(self):
         """ Mettre robot au mileu du plan
         """
         self.robot.vectDir = Vecteur(0, -1)
         self.robot.posX, self.robot.posY = self.view.arene.maxX/2, self.view.arene.maxY /2
 
-    def add_strat(self, strat):
+    def add_strat(self, strat: Strategie):
         """ Ajouter une strategie au conntroleur
 
         :param strat: Une strategie 

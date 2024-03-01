@@ -43,10 +43,16 @@ class App():
 
     def runCtrl(self):
         while True:
-            self.controller.step()
-            if self.view is not None:
-                self.view.update()
-            
+            try:
+                self.controller.step()
+                if self.view is not None:
+                    self.view.update()
+            except ValueError as e:
+                self.view.show_erreur(e)
+                print("run")
+                
+                
+        
 
 if __name__ == '__main__':
     app = App()
