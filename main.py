@@ -44,15 +44,11 @@ class App():
 
     def runCtrl(self):
         while True:
-            try:
-                self.controller.step()
-                if self.view is not None:
-                    self.view.update()
-            except ValueError as e:
-                self.view.show_erreur(e)
-                print("run")
+            self.controller.step()
+            if self.view is not None:
+                self.view.update()
 
-            time.sleep(self.dt_affichage)
+            time.sleep(self.dt_controller)
                 
                 
         
