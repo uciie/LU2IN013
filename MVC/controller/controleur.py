@@ -388,7 +388,13 @@ class Controleur:
         print(self.cur)
         self.liste_strat[self.cur].step()
 
-    def Tracer_carre(self,distance,vang):
+    def tracer_carre(self ,distance : int,vang : float ,dt : float):
         """Trace un carré
+        :param distance: La distance que le robot parcours, dans notre cas longueur du carré
+        :param vang: La vitesse angulaire des roues du robot
+        :param dt: Le FPS
         """
-        self.add_strat(self,Go(self.robot, distance, -v_ang, v_ang, dt));
+        for i in range(4):
+            self.add_strat(self,Go(self.robot, distance, -v_ang, v_ang, dt));
+            self.add_strat(self,Tourner_deg(self.robot, 90, v_ang, dt));
+
