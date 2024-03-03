@@ -108,8 +108,11 @@ class Affichage():
         self.test_collision_button = tk.Button(self.root, text = "Test de collision avec diff angle", command=self.test_collision_button_clicked)
         self.test_collision_button.grid(row = 8, column = 0, sticky = "wsn", padx=5, pady=8)
 
-        #Creation du button Reset
+        # Creation du bouton Go cap max
+        self.go_cap_max_button = tk.Button(self.root, text= "Go avec Capteur et Vmax", command=self.go_cap_max_button_clicked)
+        self.go_cap_max_button.grid(row = 9, column = 0, sticky = "wsn", padx=5, pady=8)
 
+        #Creation du button Reset
         self.canvas = tk.Canvas(self.root, width=self.arene.maxX, height=self.arene.maxY, bg=self.arene.color)
         self.canvas.grid(row=0, column=1, rowspan=100, padx=10, pady=5,sticky="nsew")
         
