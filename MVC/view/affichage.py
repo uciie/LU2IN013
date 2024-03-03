@@ -179,8 +179,8 @@ class Affichage():
         """
         if self.controller is not None :
             print("reception\n")
-            strat = Tracer_carre(self.controller.robot,self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
-            self.controller.add_strat(strat)
+            #strat = Tracer_carre(self.controller.robot,self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
+            self.controller.tracer_carre(self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
 
     def test_collision_button_clicked(self):
         """ Handle tracer_carre button click
