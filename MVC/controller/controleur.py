@@ -354,4 +354,4 @@ class Controleur:
         :param distance: La distance que le robot parcours
         :param dt: Le fps
         """
-        
+        self.add_strat(Go_cap(self.robot, distance, self.robot.vmax_ang, self.robot.vmax_ang, dt))
