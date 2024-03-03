@@ -163,7 +163,6 @@ class Go_cap(Strategie):
 
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
-
 class Tourner_deg(Strategie): 
     def __init__(self, robot: Robot,  angle : int, v_ang: float, dt: float) -> None:
         """"
@@ -231,56 +230,7 @@ class Tourner_deg(Strategie):
             self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
 
         self.robot.move_dOM(0, 0, self.dOM_theta)
-
-class Tracer_carre(Strategie):
-    def __init__(self, robot : Robot, distance : int, v_ang : float, dt: float):
-        """Trace un carré
-        :param robot: Le robot qui reçoit l'ordre
-        :param distance: La distance que le robot parcours, dans notre cas longueur du carré
-        :param vang: La vitesse angulaire des roues du robot
-        :param dt: Le FPS
-        """
-        super().__init__()  # Appel du constructeur de la classe parente 
-        #Longueur/Distance du carré
-        self.distance = distance
-        self.robot = robot
-        self.dt =dt
-        #Vitesse angulaire des roues pour tracer le carré
-        self.v_ang = v_ang
-
-        #Les étapes à faire
-        self.etapes = [Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt),
-                    Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt),
-                    Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt),
-                    Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt)]
-        self.cur = -1
-
-    def stop(self):
-        """Vérifie si toutes les étapes sont terminées
-        """
-        return self.cur == len(self.etapes)-1 and self.etapes[self.cur].stop()
-
-    def start(self, robot : Robot):
-        """ Commencer la strategie
-        """
-        self.cur = -1
-
-    def step(self):
-        """Fait avancer le traçage du carré
-        """
-        if self.stop(): 
-            print("STOP")
-            # Mettre à 0 les vitesses
-            self.robot.roue_droite.vitesse_angulaire = 0
-            self.robot.roue_gauche.vitesse_angulaire = 0
-            return
-        #Avance d'une étape
-        if self.cur <0 or self.etapes[self.cur].stop():
-            self.cur+=1
-            self.etapes[self.cur].start(self.robot)
-        self.etapes[self.cur].step()
     
-
 class Test_collision(Strategie):
     def __init__(self, robot : Robot, posX: float, posY: float,  distance : int, v_ang : float, dt: float):
         """Trace un carré
