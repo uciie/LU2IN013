@@ -179,7 +179,6 @@ class Affichage():
         """
         if self.controller is not None :
             print("reception\n")
-            #strat = Tracer_carre(self.controller.robot,self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
             self.controller.tracer_carre(self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
 
     def test_collision_button_clicked(self):
@@ -191,6 +190,12 @@ class Affichage():
             strat = Test_collision(self.controller.robot, posX, posY, self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
             self.controller.add_strat(strat)
 
+    def go_cap_max_button_clicked(self):
+        """ Handle go_cap_max button click
+        """
+        if self.controller is not None :
+            print("reception\n")
+            self.controller.go_cap_vmax(self.distance_var.get(), self.controller.dt)
 
     def draw_obj(self, Objet: Any) -> int:
         """Dessine un objet sur le canevas de l'Affichage. 
