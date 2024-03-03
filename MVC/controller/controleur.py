@@ -388,3 +388,7 @@ class Controleur:
         print(self.cur)
         self.liste_strat[self.cur].step()
 
+    def Tracer_carre(self,distance,vang):
+        """Trace un carré
+        """
+        self.add_strat(self,Go(self.robot, distance, -v_ang, v_ang, dt));
