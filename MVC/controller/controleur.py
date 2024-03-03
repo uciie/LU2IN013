@@ -348,3 +348,10 @@ class Controleur:
             self.add_strat(Go(self.robot, distance, -v_ang, v_ang, dt));
             self.add_strat(Tourner_deg(self.robot, 90, v_ang, dt));
 
+    def go_cap_vmax(self, distance : int, dt: float):
+        """
+        Avance avec le capteur et la vitesse maximale du robot
+        :param distance: La distance que le robot parcours
+        :param dt: Le fps
+        """
+        
