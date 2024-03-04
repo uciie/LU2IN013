@@ -49,8 +49,6 @@ class Robot:
         :param posY: Coordonnée y du robot (float).
         :param dimLength: Longueur de la pièce en mètres (float).
         :param dimWidth: Largeur de la pièce en mètres (float).
-        :paarm capteur : Capteur de distance du robot 
-        :param vectDir: Vecteur directeur du robot (Vecteur).
         :param rayon_roue: Rayon des roues du robot (int)
         :param vmax_ang : Vitesse maximale angulaire du robot 
         :param color: Couleur du robot (str).
@@ -174,7 +172,9 @@ class Robot:
     def move_dOM(self, dOM_x: float, dOM_y: float, dOM_theta = 0.):
         """ Robot avance d'un petit pas
 
-        :param dOM: Vecteur de deplacement pour un dt.
+        :param dOM_x: Déplacement en x pour un dt
+        :param dOM_y: Déplacement en y pour un dt
+        :param_dOM_theta : Angle pour un dt
         """
         self.lastPosX, self.lastPosY = self.posX, self.posY
         self.posX, self.posY = self.posX + dOM_x, self.posY + dOM_y
@@ -187,7 +187,6 @@ class Capteur:
         """Initialisation du capteur
 
         :param vecteur : Vecteur directeur envoyé
-        :param vitesse : Vitesse du rayon
         :returns : Retourne une instance de la classe Capteur
         """
         # Vecteur directeur
