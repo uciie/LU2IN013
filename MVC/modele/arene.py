@@ -1,4 +1,4 @@
-from .robot import Robot
+from .robot.robot_mere import Robot_mere 
 from .vecteur import Vecteur
 from .obstacle import Obstacle
 
@@ -33,7 +33,7 @@ class Arene():
         """
         return 0 <= posX < self.maxX and 0 <= posY < self.maxY
     
-    def addRobot(self, robot:Robot ):
+    def addRobot(self, robot: Robot_mere ):
         """ Ajouter un robot dans l'arene 
         
         """
@@ -61,7 +61,7 @@ class Arene():
                 return True 
         return False
     
-    def raytracing(self, robot: Robot): 
+    def raytracing(self, robot: Robot_mere): 
         """ Renvoie la distance entre l'osbtacle et le capteur
         :param robot: Le robot
         :return : la distance en float 

@@ -1,7 +1,7 @@
 from MVC.controller.controleur import Controleur
 from MVC.view.affichage import Affichage
 from MVC.modele.arene import Arene
-from MVC.modele.robot import Robot
+from MVC.modele.robot.robot_fils import Robot
 from MVC.modele.obstacle import Obstacle
 from MVC.modele.vecteur import Vecteur
 import time 
