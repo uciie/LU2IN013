@@ -7,10 +7,7 @@ class Affichage():
     def __init__(self, arene:Arene):
         """Initialise un Affichage graphique.
 
-        :param name: Nom de l'Affichage.
-        :param width: Largeur de l'Affichage.
-        :param height: Hauteur de l'Affichage.
-        :param color: Couleur de fond de l'Affichage.
+        :param arene : L'arène qui sera affichée
         """
         self.arene = arene
 
@@ -130,7 +127,9 @@ class Affichage():
 
     @controller.setter
     def controller(self, controller: Controleur):
-        """Définit le contrôleur associé."""
+        """Définit le contrôleur associé.
+        :param controller : Le contrôleur associé
+        """
         self._controller = controller
 
     def reset_button_clicked(self):
@@ -140,8 +139,10 @@ class Affichage():
         self.controller.set_view(new_affichage)
 
     def checkValue(self, val: float, var_entry: tk.Entry, nom_var: str):
-        """ Verifie si les valeurs saisies sont valides selon la commande demander
-        
+        """ Verifie si les valeurs saisies sont valides selon la commande demandée
+        :param val: La valeur
+        :param var_entry: Le champ d'entrée
+        :nom_var: Le nom de la variable
         :return bool:
         """
         if val < 0.:
