@@ -25,12 +25,11 @@ class Arene():
         self.color = "white"
     
     def inArene(self, posX: float, posY: float):
-        """ Verifie si la position (posX, posY) est dans la grille
+        """ Verifie si la position (posX, posY) est dans l'arène
 
-        :param grille: La fenetre 
         :param posX: Coordonnee en x 
         :param posY: Coordonnee en y
-        :retruns bool: Renvoie true si (x,y) est dans la grille, sinon false
+        :retruns bool: Renvoie true si (x,y) est dans l'arène, sinon false
         """
         return 0 <= posX < self.maxX and 0 <= posY < self.maxY
     
@@ -52,8 +51,8 @@ class Arene():
     def isObstacle(self, posX: float, posY: float):
         """ Renvoie vrai si (posX, posY) fait partie d'un obstacle
     
-        :param posX: 
-        :param posY:
+        :param posX: Coordonnée en x
+        :param posY: Coordonnée en y
         :return: bool
         """
         for obstacle in self.liste_Obstacles:
@@ -64,7 +63,7 @@ class Arene():
     
     def raytracing(self, robot: Robot): 
         """ Renvoie la distance entre l'osbtacle et le capteur
-
+        :param robot: Le robot
         :return : la distance en float 
         """
         #rayon du capteur capteur du robot 

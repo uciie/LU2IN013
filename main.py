@@ -8,7 +8,7 @@ import time
 
 class App():
     def __init__(self):
-        self.dt_controller = 1/600
+        self.dt_controller = 1/300
         self.dt_affichage = 1/100
         echelle = 5
         largeur, hauteur = 500, 500
@@ -50,8 +50,9 @@ class App():
                     self.view.update()
             except ValueError as e:
                 self.view.show_erreur(e)
+                print("run")
 
-            time.sleep(self.dt_affichage)
+            time.sleep(self.dt_controller)
                 
                 
         

@@ -6,8 +6,6 @@ def calcul_dOM(robot: Robot, dt: float):
     """ Calcul les dOM pour lezs utiliser lors de appel de go_dOM
 
     :param robot: Le robot qui va faire le deplacement 
-    :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
-    :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
     :param dt: Le fps
     """
     dOM_theta = -robot.roue_droite.rayon*(robot.roue_droite.vitesse_angulaire+robot.roue_gauche.vitesse_angulaire)/robot.length * dt
@@ -25,7 +23,7 @@ class Strategie():
 class Go(Strategie): 
     def __init__(self, robot: Robot, distance : int, v_ang_d: float, v_ang_g: float, dt: float) -> None:
         """/!!\\ robot ne comprends pas distance negative
-        
+        Fait avancer le robot d'une certaine distance
         :param robot: Le robot qui va faire le deplacement 
         :param distance: La distance que le robot doit parcourir (float) 
         :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
@@ -87,13 +85,12 @@ class Go(Strategie):
             #Calcul des dOM
             self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
             #print(self.dOM_theta)
-
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
 class Go_cap(Strategie): 
     def __init__(self, robot: Robot, distance : int, v_ang_d: float, v_ang_g: float, dt: float) -> None:
         """/!!\\ robot ne comprends pas distance negative
-        
+        Fait avancer le robot avec une certaine distance et en utilisant le capteur
         :param robot: Le robot qui va faire le deplacement 
         :param distance: La distance que le robot doit parcourir (float) 
         :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
@@ -164,7 +161,6 @@ class Go_cap(Strategie):
 
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
-
 class Tourner_deg(Strategie): 
     def __init__(self, robot: Robot,  angle : int, v_ang: float, dt: float) -> None:
         """"
@@ -232,65 +228,16 @@ class Tourner_deg(Strategie):
             self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
 
         self.robot.move_dOM(0, 0, self.dOM_theta)
-
-class Tracer_carre(Strategie):
-    def __init__(self, robot : Robot, distance : int, v_ang : float, dt: float):
-        """Trace un carré
-        :param robot: Le robot qui reçoit l'ordre
-        :param distance: La distance que le robot parcours, dans notre cas longueur du carré
-        :param vang: La vitesse angulaire des roues du robot
-        :param dt: Le FPS
-        """
-        super().__init__()  # Appel du constructeur de la classe parente 
-        #Longueur/Distance du carré
-        self.distance = distance
-        self.robot = robot
-        self.dt =dt
-        #Vitesse angulaire des roues pour tracer le carré
-        self.v_ang = v_ang
-
-        #Les étapes à faire
-        self.etapes = [Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt),
-                    Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt),
-                    Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt),
-                    Go(self.robot, distance, -v_ang, v_ang, dt),Tourner_deg(self.robot, 90, v_ang, dt)]
-        self.cur = -1
-
-    def stop(self):
-        """Vérifie si toutes les étapes sont terminées
-        """
-        return self.cur == len(self.etapes)-1 and self.etapes[self.cur].stop()
-
-    def start(self, robot : Robot):
-        """ Commencer la strategie
-        """
-        self.cur = -1
-
-    def step(self):
-        """Fait avancer le traçage du carré
-        """
-        if self.stop(): 
-            print("STOP")
-            # Mettre à 0 les vitesses
-            self.robot.roue_droite.vitesse_angulaire = 0
-            self.robot.roue_gauche.vitesse_angulaire = 0
-            return
-        #Avance d'une étape
-        if self.cur <0 or self.etapes[self.cur].stop():
-            self.cur+=1
-            self.etapes[self.cur].start(self.robot)
-        self.etapes[self.cur].step()
     
-
 class Test_collision(Strategie):
     def __init__(self, robot : Robot, posX: float, posY: float,  distance : int, v_ang : float, dt: float):
-        """Trace un carré
+        """Teste la capteur du robot
 
         :param robot: Le robot qui reçoit l'ordre
         :param posX: position en x de depart du robot 
         :param posY: position en y de depart du robot 
+        :param distance: La distance que le robot parcours, dans notre cas longueur du carré        
         :param vang: La vitesse angulaire des roues du robot
-        :param distance: La distance que le robot parcours, dans notre cas longueur du carré
         :param dt: Le FPS
         """
         super().__init__()  # Appel du constructeur de la classe parente 
@@ -389,3 +336,23 @@ class Controleur:
         print(self.cur)
         self.liste_strat[self.cur].step()
 
+    def tracer_carre(self ,distance : int,v_ang : float ,dt : float):
+        """Trace un carré
+        :param distance: La distance que le robot parcours, dans notre cas longueur du carré
+        :param vang: La vitesse angulaire des roues du robot
+        :param dt: Le FPS
+        """
+
+        #Ajoute les stratégies pour faire un carré
+        for i in range(4):
+            self.add_strat(Go(self.robot, distance, -v_ang, v_ang, dt));
+            self.add_strat(Tourner_deg(self.robot, 90, v_ang, dt));
+
+    def go_cap_vmax(self, distance : int, dt: float):
+        """
+        Avance avec le capteur et la vitesse maximale du robot
+        :param distance: La distance que le robot parcours
+        :param dt: Le fps
+        """
+        #Ajoute la stratégie Go_cap avec la vitesse maximale du robot
+        self.add_strat(Go_cap(self.robot, distance, -self.robot.roue_droite.vmax_ang, self.robot.roue_gauche.vmax_ang, dt))

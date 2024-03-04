@@ -38,9 +38,13 @@ class TestVecteur(unittest.TestCase):
         """
         Teste la rotation d'un vecteur.
         """
-        vecteur_rotation = self.v1.rotation(90)
-        self.assertAlmostEqual(vecteur_rotation.x, 3)
-        self.assertAlmostEqual(vecteur_rotation.y, -2)
+        vecteur_rotation1 = self.v1.rotation(90)
+        self.assertEqual(vecteur_rotation1.x, 3)
+        self.assertAlmostEqual(vecteur_rotation1.y, -2)
+
+        vecteur_rotation2 = self.v2.rotation(0)
+        self.assertEqual(vecteur_rotation2.x, 1)
+        self.assertEqual(vecteur_rotation2.y, 4)
 
     def test_equals(self):
         """

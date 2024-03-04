@@ -1,16 +1,13 @@
 import tkinter as tk
 from typing import Any
 from MVC.modele.arene import Arene
-from MVC.controller.controleur import Controleur, Go, Go_cap, Tourner_deg, Tracer_carre, Test_collision
+from MVC.controller.controleur import Controleur, Go, Go_cap, Tourner_deg, Test_collision
 
 class Affichage():
     def __init__(self, arene:Arene):
         """Initialise un Affichage graphique.
 
-        :param name: Nom de l'Affichage.
-        :param width: Largeur de l'Affichage.
-        :param height: Hauteur de l'Affichage.
-        :param color: Couleur de fond de l'Affichage.
+        :param arene : L'arène qui sera affichée
         """
         self.arene = arene
 
@@ -42,12 +39,14 @@ class Affichage():
         self.roueD_label.grid(row=2, column=0, sticky="w", padx=5)
         self.roueG_label = tk.Label(self.robot_frame, text=f"Roue gauche : {self.arene.robot.roue_gauche.vitesse_angulaire} rad/s")
         self.roueG_label.grid(row=3, column=0, sticky="w", padx=5)
+        self.vectDir_label = tk.Label(self.robot_frame, text=f"Vecteur directeur : ({self.arene.robot.vectDir.x:.2f}, {self.arene.robot.vectDir.y:.2f})")
+        self.vectDir_label.grid(row=4, column=0, sticky="w", padx=5)
         
-        
+
         # Creation du cadre pour la commande basic
         self.command_frame = tk.LabelFrame(self.root, text = " Commande Basic ")
         self.command_frame.grid(row=1, column=0, padx = 5, pady = 5, sticky = "ew")
-        
+
         # Entrée pour la vitesse angulaire de roue droit
         self.v_ang_d_label = tk.Label(self.command_frame, text="Roue droite : ")
         self.v_ang_d_var_entry = tk.Entry(self.command_frame, textvariable=self.v_ang_d_var)
@@ -66,10 +65,6 @@ class Affichage():
         self.distance_label.grid(row = 3, column= 0, sticky = "e", pady = 5)
         self.distance_var_entry.grid(row = 3, column=1, sticky = "w", padx = 5, pady = 5)
 
-        # Creation du label message erreur
-        self.message_label = tk.Label(self.command_frame, text='', foreground='red')
-        self.message_label.grid(row=4, column=0, sticky="w", padx=5)
-        
         # Cadre pour la commande pour tourner
         self.turn_frame = tk.LabelFrame(self.root, text=" Commande pour Tourner ")
         self.turn_frame.grid(row=3, column=0, padx=5, pady=5, sticky="new")
@@ -90,21 +85,29 @@ class Affichage():
         self.turn_button = tk.Button(self.turn_frame, text = "Tourner", command=self.turn_button_clicked)
         self.turn_button.grid(row = 3, column=1, pady = 5)
         
+        # Creation du label message erreur
+        self.message_label = tk.Label(self.root, text='', foreground='red')
+        self.message_label.grid(row=4, column=0, sticky = "w", padx=5)
+        
         # Creation du button Tracer Carre
         self.tracer_carre = tk.Button(self.root, text = "Tracer carre", command=self.tracer_carre_button_clicked)
-        self.tracer_carre.grid(row=4, column = 0,sticky = "wsn", padx=5, pady=8)
+        self.tracer_carre.grid(row=5, column = 0,sticky = "wsn", padx=5, pady=8)
 
         # Creation du boutton Go
         self.go_button = tk.Button(self.root, text = "Go", command=self.go_button_clicked)
-        self.go_button.grid(row = 5, column = 0, sticky = "wsn", padx=5, pady=8)
+        self.go_button.grid(row = 6, column = 0, sticky = "wsn", padx=5, pady=8)
 
         # Creation du boutton Go avec un capteur de distance 
         self.go_cap_button = tk.Button(self.root, text = "Go avec Capteur", command=self.go_cap_button_clicked)
-        self.go_cap_button.grid(row = 6, column = 0, sticky = "wsn", padx=5, pady=8)
+        self.go_cap_button.grid(row = 7, column = 0, sticky = "wsn", padx=5, pady=8)
 
         # Creation du boutton Test osbtacle avec un capteur de distance 
         self.test_collision_button = tk.Button(self.root, text = "Test de collision avec diff angle", command=self.test_collision_button_clicked)
-        self.test_collision_button.grid(row = 7, column = 0, sticky = "wsn", padx=5, pady=8)
+        self.test_collision_button.grid(row = 8, column = 0, sticky = "wsn", padx=5, pady=8)
+
+        # Creation du bouton Go cap max
+        self.go_cap_max_button = tk.Button(self.root, text= "Go avec Capteur et Vmax", command=self.go_cap_max_button_clicked)
+        self.go_cap_max_button.grid(row = 9, column = 0, sticky = "wsn", padx=5, pady=8)
 
         #Creation du button Reset
         self.reset_button = tk.Button(self.root, text = "Reset", command=self.reset_button_clicked)
@@ -126,8 +129,10 @@ class Affichage():
         return self._controller
 
     @controller.setter
-    def controller(self, controller):
-        """Définit le contrôleur associé."""
+    def controller(self, controller: Controleur):
+        """Définit le contrôleur associé.
+        :param controller : Le contrôleur associé
+        """
         self._controller = controller
 
     def reset_button_clicked(self):
@@ -140,14 +145,25 @@ class Affichage():
     
         
 
+    def checkValue(self, val: float, var_entry: tk.Entry, nom_var: str):
+        """ Verifie si les valeurs saisies sont valides selon la commande demandée
+        :param val: La valeur
+        :param var_entry: Le champ d'entrée
+        :nom_var: Le nom de la variable
+        :return bool:
+        """
+        if val < 0.:
+            error = f'Robot comprend pas ' + nom_var + ' négative'
+            self.show_error(var_entry, error)
+            raise ValueError(error)
+        return True
+
     def go_button_clicked(self):
         """ Handle go button click
         """
         if self.controller is not None :
             print("reception\n")
-            if self.distance_var.get() < 0.:
-                raise ValueError(f'Le robot ne comprend pas les distances négatives.')
-            else :
+            if self.checkValue(self.distance_var.get(), self.distance_var_entry, 'distance'):
                 strat = Go(self.controller.robot, self.distance_var.get(), -self.v_ang_d_var.get(), self.v_ang_g_var.get(), self.controller.dt)
                 self.controller.add_strat(strat)
 
@@ -156,27 +172,25 @@ class Affichage():
         """
         if self.controller is not None :
             print("reception\n")
-            if self.distance_var.get() < 0.:
-                raise ValueError("Le robot ne comprend pas les distances négatives.")
-        
-            strat = Go_cap(self.controller.robot, self.distance_var.get(), -self.v_ang_d_var.get(), self.v_ang_g_var.get(), self.controller.dt)
-            self.controller.add_strat(strat)
+            if self.checkValue(self.distance_var.get(), self.distance_var_entry,'distance'):
+                strat = Go_cap(self.controller.robot, self.distance_var.get(), -self.v_ang_d_var.get(), self.v_ang_g_var.get(), self.controller.dt)
+                self.controller.add_strat(strat)
 
     def turn_button_clicked(self):
         """ Handle turn button click
         """
         if self.controller is not None :
             print("reception\n")
-            strat = Tourner_deg(self.controller.robot, self.angle_var.get(), self.v_ang_var.get(), self.controller.dt)
-            self.controller.add_strat(strat)
+            if self.checkValue(self.v_ang_var.get(), self.v_ang_var_entry, 'vitesse'):
+                strat = Tourner_deg(self.controller.robot, self.angle_var.get(), self.v_ang_var.get(), self.controller.dt)
+                self.controller.add_strat(strat)
     
     def tracer_carre_button_clicked(self):
         """ Handle tracer_carre button click
         """
         if self.controller is not None :
             print("reception\n")
-            strat = Tracer_carre(self.controller.robot,self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
-            self.controller.add_strat(strat)
+            self.controller.tracer_carre(self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
 
     def test_collision_button_clicked(self):
         """ Handle tracer_carre button click
@@ -187,6 +201,12 @@ class Affichage():
             strat = Test_collision(self.controller.robot, posX, posY, self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
             self.controller.add_strat(strat)
 
+    def go_cap_max_button_clicked(self):
+        """ Handle go_cap_max button click
+        """
+        if self.controller is not None :
+            print("reception\n")
+            self.controller.go_cap_vmax(self.distance_var.get(), self.controller.dt)
 
     def draw_obj(self, Objet: Any) -> int:
         """Dessine un objet sur le canevas de l'Affichage. 
@@ -232,6 +252,7 @@ class Affichage():
         self.pos_label.config(text=f"Position: ({self.arene.robot.posX:.2f}, {self.arene.robot.posY:.2f})")
         self.roueD_label.config(text=f"Roue droite : {-self.arene.robot.roue_droite.vitesse_angulaire: .2f} rad/s")
         self.roueG_label.config(text=f"Roue gauche : {self.arene.robot.roue_gauche.vitesse_angulaire: .2f} rad/s")
+        self.vectDir_label.config(text=f"Vecteur directeur : ({self.arene.robot.vectDir.x:.2f}, {self.arene.robot.vectDir.y:.2f}) ")
     
     
     def update(self):
@@ -247,13 +268,31 @@ class Affichage():
         
         self.root.update()
 
-    def show_erreur(self, message: str):
+    def reset_entry_color(self, var_entry: tk.Entry):
+        """ Réinitialise la couleur du champ d'entrée à sa valeur par défaut
+            
+        :param var_entry: Le champ d'entrée à réinitialiser
+        :return:s
+        """
+        var_entry['foreground'] = 'black'
+
+    def show_error(self, var_entry: tk.Entry, message: str):
         """ Affiche les erreurs sur l'interface graphique 
         
-        :param message:  
-        :return void
+        :param var_entry: La valeur de saisie
+        :param message: Le message d'erreur
+        :return void:
         """
         print("show")
         self.message_label['text'] = message
         self.message_label['foreground'] = 'red'
+        self.message_label.after(3000, self.hide_message)
+        var_entry['foreground'] = 'red'
+        var_entry.after(3000, lambda: self.reset_entry_color(var_entry))
+
+    def hide_message(self):
+        """ Hide the message
+        :return:
+        """
+        self.message_label['text'] = ''
         
