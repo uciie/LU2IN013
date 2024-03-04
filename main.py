@@ -50,7 +50,6 @@ class App():
                     self.view.update()
             except ValueError as e:
                 self.view.show_erreur(e)
-                print("run")
 
             time.sleep(self.dt_affichage)
                 
