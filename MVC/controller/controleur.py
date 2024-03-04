@@ -6,8 +6,6 @@ def calcul_dOM(robot: Robot, dt: float):
     """ Calcul les dOM pour lezs utiliser lors de appel de go_dOM
 
     :param robot: Le robot qui va faire le deplacement 
-    :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
-    :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
     :param dt: Le fps
     """
     dOM_theta = -robot.roue_droite.rayon*(robot.roue_droite.vitesse_angulaire+robot.roue_gauche.vitesse_angulaire)/robot.length * dt
@@ -25,7 +23,7 @@ class Strategie():
 class Go(Strategie): 
     def __init__(self, robot: Robot, distance : int, v_ang_d: float, v_ang_g: float, dt: float) -> None:
         """/!!\\ robot ne comprends pas distance negative
-        
+        Fait avancer le robot d'une certaine distance
         :param robot: Le robot qui va faire le deplacement 
         :param distance: La distance que le robot doit parcourir (float) 
         :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
@@ -92,7 +90,7 @@ class Go(Strategie):
 class Go_cap(Strategie): 
     def __init__(self, robot: Robot, distance : int, v_ang_d: float, v_ang_g: float, dt: float) -> None:
         """/!!\\ robot ne comprends pas distance negative
-        
+        Fait avancer le robot avec une certaine distance et en utilisant le capteur
         :param robot: Le robot qui va faire le deplacement 
         :param distance: La distance que le robot doit parcourir (float) 
         :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
@@ -233,13 +231,13 @@ class Tourner_deg(Strategie):
     
 class Test_collision(Strategie):
     def __init__(self, robot : Robot, posX: float, posY: float,  distance : int, v_ang : float, dt: float):
-        """Trace un carré
+        """Teste la capteur du robot
 
         :param robot: Le robot qui reçoit l'ordre
         :param posX: position en x de depart du robot 
         :param posY: position en y de depart du robot 
+        :param distance: La distance que le robot parcours, dans notre cas longueur du carré        
         :param vang: La vitesse angulaire des roues du robot
-        :param distance: La distance que le robot parcours, dans notre cas longueur du carré
         :param dt: Le FPS
         """
         super().__init__()  # Appel du constructeur de la classe parente 
@@ -344,6 +342,8 @@ class Controleur:
         :param vang: La vitesse angulaire des roues du robot
         :param dt: Le FPS
         """
+
+        #Ajoute les stratégies pour faire un carré
         for i in range(4):
             self.add_strat(Go(self.robot, distance, -v_ang, v_ang, dt));
             self.add_strat(Tourner_deg(self.robot, 90, v_ang, dt));
@@ -354,4 +354,5 @@ class Controleur:
         :param distance: La distance que le robot parcours
         :param dt: Le fps
         """
+        #Ajoute la stratégie Go_cap avec la vitesse maximale du robot
         self.add_strat(Go_cap(self.robot, distance, -self.robot.roue_droite.vmax_ang, self.robot.roue_gauche.vmax_ang, dt))
