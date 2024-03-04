@@ -6,10 +6,10 @@ class Obstacle:
 
         :param posX: Coordonnée X de l'obstacle (float)
         :param posY: Coordonnée y de l'obstacle (float)
-        :param v1: Vecteur directeur de l'obstacle
-        :param v2: Vecteur directeur de l'obstacle
-        :param v3: Vecteur directeur de l'obstacle
-        :param v4: Vecteur directeur de l'obstacle
+        :param v1: Côté haut
+        :param v2: Côté bas
+        :param v3: Côté gauche
+        :param v4: Côté droite
         """
         # couleur de obstacle
         self._color = color 
