@@ -20,6 +20,8 @@ class Affichage():
         self.initial_v_ang = 50
         self.initial_angle = 90
         self.initial_distance = 50
+        self.initial_position = (self.arene.robot.posX, self.arene.robot.posY)
+        self.liste_id_draw = []
 
         # Créer des variables Tkinter pour la vitesse et la distance
         self.v_ang_d_var = tk.DoubleVar(value=self.initial_v_ang_d)
@@ -111,7 +113,7 @@ class Affichage():
 
         #Creation du button Reset
         self.reset_button = tk.Button(self.root, text = "Reset", command=self.reset_button_clicked)
-        self.reset_button.grid(row = 8, column = 0, sticky = "wsn", padx=5, pady=8)
+        self.reset_button.grid(row = 10, column = 0, sticky = "wsn", padx=5, pady=8)
 
         self.canvas = tk.Canvas(self.root, width=self.arene.maxX, height=self.arene.maxY, bg=self.arene.color)
         self.canvas.grid(row=0, column=1, rowspan=100, padx=10, pady=5,sticky="nsew")
@@ -138,13 +140,14 @@ class Affichage():
     def reset_button_clicked(self):
         """ remettre à zero l'interface graphique 
         """
+        
         # Remettre le robot a la position initial
-        self.view = Affichage(self.arene)
+        self.arene.robot.posX,self.arene.robot.posY = self.initial_position
+        self.arene.robot.lastPosX,self.arene.robot.lastPosY = self.initial_position
+        # Suppresion des parcours
+        self.delete_draw(self.liste_id_draw)
+        self.canvas.delete("all")
         
-        # Vider la liste des strategies
-    
-        
-
     def checkValue(self, val: float, var_entry: tk.Entry, nom_var: str):
         """ Verifie si les valeurs saisies sont valides selon la commande demandée
         :param val: La valeur
@@ -229,14 +232,15 @@ class Affichage():
         else:
             return poly_id
 
-    def draw_parcours(self, Objet: Any) -> int:
+    def draw_parcours(self, Objet: Any):
         """ Trace le parcours de l'objet
 
         :param Objet: Objet 
         :returns: Identifiant unique de l'objet sur le canevas.
         """
-        return self.canvas.create_line(Objet.lastPosX,Objet.lastPosY,Objet.posX,Objet.posY,fill='blue', width=3)
-
+        line_id = self.canvas.create_line(Objet.lastPosX, Objet.lastPosY, Objet.posX, Objet.posY, fill='blue', width=3)
+        self.liste_id_draw.append(line_id)
+    
     def delete_draw(self, *obj_ids: int) -> None:
         """Supprime un ou plusieurs dessins de l'Affichage.
 
@@ -253,7 +257,6 @@ class Affichage():
         self.roueD_label.config(text=f"Roue droite : {-self.arene.robot.roue_droite.vitesse_angulaire: .2f} rad/s")
         self.roueG_label.config(text=f"Roue gauche : {self.arene.robot.roue_gauche.vitesse_angulaire: .2f} rad/s")
         self.vectDir_label.config(text=f"Vecteur directeur : ({self.arene.robot.vectDir.x:.2f}, {self.arene.robot.vectDir.y:.2f}) ")
-    
     
     def update(self):
         """Mettre à jour le modele
