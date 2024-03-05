@@ -1,16 +1,17 @@
-from MVC.modele.robot import Robot, Vecteur
+from MVC.modele.vecteur import Vecteur
+from MVC.modele.robot.robot_mere import Robot_mere
 from time import sleep
 import math
 
-def calcul_dOM(robot: Robot, dt: float): 
+def calcul_dOM(robot: Robot_mere, dt: float): 
     """ Calcul les dOM pour lezs utiliser lors de appel de go_dOM
 
     :param robot: Le robot qui va faire le deplacement 
     :param dt: Le fps
     """
     dOM_theta = -robot.roue_droite.rayon*(robot.roue_droite.vitesse_angulaire+robot.roue_gauche.vitesse_angulaire)/robot.length * dt
-    dOM_x = robot.vectDir.x*robot.vitesse()*dt #/robot.grille.echelle 
-    dOM_y = robot.vectDir.y*robot.vitesse()*dt #/robot.grille.echelle 
+    dOM_x = robot.vectDir.x*robot.vitesse*dt #/robot.grille.echelle 
+    dOM_y = robot.vectDir.y*robot.vitesse*dt #/robot.grille.echelle 
 
     dOM = Vecteur(dOM_x, dOM_y)
 
@@ -21,7 +22,7 @@ class Strategie():
         pass
     
 class Go(Strategie): 
-    def __init__(self, robot: Robot, distance : int, v_ang_d: float, v_ang_g: float, dt: float) -> None:
+    def __init__(self, robot: Robot_mere, distance : int, v_ang_d: float, v_ang_g: float, dt: float) -> None:
         """/!!\\ robot ne comprends pas distance negative
         Fait avancer le robot d'une certaine distance
         :param robot: Le robot qui va faire le deplacement 
@@ -43,18 +44,18 @@ class Go(Strategie):
         self.dt = dt
        #print("x, y", robot.vectDir.x, robot.vectDir.y)
     
-    def start(self, robot : Robot):
+    def start(self, robot : Robot_mere):
         """ Commencer la strategie
         """
         #actualiser la position du robot 
         self.robot = robot
-        self.dOM_x = robot.vectDir.x*robot.vitesse()*self.dt #/robot.grille.echelle 
-        self.dOM_y = robot.vectDir.y*robot.vitesse()*self.dt #/robot.grille.echelle 
+        self.dOM_x = robot.vectDir.x*robot.vitesse*self.dt #/robot.grille.echelle 
+        self.dOM_y = robot.vectDir.y*robot.vitesse*self.dt #/robot.grille.echelle 
         self.dOM = Vecteur(self.dOM_x, self.dOM_y)
 
         # Modifier les vitesses angulaire les roues
-        self.robot.roue_droite.vitesse_angulaire = self.v_ang_d # Vitesse angulaire droite
-        self.robot.roue_gauche.vitesse_angulaire = self.v_ang_g # Vitesse angulaire gauche
+        self.robot.set_vitesse_roue(self.v_ang_d, self.v_ang_g) # Vitesse angulaire droite/gauche
+
         #Calcul des dOM
         self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
 
@@ -75,8 +76,8 @@ class Go(Strategie):
         self.parcouru += self.dOM.norme
         if self.stop(): 
             print("STOP")
-            self.robot.roue_droite.vitesse_angulaire = 0
-            self.robot.roue_gauche.vitesse_angulaire = 0
+            # Mettre à 0 les vitesses
+            self.robot.set_vitesse_roue(0, 0) # Vitesse angulaire droite/gauche
             return
         
         self.dOM_theta = 0
@@ -88,7 +89,7 @@ class Go(Strategie):
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
 class Go_cap(Strategie): 
-    def __init__(self, robot: Robot, distance : int, v_ang_d: float, v_ang_g: float, dt: float) -> None:
+    def __init__(self, robot: Robot_mere, distance : int, v_ang_d: float, v_ang_g: float, dt: float) -> None:
         """/!!\\ robot ne comprends pas distance negative
         Fait avancer le robot avec une certaine distance et en utilisant le capteur
         :param robot: Le robot qui va faire le deplacement 
@@ -110,18 +111,18 @@ class Go_cap(Strategie):
         self.dt = dt
         #print("x, y", robot.vectDir.x, robot.vectDir.y)
 
-    def start(self, robot : Robot):
+    def start(self, robot : Robot_mere):
         """ Commencer la strategie
         """
         #actualiser la position du robot 
         self.robot = robot
-        self.dOM_x = robot.vectDir.x*robot.vitesse()*self.dt #/robot.grille.echelle 
-        self.dOM_y = robot.vectDir.y*robot.vitesse()*self.dt #/robot.grille.echelle 
+        self.dOM_x = robot.vectDir.x*robot.vitesse*self.dt #/robot.grille.echelle 
+        self.dOM_y = robot.vectDir.y*robot.vitesse*self.dt #/robot.grille.echelle 
         self.dOM = Vecteur(self.dOM_x, self.dOM_y)
 
         # Modifier les vitesses angulaire les roues
-        self.robot.roue_droite.vitesse_angulaire = self.v_ang_d  # Vitesse angulaire droite
-        self.robot.roue_gauche.vitesse_angulaire = self.v_ang_g  # Vitesse angulaire gauche
+        self.robot.set_vitesse_roue(self.v_ang_d, self.v_ang_g) # Vitesse angulaire droite/gauche
+
         #Calcul des dOM
         self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
         
@@ -148,8 +149,7 @@ class Go_cap(Strategie):
         if self.stop(): 
             print("STOP")
             # Mettre à 0 les vitesses
-            self.robot.roue_droite.vitesse_angulaire = 0
-            self.robot.roue_gauche.vitesse_angulaire = 0
+            self.robot.set_vitesse_roue(0, 0) # Vitesse angulaire droite/gauche
             return
         
         self.dOM_theta = 0
@@ -162,7 +162,7 @@ class Go_cap(Strategie):
         self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
 
 class Tourner_deg(Strategie): 
-    def __init__(self, robot: Robot,  angle : int, v_ang: float, dt: float) -> None:
+    def __init__(self, robot: Robot_mere,  angle : int, v_ang: float, dt: float) -> None:
         """"
         :param robot: Le controleur qui donne l'ordre 
         :param angle: L'angle que le robot doit parcourir (float) 
@@ -182,17 +182,15 @@ class Tourner_deg(Strategie):
         self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
         #print("x, y", robot.vectDir.x, robot.vectDir.y)
 
-    def start(self, robot: Robot):
+    def start(self, robot: Robot_mere):
         """ Commencer la strategie
         """
         # Modifier les vitesses angulaire les roues
         if self.angle > 0:
-            self.robot.roue_droite.vitesse_angulaire = -self.v_ang  # Vitesse angulaire droite
-            self.robot.roue_gauche.vitesse_angulaire = 0  # Vitesse angulaire gauche
+            self.robot.set_vitesse_roue(-self.v_ang, 0) # Vitesse angulaire droite/gauche
             self.v_ang_d, self.v_ang_g = -self.v_ang, 0
         else:
-            self.robot.roue_droite.vitesse_angulaire = 0  # Vitesse angulaire droite
-            self.robot.roue_gauche.vitesse_angulaire = self.v_ang 
+            self.robot.set_vitesse_roue(0, self.v_ang) # Vitesse angulaire droite/gauche
             self.v_ang_d, self.v_ang_g = 0, self.v_ang
 
         #compteur de distance deja parcouru
@@ -218,8 +216,7 @@ class Tourner_deg(Strategie):
         if self.stop(): 
             print("STOP")
             # Mettre à 0 les vitesses
-            self.robot.roue_droite.vitesse_angulaire = 0
-            self.robot.roue_gauche.vitesse_angulaire = 0
+            self.robot.set_vitesse_roue(0, 0) # Vitesse angulaire droite/gauche
             return
         
         self.dOM_theta = 0
@@ -230,7 +227,7 @@ class Tourner_deg(Strategie):
         self.robot.move_dOM(0, 0, self.dOM_theta)
     
 class Test_collision(Strategie):
-    def __init__(self, robot : Robot, posX: float, posY: float,  distance : int, v_ang : float, dt: float):
+    def __init__(self, robot : Robot_mere, posX: float, posY: float,  distance : int, v_ang : float, dt: float):
         """Teste la capteur du robot
 
         :param robot: Le robot qui reçoit l'ordre
@@ -251,7 +248,7 @@ class Test_collision(Strategie):
 
         self.cur = -1
 
-    def start(self, robot: Robot):
+    def start(self, robot: Robot_mere):
         """ Commencer la strategie
         """
         self.robot.vectDir = Vecteur(0, -1)
@@ -263,8 +260,7 @@ class Test_collision(Strategie):
         if self.stop(): 
             print("STOP")
             # Mettre à 0 les vitesses
-            self.robot.roue_droite.vitesse_angulaire = 0
-            self.robot.roue_gauche.vitesse_angulaire = 0
+            self.robot.set_vitesse_roue(0, 0) # Vitesse angulaire droite/gauche
             return
         #Avance d'une étape
         if self.cur <0 or self.strat.stop():
@@ -281,7 +277,7 @@ class Test_collision(Strategie):
         return self.cur == len(self.list_pos)-1 and self.strat.stop()
     
 class Controleur:
-    def __init__(self, robot: Robot, dt: float):
+    def __init__(self, robot: Robot_mere, dt: float):
         """
         Initialise le contrôleur avec un robot, une vue et un intervalle de temps.
 
@@ -326,8 +322,7 @@ class Controleur:
         """
         if self.stop(): 
             # Mettre à 0 les vitesses
-            self.robot.roue_droite.vitesse_angulaire = 0
-            self.robot.roue_gauche.vitesse_angulaire = 0
+            self.robot.set_vitesse_roue(0, 0) # Vitesse angulaire droite/gauche
             return
         #Faire la strtégie suivante 
         if self.cur <0 or self.liste_strat[self.cur].stop():
@@ -345,8 +340,8 @@ class Controleur:
 
         #Ajoute les stratégies pour faire un carré
         for i in range(4):
-            self.add_strat(Go(self.robot, distance, -v_ang, v_ang, dt));
-            self.add_strat(Tourner_deg(self.robot, 90, v_ang, dt));
+            self.add_strat(Go(self.robot, distance, -v_ang, v_ang, dt))
+            self.add_strat(Tourner_deg(self.robot, 90, v_ang, dt))
 
     def go_cap_vmax(self, distance : int, dt: float):
         """

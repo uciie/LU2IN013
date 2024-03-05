@@ -1,6 +1,6 @@
 import unittest
-from MVC.modele.robot import Roue,Robot, Capteur
-from MVC.modele.vecteur import Vecteur
+from MVC.modele.robot.robot_mere import Roue
+from MVC.modele.robot.robot_fils import Robot
 
 class TestRoue(unittest.TestCase):
 
@@ -44,8 +44,7 @@ class TestRobot(unittest.TestCase):
     def test_vitesse(self):
         """Teste la vitesse du robot
         """
-        vitesse = self.r.vitesse()
-        self.assertEqual(vitesse, 0.)
+        self.assertEqual(self.r.vitesse, 0.)
 
     def test_getVitesse_angulaire(self):
         """Teste la vitesse angulaire du robot
