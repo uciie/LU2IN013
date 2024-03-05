@@ -126,7 +126,7 @@ class Robot(Robot_mere):
         
         for x in range(int(self.posX - demi_long), int(self.posX + demi_long)):
             for y in range(int(self.posY - demi_larg), int(self.posY + demi_larg)):
-                if (not self.arene.inArene(x, y) or not self.arene.isObstacle(x,y)):
+                if (not self.arene.inArene(x, y) or self.arene.isObstacle(x,y)):
                     return True
         return False          
 
