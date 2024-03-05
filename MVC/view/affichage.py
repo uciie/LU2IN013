@@ -202,15 +202,17 @@ class Affichage():
         if self.controller is not None :
             print("reception\n")
             posX, posY = self.arene.liste_Obstacles[0].posX, self.arene.liste_Obstacles[0].posY
-            strat = Test_collision(self.controller.robot, posX, posY, self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
-            self.controller.add_strat(strat)
+            if self.checkValue(self.distance_var.get(), self.distance_var_entry, 'distance') and self.checkValue(self.v_ang_var.get(), self.v_ang_var_entry, 'vitesse'):
+                strat = Test_collision(self.controller.robot, posX, posY, self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
+                self.controller.add_strat(strat)
 
     def go_cap_max_button_clicked(self):
         """ Handle go_cap_max button click
         """
         if self.controller is not None :
             print("reception\n")
-            self.controller.go_cap_vmax(self.distance_var.get(), self.controller.dt)
+            if self.checkValue(self.distance_var.get(), self.distance_var_entry, 'distance'):
+                self.controller.go_cap_vmax(self.distance_var.get(), self.controller.dt)
 
     def draw_obj(self, Objet: Any) -> int:
         """Dessine un objet sur le canevas de l'Affichage. 

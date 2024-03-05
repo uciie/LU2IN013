@@ -49,7 +49,7 @@ class App():
                 if self.view is not None:
                     self.view.update()
             except ValueError as e:
-                print("run")
+                print("Exception")
 
             time.sleep(self.dt_controller)
                 
