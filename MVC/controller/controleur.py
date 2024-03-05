@@ -100,6 +100,7 @@ class Go_cap(Strategie):
         """
         super().__init__()  # Appel du constructeur de la classe parente 
         self.robot = robot
+        self.robot.capteur.on = True
         self.distance = distance
         
         self.v_ang_d, self.v_ang_g = v_ang_d, v_ang_g
@@ -148,6 +149,8 @@ class Go_cap(Strategie):
 
         if self.stop(): 
             print("STOP")
+            #mettre capteur en off
+            self.robot.capteur.on = False
             # Mettre à 0 les vitesses
             self.robot.set_vitesse_roue(0, 0) # Vitesse angulaire droite/gauche
             return
@@ -240,6 +243,7 @@ class Test_collision(Strategie):
         super().__init__()  # Appel du constructeur de la classe parente 
         
         self.robot = robot
+        self.robot.capteur.on = True
         self.dt =dt
         self.strat = Go_cap(self.robot, distance, -v_ang, v_ang, dt)
 
@@ -259,6 +263,8 @@ class Test_collision(Strategie):
         """
         if self.stop(): 
             print("STOP")
+            #mettre capteur en off
+            self.robot.capteur.on = False
             # Mettre à 0 les vitesses
             self.robot.set_vitesse_roue(0, 0) # Vitesse angulaire droite/gauche
             return

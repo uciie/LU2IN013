@@ -59,6 +59,7 @@ class Capteur:
         # Seuil de collision
         self._seuil_collision = 2
         self._deg_max = 10
+        self.on = False
 
     @property
     def vecteur(self):

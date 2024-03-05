@@ -2,6 +2,7 @@ from .robot_mere import Roue, Capteur, Robot_mere
 from .robot2I013 import Robot2IN013
 from ..vecteur import Vecteur
 import math
+import sys
 
 class Robot(Robot_mere):
     def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, rayon_roue:int , vmax_ang : float, color: str):
@@ -120,15 +121,15 @@ class Robot(Robot_mere):
 
     def test_crash(self):
     
-        demi_long = self.length / 2
-        demi_larg = self.width / 2
+        #demi_long = self.length / 2
+        #demi_larg = self.width / 2
 
-        
-        for x in range(int(self.posX - demi_long), int(self.posX + demi_long)):
-            for y in range(int(self.posY - demi_larg), int(self.posY + demi_larg)):
-                if (not self.arene.inArene(x, y) or self.arene.isObstacle(x,y)):
-                    return True
-        return False          
+
+        #for x in range(int(self.posX - demi_long), int(self.posX + demi_long)):
+        #    for y in range(int(self.posY - demi_larg), int(self.posY + demi_larg)):
+        #       #if (not self.arene.inArene(x, y) or self.arene.isObstacle(x,y)):
+        #            return True
+        return False   
 
     @property
     def curr_pos(self) -> tuple[float, float]:
@@ -169,6 +170,8 @@ class Robot(Robot_mere):
         :param dOM_y: Déplacement en y pour un dt
         :param dOM_theta: Angle pour un dt (float)
         """
+        if not self.capteur.on and self.test_crash(): 
+            sys.exit()
         self.lastPosX, self.lastPosY = self.posX, self.posY
         self.posX, self.posY = self.posX + dOM_x, self.posY + dOM_y
         self.theta = (self.theta + math.degrees(dOM_theta)) % 360
