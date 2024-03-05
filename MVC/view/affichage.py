@@ -211,7 +211,8 @@ class Affichage():
         """
         if self.controller is not None :
             print("reception\n")
-            self.controller.go_cap_vmax(self.distance_var.get(), self.controller.dt)
+            if self.checkValue(self.distance_var.get(), self.distance_var_entry,'distance'):
+                self.controller.go_cap_vmax(self.distance_var.get(), self.controller.dt)
 
     def draw_obj(self, Objet: Any) -> int:
         """Dessine un objet sur le canevas de l'Affichage. 
