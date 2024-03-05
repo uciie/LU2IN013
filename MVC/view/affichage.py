@@ -140,7 +140,9 @@ class Affichage():
     def reset_button_clicked(self):
         """ remettre à zero l'interface graphique 
         """
-        
+        # Efface les stratégies
+        self._controller.liste_strat = []
+        self._controller.cur = -1
         # Remettre le robot a la position initial
         self.arene.robot.posX,self.arene.robot.posY = self.initial_position
         self.arene.robot.lastPosX,self.arene.robot.lastPosY = self.initial_position
