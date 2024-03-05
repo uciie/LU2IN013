@@ -118,7 +118,7 @@ class Robot(Robot_mere):
 
         return [x1, y1, x2, y2, x3, y3, x4, y4]
 
-    def test_collision(self):
+    def test_crash(self):
     
         demi_long = self.length / 2
         demi_larg = self.width / 2
