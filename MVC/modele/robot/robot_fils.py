@@ -118,6 +118,18 @@ class Robot(Robot_mere):
 
         return [x1, y1, x2, y2, x3, y3, x4, y4]
 
+    def test_collision(self):
+    
+        demi_long = self.length / 2
+        demi_larg = self.width / 2
+
+        
+        for x in range(int(self.posX - demi_long), int(self.posX + demi_long)):
+            for y in range(int(self.posY - demi_larg), int(self.posY + demi_larg)):
+                if (not self.arene.inArene(x, y) or not self.arene.isObstacle(x,y)):
+                    return True
+        return False          
+
     @property
     def curr_pos(self) -> tuple[float, float]:
         """Renvoie la position actuelle du robot.
