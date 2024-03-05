@@ -3,6 +3,7 @@ from .robot2I013 import Robot2IN013
 from ..vecteur import Vecteur
 import math
 
+
 class Robot(Robot_mere):
     def __init__(self, name: str, posX: float, posY: float, dimLength: float, dimWidth: float, rayon_roue:int , vmax_ang : float, color: str):
         """Initialisation du robot.
@@ -118,18 +119,6 @@ class Robot(Robot_mere):
 
         return [x1, y1, x2, y2, x3, y3, x4, y4]
 
-    def test_collision(self):
-    
-        demi_long = self.length / 2
-        demi_larg = self.width / 2
-
-        
-        for x in range(int(self.posX - demi_long), int(self.posX + demi_long)):
-            for y in range(int(self.posY - demi_larg), int(self.posY + demi_larg)):
-                if (not self.arene.inArene(x, y) or not self.arene.isObstacle(x,y)):
-                    return True
-        return False          
-
     @property
     def curr_pos(self) -> tuple[float, float]:
         """Renvoie la position actuelle du robot.
@@ -173,12 +162,49 @@ class Robot(Robot_mere):
         self.posX, self.posY = self.posX + dOM_x, self.posY + dOM_y
         self.theta = (self.theta + math.degrees(dOM_theta)) % 360
         self.vectDir = self.vectDir.rotation(math.degrees(dOM_theta))
+
+    def calcul_dOM(self, dt: float): 
+        """ Calcul les dOM pour lezs utiliser lors de appel de go_dOM
+
+        :param robot: Le robot qui va faire le deplacement 
+        :param dt: Le fps
+        """
+        dOM_theta = -self.roue_droite.rayon*(self.roue_droite.vitesse_angulaire+self.roue_gauche.vitesse_angulaire)/self.length * dt
+        dOM_x = self.vectDir.x*self.vitesse*dt #/robot.grille.echelle 
+        dOM_y = self.vectDir.y*self.vitesse*dt #/robot.grille.echelle 
+
+        return dOM_theta, dOM_x, dOM_y
     
     def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float):
-        """"""
+        """ Modifier la vitesse des roues droite et gauche 
+
+        :param v_ang_roue_d: vitesse roue droite 
+        :param v_ang_roue_g: vitesse roue gauche
+        """
         self.roue_droite.vitesse_angulaire = v_ang_roue_d
         self.roue_gauche.vitesse_angulaire = v_ang_roue_g
-
+    
+    def stop(self):
+        """ Arreter le robot 
+        """
+        self.set_vitesse_roue(0,0)
+    
+    def step(self, dOM_x: float, dOM_y: float, dt: float):
+        """ Faire un petit pas
+        :param dOM_x: Déplacement en x pour un dt
+        :param dOM_y: Déplacement en y pour un dt
+        :param dt: 
+        :return vecteur:
+        """
+        dOM_theta = 0
+        #Bouger le robot d'un dOM
+        if -self.roue_droite.vitesse_angulaire != self.roue_gauche.vitesse_angulaire: #si veut tourner 
+            #Calcul des dOM
+            print(self.calcul_dOM(dt))
+            dOM_theta, dOM_x, dOM_y = self.calcul_dOM(dt)
+            #print(self.dOM_theta)
+        self.move_dOM(dOM_x, dOM_y, dOM_theta)
+        return Vecteur(dOM_x, dOM_y)
 
 class Adaptateur_robot(Robot_mere):
     def __init__(self, robot_irl: Robot2IN013):
@@ -188,5 +214,12 @@ class Adaptateur_robot(Robot_mere):
         self._robot_irl = robot_irl
 
     def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float):
-        self._robot_irl.set_motor_dps(roue_droite, v_ang_roue_d)
-        self._robot_irl.set_motor_dps(roue_gauche, v_ang_roue_g)
+        self._robot_irl.set_motor_dps("roue_droite", math.degrees(v_ang_roue_d))
+        self._robot_irl.set_motor_dps("roue_gauche", math.degrees(v_ang_roue_g))
+
+    def stop(self): 
+        """ Arrete le robot irl
+        """
+        self._robot_irl.stop 
+    
+

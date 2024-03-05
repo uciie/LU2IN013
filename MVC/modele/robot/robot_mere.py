@@ -46,6 +46,10 @@ class Robot_mere:
     def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float ):
         pass
 
+    @property
+    def stop(self):
+        pass
+
 
 class Capteur:
     def __init__(self, vecteur: Vecteur):
