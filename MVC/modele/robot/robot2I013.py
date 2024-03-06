@@ -40,6 +40,7 @@ class Robot2IN013():
         :port: une constante moteur,  MOTOR_LEFT ou MOTOR_RIGHT (ou les deux MOTOR_LEFT+MOTOR_RIGHT).
         :dps: la vitesse cible en nombre de degres par seconde
         """
+        print("setter moteur ",port, dps)
         pass
 
     def get_motor_position(self):

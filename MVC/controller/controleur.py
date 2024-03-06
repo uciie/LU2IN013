@@ -1,21 +1,7 @@
 from MVC.modele.vecteur import Vecteur
 from MVC.modele.robot.robot_mere import Robot_mere
+from MVC.modele.robot.robot_fils import Robot
 from time import sleep
-import math
-
-def calcul_dOM(robot: Robot_mere, dt: float): 
-    """ Calcul les dOM pour lezs utiliser lors de appel de go_dOM
-
-    :param robot: Le robot qui va faire le deplacement 
-    :param dt: Le fps
-    """
-    dOM_theta = -robot.roue_droite.rayon*(robot.roue_droite.vitesse_angulaire+robot.roue_gauche.vitesse_angulaire)/robot.length * dt
-    dOM_x = robot.vectDir.x*robot.vitesse*dt #/robot.grille.echelle 
-    dOM_y = robot.vectDir.y*robot.vitesse*dt #/robot.grille.echelle 
-
-    dOM = Vecteur(dOM_x, dOM_y)
-
-    return dOM_theta, dOM_x, dOM_y, dOM
 
 class Strategie():
     def __init__(self):
@@ -47,7 +33,8 @@ class Go(Strategie):
     def start(self, robot : Robot_mere):
         """ Commencer la strategie
         """
-        
+        #actualiser la position du robot 
+        self.robot = robot
         self.dOM_x = robot.vectDir.x*robot.vitesse*self.dt #/robot.grille.echelle 
         self.dOM_y = robot.vectDir.y*robot.vitesse*self.dt #/robot.grille.echelle 
         self.dOM = Vecteur(self.dOM_x, self.dOM_y)
@@ -55,8 +42,10 @@ class Go(Strategie):
         # Modifier les vitesses angulaire les roues
         self.robot.set_vitesse_roue(self.v_ang_d, self.v_ang_g) # Vitesse angulaire droite/gauche
 
-        #Calcul des dOM
-        self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
+        if isinstance(robot, Robot) : 
+            #Calcul des dOM
+            self.dOM_theta, self.dOM_x, self.dOM_y= self.robot.calcul_dOM(self.dt)
+            self.dOM = Vecteur(self.dOM_x, self.dOM_y)
 
         #compteur de distance deja parcouru
         self.parcouru = 0      
@@ -76,7 +65,7 @@ class Go(Strategie):
         if self.stop(): 
             print("STOP")
             # Mettre à 0 les vitesses
-            self.robot.set_vitesse_roue(0, 0) # Vitesse angulaire droite/gauche
+            self.robot.stop() # Vitesse angulaire droite/gauche
             return
         
         self.dOM_theta = 0
@@ -113,7 +102,8 @@ class Go_cap(Strategie):
     def start(self, robot : Robot_mere):
         """ Commencer la strategie
         """
-        
+        #actualiser la position du robot 
+        self.robot = robot
         self.dOM_x = robot.vectDir.x*robot.vitesse*self.dt #/robot.grille.echelle 
         self.dOM_y = robot.vectDir.y*robot.vitesse*self.dt #/robot.grille.echelle 
         self.dOM = Vecteur(self.dOM_x, self.dOM_y)
@@ -320,13 +310,13 @@ class Controleur:
         """
         if self.stop(): 
             # Mettre à 0 les vitesses
-            self.robot.set_vitesse_roue(0, 0) # Vitesse angulaire droite/gauche
+            self.robot.stop() # Vitesse angulaire droite/gauche
             return
         #Faire la strtégie suivante 
         if self.cur <0 or self.liste_strat[self.cur].stop():
             self.cur+=1
             self.liste_strat[self.cur].start(self.robot)
-        print(self.cur)
+        #print(self.cur)
         self.liste_strat[self.cur].step()
 
     def tracer_carre(self ,distance : int,v_ang : float ,dt : float):

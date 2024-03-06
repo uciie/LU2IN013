@@ -1,7 +1,8 @@
 import tkinter as tk
 from typing import Any
 from MVC.modele.arene import Arene
-from MVC.controller.controleur import Controleur, Go, Go_cap, Tourner_deg, Test_collision
+from MVC.controller.controleur import Controleur, Go
+#, Go_cap, Tourner_deg, Test_collision
 
 class Affichage():
     def __init__(self, arene:Arene):
@@ -140,9 +141,7 @@ class Affichage():
     def reset_button_clicked(self):
         """ remettre à zero l'interface graphique 
         """
-        # Efface les stratégies
-        self._controller.liste_strat = []
-        self._controller.cur = -1
+        
         # Remettre le robot a la position initial
         self.arene.robot.posX,self.arene.robot.posY = self.initial_position
         self.arene.robot.lastPosX,self.arene.robot.lastPosY = self.initial_position
