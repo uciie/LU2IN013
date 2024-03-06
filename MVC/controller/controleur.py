@@ -47,8 +47,7 @@ class Go(Strategie):
     def start(self, robot : Robot_mere):
         """ Commencer la strategie
         """
-        #actualiser la position du robot 
-        self.robot = robot
+        
         self.dOM_x = robot.vectDir.x*robot.vitesse*self.dt #/robot.grille.echelle 
         self.dOM_y = robot.vectDir.y*robot.vitesse*self.dt #/robot.grille.echelle 
         self.dOM = Vecteur(self.dOM_x, self.dOM_y)
@@ -114,8 +113,7 @@ class Go_cap(Strategie):
     def start(self, robot : Robot_mere):
         """ Commencer la strategie
         """
-        #actualiser la position du robot 
-        self.robot = robot
+        
         self.dOM_x = robot.vectDir.x*robot.vitesse*self.dt #/robot.grille.echelle 
         self.dOM_y = robot.vectDir.y*robot.vitesse*self.dt #/robot.grille.echelle 
         self.dOM = Vecteur(self.dOM_x, self.dOM_y)
