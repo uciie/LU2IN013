@@ -4,13 +4,13 @@ from MVC.modele.arene import Arene
 from MVC.controller.controleur import Controleur, Go, Go_cap, Tourner_deg, Test_collision
 
 class Affichage():
-    def __init__(self, arene:Arene):
+    def __init__(self, arene:Arene, dt: float):
         """Initialise un Affichage graphique.
 
         :param arene : L'arène qui sera affichée
         """
         self.arene = arene
-
+        self.dt = dt
         self.root = tk.Tk()
         self.root.title(arene.name)
 
@@ -272,7 +272,9 @@ class Affichage():
         self.arene.robot.rect_id, self.arene.robot.arrow_id = self.draw_obj(self.arene.robot)
         self.draw_obj(self.arene.liste_Obstacles[0])
         
+        self.root.after(int(1/self.dt))
         self.root.update()
+        
 
     def reset_entry_color(self, var_entry: tk.Entry):
         """ Réinitialise la couleur du champ d'entrée à sa valeur par défaut

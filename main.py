@@ -8,8 +8,8 @@ import time
 
 class App():
     def __init__(self):
-        self.dt_controller = 1/300
-        self.dt_affichage = 1/100
+        self.dt_controller = 1/1000
+        self.dt_affichage = 1
         echelle = 5
         largeur, hauteur = 500, 500
         dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
@@ -26,7 +26,7 @@ class App():
         self.arene.addObstacle(obs)
 
         #Creation du module View
-        self.view = Affichage(self.arene)
+        self.view = Affichage(self.arene, self.dt_affichage)
 
         #Creation du module Controller
         self.controller = Controleur(self.robot, self.dt_controller)
@@ -37,7 +37,6 @@ class App():
         if self.view :
             self.view.controller = self.controller
             self.runCtrl()
-            self.view.root.mainloop()
         # si View n'existe pas 
         else :
             self.controller.go(10, 10, -10)

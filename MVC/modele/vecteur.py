@@ -74,12 +74,6 @@ class Vecteur:
         # Nouvelles composantes
         new_x: int = self.x * math.cos(rad) - self.y * math.sin(rad)
         new_y: int = self.x * math.sin(rad) + self.y * math.cos(rad)
-
-        # Arrondir x et y à zéro si très proches de zéro
-        if abs(new_x) < 1e-2:
-            new_x = 0
-        if abs(new_y) < 1e-2:
-            new_y = 0
         
         return Vecteur(new_x, new_y)
     
