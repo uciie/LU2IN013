@@ -14,7 +14,7 @@ class Simulation(Thread):
         """ Initialisation d'une simulation
 
         :param name: le nom de la simulation
-        :param fps: le fps
+        :param fps: le dt
         :param robot: Le robot 
         :param arene: L'arene
         """
@@ -23,7 +23,7 @@ class Simulation(Thread):
         self._running = False
         self._robot = robot
         self._arene = arene
-        self.fps = fps
+        self.dt = fps
 
         self.lock_aff = lock_aff
 
@@ -69,17 +69,18 @@ class Simulation(Thread):
             start_time = time.time()  # Temps initial de l'itération
             self.update()
             end_time = time.time() - start_time
-            print("simu", end_time)
-            sleep_time = max(0., self.fps - end_time)
+            sleep_time = max(0., self.dt - end_time)
             time.sleep(sleep_time)
+            #print("simu", sleep_time)  # Temps écoulé pour cette itération
+
 
     def update(self):
-        """ Actualiser l'arene selon le fps ecoule
+        """ Actualiser l'arene selon le dt ecoule
         """
 
         with self.lock_aff:
             # Actualiser le robot
-            self._robot.actualiser(self.fps)
+            self._robot.actualiser(self.dt)
             # print(self._robot.info)
 
             # Verifier si le robot a crash avec un obstacle

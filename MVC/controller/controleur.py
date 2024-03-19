@@ -260,7 +260,7 @@ class Controleur(Thread):
         Initialise le contrôleur avec un robot, une vue et un intervalle de temps.
 
         :param adaptateur: Le robot
-        :param dt: Le fps
+        :param dt: Le dt
         """
         super(Controleur, self).__init__()
         # Modèle
@@ -273,7 +273,7 @@ class Controleur(Thread):
         self.liste_strat = []
 
         self.cur = -1
-        # Le fps
+        # Le dt
         self.dt = dt
         self.lock = lock
         self._running = False
@@ -301,6 +301,7 @@ class Controleur(Thread):
             end_time = time.time() - start_time
             sleep_time = max(0., self.dt - end_time)
             time.sleep(sleep_time)
+            #print("ctrl", end_time)
 
 
     def step(self):

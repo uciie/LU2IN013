@@ -16,7 +16,7 @@ class Go(Strategie):
         :param distance: La distance que le robot doit parcourir (float)
         :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s
         :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s
-        :param dt: Le fps
+        :param dt: Le dt
         """
         super().__init__()  # Appel du constructeur de la classe parente
         self.adaptateur = adaptateur
@@ -29,7 +29,7 @@ class Go(Strategie):
         # compteur de distance deja parcouru
         self.parcouru = 0.
 
-        # le fps
+        # le dt
         self.dt = dt
 
     def start(self):
@@ -50,8 +50,8 @@ class Go(Strategie):
         :return : Retourne vrai si on a fini de parcourir la distance
         """
         v_roue_d, v_roue_g = self.adaptateur.vitesse_ang_roues
-        #print("parcouru", self.parcouru , "distance", self.distance)
-        return math.fabs(self.parcouru) +1 >= math.fabs(self.distance)  # or (v_roue_d == 0 and v_roue_g == 0)
+        print("parcouru", self.parcouru , "distance", self.distance)
+        return math.fabs(self.parcouru) >= math.fabs(self.distance)  # or (v_roue_d == 0 and v_roue_g == 0)
 
     def step(self):
         """ Faire un deplacement de dOM
@@ -75,7 +75,7 @@ class TournerDeg(Strategie):
         :param adaptateur: Le robot qui va faire le deplacement
         :param angle: L'angle que le robot doit tourner en degree
         :param v_ang: La vitesse angulaire du robot en rad/s
-        :param dt: Le fps
+        :param dt: Le dt
         """
         super().__init__()  # Appel du constructeur de la classe parente
         self.pos_ini = None
@@ -86,7 +86,7 @@ class TournerDeg(Strategie):
         # compteur de distance deja parcouru
         self.parcouru = 0.
 
-        # le fps
+        # le dt
         self.dt = dt
 
     def start(self):
@@ -113,8 +113,8 @@ class TournerDeg(Strategie):
 
         :return : Retourne vrai si on a fini de parcourir l'angle
         """
-        #print("parcouru", self.parcouru, "angle", self.angle)
-        return math.fabs(self.parcouru) +1 >= math.fabs(self.angle)
+        print("parcouru", self.parcouru, "angle", self.angle)
+        return math.fabs(self.parcouru) >= math.fabs(self.angle)
 
     def step(self):
         """ Faire un deplacement de dOM
@@ -137,7 +137,7 @@ class TracerCarre(Strategie):
         :param adaptateur: Le robot qui va faire le deplacement
         :param distance_cote: La distance du cote du carre
         :param v_ang: La vitesse angulaire du robot en rad/s
-        :param dt: Le fps
+        :param dt: Le dt
         """
         super().__init__()  # Appel du constructeur de la classe parente
         self.adaptateur = adaptateur
@@ -147,7 +147,7 @@ class TracerCarre(Strategie):
         self.v_ang = v_ang
         # compteur de distance deja parcouru
         self.parcouru = 0.
-        # le fps
+        # le dt
         self.dt = dt
         # Liste d'etapes pour tracer un carre
         self.steps = [

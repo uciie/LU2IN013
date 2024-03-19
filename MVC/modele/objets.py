@@ -1,4 +1,5 @@
 import math
+import numpy as np
 from abc import ABC, abstractmethod
 
 from .vecteur import Vecteur
@@ -7,7 +8,7 @@ from ..robot.accessoirs import Capteur, Roue
 
 class ProjectionMixin:
     @staticmethod
-    def project(axes: list[int], coins: list[tuple[float, float]]) -> list[float]:
+    def project(axes: list[float], coins: list[tuple[float, float]]) -> list[float]:
         """ Projection des coins de l'obstacle sur un axe
 
         :param axes: Les axes de la projection
@@ -22,6 +23,11 @@ class ProjectionMixin:
             elif projection > max_p:
                 max_p = projection
         return [min_p, max_p]
+
+
+def intervals_overlap(interval1, interval2):
+    """Vérifie si deux intervalles se chevauchent."""
+    return interval1[1] >= interval2[0] and interval1[0] <= interval2[1]
 
 
 class SimuRobot(ProjectionMixin):
@@ -334,16 +340,13 @@ class Arene:
 
 
 class ObstacleRectangle(Obstacle):
-    def __init__(self, pos_x: float, pos_y: float, coin1: Vecteur, coin2: Vecteur, coin3: Vecteur, coin4: Vecteur,
-                 color: str):
+    def __init__(self, pos_x: float, pos_y: float, coin1: Vecteur, coin2: Vecteur, color: str):
         """ Initialise un obstacle rectangulaire 
 
         :param pos_x: Coordonnée X de l'obstacle (float)
         :param pos_y: Coordonnée y de l'obstacle (float)
         :param coin1: Côté haut
         :param coin2: Côté bas
-        :param coin3: Côté gauche
-        :param coin4: Côté droite
         :param color: Couleur de l'obstacle
         """
         super().__init__(pos_x, pos_y, color)
@@ -351,8 +354,6 @@ class ObstacleRectangle(Obstacle):
         # Vecteurs directeurs de l'obstacle
         self._coin1 = coin1
         self._coin2 = coin2
-        self._coin3 = coin3
-        self._coin4 = coin4
 
     @property
     def coin1(self) -> Vecteur:
@@ -365,16 +366,6 @@ class ObstacleRectangle(Obstacle):
         return self._coin2
 
     @property
-    def coin3(self) -> Vecteur:
-        """ Propriété pour l'attribut v3 """
-        return self._coin3
-
-    @property
-    def coin4(self) -> Vecteur:
-        """ Propriété pour l'attribut v4 """
-        return self._coin4
-
-    @property
     def coins(self):
         """ Renvoie les coordonnées des 4 coins de l'obstacle """
         x1, y1 = self._pos_x + self._coin1.x / 2, self._pos_y - self._coin2.y / 2
@@ -385,16 +376,17 @@ class ObstacleRectangle(Obstacle):
         return [(x1, y1), (x2, y2), (x3, y3), (x4, y4)]
 
     def test_collision(self, robot: SimuRobot):
-        """ Tester si l'obstacle est en collision avec robot
+        """Tester si l'obstacle est en collision avec le robot.
 
         :param robot: Robot sur lequel on teste la collision
-        :return bool: True si crash, sinon False
+        :return: True si collision, sinon False
         """
-        axes = [[1, 0], [0, 1]]
+        vect_dir_normal = robot.vectDir.rotation(90)
+        axes = [[1, 0], [0, 1], [robot.vectDir.x, robot.vectDir.y], [vect_dir_normal.x, vect_dir_normal.y]]
         cpt = 0
         for axe in axes:
             self_interval = self.project(axe, self.coins)
             robot_interval = robot.project(axe, robot.coins)
             if self_interval[0] <= robot_interval[1] and robot_interval[0] <= self_interval[1]:
                 cpt += 1
-        return cpt == 2
+        return cpt == 4
