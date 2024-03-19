@@ -1,60 +1,60 @@
-from MVC.controller.controleur import Controleur
-from MVC.view.affichage import Affichage
-from MVC.modele.arene import Arene
-from MVC.modele.robot.robot_fils import Robot
-from MVC.modele.obstacle import Obstacle
+import threading
+
+from MVC.controller.controleur import Controleur, AdaptateurRobotSimu
+from MVC.modele.objets import Arene, SimuRobot, ObstacleRectangle
+from MVC.modele.simulation import Simulation
 from MVC.modele.vecteur import Vecteur
-import time 
-
-class App():
-    def __init__(self):
-        self.dt_controller = 1/1000
-        self.dt_affichage = 1
-        echelle = 5
-        largeur, hauteur = 500, 500
-        dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
+from MVC.view.affichage import Affichage
 
 
-        # initilisation de l'arene , robot, obstacle
-        self.arene = Arene("Simulation de déplacement du robot", largeur, hauteur, echelle)
-        self.robot = Robot("R", int(largeur/2), int(hauteur/2), dim_robot_x, dim_robot_y, 10, 150, color="red")
-        obs = Obstacle(100, 100, Vecteur(10, 0), Vecteur(0,20), Vecteur(10, 0), Vecteur(0,20), color="blue")
-        
-        # ajouter un robot dans l'arene 
-        self.arene.addRobot(self.robot)
+def main():
+    # Création du verrou
+    lock_aff = threading.RLock()
+    lock_ctrl = threading.RLock()
 
-        self.arene.addObstacle(obs)
+    dt_simu = 1/10000
+    dt_controller = 1/100000
+    dt_affichage = 1
+    echelle = 5
+    largeur, hauteur = 500, 500
+    dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
 
-        #Creation du module View
-        self.view = Affichage(self.arene, self.dt_affichage)
+    # Initialisation de l'arene, robot, obstacle
+    arene = Arene("Simulation de déplacement du robot", largeur, hauteur, echelle)
+    robot = SimuRobot("R", int(largeur / 2), int(hauteur / 2), dim_robot_x, dim_robot_y, 10, 150, color="red")
+    obs = ObstacleRectangle(100, 100, Vecteur(10, 10), Vecteur(20, 20), color="blue")
 
-        #Creation du module Controller
-        self.controller = Controleur(self.robot, self.dt_controller)
+    # Ajouter un obstacle dans l'arene
+    arene.add_obstacle(obs)
 
-        # Ajoute du lien de communication entre controller et view
-    
-        # Ajoute du lien de communication entre view et controller 
-        if self.view :
-            self.view.controller = self.controller
-            self.runCtrl()
-        # si View n'existe pas 
-        else :
-            self.controller.go(10, 10, -10)
+    # Créer la simulation
+    simu = Simulation("Simulation", dt_simu, robot, arene, lock_aff)
 
-    def runCtrl(self):
-        while True:
-            try:
-                self.controller.step()
-                if self.view is not None:
-                    self.view.update()
-            except ValueError as e:
-                self.view.show_erreur(e)
-                print("run")
+    # Créer l'adaptateur
+    adaptateur = AdaptateurRobotSimu(robot, simu)
+    # adaptateur.set_vitesse_roue(50, 50)
 
-            time.sleep(self.dt_controller)
-                
-                
-        
+    # Création du module View
+    view = Affichage(simu, dt_affichage, lock_aff)
+
+    # Création du module Controller
+    controller = Controleur(adaptateur, dt_controller, lock_aff)
+
+    # Ajout du lien de communication entre view et controller
+    view.controller = controller
+
+    # demarrage des threads
+    view_thread = threading.Thread(target=view.run)
+
+    view_thread.start()
+    simu.start()
+    controller.start()
+
+    # Attendre que les threads se terminent
+    view_thread.join()
+    simu.join()
+    controller.join()
+
 
 if __name__ == '__main__':
-    app = App()
+    main()
