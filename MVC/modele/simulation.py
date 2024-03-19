@@ -87,16 +87,12 @@ class Simulation(Thread):
             for obstacle in self._arene.liste_Obstacles:
                 if obstacle.test_collision(self._robot):
                     print("collision detected")
-                    self._robot.set_vitesse_roue(0, 0)
-                    sys.exit()
-                    # self.remove_robot()
+                    self.remove_robot()
 
             # Verifier si le robot a crash sur un mur
             if self._robot.test_crash(self._arene.max_x, self._arene.max_y):
                 print("Crash")
-                self._robot.set_vitesse_roue(0, 0)
-                sys.exit()
-                # self.remove_robot()
+                self.remove_robot()
             # end_time = time.time()  # Temps final de l'itération
             # self._fps = end_time - start_time  # Temps écoulé pour cette itération
             # time.sleep(1 / self._wait)
