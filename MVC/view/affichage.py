@@ -337,23 +337,23 @@ class Affichage(Thread):
         self.go_button = tk.Button(self.root, text="Go", command=self.go_button_clicked)
         self.go_button.grid(row=6, column=0, sticky="wsn", padx=5, pady=8)
 
-        # Creation du boutton Go avec un capteur de distance
-        self.go_cap_button = tk.Button(self.root, text="Go avec Capteur", command=self.go_cap_button_clicked)
-        self.go_cap_button.grid(row=7, column=0, sticky="wsn", padx=5, pady=8)
+        ## Creation du boutton Go avec un capteur de distance
+        #self.go_cap_button = tk.Button(self.root, text="Go avec Capteur", command=self.go_cap_button_clicked)
+        #self.go_cap_button.grid(row=7, column=0, sticky="wsn", padx=5, pady=8)
 
-        # Creation du boutton Test osbtacle avec un capteur de distance
-        self.test_collision_button = tk.Button(self.root, text="Test de collision avec diff angle",
-                                               command=self.test_collision_button_clicked)
-        self.test_collision_button.grid(row=8, column=0, sticky="wsn", padx=5, pady=8)
+        ## Creation du boutton Test osbtacle avec un capteur de distance
+        #self.test_collision_button = tk.Button(self.root, text="Test de collision avec diff angle",
+        #                                      command=self.test_collision_button_clicked)
+        #self.test_collision_button.grid(row=8, column=0, sticky="wsn", padx=5, pady=8)
 
         # Creation du bouton Go cap max
-        self.go_cap_max_button = tk.Button(self.root, text="Go avec Capteur et Vmax",
-                                           command=self.go_cap_max_button_clicked)
-        self.go_cap_max_button.grid(row=9, column=0, sticky="wsn", padx=5, pady=8)
+        #self.go_cap_max_button = tk.Button(self.root, text="Go avec Capteur et Vmax",
+        #                                   command=self.go_cap_max_button_clicked)
+        #self.go_cap_max_button.grid(row=9, column=0, sticky="wsn", padx=5, pady=8)
 
         # Creation du button Reset
-        self.reset_button = tk.Button(self.root, text="Reset", command=self.reset_button_clicked)
-        self.reset_button.grid(row=10, column=0, sticky="wsn", padx=5, pady=8)
+        #self.reset_button = tk.Button(self.root, text="Reset", command=self.reset_button_clicked)
+        #self.reset_button.grid(row=10, column=0, sticky="wsn", padx=5, pady=8)
 
         self.canvas = tk.Canvas(self.root, width=self.simu.arene.max_x, height=self.simu.arene.max_y,
                                 bg=self.simu.arene.color)
