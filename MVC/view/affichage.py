@@ -128,11 +128,7 @@ class Affichage(Thread):
     def go_cap_button_clicked(self):
         """ Handle go button click
         """
-        if self.controller is not None :
-            print("reception\n")
-            if self.checkValue(self.distance_var.get(), self.distance_var_entry,'distance'):
-                strat = Go_cap(self.controller.robot, self.distance_var.get(), -self.v_ang_d_var.get(), self.v_ang_g_var.get(), self.controller.dt)
-                self.controller.add_strat(strat)
+        pass
 
     def turn_button_clicked(self):
         """ Handle turn button click
@@ -154,19 +150,12 @@ class Affichage(Thread):
     def test_collision_button_clicked(self):
         """ Handle tracer_carre button click
         """
-        if self.controller is not None :
-            print("reception\n")
-            posX, posY = self.arene.liste_Obstacles[0].posX, self.arene.liste_Obstacles[0].posY
-            strat = Test_collision(self.controller.robot, posX, posY, self.distance_var.get(), self.v_ang_var.get(), self.controller.dt)
-            self.controller.add_strat(strat)
+        pass
 
     def go_cap_max_button_clicked(self):
         """ Handle go_cap_max button click
         """
-        if self.controller is not None :
-            print("reception\n")
-            if self.checkValue(self.distance_var.get(), self.distance_var_entry,'distance'):
-                self.controller.go_cap_vmax(self.distance_var.get(), self.controller.dt)
+        pass
 
     @staticmethod
     def reset_entry_color(var_entry: tk.Entry):
