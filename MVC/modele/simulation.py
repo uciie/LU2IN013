@@ -69,34 +69,33 @@ class Simulation(Thread):
             start_time = time.time()  # Temps initial de l'itération
             self.update()
             end_time = time.time() - start_time
-            sleep_time = max(0., self.dt - end_time)
+            sleep_time = self.dt - end_time
+            if sleep_time < 0:
+                self.dt = -sleep_time
+                sleep_time = 0
             time.sleep(sleep_time)
-            #print("simu", sleep_time)  # Temps écoulé pour cette itération
 
 
     def update(self):
         """ Actualiser l'arene selon le dt ecoule
         """
 
-        with self.lock_aff:
+        #with self.lock_aff:
             # Actualiser le robot
-            self._robot.actualiser(self.dt)
-            # print(self._robot.info)
+        self._robot.actualiser(self.dt)
 
-            # Verifier si le robot a crash avec un obstacle
-            for obstacle in self._arene.liste_Obstacles:
-                if obstacle.test_collision(self._robot):
-                    print("collision detected")
-                    self._robot.set_vitesse_roue(0, 0)
-                    sys.exit()
-                    # self.remove_robot()
-
-            # Verifier si le robot a crash sur un mur
-            if self._robot.test_crash(self._arene.max_x, self._arene.max_y):
-                print("Crash")
+        # Verifier si le robot a crash avec un obstacle
+        for obstacle in self._arene.liste_Obstacles:
+            if obstacle.test_collision(self._robot):
                 self._robot.set_vitesse_roue(0, 0)
                 sys.exit()
                 # self.remove_robot()
-            # end_time = time.time()  # Temps final de l'itération
-            # self._fps = end_time - start_time  # Temps écoulé pour cette itération
-            # time.sleep(1 / self._wait)
+
+        # Verifier si le robot a crash sur un mur
+        if self._robot.test_crash(self._arene.max_x, self._arene.max_y):
+            self._robot.set_vitesse_roue(0, 0)
+            sys.exit()
+            # self.remove_robot()
+        # end_time = time.time()  # Temps final de l'itération
+        # self._fps = end_time - start_time  # Temps écoulé pour cette itération
+        # time.sleep(1 / self._wait)

@@ -180,9 +180,7 @@ class SimuRobot(ProjectionMixin):
         # Verifier si les coins du robot sont à l'interieur de l'arene
         for coin_x, coin_y in self.coins:
             if coin_x < 0 or coin_x >= max_x or coin_y < 0 or coin_y >= max_y:
-                print("True")
                 return True
-        print("False")
         return False
 
     @property
@@ -221,7 +219,6 @@ class SimuRobot(ProjectionMixin):
         else:
             self.roue_gauche.vitesse_angulaire = v_ang_roue_g
 
-        print(self.roue_droite.vitesse_angulaire, self.roue_gauche.vitesse_angulaire)
 
     def actualiser(self, dt: float) -> None:
         """ Actualise le robot selon le dt ecoule
@@ -238,7 +235,6 @@ class SimuRobot(ProjectionMixin):
             self.vectDir.angle) * self.roue_droite.rayon / 2 * dt
         theta = self.roue_droite.rayon * (
                 self.roue_droite.vitesse_angulaire - self.roue_gauche.vitesse_angulaire) / self.length * dt
-        # print("x", x, "y", y)
         self._pos_x += x
         self._pos_y += y
         self._theta = (self._theta + math.degrees(theta)) % 360

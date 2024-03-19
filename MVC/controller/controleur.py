@@ -52,14 +52,14 @@ class Adaptateur(ABC):
 
     @property
     @abstractmethod
-    def distance_parcourue(self):
+    def distance_parcourue(self)->float:
         """ Obtenir la distance parcourue
         """
         pass
 
     @property
     @abstractmethod
-    def angle_parcourue(self):
+    def angle_parcourue(self)->float:
         """ Obtenir l'angle parcouru
         """
         pass
@@ -171,7 +171,7 @@ class AdaptateurRobotIrl(Adaptateur):
         self._v_ang_roue_g = v_ang_roue_g
 
     @property
-    def robot(self):
+    def robot(self)->Robot2IN013:
         return self._robot
 
     def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float):
@@ -186,14 +186,14 @@ class AdaptateurRobotIrl(Adaptateur):
         self._robot.set_motor_dps("roue_gauche", v_ang_roue_g)
 
     @property
-    def distance_parcourue(self):
+    def distance_parcourue(self)->float:
         """ Obtenir la distance parcourue
         :returns : Renvoie la distance parcourue du robot
         """
         return self.angle_parcourue / 360 * self._robot.WHEEL_DIAMETER * 2 * math.pi
 
     @property
-    def angle_parcourue(self):
+    def angle_parcourue(self)->float:
         """ Obtenir l'angle parcouru
         :returns : Renvoie l'angle parcourut du robot en degree
         """
@@ -215,7 +215,6 @@ class AdaptateurRobotIrl(Adaptateur):
     def actualiser(self):
         """"""
         self.set_vitesse_roue(self._v_ang_roue_d, self._v_ang_roue_g)
-        print(self.info)
 
     @property
     def vitesse_ang_roues(self) -> tuple[float, float]:
@@ -296,22 +295,17 @@ class Controleur(Thread):
 
         self._running = True
         while self._running:
-            start_time = time.time()
             self.step()
-            end_time = time.time() - start_time
-            sleep_time = max(0., self.dt - end_time)
-            time.sleep(sleep_time)
-            #print("ctrl", end_time)
+            time.sleep(self.dt)
 
 
     def step(self):
         """Faire la commande suivante"""
-        with self.lock:
-            if self.stop():
-                return
-            # Faire la stratégie suivante
-            if self.cur < 0 or self.liste_strat[self.cur].stop():
-                self.cur += 1
-                print(self.cur)
-                self.liste_strat[self.cur].start()
-            self.liste_strat[self.cur].step()
+        #with self.lock:
+        if self.stop():
+            return
+        # Faire la stratégie suivante
+        if self.cur < 0 or self.liste_strat[self.cur].stop():
+            self.cur += 1
+            self.liste_strat[self.cur].start()
+        self.liste_strat[self.cur].step()

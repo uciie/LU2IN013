@@ -119,7 +119,6 @@ class Affichage(Thread):
         """ Handle go button click
         """
         if self.controller is not None:
-            print("reception\n")
             if self.check_value(self.distance_var.get(), self.distance_var_entry, 'distance'):
                 strat = Go(self.controller.adaptateur, self.distance_var.get(), self.v_ang_d_var.get(),
                            self.v_ang_g_var.get(), self.controller.dt)
@@ -134,7 +133,6 @@ class Affichage(Thread):
         """ Handle turn button click
         """
         if self.controller is not None:
-            print("reception\n")
             strat = TournerDeg(self.controller.adaptateur, self.angle_var.get(), self.v_ang_var.get(), self.controller.dt)
             self.controller.add_strat(strat)
 
@@ -142,7 +140,6 @@ class Affichage(Thread):
         """ Handle tracer_carre button click
         """
         if self.controller is not None:
-            print("reception\n")
             strat = TracerCarre(self.controller.adaptateur, self.distance_var.get(), self.v_ang_var.get(),
                                 self.controller.dt)
             self.controller.add_strat(strat)
@@ -172,7 +169,6 @@ class Affichage(Thread):
         :param message: Le message d'erreur
         :return void:
         """
-        print("show")
         self.message_label['text'] = message
         self.message_label['foreground'] = 'red'
         self.message_label.after(3000, self.hide_message)
@@ -243,16 +239,15 @@ class Affichage(Thread):
         """
 
         self.update_donnee_robot()
-        with self.lock:
-            if self.simu.robot.rect_id and self.simu.robot.arrow_id:
-                self.delete_draw(self.simu.robot.arrow_id, self.simu.robot.rect_id)  # effacer le robot
-                self.delete_draw(self.simu.arene.liste_Obstacles[0])  # effacer l'obstacle
-            self.draw_parcours(self.simu.robot)
-            self.simu.robot.rect_id, self.simu.robot.arrow_id = self.draw_obj(self.simu.robot)
-            self.draw_obj(self.simu.arene.liste_Obstacles[0])
+        #with self.lock:
+        if self.simu.robot.rect_id and self.simu.robot.arrow_id:
+            self.delete_draw(self.simu.robot.arrow_id, self.simu.robot.rect_id)  # effacer le robot
+            self.delete_draw(self.simu.arene.liste_Obstacles[0])  # effacer l'obstacle
+        self.draw_parcours(self.simu.robot)
+        self.simu.robot.rect_id, self.simu.robot.arrow_id = self.draw_obj(self.simu.robot)
+        self.draw_obj(self.simu.arene.liste_Obstacles[0])
 
-            self.root.after(int(self.dt))
-            self.root.update()
+        self.root.update()
 
     def run(self):
         self.root = tk.Tk()
@@ -366,5 +361,6 @@ class Affichage(Thread):
         self._running = True
         while self._running:
             self.update()
+            time.sleep(self.dt)
 
 
