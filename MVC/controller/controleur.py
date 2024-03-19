@@ -1,280 +1,271 @@
-from MVC.modele.vecteur import Vecteur
-from MVC.modele.robot.robot_mere import Robot_mere
-from MVC.modele.robot.robot_fils import Robot
-from time import sleep
+import math
+import threading
+import time
+from abc import ABC, abstractmethod
+from threading import Thread
 
-class Strategie():
-    def __init__(self):
+from ..modele.objets import SimuRobot
+from ..modele.simulation import Simulation
+from ..modele.vecteur import Vecteur
+from ..robot.robot2I013 import Robot2IN013
+
+
+class Adaptateur(ABC):
+    def __init__(self) -> None:
+        """
+        """
+        self._v_ang_roue_d = 0
+        self._v_ang_roue_g = 0
+
+    @property
+    def v_ang_d(self) -> float:
+        """ Obtenir la vitesse angulaire de la route droite
+        """
+        return self._v_ang_roue_d
+
+    @v_ang_d.setter
+    def v_ang_d(self, value: float):
+        self._v_ang_roue_d = value
+
+    @property
+    def v_ang_g(self) -> float:
+        """ Obtenir la vitesse angulaire de la route droite
+        """
+        return self._v_ang_roue_g
+
+    @v_ang_g.setter
+    def v_ang_g(self, value: float):
+        self._v_ang_roue_g = value
+
+    @abstractmethod
+    def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float):
+        """ Modifier la vitesse des roues
+        """
         pass
-    
-class Go(Strategie): 
-    def __init__(self, robot: Robot_mere, distance : int, v_ang_d: float, v_ang_g: float, dt: float) -> None:
-        """/!!\\ robot ne comprends pas distance negative
-        Fait avancer le robot d'une certaine distance
-        :param robot: Le robot qui va faire le deplacement 
-        :param distance: La distance que le robot doit parcourir (float) 
-        :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
-        :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
-        :param dt: Le fps
+
+    @property
+    @abstractmethod
+    def vitesse_ang_roues(self) -> tuple[float, float]:
+        """ Obtenir la vitesse angulaire des roues
         """
-        super().__init__()  # Appel du constructeur de la classe parente 
-        self.robot = robot
-        self.distance = distance
-        
-        self.v_ang_d, self.v_ang_g = v_ang_d, v_ang_g
+        pass
 
-        #compteur de distance deja parcouru
-        self.parcouru = 0
-
-        #le fps
-        self.dt = dt
-       #print("x, y", robot.vectDir.x, robot.vectDir.y)
-    
-    def start(self, robot : Robot_mere):
-        """ Commencer la strategie
+    @property
+    @abstractmethod
+    def distance_parcourue(self):
+        """ Obtenir la distance parcourue
         """
-        #actualiser la position du robot 
-        self.robot = robot
-        self.dOM_x = robot.vectDir.x*robot.vitesse*self.dt #/robot.grille.echelle 
-        self.dOM_y = robot.vectDir.y*robot.vitesse*self.dt #/robot.grille.echelle 
-        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+        pass
 
-        # Modifier les vitesses angulaire les roues
-        self.robot.set_vitesse_roue(self.v_ang_d, self.v_ang_g) # Vitesse angulaire droite/gauche
+    @property
+    @abstractmethod
+    def angle_parcourue(self):
+        """ Obtenir l'angle parcouru
+        """
+        pass
 
-        if isinstance(robot, Robot) : 
-            #Calcul des dOM
-            self.dOM_theta, self.dOM_x, self.dOM_y= self.robot.calcul_dOM(self.dt)
-            self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+    @property
+    @abstractmethod
+    def stop(self):
+        """ Arreter le robot
+        """
+        pass
 
-        #compteur de distance deja parcouru
-        self.parcouru = 0      
+    @property
+    @abstractmethod
+    def robot(self):
+        """
+        """
+        pass
+
+    @abstractmethod
+    def actualiser(self):
+        """Actualiser la simulation
+        """
+        pass
+
+
+class AdaptateurRobotSimu(Adaptateur):
+    def __init__(self, robot: SimuRobot, simulation: Simulation):
+        """
+        """
+        super().__init__()
+        self._robot = robot
+        self._simulation = simulation
+
+        self.last_theta = self._robot.last_theta
+        self.last_pos_x, self.last_pos_y = self._robot.last_pos_x, self._robot.last_pos_y
+
+    @property
+    def robot(self):
+        return self._robot
+
+    def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float):
+        """ Modifier la vitesse des roues
+
+        :param v_ang_roue_d: Modifier la vitesse angulaire de la roue droite
+        :param v_ang_roue_g: Modifier la vitesse angulaire de la roue gauche
+        """
+        self.robot.set_vitesse_roue(v_ang_roue_d, v_ang_roue_g)
+
+    @property
+    def distance_parcourue(self) -> float:
+        """ Obtenir la distance parcourue
+        :return: la distance parcourue
+        """
+        distance = Vecteur(self._robot.pos_x - self.last_pos_x, self._robot.pos_y - self.last_pos_y)
+        self.last_pos_x, self.last_pos_y = self._robot.pos_x, self._robot.pos_y
+        return distance.norme
+
+    @property
+    def angle_parcourue(self) -> float:
+        """ Obtenir l'angle parcouru
+        :return: l'angle parcouru
+        """
+        angle = self._robot.theta - self.last_theta
+        self.last_theta = self._robot.theta
+        return angle
 
     def stop(self):
-        """ Savoir le parcour est fini ou non
-
-        :return : Retourne vrai si on fini de parcourir la distance  
+        """ Arreter le robot irl
+        :return: True si le robot est en arret
         """
-        return self.parcouru > self.distance
+        self.set_vitesse_roue(0, 0)
 
-    def step(self):
-        """ Faire un deplacement de dOM 
+    @property
+    def vitesse_ang_roues(self) -> tuple[float, float]:
+        """ Obtenir la vitesse angulaire des roues droite et gauche
+        :return: la vitesse angulaire des roues
         """
-        #Incrémenter la distance parcourru
-        self.parcouru += self.dOM.norme
-        if self.stop(): 
-            print("STOP")
-            # Mettre à 0 les vitesses
-            self.robot.stop() # Vitesse angulaire droite/gauche
-            return
-        
-        self.dOM_theta = 0
-        #Bouger le robot d'un dOM
-        if -self.v_ang_d != self.v_ang_g: #si veut tourner 
-            #Calcul des dOM
-            self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
-            #print(self.dOM_theta)
-        self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
+        return self._robot.roue_droite.vitesse_angulaire, self._robot.roue_gauche.vitesse_angulaire
 
-class Go_cap(Strategie): 
-    def __init__(self, robot: Robot_mere, distance : int, v_ang_d: float, v_ang_g: float, dt: float) -> None:
-        """/!!\\ robot ne comprends pas distance negative
-        Fait avancer le robot avec une certaine distance et en utilisant le capteur
-        :param robot: Le robot qui va faire le deplacement 
-        :param distance: La distance que le robot doit parcourir (float) 
-        :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s 
-        :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s 
-        :param dt: Le fps
+    def actualiser(self):
+        """Actualiser la simulation
         """
-        super().__init__()  # Appel du constructeur de la classe parente 
-        self.robot = robot
-        self.distance = distance
-        
-        self.v_ang_d, self.v_ang_g = v_ang_d, v_ang_g
+        #self._simulation.update()
+        pass
 
-        #compteur de distance deja parcouru
-        self.parcouru = 0
 
-        #le fps
-        self.dt = dt
-        #print("x, y", robot.vectDir.x, robot.vectDir.y)
-
-    def start(self, robot : Robot_mere):
-        """ Commencer la strategie
+class AdaptateurRobotIrl(Adaptateur):
+    def __init__(self, robot: Robot2IN013):
+        """ Adaptateur du robot irl
         """
-        #actualiser la position du robot 
-        self.robot = robot
-        self.dOM_x = robot.vectDir.x*robot.vitesse*self.dt #/robot.grille.echelle 
-        self.dOM_y = robot.vectDir.y*robot.vitesse*self.dt #/robot.grille.echelle 
-        self.dOM = Vecteur(self.dOM_x, self.dOM_y)
+        super().__init__()
+        self._robot = robot
+        self._v_ang_roue_d, self._v_ang_roue_g = 0., 0.
 
-        # Modifier les vitesses angulaire les roues
-        self.robot.set_vitesse_roue(self.v_ang_d, self.v_ang_g) # Vitesse angulaire droite/gauche
+    @property
+    def v_ang_d(self) -> float:
+        return self._v_ang_roue_d
 
-        #Calcul des dOM
-        self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
-        
-        #compteur de distance deja parcouru
-        self.parcouru = 0  
-        #Verification de detection d'un mur ou obstacle     
-        self.danger = self.robot.arene.raytracing(self.robot) < 2 
+    @v_ang_d.setter
+    def v_ang_d(self, v_ang_roue_d: float):
+        self._v_ang_roue_d = v_ang_roue_d
+
+    @property
+    def v_ang_g(self) -> float:
+        return self._v_ang_roue_g
+
+    @v_ang_g.setter
+    def v_ang_g(self, v_ang_roue_g: float):
+        self._v_ang_roue_g = v_ang_roue_g
+
+    @property
+    def robot(self):
+        return self._robot
+
+    def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float):
+        """ Modifier la vitesse des roues
+
+        :param v_ang_roue_d: Modifier la vitesse angulaire de la roue droite
+        :param v_ang_roue_g: Modifier la vitesse angulaire de la roue gauche
+        """
+        self._v_ang_roue_d = v_ang_roue_d
+        self._v_ang_roue_g = v_ang_roue_g
+        self._robot.set_motor_dps("roue_droite", v_ang_roue_d)
+        self._robot.set_motor_dps("roue_gauche", v_ang_roue_g)
+
+    @property
+    def distance_parcourue(self):
+        """ Obtenir la distance parcourue
+        :returns : Renvoie la distance parcourue du robot
+        """
+        return self.angle_parcourue / 360 * self._robot.WHEEL_DIAMETER * 2 * math.pi
+
+    @property
+    def angle_parcourue(self):
+        """ Obtenir l'angle parcouru
+        :returns : Renvoie l'angle parcourut du robot en degree
+        """
+        # obtenir la position des angles des roues
+        # pos_roues_x, pos_roues_y = self._robot.get_motor_position()
+        # moyenne d'angle parcourue
+        # angle_parcourue = (pos_roues_x + pos_roues_y) / 2
+
+        # self._robot.offset_motor_encoder("roue_droite", 0)
+        # self._robot.offset_motor_encoder("roue_gauche", 0)
+        angle_parcourue = 1
+        return angle_parcourue
 
     def stop(self):
-        """ Savoir le parcour est fini ou non
-
-        :return : Retourne vrai si on fini de parcourir la distance  
+        """ Arreter le robot irl
         """
-        return self.parcouru > self.distance or self.danger
+        self.set_vitesse_roue(0, 0)
 
+    def actualiser(self):
+        """"""
+        self.set_vitesse_roue(self._v_ang_roue_d, self._v_ang_roue_g)
+        print(self.info)
+
+    @property
+    def vitesse_ang_roues(self) -> tuple[float, float]:
+        """ Obtenir la vitesse angulaire des roues droite et gauche
+        :return: la vitesse angulaire des roues
+        """
+        return self._v_ang_roue_d, self._v_ang_roue_g
+
+    @property
+    def info(self) -> str:
+        """ afficher les informations du robot
+        :return str: informations du robot
+        """
+        info_str = ""
+        info_str += f"Vitesse roue droite: {self._v_ang_roue_d}\n"
+        info_str += f"Vitesse roue gauche: {self._v_ang_roue_g}\n"
+        return info_str
+
+
+class Strategie(ABC):
+    def __init__(self):  # , adaptateur: Adaptateur):
+        """ Initialise la classe Strategie
+        """
+        # self._adaptateur = adaptateur
+
+    @abstractmethod
+    def start(self):
+        pass
+
+    @abstractmethod
+    def stop(self) -> bool:
+        pass
+
+    @abstractmethod
     def step(self):
-        """ Faire un deplacement de dOM 
-        """
-        #Incrémenter la distance parcourru
-        self.parcouru += self.dOM.norme
-        #Verification de detection d'un mur ou obstacle 
-        self.danger = self.robot.arene.raytracing(self.robot) < 2 
+        pass
 
-        if self.stop(): 
-            print("STOP")
-            # Mettre à 0 les vitesses
-            self.robot.set_vitesse_roue(0, 0) # Vitesse angulaire droite/gauche
-            return
-        
-        self.dOM_theta = 0
-        #Bouger le robot d'un dOM
-        if -self.v_ang_d != self.v_ang_g: #si veut tourner 
-            #Calcul des dOM
-            self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
-            #print(self.dOM_theta)
 
-        self.robot.move_dOM(self.dOM_x, self.dOM_y, self.dOM_theta)
-
-class Tourner_deg(Strategie): 
-    def __init__(self, robot: Robot_mere,  angle : int, v_ang: float, dt: float) -> None:
-        """"
-        :param robot: Le controleur qui donne l'ordre 
-        :param angle: L'angle que le robot doit parcourir (float) 
-        :param v_ang: La vitesse angulaire de la roue droite ou gauche du robot en rad/s 
-        :param dt: Le fps
-        """
-        super().__init__()  # Appel du constructeur de la classe parente 
-        self.angle = angle
-        self.robot = robot
-
-        self.v_ang = v_ang #Vitesse angulaire 
-        self.parcouru = 0 #compteur de distance deja parcouru
-        self.angle = angle #angle à parcourir
-        self.dt = dt
-
-        #Calcul des dOM
-        self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
-        #print("x, y", robot.vectDir.x, robot.vectDir.y)
-
-    def start(self, robot: Robot_mere):
-        """ Commencer la strategie
-        """
-        # Modifier les vitesses angulaire les roues
-        if self.angle > 0:
-            self.robot.set_vitesse_roue(-self.v_ang, 0) # Vitesse angulaire droite/gauche
-            self.v_ang_d, self.v_ang_g = -self.v_ang, 0
-        else:
-            self.robot.set_vitesse_roue(0, self.v_ang) # Vitesse angulaire droite/gauche
-            self.v_ang_d, self.v_ang_g = 0, self.v_ang
-
-        #compteur de distance deja parcouru
-        self.parcouru = 0      
-
-    def stop(self):
-        """ Savoir le parcours est fini ou non
-
-        :return : Retourne vrai si on fini de parcourir la distance  
-        """
-        if self.angle > 0:
-            return self.parcouru > self.angle
-        else:
-            return self.parcouru < self.angle
-
- 
-    def step(self):
-        """ Faire un deplacement de dOM 
-        """
-        #Incrémenter la distance parcourru
-        self.parcouru += (-self.robot.roue_droite.rayon*(self.robot.roue_droite.vitesse_angulaire+self.robot.roue_gauche.vitesse_angulaire)/self.robot.length * self.dt)*180/math.pi
-
-        if self.stop(): 
-            print("STOP")
-            # Mettre à 0 les vitesses
-            self.robot.set_vitesse_roue(0, 0) # Vitesse angulaire droite/gauche
-            return
-        
-        self.dOM_theta = 0
-        #Bouger le robot d'un dOM
-        if -self.v_ang_d != self.v_ang_g: #si veut tourner 
-            self.dOM_theta, self.dOM_x, self.dOM_y, self.dOM = calcul_dOM(self.robot, self.dt)
-
-        self.robot.move_dOM(0, 0, self.dOM_theta)
-    
-class Test_collision(Strategie):
-    def __init__(self, robot : Robot_mere, posX: float, posY: float,  distance : int, v_ang : float, dt: float):
-        """Teste la capteur du robot
-
-        :param robot: Le robot qui reçoit l'ordre
-        :param posX: position en x de depart du robot 
-        :param posY: position en y de depart du robot 
-        :param distance: La distance que le robot parcours, dans notre cas longueur du carré        
-        :param vang: La vitesse angulaire des roues du robot
-        :param dt: Le FPS
-        """
-        super().__init__()  # Appel du constructeur de la classe parente 
-        
-        self.robot = robot
-        self.dt =dt
-        self.strat = Go_cap(self.robot, distance, -v_ang, v_ang, dt)
-
-        #Les listes des positions
-        self.list_pos = [(posX+distance, posY), (posX, posY-distance), (posX-distance, posY), (posX, posY+distance)]
-
-        self.cur = -1
-
-    def start(self, robot: Robot_mere):
-        """ Commencer la strategie
-        """
-        self.robot.vectDir = Vecteur(0, -1)
-        self.cur = -1
-
-    def step(self):
-        """Fait avancer le traçage du carré
-        """
-        if self.stop(): 
-            print("STOP")
-            # Mettre à 0 les vitesses
-            self.robot.set_vitesse_roue(0, 0) # Vitesse angulaire droite/gauche
-            return
-        #Avance d'une étape
-        if self.cur <0 or self.strat.stop():
-            self.cur+=1
-            self.robot.vectDir = self.robot.vectDir.rotation(90)
-            self.robot.posX, self.robot.posY = self.list_pos[self.cur]
-            self.strat.start(self.robot)
-
-        self.strat.step()
-    
-    def stop(self):
-        """Vérifie si toutes les étapes sont terminées
-        """
-        return self.cur == len(self.list_pos)-1 and self.strat.stop()
-    
-class Controleur:
-    def __init__(self, robot: Robot_mere, dt: float):
+class Controleur(Thread):
+    def __init__(self, adaptateur: Adaptateur, dt: float, lock: threading.RLock):
         """
         Initialise le contrôleur avec un robot, une vue et un intervalle de temps.
 
-        :param robot: Le robot
+        :param adaptateur: Le robot
         :param dt: Le fps
         """
+        super(Controleur, self).__init__()
         # Modèle
-        self.robot = robot
-        
+        self.adaptateur = adaptateur
+
         # Vues 
         self.view = None
 
@@ -284,58 +275,42 @@ class Controleur:
         self.cur = -1
         # Le fps
         self.dt = dt
-
-    def reset_robot(self):
-        """ Mettre robot au mileu du plan
-        """
-        self.robot.vectDir = Vecteur(0, -1)
-        self.robot.posX, self.robot.posY = self.view.arene.maxX/2, self.view.arene.maxY /2
+        self.lock = lock
+        self._running = False
 
     def add_strat(self, strat: Strategie):
         """ Ajouter une strategie au conntroleur
 
-        :param strat: Une strategie 
+        :param strat: Une strategie
         """
         self.liste_strat.append(strat)
 
     def stop(self):
         """Vérifie si toutes les étapes sont terminées
         """
-        if self.liste_strat == []: 
+        if not self.liste_strat:
             return True
-        return self.cur == len(self.liste_strat)-1 and self.liste_strat[self.cur].stop()
-    
+        return self.cur == len(self.liste_strat) - 1 and self.liste_strat[self.cur].stop()
+
+    def run(self):
+
+        self._running = True
+        while self._running:
+            start_time = time.time()
+            self.step()
+            end_time = time.time() - start_time
+            sleep_time = max(0., self.dt - end_time)
+            time.sleep(sleep_time)
+
+
     def step(self):
-        """Faire la commande suivante 
-        """
-        if self.stop(): 
-            # Mettre à 0 les vitesses
-            self.robot.stop() # Vitesse angulaire droite/gauche
-            return
-        #Faire la strtégie suivante 
-        if self.cur <0 or self.liste_strat[self.cur].stop():
-            self.cur+=1
-            self.liste_strat[self.cur].start(self.robot)
-        #print(self.cur)
-        self.liste_strat[self.cur].step()
-
-    def tracer_carre(self ,distance : int,v_ang : float ,dt : float):
-        """Trace un carré
-        :param distance: La distance que le robot parcours, dans notre cas longueur du carré
-        :param vang: La vitesse angulaire des roues du robot
-        :param dt: Le FPS
-        """
-
-        #Ajoute les stratégies pour faire un carré
-        for i in range(4):
-            self.add_strat(Go(self.robot, distance, -v_ang, v_ang, dt))
-            self.add_strat(Tourner_deg(self.robot, 90, v_ang, dt))
-
-    def go_cap_vmax(self, distance : int, dt: float):
-        """
-        Avance avec le capteur et la vitesse maximale du robot
-        :param distance: La distance que le robot parcours
-        :param dt: Le fps
-        """
-        #Ajoute la stratégie Go_cap avec la vitesse maximale du robot
-        self.add_strat(Go_cap(self.robot, distance, -self.robot.roue_droite.vmax_ang, self.robot.roue_gauche.vmax_ang, dt))
+        """Faire la commande suivante"""
+        with self.lock:
+            if self.stop():
+                return
+            # Faire la stratégie suivante
+            if self.cur < 0 or self.liste_strat[self.cur].stop():
+                self.cur += 1
+                print(self.cur)
+                self.liste_strat[self.cur].start()
+            self.liste_strat[self.cur].step()

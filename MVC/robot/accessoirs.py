@@ -1,8 +1,5 @@
-# @authors Équipe HELMS
-from ..vecteur import Vecteur
+from ..modele.vecteur import Vecteur
 
-# Supposons que les robots sont en forme de rectangle/carré
-# Supposons que la position du robot (x, y) correspond à l'extrémité en haut à gauche
 
 class Roue:
     def __init__(self, rayon: float, vmax_ang: float):
@@ -38,18 +35,6 @@ class Roue:
         """
         self._vitesse_angulaire = min(value, self._vmax_ang)
 
-class Robot_mere:
-    def __init__(self):
-        """"""
-
-    @property
-    def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float ):
-        pass
-
-    @property
-    def stop(self):
-        pass
-
 
 class Capteur:
     def __init__(self, vecteur: Vecteur):
@@ -60,9 +45,8 @@ class Capteur:
         """
         # Vecteur directeur
         self._vecteur = vecteur
-        # Seuil de collision
-        self._seuil_collision = 2
         self._deg_max = 10
+        self._active = False
 
     @property
     def vecteur(self):
@@ -70,11 +54,19 @@ class Capteur:
         return self._vecteur
 
     @property
-    def seuil_collision(self):
-        """Propriété pour l'attribut seuil_collision"""
-        return self._seuil_collision
+    def deg_max(self) -> float:
+        """Propriété pour l'attribut deg_max
+        :returns : Le degree maximale du capteur
+        """
+        return self._deg_max
 
     @property
-    def deg_max(self):
-        """Propriété pour l'attribut deg_max"""
-        return self._deg_max
+    def active(self) -> bool:
+        """Propriété pour l'attribut active
+        :return: True si le capteur est active et False sinon
+        """
+        return self._active
+
+    @active.setter
+    def active(self, value: bool):
+        self._active = value
