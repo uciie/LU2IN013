@@ -21,7 +21,7 @@ def main():
 
     # Initialisation de l'arene, robot, obstacle
     arene = Arene("Simulation de déplacement du robot", largeur, hauteur, echelle)
-    robot = SimuRobot("R", int(largeur / 2), int(hauteur / 2), dim_robot_x, dim_robot_y, 10, 200, color="red")
+    robot = SimuRobot("R", int(largeur / 2), int(hauteur / 2), dim_robot_x, dim_robot_y, 10, 150, color="red")
     obs = ObstacleRectangle(100, 100, Vecteur(10, 10), Vecteur(20, 20), color="blue")
 
     # Ajouter un obstacle dans l'arene
