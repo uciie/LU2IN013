@@ -1,7 +1,8 @@
 #.gitignore
 
-modele/__pycache__
-controller/__pycache__
-view/__pycache__
+MVC/modele/__pycache__
+MVC/robot/__pycache__
+MVC/controller/__pycache__
+MVC/view/__pycache__
 test_unitaire/__pycache__
 __pycache__
