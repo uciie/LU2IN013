@@ -18,7 +18,7 @@ def main():
     adaptateur = AdaptateurRobotIrl(robot)
 
     # Création du module Controller
-    controller = Controleur(adaptateur, dt_controller)
+    controller = Controleur(adaptateur, dt_controller,)
 
     # Avancer
     strat1 = Go(controller.adaptateur, 50, 50, 50, controller.dt)
