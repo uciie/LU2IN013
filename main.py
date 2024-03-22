@@ -1,7 +1,8 @@
 import threading
 
-from MVC.controller.controleur import Controleur, AdaptateurRobotSimu
-from MVC.modele.objets import Arene, SimuRobot, ObstacleRectangle
+from MVC.controller.adaptateur_robot_simu import AdaptateurRobotSimu
+from MVC.controller.controleur import Controleur
+from MVC.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from MVC.modele.simulation import Simulation
 from MVC.modele.vecteur import Vecteur
 from MVC.view.affichage import Affichage
