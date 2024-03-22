@@ -1,8 +1,7 @@
+import logging
 import math
 
-from ..controller.controleur import Strategie, Adaptateur
-
-import logging
+from ..controller.controleur import Adaptateur, Strategie
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)

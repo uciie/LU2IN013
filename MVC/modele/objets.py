@@ -1,9 +1,10 @@
 import math
-import numpy as np
 from abc import ABC, abstractmethod
 
-from .vecteur import Vecteur
+import numpy as np
+
 from ..robot.accessoirs import Capteur, Roue
+from .vecteur import Vecteur
 
 
 class ProjectionMixin:

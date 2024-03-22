@@ -112,31 +112,29 @@ class Controleur(Thread):
         # Modèle
         self.adaptateur = adaptateur
 
-        # Vues 
+        # Vues
         self.view = None
 
-        # liste strat
-        self.liste_strat = []
-
-        self.cur = -1
         # Le dt
         self.dt = dt
         self.lock = lock
         self._running = False
+        self.strat = None
 
     def add_strat(self, strat: Strategie):
         """ Ajouter une strategie au conntroleur
 
         :param strat: Une strategie
         """
-        self.liste_strat.append(strat)
+        self.strat = strat
+        self.strat.start()
 
     def stop(self):
         """Vérifie si toutes les étapes sont terminées
         """
-        if not self.liste_strat:
+        if not self.strat:
             return True
-        return self.cur == len(self.liste_strat) - 1 and self.liste_strat[self.cur].stop()
+        return self.strat.stop()
 
     def run(self):
 
@@ -151,7 +149,4 @@ class Controleur(Thread):
         if self.stop():
             return
         # Faire la stratégie suivante
-        if self.cur < 0 or self.liste_strat[self.cur].stop():
-            self.cur += 1
-            self.liste_strat[self.cur].start()
-        self.liste_strat[self.cur].step()
+        self.strat.step()

@@ -4,11 +4,9 @@ import tkinter as tk
 from threading import Thread
 from typing import Any
 
-
 from ..controller.ai import Go, TournerDeg, TracerCarre
 from ..controller.controleur import Controleur
 from ..modele.simulation import Simulation
-
 
 # , Go_cap, Tourner_deg, Test_collision
 
