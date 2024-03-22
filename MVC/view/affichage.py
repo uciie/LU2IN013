@@ -8,6 +8,7 @@ from ..controller.ai import Go, TournerDeg, TracerCarre
 from ..controller.controleur import Controleur
 from ..modele.simulation import Simulation
 
+
 # , Go_cap, Tourner_deg, Test_collision
 
 class Affichage(Thread):
@@ -18,7 +19,7 @@ class Affichage(Thread):
         """
         super(Affichage, self).__init__()
         self._running = False
-        self.simu = simu
+        self._simu = simu
         self.dt = dt
         self.lock = lock
 
@@ -32,7 +33,7 @@ class Affichage(Thread):
         self.initial_v_ang = 50
         self.initial_angle = 90
         self.initial_distance = 50
-        self.initial_position = (self.simu.robot.pos_x, self.simu.robot.pos_y)
+        self.initial_position = (self._simu.robot.pos_x, self._simu.robot.pos_y)
         self.liste_id_draw = []
 
         # Les variables
@@ -94,8 +95,8 @@ class Affichage(Thread):
         self._controller.liste_strat = []
         self._controller.cur = -1
         # Remettre le robot a la position initial
-        self.simu.robot.pos_x, self.simu.robot.pos_y = self.initial_position
-        self.simu.robot.last_pos_x, self.simu.robot.last_pos_y = self.initial_position
+        self._simu.robot.pos_x, self._simu.robot.pos_y = self.initial_position
+        self._simu.robot.last_pos_x, self._simu.robot.last_pos_y = self.initial_position
         # Suppression des parcours
         self.delete_parcours(self.liste_id_draw)
         self.canvas.delete("all")
@@ -116,11 +117,11 @@ class Affichage(Thread):
     def go_button_clicked(self):
         """ Handle go button click
         """
-        if self.controller is not None:
+        if self._controller is not None:
             if self.check_value(self.distance_var.get(), self.distance_var_entry, 'distance'):
-                strat = Go(self.controller.adaptateur, self.distance_var.get(), self.v_ang_d_var.get(),
-                           self.v_ang_g_var.get(), self.controller.dt)
-                self.controller.add_strat(strat)
+                strat = Go(self._controller.adaptateur, self.distance_var.get(), self.v_ang_d_var.get(),
+                           self.v_ang_g_var.get(), self._controller.dt)
+                self._controller.add_strat(strat)
 
     def go_cap_button_clicked(self):
         """ Handle go button click
@@ -130,17 +131,18 @@ class Affichage(Thread):
     def turn_button_clicked(self):
         """ Handle turn button click
         """
-        if self.controller is not None:
-            strat = TournerDeg(self.controller.adaptateur, self.angle_var.get(), self.v_ang_var.get(), self.controller.dt)
-            self.controller.add_strat(strat)
+        if self._controller is not None:
+            strat = TournerDeg(self._controller.adaptateur, self.angle_var.get(), self.v_ang_var.get(),
+                               self._controller.dt)
+            self._controller.add_strat(strat)
 
     def tracer_carre_button_clicked(self):
         """ Handle tracer_carre button click
         """
-        if self.controller is not None:
-            strat = TracerCarre(self.controller.adaptateur, self.distance_var.get(), self.v_ang_var.get(),
-                                self.controller.dt)
-            self.controller.add_strat(strat)
+        if self._controller is not None:
+            strat = TracerCarre(self._controller.adaptateur, self.distance_var.get(), self.v_ang_var.get(),
+                                self._controller.dt)
+            self._controller.add_strat(strat)
 
     def test_collision_button_clicked(self):
         """ Handle tracer_carre button click
@@ -223,33 +225,41 @@ class Affichage(Thread):
         for obj_id in obj_ids:
             self.canvas.delete(obj_id)
 
+    def on_closing(self):
+        """ Lors de la fermetura de la fenetre graphique """
+        self._running = False
+        self._simu.stop()
+        self._controller._running = False
+        self.root.quit()
+        exit()
+
     def update_donnee_robot(self):
         """ Mettre à jour l'affichage des infos du robot
         """
-        self.pos_label.config(text=f"Position: ({self.simu.robot.pos_x:.2f}, {self.simu.robot.pos_y:.2f})")
-        self.roueD_label.config(text=f"Roue droite : {self.simu.robot.roue_droite.vitesse_angulaire: .2f} rad/s")
-        self.roueG_label.config(text=f"Roue gauche : {self.simu.robot.roue_gauche.vitesse_angulaire: .2f} rad/s")
+        self.pos_label.config(text=f"Position: ({self._simu.robot.pos_x:.2f}, {self._simu.robot.pos_y:.2f})")
+        self.roueD_label.config(text=f"Roue droite : {self._simu.robot.roue_droite.vitesse_angulaire: .2f} rad/s")
+        self.roueG_label.config(text=f"Roue gauche : {self._simu.robot.roue_gauche.vitesse_angulaire: .2f} rad/s")
         self.vectDir_label.config(
-            text=f"Vecteur directeur : ({self.simu.robot.vectDir.x:.2f}, {self.simu.robot.vectDir.y:.2f}) ")
+            text=f"Vecteur directeur : ({self._simu.robot.vectDir.x:.2f}, {self._simu.robot.vectDir.y:.2f}) ")
 
     def update(self):
         """Mettre à jour le modele
         """
 
         self.update_donnee_robot()
-        #with self.lock:
-        if self.simu.robot.rect_id and self.simu.robot.arrow_id:
-            self.delete_draw(self.simu.robot.arrow_id, self.simu.robot.rect_id)  # effacer le robot
-            self.delete_draw(self.simu.arene.liste_Obstacles[0])  # effacer l'obstacle
-        self.draw_parcours(self.simu.robot)
-        self.simu.robot.rect_id, self.simu.robot.arrow_id = self.draw_obj(self.simu.robot)
-        self.draw_obj(self.simu.arene.liste_Obstacles[0])
+        # with self.lock:
+        if self._simu.robot.rect_id and self._simu.robot.arrow_id:
+            self.delete_draw(self._simu.robot.arrow_id, self._simu.robot.rect_id)  # effacer le robot
+            self.delete_draw(self._simu.arene.liste_Obstacles[0])  # effacer l'obstacle
+        self.draw_parcours(self._simu.robot)
+        self._simu.robot.rect_id, self._simu.robot.arrow_id = self.draw_obj(self._simu.robot)
+        self.draw_obj(self._simu.arene.liste_Obstacles[0])
 
         self.root.update()
 
     def run(self):
         self.root = tk.Tk()
-        self.root.title(self.simu.name)
+        self.root.title(self._simu.name)
 
         # Créer des variables Tkinter pour la vitesse et la distance
         self.v_ang_d_var = tk.DoubleVar(value=self.initial_v_ang_d)
@@ -264,16 +274,16 @@ class Affichage(Thread):
 
         # Données du robot en temps réel
         self.pos_label = tk.Label(self.robot_frame,
-                                  text=f"Position: ({self.simu.robot.pos_x:.2f}, {self.simu.robot.pos_y:.2f})")
+                                  text=f"Position: ({self._simu.robot.pos_x:.2f}, {self._simu.robot.pos_y:.2f})")
         self.pos_label.grid(row=1, column=0, sticky="w", padx=5)
         self.roueD_label = tk.Label(self.robot_frame,
-                                    text=f"Roue droite : {self.simu.robot.roue_droite.vitesse_angulaire} rad/s")
+                                    text=f"Roue droite : {self._simu.robot.roue_droite.vitesse_angulaire} rad/s")
         self.roueD_label.grid(row=2, column=0, sticky="w", padx=5)
         self.roueG_label = tk.Label(self.robot_frame,
-                                    text=f"Roue gauche : {self.simu.robot.roue_gauche.vitesse_angulaire} rad/s")
+                                    text=f"Roue gauche : {self._simu.robot.roue_gauche.vitesse_angulaire} rad/s")
         self.roueG_label.grid(row=3, column=0, sticky="w", padx=5)
         self.vectDir_label = tk.Label(self.robot_frame,
-                                      text=f"Vecteur directeur : ({self.simu.robot.vectDir.x:.2f}, {self.simu.robot.vectDir.y:.2f})")
+                                      text=f"Vecteur directeur : ({self._simu.robot.vectDir.x:.2f}, {self._simu.robot.vectDir.y:.2f})")
         self.vectDir_label.grid(row=4, column=0, sticky="w", padx=5)
 
         # Creation du cadre pour la commande basic
@@ -348,17 +358,17 @@ class Affichage(Thread):
         self.reset_button = tk.Button(self.root, text="Reset", command=self.reset_button_clicked)
         self.reset_button.grid(row=10, column=0, sticky="wsn", padx=5, pady=8)
 
-        self.canvas = tk.Canvas(self.root, width=self.simu.arene.max_x, height=self.simu.arene.max_y,
-                                bg=self.simu.arene.color)
+        self.canvas = tk.Canvas(self.root, width=self._simu.arene.max_x, height=self._simu.arene.max_y,
+                                bg=self._simu.arene.color)
         self.canvas.grid(row=0, column=1, rowspan=100, padx=10, pady=5)
 
         # Définir l'étirement des colonnes et des lignes
         self.root.columnconfigure(0, weight=1)
         self.root.columnconfigure(1, weight=1)
 
+        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
+
         self._running = True
         while self._running:
             self.update()
             time.sleep(self.dt)
-
-
