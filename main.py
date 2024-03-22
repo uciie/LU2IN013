@@ -1,20 +1,22 @@
 import threading
-import time
-from MVC.controller.controleur import Controleur, AdaptateurRobotSimu
+
+from MVC.controller.controleur import Controleur
+from MVC.controller.adaptateur_robot_simu import AdaptateurRobotSimu
 from MVC.modele.objets import Arene, SimuRobot, ObstacleRectangle
 from MVC.modele.simulation import Simulation
 from MVC.modele.vecteur import Vecteur
 from MVC.view.affichage import Affichage
 from MVC.controller.ai import TracerCarre
 
+
 def main():
     # Création du verrou
     lock_aff = threading.RLock()
     lock_ctrl = threading.RLock()
 
-    dt_simu = 1/24000
-    dt_controller = 1/24000
-    dt_affichage = 1/240000
+    dt_simu = 1 / 24000
+    dt_controller = 1 / 24000
+    dt_affichage = 1 / 240000
     echelle = 5
     largeur, hauteur = 500, 500
     dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
