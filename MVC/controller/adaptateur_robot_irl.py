@@ -1,7 +1,7 @@
 import math
 
-from ..controller.controleur import Adaptateur
-from ..robot.robot2I013 import Robot2IN013
+from MVC.controller.controleur import Adaptateur
+from MVC.robot.robot2I013 import Robot2IN013
 
 
 class AdaptateurRobotIrl(Adaptateur):
@@ -29,7 +29,7 @@ class AdaptateurRobotIrl(Adaptateur):
         self._v_ang_roue_g = v_ang_roue_g
 
     @property
-    def robot(self):
+    def robot(self) -> Robot2IN013:
         return self._robot
 
     def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float):
@@ -44,14 +44,14 @@ class AdaptateurRobotIrl(Adaptateur):
         self._robot.set_motor_dps("roue_gauche", v_ang_roue_g)
 
     @property
-    def distance_parcourue(self):
+    def distance_parcourue(self) -> float:
         """ Obtenir la distance parcourue
         :returns : Renvoie la distance parcourue du robot
         """
         return self.angle_parcourue / 360 * self._robot.WHEEL_DIAMETER * 2 * math.pi
 
     @property
-    def angle_parcourue(self):
+    def angle_parcourue(self) -> float:
         """ Obtenir l'angle parcouru
         :returns : Renvoie l'angle parcourut du robot en degree
         """
@@ -71,9 +71,8 @@ class AdaptateurRobotIrl(Adaptateur):
         self.set_vitesse_roue(0, 0)
 
     def actualiser(self):
-        """"""
+        """mettre à jour """
         self.set_vitesse_roue(self._v_ang_roue_d, self._v_ang_roue_g)
-        print(self.info)
 
     @property
     def vitesse_ang_roues(self) -> tuple[float, float]:

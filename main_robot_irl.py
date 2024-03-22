@@ -1,10 +1,18 @@
 import threading
 
+<<<<<<< HEAD
 from MVC.controller.adaptateur_robot_irl import AdaptateurRobotIrl
 from MVC.controller.ai import Go, TournerDeg
 from MVC.controller.controleur import Controleur
 from MVC.robot.robot2I013 import Robot2IN013
 
+=======
+from MVC.controller.controleur import Controleur, AdaptateurRobotIrl
+from MVC.robot.robot2I013 import Robot2IN013
+
+from MVC.controller.ai import Go, TournerDeg
+
+>>>>>>> test_robot_irl
 
 def main():
     # Création du verrou

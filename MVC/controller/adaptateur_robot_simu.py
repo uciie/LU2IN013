@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 from ..controller.controleur import Adaptateur
 from ..modele.objets import SimuRobot
 from ..modele.simulation import Simulation
 from ..modele.vecteur import Vecteur
+=======
+from MVC.controller.controleur import Adaptateur
+from MVC.modele.objets import SimuRobot
+from MVC.modele.simulation import Simulation
+from MVC.modele.vecteur import Vecteur
+>>>>>>> test_robot_irl
 
 
 class AdaptateurRobotSimu(Adaptateur):
@@ -61,5 +68,10 @@ class AdaptateurRobotSimu(Adaptateur):
     def actualiser(self):
         """Actualiser la simulation
         """
+<<<<<<< HEAD
         #self._simulation.update()
         pass
+=======
+        # self._simulation.update()
+        pass
+>>>>>>> test_robot_irl

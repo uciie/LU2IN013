@@ -1,4 +1,3 @@
-import math
 import threading
 import time
 from abc import ABC, abstractmethod
@@ -7,7 +6,7 @@ from threading import Thread
 
 class Adaptateur(ABC):
     def __init__(self) -> None:
-        """
+        """ Initialise l'adaptateur
         """
         self._v_ang_roue_d = 0
         self._v_ang_roue_g = 0
@@ -20,6 +19,7 @@ class Adaptateur(ABC):
 
     @v_ang_d.setter
     def v_ang_d(self, value: float):
+        """ Mettre à jour la vitesse angulaire de la route droite"""
         self._v_ang_roue_d = value
 
     @property
@@ -30,6 +30,7 @@ class Adaptateur(ABC):
 
     @v_ang_g.setter
     def v_ang_g(self, value: float):
+        """ Mettre à jour la vitesse angulaire de la route gauche"""
         self._v_ang_roue_g = value
 
     @abstractmethod
@@ -47,14 +48,14 @@ class Adaptateur(ABC):
 
     @property
     @abstractmethod
-    def distance_parcourue(self):
+    def distance_parcourue(self) -> float:
         """ Obtenir la distance parcourue
         """
         pass
 
     @property
     @abstractmethod
-    def angle_parcourue(self):
+    def angle_parcourue(self) -> float:
         """ Obtenir l'angle parcouru
         """
         pass
@@ -141,22 +142,16 @@ class Controleur(Thread):
 
         self._running = True
         while self._running:
-            start_time = time.time()
             self.step()
-            end_time = time.time() - start_time
-            sleep_time = max(0., self.dt - end_time)
-            time.sleep(sleep_time)
-            #print("ctrl", end_time)
-
+            time.sleep(self.dt)
 
     def step(self):
         """Faire la commande suivante"""
-        with self.lock:
-            if self.stop():
-                return
-            # Faire la stratégie suivante
-            if self.cur < 0 or self.liste_strat[self.cur].stop():
-                self.cur += 1
-                print(self.cur)
-                self.liste_strat[self.cur].start()
-            self.liste_strat[self.cur].step()
+        # with self.lock:
+        if self.stop():
+            return
+        # Faire la stratégie suivante
+        if self.cur < 0 or self.liste_strat[self.cur].stop():
+            self.cur += 1
+            self.liste_strat[self.cur].start()
+        self.liste_strat[self.cur].step()
