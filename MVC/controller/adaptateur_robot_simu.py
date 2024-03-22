@@ -1,5 +1,6 @@
 from ..controller.controleur import Adaptateur
-from ..modele.objets import Simulation, SimuRobot
+from ..modele.objets import SimuRobot
+from ..modele.simulation import Simulation
 from ..modele.vecteur import Vecteur
 
 
