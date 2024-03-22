@@ -42,6 +42,7 @@ class Affichage(Thread):
         self.v_ang_var = None
         self.angle_var = None
         self.distance_var = None
+        self.activer_trace_var = None
 
         self.robot_frame = None
         self.pos_label = None
@@ -65,14 +66,17 @@ class Affichage(Thread):
         self.angle_var_entry = None
         self.v_ang_var_label = None
         self.v_ang_var_entry = None
-        self.turn_button = None
         self.message_label = None
-        self.tracer_carre = None
+
+        #Boutons
+        self.turn_button = None
         self.go_button = None
         self.go_cap_button = None
+        self.tracer_carre_button = None
         self.test_collision_button = None
         self.go_cap_max_button = None
         self.reset_button = None
+        self.activer_trace_button = None
 
         self.canvas = None
 
@@ -200,6 +204,10 @@ class Affichage(Thread):
         else:
             return poly_id
 
+    def tracer_parcours(self):
+        """Activation du tracer"""
+        self._simu.robot.tracer_parcours = self.activer_trace_var.get()
+
     def draw_parcours(self, objet: Any):
         """ Trace le parcours de l'objet
 
@@ -207,7 +215,7 @@ class Affichage(Thread):
         :returns: Identifiant unique de l'objet sur le canevas.
         """
         line_id = self.canvas.create_line(objet.last_pos_x, objet.last_pos_y, objet.pos_x, objet.pos_y, fill='blue',
-                                          width=3)
+                                              width=3)
         self.liste_id_draw.append(line_id)
 
     def delete_parcours(self, parcours: list[int]):
@@ -251,7 +259,9 @@ class Affichage(Thread):
         if self._simu.robot.rect_id and self._simu.robot.arrow_id:
             self.delete_draw(self._simu.robot.arrow_id, self._simu.robot.rect_id)  # effacer le robot
             self.delete_draw(self._simu.arene.liste_Obstacles[0])  # effacer l'obstacle
-        self.draw_parcours(self._simu.robot)
+
+        if self._simu.robot.tracer_parcours:
+            self.draw_parcours(self._simu.robot)
         self._simu.robot.rect_id, self._simu.robot.arrow_id = self.draw_obj(self._simu.robot)
         self.draw_obj(self._simu.arene.liste_Obstacles[0])
 
@@ -267,6 +277,7 @@ class Affichage(Thread):
         self.v_ang_var = tk.DoubleVar(value=self.initial_v_ang)
         self.angle_var = tk.DoubleVar(value=self.initial_angle)
         self.distance_var = tk.DoubleVar(value=self.initial_distance)
+        self.activer_trace_var = tk.BooleanVar(value=False)  # bouton activation du trace
 
         # Creation du cadre pour les données du robot
         self.robot_frame = tk.LabelFrame(self.root, text=" Données du robot ")
@@ -286,9 +297,14 @@ class Affichage(Thread):
                                       text=f"Vecteur directeur : ({self._simu.robot.vectDir.x:.2f}, {self._simu.robot.vectDir.y:.2f})")
         self.vectDir_label.grid(row=4, column=0, sticky="w", padx=5)
 
+        # Create the activer_trace
+        self.activer_trace_button = tk.Checkbutton(self.root, text="Activer Tracage", variable=self.activer_trace_var,
+                                                   command=self.tracer_parcours)
+        self.activer_trace_button.grid(row=1, column=0, sticky="w", padx=5, pady=8)
+
         # Creation du cadre pour la commande basic
         self.command_frame = tk.LabelFrame(self.root, text=" Commande Basic ")
-        self.command_frame.grid(row=1, column=0, padx=5, pady=5, sticky="ew")
+        self.command_frame.grid(row=2, column=0, padx=5, pady=5, sticky="ew")
 
         # Entrée pour la vitesse angulaire de roue droit
         self.v_ang_d_label = tk.Label(self.command_frame, text="Roue droite : ")
@@ -310,7 +326,7 @@ class Affichage(Thread):
 
         # Cadre pour la commande pour tourner
         self.turn_frame = tk.LabelFrame(self.root, text=" Commande pour Tourner ")
-        self.turn_frame.grid(row=3, column=0, padx=5, pady=5, sticky="new")
+        self.turn_frame.grid(row=4, column=0, padx=5, pady=5, sticky="new")
 
         # Entree pour l'angle de parcours
         self.angle_var_label = tk.Label(self.turn_frame, text="Angle : ")
@@ -330,33 +346,33 @@ class Affichage(Thread):
 
         # Creation du label message erreur
         self.message_label = tk.Label(self.root, text='', foreground='red')
-        self.message_label.grid(row=4, column=0, sticky="w", padx=5)
+        self.message_label.grid(row=5, column=0, sticky="w", padx=5)
 
         # Creation du button Tracer Carre
-        self.tracer_carre = tk.Button(self.root, text="Tracer carre", command=self.tracer_carre_button_clicked)
-        self.tracer_carre.grid(row=5, column=0, sticky="wsn", padx=5, pady=8)
+        self.tracer_carre_button = tk.Button(self.root, text="Tracer carre", command=self.tracer_carre_button_clicked)
+        self.tracer_carre_button.grid(row=6, column=0, sticky="wsn", padx=5, pady=8)
 
         # Creation du boutton Go
         self.go_button = tk.Button(self.root, text="Go", command=self.go_button_clicked)
-        self.go_button.grid(row=6, column=0, sticky="wsn", padx=5, pady=8)
+        self.go_button.grid(row=7, column=0, sticky="wsn", padx=5, pady=8)
 
         # Creation du boutton Go avec un capteur de distance
         self.go_cap_button = tk.Button(self.root, text="Go avec Capteur", command=self.go_cap_button_clicked)
-        self.go_cap_button.grid(row=7, column=0, sticky="wsn", padx=5, pady=8)
+        self.go_cap_button.grid(row=8, column=0, sticky="wsn", padx=5, pady=8)
 
         # Creation du boutton Test osbtacle avec un capteur de distance
         self.test_collision_button = tk.Button(self.root, text="Test de collision avec diff angle",
                                                command=self.test_collision_button_clicked)
-        self.test_collision_button.grid(row=8, column=0, sticky="wsn", padx=5, pady=8)
+        self.test_collision_button.grid(row=9, column=0, sticky="wsn", padx=5, pady=8)
 
         # Creation du bouton Go cap max
         self.go_cap_max_button = tk.Button(self.root, text="Go avec Capteur et Vmax",
                                            command=self.go_cap_max_button_clicked)
-        self.go_cap_max_button.grid(row=9, column=0, sticky="wsn", padx=5, pady=8)
+        self.go_cap_max_button.grid(row=10, column=0, sticky="wsn", padx=5, pady=8)
 
         # Creation du button Reset
         self.reset_button = tk.Button(self.root, text="Reset", command=self.reset_button_clicked)
-        self.reset_button.grid(row=10, column=0, sticky="wsn", padx=5, pady=8)
+        self.reset_button.grid(row=11, column=0, sticky="wsn", padx=5, pady=8)
 
         self.canvas = tk.Canvas(self.root, width=self._simu.arene.max_x, height=self._simu.arene.max_y,
                                 bg=self._simu.arene.color)

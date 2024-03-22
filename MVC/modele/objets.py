@@ -1,10 +1,8 @@
 import math
 from abc import ABC, abstractmethod
 
-import numpy as np
-
-from ..robot.accessoirs import Capteur, Roue
 from .vecteur import Vecteur
+from ..robot.accessoirs import Capteur, Roue
 
 
 class ProjectionMixin:
@@ -76,12 +74,23 @@ class SimuRobot(ProjectionMixin):
         # Ancienne angle
         self._last_theta = 0.  # angle en degré
 
+        # Activation du tracage du parcours
+        self._tracer_parcours = False
+
         # Roues du robot
         self.roue_gauche = Roue(rayon_roue, vmax_ang)
         self.roue_droite = Roue(rayon_roue, vmax_ang)
 
         # Capteur du robot
         self.capteur = Capteur(Vecteur(self.vectDir.x, int(self.vectDir.y / abs(self.vectDir.y))))
+
+    @property
+    def tracer_parcours(self) -> bool:
+        return self._tracer_parcours
+
+    @tracer_parcours.setter
+    def tracer_parcours(self, valeur: bool):
+        self._tracer_parcours = valeur
 
     # Propriété pour l'attribut pos_x
     @property
@@ -219,7 +228,6 @@ class SimuRobot(ProjectionMixin):
             self.roue_gauche.vitesse_angulaire = self.roue_gauche.vmax_ang
         else:
             self.roue_gauche.vitesse_angulaire = v_ang_roue_g
-
 
     def actualiser(self, dt: float) -> None:
         """ Actualise le robot selon le dt ecoule
