@@ -1,8 +1,7 @@
+import logging
 import math
 
-from ..controller.controleur import Strategie, Adaptateur
-
-import logging
+from ..controller.controleur import Adaptateur, Strategie
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -39,11 +38,7 @@ class Go(Strategie):
         self.adaptateur.set_vitesse_roue(self.v_ang_d, self.v_ang_g)  # Vitesse angulaire droite/gauche
 
         # Position initiale du robot avant de commencer
-<<<<<<< HEAD
-        self.pos_ini = 1. * self.adaptateur.distance_parcourue
-=======
         self.pos_ini = self.adaptateur.distance_parcourue
->>>>>>> test_robot_irl
 
         # compteur de distance deja parcouru
         self.parcouru = 0.
@@ -54,10 +49,6 @@ class Go(Strategie):
         :return : Retourne vrai si on a fini de parcourir la distance
         """
         v_roue_d, v_roue_g = self.adaptateur.vitesse_ang_roues
-<<<<<<< HEAD
-        print("parcouru", self.parcouru , "distance", self.distance)
-=======
->>>>>>> test_robot_irl
         return math.fabs(self.parcouru) >= math.fabs(self.distance)  # or (v_roue_d == 0 and v_roue_g == 0)
 
     def step(self):
@@ -66,10 +57,6 @@ class Go(Strategie):
         # Incrémenter la distance parcourue
         self.parcouru += self.adaptateur.distance_parcourue
         if self.stop():
-<<<<<<< HEAD
-            print("STOP")
-=======
->>>>>>> test_robot_irl
             # Mettre à 0 les vitesses
 
             self.adaptateur.stop()
@@ -123,11 +110,7 @@ class TournerDeg(Strategie):
 
         :return : Retourne vrai si on a fini de parcourir l'angle
         """
-<<<<<<< HEAD
-        print("parcouru", self.parcouru, "angle", self.angle)
-=======
         #print(self.parcouru)
->>>>>>> test_robot_irl
         return math.fabs(self.parcouru) >= math.fabs(self.angle)
 
     def step(self):
@@ -136,10 +119,6 @@ class TournerDeg(Strategie):
         # Incrémenter l'angle parcouru
         self.parcouru += self.adaptateur.angle_parcourue
         if self.stop():
-<<<<<<< HEAD
-            print("STOP")
-=======
->>>>>>> test_robot_irl
             # Mettre à 0 les vitesses
             self.adaptateur.stop()
             return

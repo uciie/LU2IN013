@@ -76,21 +76,12 @@ class Vecteur:
         :returns: Nouveau vecteur résultant de la rotation du vecteur self selon l'angle spécifié.
         """
         # Conversion degrés en radians
-<<<<<<< HEAD
-        rad: float = -degre * (math.pi / 180)
-        
-        # Nouvelles composantes
-        new_x: int = self.x * math.cos(rad) - self.y * math.sin(rad)
-        new_y: int = self.x * math.sin(rad) + self.y * math.cos(rad)
-        
-=======
         rad = -degre * (math.pi / 180)
 
         # Nouvelles composantes
         new_x = self.x * math.cos(rad) - self.y * math.sin(rad)
         new_y = self.x * math.sin(rad) + self.y * math.cos(rad)
 
->>>>>>> test_robot_irl
         return Vecteur(new_x, new_y)
 
     def equals(self, autre_vecteur: 'Vecteur') -> bool:

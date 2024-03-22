@@ -4,11 +4,9 @@ import tkinter as tk
 from threading import Thread
 from typing import Any
 
-
 from ..controller.ai import Go, TournerDeg, TracerCarre
 from ..controller.controleur import Controleur
 from ..modele.simulation import Simulation
-
 
 # , Go_cap, Tourner_deg, Test_collision
 
@@ -119,10 +117,6 @@ class Affichage(Thread):
         """ Handle go button click
         """
         if self.controller is not None:
-<<<<<<< HEAD
-            print("reception\n")
-=======
->>>>>>> test_robot_irl
             if self.check_value(self.distance_var.get(), self.distance_var_entry, 'distance'):
                 strat = Go(self.controller.adaptateur, self.distance_var.get(), self.v_ang_d_var.get(),
                            self.v_ang_g_var.get(), self.controller.dt)
@@ -137,10 +131,6 @@ class Affichage(Thread):
         """ Handle turn button click
         """
         if self.controller is not None:
-<<<<<<< HEAD
-            print("reception\n")
-=======
->>>>>>> test_robot_irl
             strat = TournerDeg(self.controller.adaptateur, self.angle_var.get(), self.v_ang_var.get(), self.controller.dt)
             self.controller.add_strat(strat)
 
@@ -148,10 +138,6 @@ class Affichage(Thread):
         """ Handle tracer_carre button click
         """
         if self.controller is not None:
-<<<<<<< HEAD
-            print("reception\n")
-=======
->>>>>>> test_robot_irl
             strat = TracerCarre(self.controller.adaptateur, self.distance_var.get(), self.v_ang_var.get(),
                                 self.controller.dt)
             self.controller.add_strat(strat)
@@ -251,18 +237,6 @@ class Affichage(Thread):
         """
 
         self.update_donnee_robot()
-<<<<<<< HEAD
-        with self.lock:
-            if self.simu.robot.rect_id and self.simu.robot.arrow_id:
-                self.delete_draw(self.simu.robot.arrow_id, self.simu.robot.rect_id)  # effacer le robot
-                self.delete_draw(self.simu.arene.liste_Obstacles[0])  # effacer l'obstacle
-            self.draw_parcours(self.simu.robot)
-            self.simu.robot.rect_id, self.simu.robot.arrow_id = self.draw_obj(self.simu.robot)
-            self.draw_obj(self.simu.arene.liste_Obstacles[0])
-
-            self.root.after(int(self.dt))
-            self.root.update()
-=======
         #with self.lock:
         if self.simu.robot.rect_id and self.simu.robot.arrow_id:
             self.delete_draw(self.simu.robot.arrow_id, self.simu.robot.rect_id)  # effacer le robot
@@ -272,7 +246,6 @@ class Affichage(Thread):
         self.draw_obj(self.simu.arene.liste_Obstacles[0])
 
         self.root.update()
->>>>>>> test_robot_irl
 
     def run(self):
         self.root = tk.Tk()
@@ -357,25 +330,6 @@ class Affichage(Thread):
         self.go_button = tk.Button(self.root, text="Go", command=self.go_button_clicked)
         self.go_button.grid(row=6, column=0, sticky="wsn", padx=5, pady=8)
 
-<<<<<<< HEAD
-        ## Creation du boutton Go avec un capteur de distance
-        #self.go_cap_button = tk.Button(self.root, text="Go avec Capteur", command=self.go_cap_button_clicked)
-        #self.go_cap_button.grid(row=7, column=0, sticky="wsn", padx=5, pady=8)
-
-        ## Creation du boutton Test osbtacle avec un capteur de distance
-        #self.test_collision_button = tk.Button(self.root, text="Test de collision avec diff angle",
-        #                                      command=self.test_collision_button_clicked)
-        #self.test_collision_button.grid(row=8, column=0, sticky="wsn", padx=5, pady=8)
-
-        # Creation du bouton Go cap max
-        #self.go_cap_max_button = tk.Button(self.root, text="Go avec Capteur et Vmax",
-        #                                   command=self.go_cap_max_button_clicked)
-        #self.go_cap_max_button.grid(row=9, column=0, sticky="wsn", padx=5, pady=8)
-
-        # Creation du button Reset
-        #self.reset_button = tk.Button(self.root, text="Reset", command=self.reset_button_clicked)
-        #self.reset_button.grid(row=10, column=0, sticky="wsn", padx=5, pady=8)
-=======
         # Creation du boutton Go avec un capteur de distance
         self.go_cap_button = tk.Button(self.root, text="Go avec Capteur", command=self.go_cap_button_clicked)
         self.go_cap_button.grid(row=7, column=0, sticky="wsn", padx=5, pady=8)
@@ -393,7 +347,6 @@ class Affichage(Thread):
         # Creation du button Reset
         self.reset_button = tk.Button(self.root, text="Reset", command=self.reset_button_clicked)
         self.reset_button.grid(row=10, column=0, sticky="wsn", padx=5, pady=8)
->>>>>>> test_robot_irl
 
         self.canvas = tk.Canvas(self.root, width=self.simu.arene.max_x, height=self.simu.arene.max_y,
                                 bg=self.simu.arene.color)
@@ -406,9 +359,6 @@ class Affichage(Thread):
         self._running = True
         while self._running:
             self.update()
-<<<<<<< HEAD
-=======
             time.sleep(self.dt)
->>>>>>> test_robot_irl
 
 
