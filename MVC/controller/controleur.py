@@ -4,11 +4,6 @@ import time
 from abc import ABC, abstractmethod
 from threading import Thread
 
-from ..modele.objets import SimuRobot
-from ..modele.simulation import Simulation
-from ..modele.vecteur import Vecteur
-from ..robot.robot2I013 import Robot2IN013
-
 
 class Adaptateur(ABC):
     def __init__(self) -> None:
@@ -83,6 +78,7 @@ class Adaptateur(ABC):
         """Actualiser la simulation
         """
         pass
+
 
 class Strategie(ABC):
     def __init__(self):  # , adaptateur: Adaptateur):

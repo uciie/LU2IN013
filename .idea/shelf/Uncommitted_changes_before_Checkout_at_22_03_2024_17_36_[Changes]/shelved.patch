@@ -1,0 +1,25 @@
+Index: main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import threading\r\nimport time\r\nfrom MVC.controller.controleur import Controleur, AdaptateurRobotSimu\r\nfrom MVC.modele.objets import Arene, SimuRobot, ObstacleRectangle\r\nfrom MVC.modele.simulation import Simulation\r\nfrom MVC.modele.vecteur import Vecteur\r\nfrom MVC.view.affichage import Affichage\r\nfrom MVC.controller.ai import TracerCarre\r\n\r\ndef main():\r\n    # Création du verrou\r\n    lock_aff = threading.RLock()\r\n    lock_ctrl = threading.RLock()\r\n\r\n    dt_simu = 1/24000\r\n    dt_controller = 1/24000\r\n    dt_affichage = 1/240000\r\n    echelle = 5\r\n    largeur, hauteur = 500, 500\r\n    dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)\r\n\r\n    # Initialisation de l'arene, robot, obstacle\r\n    arene = Arene(\"Simulation de déplacement du robot\", largeur, hauteur, echelle)\r\n    robot = SimuRobot(\"R\", int(largeur / 2), int(hauteur / 2), dim_robot_x, dim_robot_y, 10, 150, color=\"red\")\r\n    obs = ObstacleRectangle(100, 100, Vecteur(10, 10), Vecteur(20, 20), color=\"blue\")\r\n\r\n    # Ajouter un obstacle dans l'arene\r\n    arene.add_obstacle(obs)\r\n\r\n    # Créer la simulation\r\n    simu = Simulation(\"Simulation\", dt_simu, robot, arene, lock_aff)\r\n\r\n    # Créer l'adaptateur\r\n    adaptateur = AdaptateurRobotSimu(robot, simu)\r\n\r\n    # Création du module View\r\n    view = Affichage(simu, dt_affichage, lock_aff)\r\n\r\n    # Création du module Controller\r\n    controller = Controleur(adaptateur, dt_controller, lock_aff)\r\n\r\n    # Ajout du lien de communication entre view et controller\r\n    view.controller = controller\r\n    strat = TracerCarre(controller.adaptateur, 50, 50, dt_controller)\r\n    controller.add_strat(strat)\r\n\r\n    # demarrage des threads\r\n    view_thread = threading.Thread(target=view.run)\r\n\r\n    view_thread.start()\r\n    simu.start()\r\n    controller.start()\r\n\r\n    # Attendre que les threads se terminent\r\n    view_thread.join()\r\n    simu.join()\r\n    controller.join()\r\n\r\n\r\nif __name__ == '__main__':\r\n    main()\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.py b/main.py
+--- a/main.py	
++++ b/main.py	
+@@ -1,11 +1,12 @@
+ import threading
+-import time
++
++from MVC.controller.ai import TracerCarre
+ from MVC.controller.controleur import Controleur, AdaptateurRobotSimu
+ from MVC.modele.objets import Arene, SimuRobot, ObstacleRectangle
+ from MVC.modele.simulation import Simulation
+ from MVC.modele.vecteur import Vecteur
+ from MVC.view.affichage import Affichage
+-from MVC.controller.ai import TracerCarre
++
+ 
+ def main():
+     # Création du verrou
