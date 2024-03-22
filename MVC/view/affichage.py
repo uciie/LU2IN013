@@ -184,7 +184,7 @@ class Affichage(Thread):
         """
         self.message_label['text'] = ''
 
-    def draw_obj(self, objet: Any) -> int | tuple[int, int]:
+    def draw_obj(self, objet: Any) -> 'int | tuple[int, int]':
         """Dessine un objet sur le canevas de l'Affichage.
 
         :param objet: objet à dessiner.
