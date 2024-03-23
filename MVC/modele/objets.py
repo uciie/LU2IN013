@@ -75,7 +75,7 @@ class SimuRobot(ProjectionMixin):
         self._last_theta = 0.  # angle en degré
 
         # Activation du tracage du parcours
-        self._tracer_parcours = False
+        self._tracer_parcours = None
 
         # Roues du robot
         self.roue_gauche = Roue(rayon_roue, vmax_ang)
@@ -88,8 +88,8 @@ class SimuRobot(ProjectionMixin):
     def tracer_parcours(self) -> bool:
         return self._tracer_parcours
 
-    @tracer_parcours.setter
-    def tracer_parcours(self, valeur: bool):
+    def activer_tracer_parcours(self, valeur: bool):
+        """Activer ou désactiver le traçage du parcours du robot."""
         self._tracer_parcours = valeur
 
     # Propriété pour l'attribut pos_x

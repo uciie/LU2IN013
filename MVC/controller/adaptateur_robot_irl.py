@@ -90,3 +90,6 @@ class AdaptateurRobotIrl(Adaptateur):
         info_str += f"Vitesse roue droite: {self._v_ang_roue_d}\n"
         info_str += f"Vitesse roue gauche: {self._v_ang_roue_g}\n"
         return info_str
+
+    def active_trace(self, val: bool):
+        pass

@@ -4,23 +4,31 @@ import math
 from ..controller.controleur import Adaptateur, Strategie
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG, filename='logs/ai.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, filename='ai.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 # Désactiver les messages de journalisation pour le module spécifié
-logging.getLogger('MVC.controller.ai').setLevel(logging.WARNING)
+#logging.getLogger('MVC.controller.ai').setLevel(logging.WARNING)
 
 class Go(Strategie):
-    def __init__(self, adaptateur: Adaptateur, distance: float, v_ang_d: float, v_ang_g: float, dt: float) -> None:
+    def __init__(self, adaptateur: Adaptateur, distance: float, v_ang_d: float, v_ang_g: float, active_trace: bool) -> None:
+        """
+        :param adaptateur: l'adaptateur du robot
+        :param distance: la distance à parcourir robot
+        :param v_ang_d: la vitesse angulaire droite du robot
+        :param v_ang_g: la vitesse angulaire gauche du robot
+        :param active_trace: activation du tracage du parcours du robot
+        """
         super().__init__()
         self.adaptateur = adaptateur
         self.pos_ini = None
         self.distance = distance
         self.v_ang_d, self.v_ang_g = v_ang_d, v_ang_g
         self.parcouru = 0.
-        self.dt = dt
+        self.active_trace = active_trace
         self.logger = logging.getLogger(__name__)
 
     def start(self):
         self.logger.info("Starting Go strategy")
+        self.adaptateur.active_trace(self.active_trace)
         self.adaptateur.set_vitesse_roue(self.v_ang_d, self.v_ang_g)
         self.pos_ini = self.adaptateur.distance_parcourue
         self.parcouru = 0.
@@ -39,17 +47,24 @@ class Go(Strategie):
             return
 
 class TournerDeg(Strategie):
-    def __init__(self, adaptateur: Adaptateur, angle: float, v_ang: float, dt: float) -> None:
+    def __init__(self, adaptateur: Adaptateur, angle: float, v_ang: float, active_trace: bool) -> None:
+        """
+        :param adaptateur: l'adaptateur du robot
+        :param angle: l'angle à parcourir robot
+        :param v_ang: la vitesse angulaire du robot
+        :param active_trace: activation du tracage du parcours du robot
+        """
         super().__init__()
         self.pos_ini = None
         self.adaptateur = adaptateur
         self.angle, self.v_ang = angle, v_ang
         self.parcouru = 0.
-        self.dt = dt
+        self.active_trace = active_trace
         self.logger = logging.getLogger(__name__)
 
     def start(self):
         self.logger.info("Starting TournerDeg strategy")
+        self.adaptateur.active_trace(self.active_trace)
         if self.angle > 0:
             self.v_ang_d, self.v_ang_g = self.v_ang, -self.v_ang
             self.adaptateur.set_vitesse_roue(self.v_ang, -self.v_ang)
@@ -72,22 +87,28 @@ class TournerDeg(Strategie):
             return
 
 class TracerCarre(Strategie):
-    def __init__(self, adaptateur: Adaptateur, distance_cote: float, v_ang: float, dt: float) -> None:
+    def __init__(self, adaptateur: Adaptateur, distance_cote: float, v_ang: float, active_trace: bool) -> None:
+        """
+        :param adaptateur:
+        :param distance_cote:
+        :param v_ang:
+        :param active_trace:
+        """
         super().__init__()
         self.adaptateur = adaptateur
         self.pos_ini = None
         self.distance_cote = distance_cote
         self.v_ang = v_ang
         self.parcouru = 0.
-        self.dt = dt
+        self.active_trace = active_trace
         self.steps = [
-            Go(adaptateur, distance_cote, v_ang, v_ang, dt),
-            TournerDeg(adaptateur, 90, v_ang, dt),
-            Go(adaptateur, distance_cote, v_ang, v_ang, dt),
-            TournerDeg(adaptateur, 90, v_ang, dt),
-            Go(adaptateur, distance_cote, v_ang, v_ang, dt),
-            TournerDeg(adaptateur, 90, v_ang, dt),
-            Go(adaptateur, distance_cote, v_ang, v_ang, dt)
+            Go(adaptateur, distance_cote, v_ang, v_ang, self.active_trace),
+            TournerDeg(adaptateur, 90, v_ang, self.active_trace),
+            Go(adaptateur, distance_cote, v_ang, v_ang, self.active_trace),
+            TournerDeg(adaptateur, 90, v_ang, self.active_trace),
+            Go(adaptateur, distance_cote, v_ang, v_ang, self.active_trace),
+            TournerDeg(adaptateur, 90, v_ang, self.active_trace),
+            Go(adaptateur, distance_cote, v_ang, v_ang, self.active_trace)
         ]
         self.current_step = 0
         self.logger = logging.getLogger(__name__)

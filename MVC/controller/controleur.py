@@ -80,6 +80,11 @@ class Adaptateur(ABC):
         """
         pass
 
+    @abstractmethod
+    def active_trace(self, val: bool):
+        """"""
+        pass
+
 
 class Strategie(ABC):
     def __init__(self):  # , adaptateur: Adaptateur):

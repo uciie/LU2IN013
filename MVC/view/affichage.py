@@ -11,11 +11,6 @@ from ..modele.simulation import Simulation
 
 # , Go_cap, Tourner_deg, Test_collision
 
-# configuration logging
-logging.basicConfig(level=logging.INFO, filename='logs/affichage.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-# Désactiver les messages de journalisation pour le module spécifié
-#logging.getLogger('MVC.view.affichage').setLevel(logging.WARNING)
-
 
 class Affichage(Thread):
     def __init__(self, simu: Simulation, dt: float, lock: threading.RLock):
@@ -24,12 +19,19 @@ class Affichage(Thread):
         :param simu : L'arène qui sera affichée
         """
         super(Affichage, self).__init__()
+
+        # Configure logging
+        logging.basicConfig(level=logging.DEBUG, filename='ai.log', filemode='w',
+                            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        # Désactiver les messages de journalisation pour le module spécifié
+        # logging.getLogger('MVC.view.affichage').setLevel(logging.WARNING)
+
+        self.logger = logging.getLogger(__name__)
+
         self._running = False
         self._simu = simu
         self.dt = dt
         self.lock = lock
-
-        self.logger = logging.getLogger(__name__)
 
         # set the controller
         self._controller = None
@@ -76,7 +78,7 @@ class Affichage(Thread):
         self.v_ang_var_entry = None
         self.message_label = None
 
-        #Boutons
+        # Boutons
         self.turn_button = None
         self.go_button = None
         self.go_cap_button = None
@@ -132,7 +134,7 @@ class Affichage(Thread):
         if self._controller is not None:
             if self.check_value(self.distance_var.get(), self.distance_var_entry, 'distance'):
                 strat = Go(self._controller.adaptateur, self.distance_var.get(), self.v_ang_d_var.get(),
-                           self.v_ang_g_var.get(), self._controller.dt)
+                           self.v_ang_g_var.get(), self.activer_trace_var.get())
                 self._controller.add_strat(strat)
 
     def go_cap_button_clicked(self):
@@ -145,15 +147,16 @@ class Affichage(Thread):
         """
         if self._controller is not None:
             strat = TournerDeg(self._controller.adaptateur, self.angle_var.get(), self.v_ang_var.get(),
-                               self._controller.dt)
+                               self.activer_trace_var.get())
             self._controller.add_strat(strat)
 
     def tracer_carre_button_clicked(self):
         """ Handle tracer_carre button click
         """
         if self._controller is not None:
+            self.logger.info(self.activer_trace_var.get())
             strat = TracerCarre(self._controller.adaptateur, self.distance_var.get(), self.v_ang_var.get(),
-                                self._controller.dt)
+                                self.activer_trace_var.get())
             self._controller.add_strat(strat)
 
     def test_collision_button_clicked(self):
@@ -212,10 +215,6 @@ class Affichage(Thread):
         else:
             return poly_id
 
-    def tracer_parcours(self):
-        """Activation du tracer"""
-        self._simu.robot.tracer_parcours = self.activer_trace_var.get()
-
     def draw_parcours(self, objet: Any):
         """ Trace le parcours de l'objet
 
@@ -223,7 +222,7 @@ class Affichage(Thread):
         :returns: Identifiant unique de l'objet sur le canevas.
         """
         line_id = self.canvas.create_line(objet.last_pos_x, objet.last_pos_y, objet.pos_x, objet.pos_y, fill='blue',
-                                              width=3)
+                                          width=3)
         self.liste_id_draw.append(line_id)
 
     def delete_parcours(self, parcours: list[int]):
@@ -307,8 +306,7 @@ class Affichage(Thread):
         self.vectDir_label.grid(row=4, column=0, sticky="w", padx=5)
 
         # Create the activer_trace
-        self.activer_trace_button = tk.Checkbutton(self.root, text="Activer Tracage", variable=self.activer_trace_var,
-                                                   command=self.tracer_parcours)
+        self.activer_trace_button = tk.Checkbutton(self.root, text="Activer Tracage", variable=self.activer_trace_var)
         self.activer_trace_button.grid(row=1, column=0, sticky="w", padx=5, pady=8)
 
         # Creation du cadre pour la commande basic
