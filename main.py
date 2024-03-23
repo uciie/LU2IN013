@@ -1,12 +1,12 @@
 import threading
 
-from MVC.controller.controleur import Controleur
 from MVC.controller.adaptateur_robot_simu import AdaptateurRobotSimu
-from MVC.modele.objets import Arene, SimuRobot, ObstacleRectangle
+from MVC.controller.ai import Go, StrategieSequentielle, TournerDeg
+from MVC.controller.controleur import Controleur
+from MVC.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from MVC.modele.simulation import Simulation
 from MVC.modele.vecteur import Vecteur
 from MVC.view.affichage import Affichage
-from MVC.controller.ai import TracerCarre
 
 
 def main():
@@ -44,7 +44,16 @@ def main():
 
     # Ajout du lien de communication entre view et controller
     view.controller = controller
-    strat = TracerCarre(controller.adaptateur, 50, 50, dt_controller)
+    steps = [Go(controller.adaptateur, 50, 50,50, controller.dt),
+            TournerDeg(controller.adaptateur, 90, 50, controller.dt),
+            Go(controller.adaptateur, 50, 50,50, controller.dt),
+            TournerDeg(controller.adaptateur, 90, 50, controller.dt),
+            Go(controller.adaptateur, 50, 50,50, controller.dt),
+            TournerDeg(controller.adaptateur, 90, 50, controller.dt),
+            Go(controller.adaptateur, 50, 50,50, controller.dt),
+            TournerDeg(controller.adaptateur, 90, 50, controller.dt)
+            ]
+    strat = StrategieSequentielle(controller.adaptateur, steps, dt_controller)
     controller.add_strat(strat)
 
     # demarrage des threads
