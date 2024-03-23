@@ -1,5 +1,6 @@
 import threading
 import time
+import logging
 import tkinter as tk
 from threading import Thread
 from typing import Any
@@ -8,8 +9,13 @@ from ..controller.ai import Go, TournerDeg, TracerCarre
 from ..controller.controleur import Controleur
 from ..modele.simulation import Simulation
 
-
 # , Go_cap, Tourner_deg, Test_collision
+
+# configuration logging
+logging.basicConfig(level=logging.INFO, filename='logs/affichage.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# Désactiver les messages de journalisation pour le module spécifié
+#logging.getLogger('MVC.view.affichage').setLevel(logging.WARNING)
+
 
 class Affichage(Thread):
     def __init__(self, simu: Simulation, dt: float, lock: threading.RLock):
@@ -22,6 +28,8 @@ class Affichage(Thread):
         self._simu = simu
         self.dt = dt
         self.lock = lock
+
+        self.logger = logging.getLogger(__name__)
 
         # set the controller
         self._controller = None
@@ -255,19 +263,20 @@ class Affichage(Thread):
         """
 
         self.update_donnee_robot()
-        # with self.lock:
-        if self._simu.robot.rect_id and self._simu.robot.arrow_id:
-            self.delete_draw(self._simu.robot.arrow_id, self._simu.robot.rect_id)  # effacer le robot
-            self.delete_draw(self._simu.arene.liste_Obstacles[0])  # effacer l'obstacle
+        with self.lock:
+            if self._simu.robot.rect_id and self._simu.robot.arrow_id:
+                self.delete_draw(self._simu.robot.arrow_id, self._simu.robot.rect_id)  # effacer le robot
+                self.delete_draw(self._simu.arene.liste_Obstacles[0])  # effacer l'obstacle
 
-        if self._simu.robot.tracer_parcours:
-            self.draw_parcours(self._simu.robot)
-        self._simu.robot.rect_id, self._simu.robot.arrow_id = self.draw_obj(self._simu.robot)
-        self.draw_obj(self._simu.arene.liste_Obstacles[0])
+            if self._simu.robot.tracer_parcours:
+                self.draw_parcours(self._simu.robot)
+            self._simu.robot.rect_id, self._simu.robot.arrow_id = self.draw_obj(self._simu.robot)
+            self.draw_obj(self._simu.arene.liste_Obstacles[0])
 
-        self.root.update()
+            self.root.update()
 
     def run(self):
+        """Demarrage de l'interface graphique"""
         self.root = tk.Tk()
         self.root.title(self._simu.name)
 

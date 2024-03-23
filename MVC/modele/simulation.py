@@ -1,10 +1,15 @@
 import sys
 import threading
 import time
+import logging
 from threading import Thread
 
 from .objets import Arene, SimuRobot
 
+# Configure logging
+logging.basicConfig(level=logging.INFO, filename='logs/simu.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# Désactiver tous les messages de journalisation
+logging.getLogger('MVC.modele.simulation').setLevel(logging.WARNING)
 
 class Simulation(Thread):
     """ Simulation class
@@ -26,6 +31,7 @@ class Simulation(Thread):
         self.dt = fps
 
         self.lock_aff = lock_aff
+        self.logger = logging.getLogger(__name__)
 
     @property
     def running(self) -> bool:
@@ -70,6 +76,7 @@ class Simulation(Thread):
             self.update()
             end_time = time.time() - start_time
             sleep_time = self.dt - end_time
+            self.logger.info(f"temps utilise {end_time}")
             if sleep_time < 0:
                 self.dt = -sleep_time
                 sleep_time = 0
@@ -80,9 +87,9 @@ class Simulation(Thread):
         """ Actualiser l'arene selon le dt ecoule
         """
 
-        #with self.lock_aff:
+        with self.lock_aff:
             # Actualiser le robot
-        self._robot.actualiser(self.dt)
+            self._robot.actualiser(self.dt)
 
         # Verifier si le robot a crash avec un obstacle
         for obstacle in self._arene.liste_Obstacles:

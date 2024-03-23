@@ -4,148 +4,82 @@ import math
 from ..controller.controleur import Adaptateur, Strategie
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG)
-
+logging.basicConfig(level=logging.DEBUG, filename='logs/ai.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# Désactiver les messages de journalisation pour le module spécifié
+logging.getLogger('MVC.controller.ai').setLevel(logging.WARNING)
 
 class Go(Strategie):
     def __init__(self, adaptateur: Adaptateur, distance: float, v_ang_d: float, v_ang_g: float, dt: float) -> None:
-        """
-        Fait avancer le robot d'une certaine distance
-        :param adaptateur: Le robot qui va faire le deplacement
-        :param distance: La distance que le robot doit parcourir (float)
-        :param v_ang_d: La vitesse angulaire de la roue droite du robot en rad/s
-        :param v_ang_g: La vitesse angulaire de la roue gauche du robot en rad/s
-        :param dt: Le dt
-        """
-        super().__init__()  # Appel du constructeur de la classe parente
+        super().__init__()
         self.adaptateur = adaptateur
-
         self.pos_ini = None
         self.distance = distance
-
         self.v_ang_d, self.v_ang_g = v_ang_d, v_ang_g
-
-        # compteur de distance deja parcouru
         self.parcouru = 0.
-
-        # le dt
         self.dt = dt
+        self.logger = logging.getLogger(__name__)
 
     def start(self):
-        """ Commencer la strategie
-        """
-        # Modifier les vitesses angulaires les roues
-        self.adaptateur.set_vitesse_roue(self.v_ang_d, self.v_ang_g)  # Vitesse angulaire droite/gauche
-
-        # Position initiale du robot avant de commencer
+        self.logger.info("Starting Go strategy")
+        self.adaptateur.set_vitesse_roue(self.v_ang_d, self.v_ang_g)
         self.pos_ini = self.adaptateur.distance_parcourue
-
-        # compteur de distance deja parcouru
         self.parcouru = 0.
 
     def stop(self):
-        """ Savoir le parcours est fini ou non
-
-        :return : Retourne vrai si on a fini de parcourir la distance
-        """
-        v_roue_d, v_roue_g = self.adaptateur.vitesse_ang_roues
-        return math.fabs(self.parcouru) >= math.fabs(self.distance)  # or (v_roue_d == 0 and v_roue_g == 0)
+        """Verifier si la strategie est fini ou non"""
+        self.logger.info(f"distance parcourue {self.parcouru}, distance {self.distance}")
+        #v_roue_d, v_roue_g = self.adaptateur.vitesse_ang_roues
+        return math.fabs(self.parcouru) >= math.fabs(self.distance)
 
     def step(self):
-        """ Faire un deplacement de dOM
-        """
-        # Incrémenter la distance parcourue
         self.parcouru += self.adaptateur.distance_parcourue
         if self.stop():
-            # Mettre à 0 les vitesses
-
             self.adaptateur.stop()
+            self.logger.info("Go strategy finished")
             return
-
-        #self.adaptateur.actualiser()
-
 
 class TournerDeg(Strategie):
     def __init__(self, adaptateur: Adaptateur, angle: float, v_ang: float, dt: float) -> None:
-        """
-        Fait avancer le robot d'un certain angle
-        :param adaptateur: Le robot qui va faire le deplacement
-        :param angle: L'angle que le robot doit tourner en degree
-        :param v_ang: La vitesse angulaire du robot en rad/s
-        :param dt: Le dt
-        """
-        super().__init__()  # Appel du constructeur de la classe parente
+        super().__init__()
         self.pos_ini = None
         self.adaptateur = adaptateur
-
         self.angle, self.v_ang = angle, v_ang
-
-        # compteur de distance deja parcouru
         self.parcouru = 0.
-
-        # le dt
         self.dt = dt
+        self.logger = logging.getLogger(__name__)
 
     def start(self):
-        """ Commencer la strategie
-        """
-        # Modifier les vitesses angulaires les roues
-        # Tourner à droite
+        self.logger.info("Starting TournerDeg strategy")
         if self.angle > 0:
             self.v_ang_d, self.v_ang_g = self.v_ang, -self.v_ang
-            self.adaptateur.set_vitesse_roue(self.v_ang, -self.v_ang)  # Vitesse angulaire droite/gauche
-        # Tourner à gauche
+            self.adaptateur.set_vitesse_roue(self.v_ang, -self.v_ang)
         else:
             self.v_ang_d, self.v_ang_g = -self.v_ang, self.v_ang
-            self.adaptateur.set_vitesse_roue(-self.v_ang, self.v_ang)  # Vitesse angulaire droite/gauche
-
-        # Position initiale du robot avant de commencer
+            self.adaptateur.set_vitesse_roue(-self.v_ang, self.v_ang)
         self.pos_ini = 1. * self.adaptateur.angle_parcourue
-
-        # compteur de distance deja parcouru
         self.parcouru = 0.
 
     def stop(self) -> bool:
-        """ Savoir le parcours est fini ou non
-
-        :return : Retourne vrai si on a fini de parcourir l'angle
-        """
-        #print(self.parcouru)
+        """Verifier si la strategie est fini ou non"""
+        self.logger.info(f"angle parcourue {self.parcouru}, angle {self.angle}")
         return math.fabs(self.parcouru) >= math.fabs(self.angle)
 
     def step(self):
-        """ Faire un deplacement de dOM
-        """
-        # Incrémenter l'angle parcouru
         self.parcouru += self.adaptateur.angle_parcourue
         if self.stop():
-            # Mettre à 0 les vitesses
             self.adaptateur.stop()
+            self.logger.info("TournerDeg strategy finished")
             return
-
-        #self.adaptateur.actualiser()
-
 
 class TracerCarre(Strategie):
     def __init__(self, adaptateur: Adaptateur, distance_cote: float, v_ang: float, dt: float) -> None:
-        """
-        Tracer un carre
-        :param adaptateur: Le robot qui va faire le deplacement
-        :param distance_cote: La distance du cote du carre
-        :param v_ang: La vitesse angulaire du robot en rad/s
-        :param dt: Le dt
-        """
-        super().__init__()  # Appel du constructeur de la classe parente
+        super().__init__()
         self.adaptateur = adaptateur
-
         self.pos_ini = None
         self.distance_cote = distance_cote
         self.v_ang = v_ang
-        # compteur de distance deja parcouru
         self.parcouru = 0.
-        # le dt
         self.dt = dt
-        # Liste d'etapes pour tracer un carre
         self.steps = [
             Go(adaptateur, distance_cote, v_ang, v_ang, dt),
             TournerDeg(adaptateur, 90, v_ang, dt),
@@ -155,24 +89,18 @@ class TracerCarre(Strategie):
             TournerDeg(adaptateur, 90, v_ang, dt),
             Go(adaptateur, distance_cote, v_ang, v_ang, dt)
         ]
-
         self.current_step = 0
+        self.logger = logging.getLogger(__name__)
 
     def start(self):
-        """ Commencer la strategie
-        """
+        self.logger.info("Starting TracerCarre strategy")
         self.current_step = 0
         self.steps[self.current_step].start()
 
     def stop(self) -> bool:
-        """ Savoir le parcours est fini ou non
-
-        :return : Retourne vrai si on a fini son carre
-        """
         return self.current_step >= len(self.steps) or self.steps[self.current_step].stop()
 
     def step(self):
-        """Effectue une étape de la séquence de traçage du carré."""
         if self.stop():
             return
         self.steps[self.current_step].step()
