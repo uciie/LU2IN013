@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.DEBUG, filename='ai.log', filemode='w',
 
 class Go(Strategie):
     def __init__(self, adaptateur: Adaptateur, distance: float, v_ang_d: float, v_ang_g: float,
-                 active_trace: bool) -> None:
+                 active_trace: bool = False) -> None:
         """
         :param adaptateur: l'adaptateur du robot
         :param distance: la distance à parcourir robot
@@ -52,7 +52,7 @@ class Go(Strategie):
 
 
 class TournerDeg(Strategie):
-    def __init__(self, adaptateur: Adaptateur, angle: float, v_ang: float, active_trace: bool) -> None:
+    def __init__(self, adaptateur: Adaptateur, angle: float, v_ang: float, active_trace: bool = False) -> None:
         """
         :param adaptateur: l'adaptateur du robot
         :param angle: l'angle à parcourir robot
@@ -93,7 +93,7 @@ class TournerDeg(Strategie):
 
 
 class StrategieSequentielle(Strategie):
-    def __init__(self, adaptateur: Adaptateur, steps: list[Strategie], active_trace: bool) -> None:
+    def __init__(self, adaptateur: Adaptateur, steps: list[Strategie], active_trace: bool = False) -> None:
         """
         :param adaptateur: adaptateur du robot
         :param steps: liste des steps

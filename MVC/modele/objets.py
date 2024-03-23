@@ -249,7 +249,6 @@ class SimuRobot(ProjectionMixin):
         self._theta = (self._theta + math.degrees(theta)) % 360
         self.vectDir = self.vectDir.rotation(math.degrees(theta))
 
-    @property
     def info(self) -> str:
         """ afficher les informations du robot
         :return str: informations du robot

@@ -9,7 +9,7 @@ from .objets import Arene, SimuRobot
 # Configure logging
 logging.basicConfig(level=logging.INFO, filename='logs/simu.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 # Désactiver tous les messages de journalisation
-logging.getLogger('MVC.modele.simulation').setLevel(logging.WARNING)
+#logging.getLogger('MVC.modele.simulation').setLevel(logging.WARNING)
 
 class Simulation(Thread):
     """ Simulation class
@@ -90,6 +90,7 @@ class Simulation(Thread):
         with self.lock_aff:
             # Actualiser le robot
             self._robot.actualiser(self.dt)
+            self.logger.info(self._robot.info())
 
         # Verifier si le robot a crash avec un obstacle
         for obstacle in self._arene.liste_Obstacles:

@@ -1,12 +1,12 @@
 import threading
 
 from MVC.controller.adaptateur_robot_simu import AdaptateurRobotSimu
-from MVC.controller.ai import Go, StrategieSequentielle, TournerDeg
 from MVC.controller.controleur import Controleur
 from MVC.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from MVC.modele.simulation import Simulation
 from MVC.modele.vecteur import Vecteur
 from MVC.view.affichage import Affichage
+from strategies_prefaites import test_go_sans_tracer
 
 
 class Demo:
@@ -55,34 +55,6 @@ class Demo:
         # Ajout du lien de communication entre view et controller
         view.controller = self.controller
 
-
-def test_strat_seq(controller):
-    tracer_parcours = True
-    steps = [Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
-             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
-             Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
-             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
-             Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
-             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
-             Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
-             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours)
-             ]
-    strat = StrategieSequentielle(controller.adaptateur, steps, tracer_parcours)
-    controller.add_strat(strat)
-
-
-def test_sans_tracer(controller):
-    tracer_parcours = False
-    strat = Go(controller.adaptateur, 50, 50, 50, tracer_parcours)
-    controller.add_strat(strat)
-
-
-def test_avec_tracer(controller):
-    tracer_parcours = True
-    strat2 = Go(controller.adaptateur, 50, 50, 50, tracer_parcours)
-    controller.add_strat(strat2)
-
-
 if __name__ == '__main__':
     demo = Demo()
-    test_sans_tracer(demo.controller)
+    test_go_sans_tracer(demo.controller)
