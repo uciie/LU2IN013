@@ -1,13 +1,14 @@
+import logging
 import threading
 import time
-import logging
 import tkinter as tk
 from threading import Thread
 from typing import Any
 
-from ..controller.ai import Go, TournerDeg, TracerCarre
+from ..controller.ai import Go, StrategieSequentielle, TournerDeg
 from ..controller.controleur import Controleur
 from ..modele.simulation import Simulation
+
 
 # , Go_cap, Tourner_deg, Test_collision
 
@@ -154,9 +155,20 @@ class Affichage(Thread):
         """ Handle tracer_carre button click
         """
         if self._controller is not None:
-            self.logger.info(self.activer_trace_var.get())
-            strat = TracerCarre(self._controller.adaptateur, self.distance_var.get(), self.v_ang_var.get(),
-                                self.activer_trace_var.get())
+            steps = [
+                Go(self._controller.adaptateur, self.distance_var.get(), self.v_ang_d_var.get(), self.v_ang_g_var.get(),
+                   self.activer_trace_var.get()),
+                TournerDeg(self._controller.adaptateur, 90, self.v_ang_var.get(), self.activer_trace_var.get()),
+                Go(self._controller.adaptateur, self.distance_var.get(), self.v_ang_d_var.get(), self.v_ang_g_var.get(),
+                   self.activer_trace_var.get()),
+                TournerDeg(self._controller.adaptateur, 90, self.v_ang_var.get(), self.activer_trace_var.get()),
+                Go(self._controller.adaptateur, self.distance_var.get(), self.v_ang_d_var.get(), self.v_ang_g_var.get(),
+                   self.activer_trace_var.get()),
+                TournerDeg(self._controller.adaptateur, 90, self.v_ang_var.get(), self.activer_trace_var.get()),
+                Go(self._controller.adaptateur, self.distance_var.get(), self.v_ang_d_var.get(), self.v_ang_g_var.get(),
+                   self.activer_trace_var.get()),
+                TournerDeg(self._controller.adaptateur, 90, self.v_ang_var.get(), self.activer_trace_var.get())]
+            strat = StrategieSequentielle(self._controller.adaptateur, steps, self.activer_trace_var.get())
             self._controller.add_strat(strat)
 
     def test_collision_button_clicked(self):

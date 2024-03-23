@@ -4,12 +4,16 @@ import math
 from ..controller.controleur import Adaptateur, Strategie
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG, filename='ai.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, filename='ai.log', filemode='w',
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+
 # Désactiver les messages de journalisation pour le module spécifié
-#logging.getLogger('MVC.controller.ai').setLevel(logging.WARNING)
+# logging.getLogger('MVC.controller.ai').setLevel(logging.WARNING)
 
 class Go(Strategie):
-    def __init__(self, adaptateur: Adaptateur, distance: float, v_ang_d: float, v_ang_g: float, active_trace: bool) -> None:
+    def __init__(self, adaptateur: Adaptateur, distance: float, v_ang_d: float, v_ang_g: float,
+                 active_trace: bool) -> None:
         """
         :param adaptateur: l'adaptateur du robot
         :param distance: la distance à parcourir robot
@@ -36,7 +40,7 @@ class Go(Strategie):
     def stop(self):
         """Verifier si la strategie est fini ou non"""
         self.logger.info(f"distance parcourue {self.parcouru}, distance {self.distance}")
-        #v_roue_d, v_roue_g = self.adaptateur.vitesse_ang_roues
+        # v_roue_d, v_roue_g = self.adaptateur.vitesse_ang_roues
         return math.fabs(self.parcouru) >= math.fabs(self.distance)
 
     def step(self):
@@ -45,6 +49,7 @@ class Go(Strategie):
             self.adaptateur.stop()
             self.logger.info("Go strategy finished")
             return
+
 
 class TournerDeg(Strategie):
     def __init__(self, adaptateur: Adaptateur, angle: float, v_ang: float, active_trace: bool) -> None:
@@ -86,42 +91,36 @@ class TournerDeg(Strategie):
             self.logger.info("TournerDeg strategy finished")
             return
 
-class TracerCarre(Strategie):
-    def __init__(self, adaptateur: Adaptateur, distance_cote: float, v_ang: float, active_trace: bool) -> None:
+
+class StrategieSequentielle(Strategie):
+    def __init__(self, adaptateur: Adaptateur, steps: list[Strategie], active_trace: bool) -> None:
         """
-        :param adaptateur:
-        :param distance_cote:
-        :param v_ang:
-        :param active_trace:
+        :param adaptateur: adaptateur du robot
+        :param steps: liste des steps
+        :param active_trace: True si on veut la tracage du parcours, sinon false
         """
         super().__init__()
         self.adaptateur = adaptateur
         self.pos_ini = None
-        self.distance_cote = distance_cote
-        self.v_ang = v_ang
         self.parcouru = 0.
-        self.active_trace = active_trace
-        self.steps = [
-            Go(adaptateur, distance_cote, v_ang, v_ang, self.active_trace),
-            TournerDeg(adaptateur, 90, v_ang, self.active_trace),
-            Go(adaptateur, distance_cote, v_ang, v_ang, self.active_trace),
-            TournerDeg(adaptateur, 90, v_ang, self.active_trace),
-            Go(adaptateur, distance_cote, v_ang, v_ang, self.active_trace),
-            TournerDeg(adaptateur, 90, v_ang, self.active_trace),
-            Go(adaptateur, distance_cote, v_ang, v_ang, self.active_trace)
-        ]
+        self.steps = steps
         self.current_step = 0
+        self.active_trace = active_trace
+
         self.logger = logging.getLogger(__name__)
 
     def start(self):
-        self.logger.info("Starting TracerCarre strategy")
+        """commencer la strategie"""
+        self.logger.info("Starting Sequential strategy")
         self.current_step = 0
         self.steps[self.current_step].start()
 
     def stop(self) -> bool:
+        """Verifier si la strategie est finie"""
         return self.current_step >= len(self.steps) or self.steps[self.current_step].stop()
 
     def step(self):
+        """pas de la strategie sequentielle """
         if self.stop():
             return
         self.steps[self.current_step].step()

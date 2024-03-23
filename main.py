@@ -1,19 +1,18 @@
-
 import threading
 
-from MVC.controller.controleur import Controleur
 from MVC.controller.adaptateur_robot_simu import AdaptateurRobotSimu
-from MVC.modele.objets import Arene, SimuRobot, ObstacleRectangle
+from MVC.controller.ai import Go, StrategieSequentielle, TournerDeg
+from MVC.controller.controleur import Controleur
+from MVC.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from MVC.modele.simulation import Simulation
 from MVC.modele.vecteur import Vecteur
 from MVC.view.affichage import Affichage
-from MVC.controller.ai import TracerCarre
+
 
 class Demo:
     def __init__(self):
         # Création du verrou
         lock_aff = threading.RLock()
-        lock_ctrl = threading.RLock()
         lock_sim = threading.RLock()
 
         dt_simu = 1 / 24000
@@ -41,11 +40,10 @@ class Demo:
         view = Affichage(simu, dt_affichage, lock_aff)
 
         # Création du module Controller
-        self.controller = Controleur(adaptateur, dt_controller, lock_aff)
+        self.controller = Controleur(adaptateur, dt_controller)
 
         # Ajout du lien de communication entre view et controller
         view.controller = self.controller
-
 
         # demarrage des threads
         view_thread = threading.Thread(target=view.run)
@@ -54,19 +52,37 @@ class Demo:
         simu.start()
         self.controller.start()
 
+        # Ajout du lien de communication entre view et controller
+        view.controller = self.controller
 
 
-def test(controller, robot):
-    tracer_parcours = False
-    strat = TracerCarre(controller.adaptateur, 50, 50, tracer_parcours)
+def test_strat_seq(controller):
+    tracer_parcours = True
+    steps = [Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
+             Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
+             Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
+             Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours)
+             ]
+    strat = StrategieSequentielle(controller.adaptateur, steps, tracer_parcours)
     controller.add_strat(strat)
 
-def test2(controller, robot):
+
+def test_sans_tracer(controller):
+    tracer_parcours = False
+    strat = Go(controller.adaptateur, 50, 50, 50, tracer_parcours)
+    controller.add_strat(strat)
+
+
+def test_avec_tracer(controller):
     tracer_parcours = True
-    strat2 = TracerCarre(controller.adaptateur, 50, 50, tracer_parcours)
+    strat2 = Go(controller.adaptateur, 50, 50, 50, tracer_parcours)
     controller.add_strat(strat2)
+
 
 if __name__ == '__main__':
     demo = Demo()
-    test(demo.controller, demo.robot)
-
+    test_sans_tracer(demo.controller)

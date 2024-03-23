@@ -70,7 +70,7 @@ class Adaptateur(ABC):
     @property
     @abstractmethod
     def robot(self):
-        """
+        """ robot
         """
         pass
 
@@ -82,7 +82,7 @@ class Adaptateur(ABC):
 
     @abstractmethod
     def active_trace(self, val: bool):
-        """"""
+        """ Activation du tracage de parcours"""
         pass
 
 
@@ -94,19 +94,22 @@ class Strategie(ABC):
 
     @abstractmethod
     def start(self):
+        """Commencer strategie"""
         pass
 
     @abstractmethod
     def stop(self) -> bool:
+        """Verifier si strategie est finie"""
         pass
 
     @abstractmethod
     def step(self):
+        """pas de la strategie """
         pass
 
 
 class Controleur(Thread):
-    def __init__(self, adaptateur: Adaptateur, dt: float, lock: threading.RLock):
+    def __init__(self, adaptateur: Adaptateur, dt: float):
         """
         Initialise le contrôleur avec un robot, une vue et un intervalle de temps.
 
@@ -122,7 +125,7 @@ class Controleur(Thread):
 
         # Le dt
         self.dt = dt
-        self.lock = lock
+        # self.lock = lock
         self._running = False
         self.strat = None
 
@@ -142,7 +145,7 @@ class Controleur(Thread):
         return self.strat.stop()
 
     def run(self):
-
+        """Activer le controleur"""
         self._running = True
         while self._running:
             self.step()
