@@ -12,8 +12,32 @@ class AdaptateurRobotSimu(Adaptateur):
         self._robot = robot
         self._simulation = simulation
 
-        self.last_theta = self._robot.last_theta
-        self.last_pos_x, self.last_pos_y = self._robot.last_pos_x, self._robot.last_pos_y
+        self._last_theta = self._robot.last_theta
+        self._last_pos_x, self._last_pos_y = self._robot.last_pos_x, self._robot.last_pos_y
+
+    @property
+    def last_theta(self):
+        return self._last_theta
+
+    @last_theta.setter
+    def last_theta(self, theta: float):
+        self._last_theta = theta
+
+    @property
+    def last_pos_x(self):
+        return self._last_pos_x
+
+    @last_pos_x.setter
+    def last_pos_x(self, x: float):
+        self._last_pos_x = x
+
+    @property
+    def last_pos_y(self):
+        return self._last_pos_y
+
+    @last_pos_y.setter
+    def last_pos_y(self, y: float):
+        self._last_pos_y = y
 
     @property
     def robot(self):
@@ -32,8 +56,8 @@ class AdaptateurRobotSimu(Adaptateur):
         """ Obtenir la distance parcourue
         :return: la distance parcourue
         """
-        distance = Vecteur(self._robot.pos_x - self.last_pos_x, self._robot.pos_y - self.last_pos_y)
-        self.last_pos_x, self.last_pos_y = self._robot.pos_x, self._robot.pos_y
+        distance = Vecteur(self._robot.pos_x - self._last_pos_x, self._robot.pos_y - self._last_pos_y)
+        self._last_pos_x, self._last_pos_y = self._robot.pos_x, self._robot.pos_y
         return distance.norme
 
     @property
@@ -41,8 +65,8 @@ class AdaptateurRobotSimu(Adaptateur):
         """ Obtenir l'angle parcouru
         :return: l'angle parcouru
         """
-        angle = self._robot.theta - self.last_theta
-        self.last_theta = self._robot.theta
+        angle = self._robot.theta - self._last_theta
+        self._last_theta = self._robot.theta
         return angle
 
     def stop(self):
