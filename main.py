@@ -13,10 +13,11 @@ def main():
     # Création du verrou
     lock_aff = threading.RLock()
     lock_ctrl = threading.RLock()
+    lock_sim = threading.RLock()
 
     dt_simu = 1 / 24000
-    dt_controller = 1 / 24000
-    dt_affichage = 1 / 240000
+    dt_controller = 1 / 3000000
+    dt_affichage = 1 / 300000
     echelle = 5
     largeur, hauteur = 500, 500
     dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
@@ -30,7 +31,7 @@ def main():
     arene.add_obstacle(obs)
 
     # Créer la simulation
-    simu = Simulation("Simulation", dt_simu, robot, arene, lock_aff)
+    simu = Simulation("Simulation", dt_simu, robot, arene, lock_sim)
 
     # Créer l'adaptateur
     adaptateur = AdaptateurRobotSimu(robot, simu)
