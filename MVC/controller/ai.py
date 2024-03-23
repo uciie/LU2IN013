@@ -71,24 +71,14 @@ class TournerDeg(Strategie):
             self.logger.info("TournerDeg strategy finished")
             return
 
-class TracerCarre(Strategie):
-    def __init__(self, adaptateur: Adaptateur, distance_cote: float, v_ang: float, dt: float) -> None:
+class StrategieSequentielle(Strategie):
+    def __init__(self, adaptateur: Adaptateur, steps : Strategie, dt: float) -> None:
         super().__init__()
         self.adaptateur = adaptateur
         self.pos_ini = None
-        self.distance_cote = distance_cote
-        self.v_ang = v_ang
         self.parcouru = 0.
         self.dt = dt
-        self.steps = [
-            Go(adaptateur, distance_cote, v_ang, v_ang, dt),
-            TournerDeg(adaptateur, 90, v_ang, dt),
-            Go(adaptateur, distance_cote, v_ang, v_ang, dt),
-            TournerDeg(adaptateur, 90, v_ang, dt),
-            Go(adaptateur, distance_cote, v_ang, v_ang, dt),
-            TournerDeg(adaptateur, 90, v_ang, dt),
-            Go(adaptateur, distance_cote, v_ang, v_ang, dt)
-        ]
+        self.steps = steps
         self.current_step = 0
         self.logger = logging.getLogger(__name__)
 
