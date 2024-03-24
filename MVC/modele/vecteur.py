@@ -2,6 +2,7 @@ import math
 
 
 class Vecteur:
+    """Classe vecteur """
     def __init__(self, x: float, y: float) -> None:
         """ Initialise un vecteur.
 

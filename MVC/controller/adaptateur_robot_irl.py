@@ -5,6 +5,7 @@ from MVC.robot.robot2I013 import Robot2IN013
 
 
 class AdaptateurRobotIrl(Adaptateur):
+    """Classe de l'adaptateur du robot irl"""
     def __init__(self, robot: Robot2IN013):
         """ Adaptateur du robot irl
         """

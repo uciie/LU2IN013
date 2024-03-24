@@ -6,13 +6,20 @@ from MVC.modele.simulation import Simulation
 from MVC.modele.vecteur import Vecteur
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG, filename='logs/simu.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, filename='logs/simu.log', filemode='w',
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+
 # Désactiver les messages de journalisation pour le module spécifié
-#logging.getLogger('MVC.controller.ai').setLevel(logging.WARNING)
+# logging.getLogger('MVC.controller.ai').setLevel(logging.WARNING)
 
 class AdaptateurRobotSimu(Adaptateur):
+    """Classe de l'adaptateur d'un robot simule '"""
+
     def __init__(self, robot: SimuRobot, simulation: Simulation):
-        """
+        """ initialise la classe adaptateur_robot_simu
+        :param robot: Robot simule
+        :param simulation: Simulation robot arene
         """
         super().__init__()
         self._robot = robot
@@ -23,27 +30,39 @@ class AdaptateurRobotSimu(Adaptateur):
         self.logger = logging.getLogger(__name__)
 
     @property
-    def last_theta(self):
+    def last_theta(self) -> float:
+        """Getter dernier tetha enregistre depuis le dernier appel
+        :return float: l'angle theta du robot'"""
         return self._last_theta
 
     @last_theta.setter
     def last_theta(self, theta: float):
+        """setter du dernier angle theta enregistre depuis le dernier appel
+        :param float theta: nouveau angle theta '"""
         self._last_theta = theta
 
     @property
-    def last_pos_x(self):
+    def last_pos_x(self) -> float:
+        """Getter de la derniere position en x enregistree depuis le dernier appel
+        :return float: derniere position en x enregistree"""
         return self._last_pos_x
 
     @last_pos_x.setter
     def last_pos_x(self, x: float):
+        """Setter de la derniere position en x enregistree
+        :param float x: nouvelle position"""
         self._last_pos_x = x
 
     @property
-    def last_pos_y(self):
+    def last_pos_y(self) -> float:
+        """Getter de la derniere position en y enregistree depuis le dernier appel
+        :return float: derniere position en y enregistree"""
         return self._last_pos_y
 
     @last_pos_y.setter
     def last_pos_y(self, y: float):
+        """Setter de la derniere position en y enregistree
+        :param float y: nouvelle position"""
         self._last_pos_y = y
 
     @property

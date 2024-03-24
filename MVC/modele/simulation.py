@@ -7,9 +7,11 @@ from threading import Thread
 from .objets import Arene, SimuRobot
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, filename='logs/simu.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, filename='logs/simu.log', filemode='w',
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 # Désactiver tous les messages de journalisation
 logging.getLogger('MVC.modele.simulation').setLevel(logging.WARNING)
+
 
 class Simulation(Thread):
     """ Simulation class
@@ -81,7 +83,6 @@ class Simulation(Thread):
                 self.dt = -sleep_time
                 sleep_time = 0
             time.sleep(sleep_time)
-
 
     def update(self):
         """ Actualiser l'arene selon le dt ecoule

@@ -30,6 +30,7 @@ def intervals_overlap(interval1, interval2):
 
 
 class SimuRobot(ProjectionMixin):
+    """Classe qui permet de creer un robot"""
     def __init__(self, name: str, pos_x: float, pos_y: float, dim_length: float, dim_width: float, rayon_roue: int,
                  vmax_ang: float, color: str):
         """Initialisation du robot.
@@ -86,6 +87,7 @@ class SimuRobot(ProjectionMixin):
 
     @property
     def tracer_parcours(self) -> bool:
+        """Savoir si le tracer est active ou non"""
         return self._tracer_parcours
 
     def activer_tracer_parcours(self, valeur: bool):
@@ -94,53 +96,77 @@ class SimuRobot(ProjectionMixin):
 
     # Propriété pour l'attribut pos_x
     @property
-    def pos_x(self):
+    def pos_x(self) -> float:
+        """Getter Position en x du robot
+        :return: Position en x du robot"""
         return self._pos_x
 
     @pos_x.setter
     def pos_x(self, value):
+        """Setter Position en x du robot
+        :param value: Nouvelle position en x du robot"""
         self._pos_x = value
 
     # Propriété pour l'attribut pos_y
     @property
-    def pos_y(self):
+    def pos_y(self) -> float:
+        """Getter Position en y du robot
+        :return: Position en y du robot"""
         return self._pos_y
 
     @pos_y.setter
-    def pos_y(self, value):
+    def pos_y(self, value: float):
+        """Setter Position en y du robot
+        :param value: Nouvelle position en y du robot"""
         self._pos_y = value
 
     @property
     def last_pos_x(self) -> float:
+        """Getter de la derniere position en x du robot
+        :return: derniere position en x du robot """
         return self._last_pos_x
 
     @last_pos_x.setter
     def last_pos_x(self, value: float):
+        """setter de la derniere position en x du robot
+        :param value: Nouvelle de la derniere position en x """
         self._last_pos_x = value
 
     @property
     def last_pos_y(self) -> float:
+        """getter de la derniere position en y du robot
+        :return: derniere position en y du robot"""
         return self._last_pos_y
 
     @last_pos_y.setter
     def last_pos_y(self, value: float):
+        """setter de la derniere position en y
+        :param value: Nouvelle de la derniere position en y"""
         self._last_pos_y = value
 
     # Propriété pour l'attribut theta
     @property
-    def theta(self):
+    def theta(self) -> float:
+        """getter du theta du robot
+        :return: theta du robot"""
         return self._theta
 
     @theta.setter
     def theta(self, value):
+        """setter du theta du robot
+        :param value: nouveau theta du robot"""
         self._theta = value
 
     @property
-    def last_theta(self):
+    def last_theta(self) -> float:
+        """Le dernier theta du robot
+        :return: Le dernier theta du robot"""
         return self._last_theta
 
     @last_theta.setter
     def last_theta(self, value):
+        """setter du dernier theta du robot
+        :param value: nouveau dernier theta """
         self._last_theta = value
 
     @property
@@ -267,6 +293,7 @@ class SimuRobot(ProjectionMixin):
 
 ########################
 class Obstacle(ABC, ProjectionMixin):
+    """Classe de l'obstacle'"""
     def __init__(self, pos_x: float, pos_y: float, color: str):
         """ Initialise un obstacle
 
@@ -310,6 +337,7 @@ class Obstacle(ABC, ProjectionMixin):
 
 #############
 class Arene:
+    """ Classe de l'Arene"""
     def __init__(self, name: str, max_x: int, max_y: int, echelle: float):
         """ Initisalisation d'une Arene 
         

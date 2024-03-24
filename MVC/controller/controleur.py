@@ -5,6 +5,7 @@ from threading import Thread
 
 
 class Adaptateur(ABC):
+    """Classe mere d'adaptateur de robot'"""
     def __init__(self) -> None:
         """ Initialise l'adaptateur
         """
@@ -87,6 +88,7 @@ class Adaptateur(ABC):
 
 
 class Strategie(ABC):
+    """Classe mere de strategie"""
     def __init__(self):  # , adaptateur: Adaptateur):
         """ Initialise la classe Strategie
         """
@@ -109,6 +111,7 @@ class Strategie(ABC):
 
 
 class Controleur(Thread):
+    """classe Controleur"""
     def __init__(self, adaptateur: Adaptateur, dt: float):
         """
         Initialise le contrôleur avec un robot, une vue et un intervalle de temps.

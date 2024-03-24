@@ -6,10 +6,11 @@ from MVC.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from MVC.modele.simulation import Simulation
 from MVC.modele.vecteur import Vecteur
 from MVC.view.affichage import Affichage
-from strategies_prefaites import test_go_sans_tracer, test_avec_sans_tracer, test_strat_seq_carre, test_tourn_deg
 
 
 class Demo:
+    """Demonstration du jour """
+
     def __init__(self):
         # Création du verrou
         lock_aff = threading.RLock()
@@ -55,7 +56,6 @@ class Demo:
         # Ajout du lien de communication entre view et controller
         view.controller = self.controller
 
+
 if __name__ == '__main__':
     demo = Demo()
-    test_tourn_deg(demo.controller)
-

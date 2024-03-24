@@ -12,6 +12,7 @@ logging.basicConfig(level=logging.DEBUG, filename='ai.log', filemode='w',
 # logging.getLogger('MVC.controller.ai').setLevel(logging.WARNING)
 
 class Go(Strategie):
+    """ Classe responsable d'avancer le robot """
     def __init__(self, adaptateur: Adaptateur, distance: float, v_ang_d: float, v_ang_g: float,
                  active_trace: bool = False) -> None:
         """
@@ -31,6 +32,7 @@ class Go(Strategie):
         self.logger = logging.getLogger(__name__)
 
     def start(self):
+        """Commencer la strategie"""
         self.logger.info("Starting Go strategy")
         self.adaptateur.active_trace(self.active_trace)
         self.adaptateur.set_vitesse_roue(self.v_ang_d, self.v_ang_g)
@@ -38,12 +40,14 @@ class Go(Strategie):
         self.parcouru = 0.
 
     def stop(self):
-        """Verifier si la strategie est fini ou non"""
+        """Verifier si la strategie est fini ou non
+        :return: True si la strategie est finie, False sinon"""
         self.logger.info(f"distance parcourue {self.parcouru}, distance {self.distance}")
         # v_roue_d, v_roue_g = self.adaptateur.vitesse_ang_roues
         return math.fabs(self.parcouru) >= math.fabs(self.distance)
 
     def step(self):
+        """pas de la strategie """
         self.parcouru += self.adaptateur.distance_parcourue
         if self.stop():
             self.adaptateur.stop()
@@ -52,6 +56,7 @@ class Go(Strategie):
 
 
 class TournerDeg(Strategie):
+    """Classe qui permet de tourner le robot d'un certain degree"""
     def __init__(self, adaptateur: Adaptateur, angle: float, v_ang: float, active_trace: bool = False) -> None:
         """
         :param adaptateur: l'adaptateur du robot
@@ -68,6 +73,7 @@ class TournerDeg(Strategie):
         self.logger = logging.getLogger(__name__)
 
     def start(self):
+        """Commencer la strategie"""
         self.logger.info("Starting TournerDeg strategy")
         self.adaptateur.active_trace(self.active_trace)
         if self.angle > 0:
@@ -80,11 +86,13 @@ class TournerDeg(Strategie):
         self.parcouru = 0.
 
     def stop(self) -> bool:
-        """Verifier si la strategie est fini ou non"""
+        """Verifier si la strategie est fini ou non
+        :return: True si la strategie est finie ou False sinon"""
         self.logger.info(f"angle parcourue {self.parcouru}, angle {self.angle}")
         return math.fabs(self.parcouru) >= math.fabs(self.angle)
 
     def step(self):
+        """pas de la strategie"""
         self.parcouru += self.adaptateur.angle_parcourue
         if self.stop():
             self.adaptateur.stop()
@@ -93,11 +101,11 @@ class TournerDeg(Strategie):
 
 
 class StrategieSequentielle(Strategie):
+    """Classe Strategie sequentielle permettant de faire des combinaisons de la strategie basique"""
     def __init__(self, adaptateur: Adaptateur, steps: list[Strategie]) -> None:
         """
         :param adaptateur: adaptateur du robot
         :param steps: liste des steps
-        :param active_trace: True si on veut la tracage du parcours, sinon false
         """
         super().__init__()
         self.adaptateur = adaptateur
@@ -115,7 +123,8 @@ class StrategieSequentielle(Strategie):
         self.steps[self.current_step].start()
 
     def stop(self) -> bool:
-        """Verifier si la strategie est finie"""
+        """Verifier si la strategie est finie
+        :return: True si la strategie est finie, False sinon"""
         return self.current_step >= len(self.steps) or self.steps[self.current_step].stop()
 
     def step(self):
