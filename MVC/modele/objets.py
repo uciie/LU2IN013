@@ -108,7 +108,7 @@ class SimuRobot(ProjectionMixin):
 
     @pos_y.setter
     def pos_y(self, value):
-        self._pos_x = value
+        self._pos_y = value
 
     @property
     def last_pos_x(self) -> float:
