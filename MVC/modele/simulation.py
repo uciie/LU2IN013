@@ -9,7 +9,7 @@ from .objets import Arene, SimuRobot
 # Configure logging
 logging.basicConfig(level=logging.INFO, filename='logs/simu.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 # Désactiver tous les messages de journalisation
-#logging.getLogger('MVC.modele.simulation').setLevel(logging.WARNING)
+logging.getLogger('MVC.modele.simulation').setLevel(logging.WARNING)
 
 class Simulation(Thread):
     """ Simulation class

@@ -34,6 +34,9 @@ class Affichage(Thread):
         self.dt = dt
         self.lock = lock
 
+        self.last_pos_y = self._simu.robot.last_pos_y
+        self.last_pos_x = self._simu.robot.last_pos_x
+
         # set the controller
         self._controller = None
         self.root = None
@@ -156,19 +159,19 @@ class Affichage(Thread):
         """
         if self._controller is not None:
             steps = [
-                Go(self._controller.adaptateur, self.distance_var.get(), self.v_ang_d_var.get(), self.v_ang_g_var.get(),
+                Go(self._controller.adaptateur, self.distance_var.get(), self.v_ang_var.get(), self.v_ang_var.get(),
                    self.activer_trace_var.get()),
                 TournerDeg(self._controller.adaptateur, 90, self.v_ang_var.get(), self.activer_trace_var.get()),
-                Go(self._controller.adaptateur, self.distance_var.get(), self.v_ang_d_var.get(), self.v_ang_g_var.get(),
+                Go(self._controller.adaptateur, self.distance_var.get(), self.v_ang_var.get(), self.v_ang_var.get(),
                    self.activer_trace_var.get()),
                 TournerDeg(self._controller.adaptateur, 90, self.v_ang_var.get(), self.activer_trace_var.get()),
-                Go(self._controller.adaptateur, self.distance_var.get(), self.v_ang_d_var.get(), self.v_ang_g_var.get(),
+                Go(self._controller.adaptateur, self.distance_var.get(), self.v_ang_var.get(), self.v_ang_var.get(),
                    self.activer_trace_var.get()),
                 TournerDeg(self._controller.adaptateur, 90, self.v_ang_var.get(), self.activer_trace_var.get()),
-                Go(self._controller.adaptateur, self.distance_var.get(), self.v_ang_d_var.get(), self.v_ang_g_var.get(),
+                Go(self._controller.adaptateur, self.distance_var.get(), self.v_ang_var.get(), self.v_ang_var.get(),
                    self.activer_trace_var.get()),
                 TournerDeg(self._controller.adaptateur, 90, self.v_ang_var.get(), self.activer_trace_var.get())]
-            strat = StrategieSequentielle(self._controller.adaptateur, steps, self.activer_trace_var.get())
+            strat = StrategieSequentielle(self._controller.adaptateur, steps)
             self._controller.add_strat(strat)
 
     def test_collision_button_clicked(self):
@@ -233,8 +236,10 @@ class Affichage(Thread):
         :param objet: objet
         :returns: Identifiant unique de l'objet sur le canevas.
         """
-        line_id = self.canvas.create_line(objet.last_pos_x, objet.last_pos_y, objet.pos_x, objet.pos_y, fill='blue',
+        line_id = self.canvas.create_line(self.last_pos_x, self.last_pos_y, objet.pos_x, objet.pos_y, fill='blue',
                                           width=3)
+        self.last_pos_x = objet.pos_x
+        self.last_pos_y = objet.pos_y
         self.liste_id_draw.append(line_id)
 
     def delete_parcours(self, parcours: list[int]):
@@ -281,6 +286,9 @@ class Affichage(Thread):
 
             if self._simu.robot.tracer_parcours:
                 self.draw_parcours(self._simu.robot)
+            else:
+                self.last_pos_x = self._simu.robot.pos_x
+                self.last_pos_y = self._simu.robot.pos_y
             self._simu.robot.rect_id, self._simu.robot.arrow_id = self.draw_obj(self._simu.robot)
             self.draw_obj(self._simu.arene.liste_Obstacles[0])
 
@@ -297,7 +305,7 @@ class Affichage(Thread):
         self.v_ang_var = tk.DoubleVar(value=self.initial_v_ang)
         self.angle_var = tk.DoubleVar(value=self.initial_angle)
         self.distance_var = tk.DoubleVar(value=self.initial_distance)
-        self.activer_trace_var = tk.BooleanVar(value=False)  # bouton activation du trace
+        self.activer_trace_var = tk.BooleanVar(value=True)  # bouton activation du trace
 
         # Creation du cadre pour les données du robot
         self.robot_frame = tk.LabelFrame(self.root, text=" Données du robot ")

@@ -93,7 +93,7 @@ class TournerDeg(Strategie):
 
 
 class StrategieSequentielle(Strategie):
-    def __init__(self, adaptateur: Adaptateur, steps: list[Strategie], active_trace: bool = False) -> None:
+    def __init__(self, adaptateur: Adaptateur, steps: list[Strategie]) -> None:
         """
         :param adaptateur: adaptateur du robot
         :param steps: liste des steps
@@ -105,7 +105,6 @@ class StrategieSequentielle(Strategie):
         self.parcouru = 0.
         self.steps = steps
         self.current_step = 0
-        self.active_trace = active_trace
 
         self.logger = logging.getLogger(__name__)
 

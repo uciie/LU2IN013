@@ -1,5 +1,15 @@
 from MVC.controller.ai import Go, StrategieSequentielle, TournerDeg
 
+
+def test_avec_sans_tracer(controller):
+    liste = []
+    for i in range(4):
+        liste.append(Go(controller.adaptateur, 50, 50, 50, i%2==0))
+        liste.append(TournerDeg(controller.adaptateur, 90, 50, True))
+    strat = StrategieSequentielle(controller.adaptateur, liste)
+    controller.add_strat(strat)
+
+
 def test_strat_seq_carre(controller):
     tracer_parcours = True
     steps = [Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
@@ -11,7 +21,7 @@ def test_strat_seq_carre(controller):
              Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
              TournerDeg(controller.adaptateur, 90, 50, tracer_parcours)
              ]
-    strat = StrategieSequentielle(controller.adaptateur, steps, tracer_parcours)
+    strat = StrategieSequentielle(controller.adaptateur, steps)
     controller.add_strat(strat)
 
 
