@@ -9,7 +9,6 @@ from ..controller.ai import Go, StrategieSequentielle, TournerDeg
 from ..controller.controleur import Controleur
 from ..modele.simulation import Simulation
 
-
 # , Go_cap, Tourner_deg, Test_collision
 
 
@@ -110,8 +109,8 @@ class Affichage(Thread):
         """ Remettre à zero l'interface graphique
         """
         # Efface les stratégies
-        self._controller.liste_strat = []
-        self._controller.cur = -1
+        self._controller.strat = None
+        self._simu.robot.set_vitesse_roue(0,0)
         # Remettre le robot a la position initial
         self._simu.robot.pos_x, self._simu.robot.pos_y = self.initial_position
         self._simu.robot.last_pos_x, self._simu.robot.last_pos_y = self.initial_position
