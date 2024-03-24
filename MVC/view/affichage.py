@@ -35,6 +35,7 @@ class Affichage(Thread):
 
         self.last_pos_y = self._simu.robot.last_pos_y
         self.last_pos_x = self._simu.robot.last_pos_x
+        
 
         # set the controller
         self._controller = None
@@ -48,6 +49,7 @@ class Affichage(Thread):
         self.initial_distance = 50
         self.initial_position = (self._simu.robot.pos_x, self._simu.robot.pos_y)
         self.liste_id_draw = []
+        self.initial_vectDir = self._simu.robot.vectDir
 
         # Les variables
         self.v_ang_d_var = None
@@ -111,6 +113,7 @@ class Affichage(Thread):
         # Efface les stratégies
         self._controller.strat = None
         self._simu.robot.set_vitesse_roue(0,0)
+        self._simu.robot.vectDir = self.initial_vectDir
         # Remettre le robot a la position initial
         self._simu.robot.pos_x, self._simu.robot.pos_y = self.initial_position
         self._simu.robot.last_pos_x, self._simu.robot.last_pos_y = self.initial_position
