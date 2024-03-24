@@ -6,7 +6,7 @@ from MVC.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from MVC.modele.simulation import Simulation
 from MVC.modele.vecteur import Vecteur
 from MVC.view.affichage import Affichage
-from strategies_prefaites import test_go_sans_tracer, test_avec_sans_tracer, test_strat_seq_carre
+from strategies_prefaites import test_go_sans_tracer, test_avec_sans_tracer, test_strat_seq_carre, test_tourn_deg
 
 
 class Demo:
@@ -15,7 +15,7 @@ class Demo:
         lock_aff = threading.RLock()
         lock_sim = threading.RLock()
 
-        dt_simu = 1 / 26300
+        dt_simu = 1 / 27000
         dt_controller = 1 / 3000000
         dt_affichage = 1 / 300000
         echelle = 5
@@ -57,5 +57,5 @@ class Demo:
 
 if __name__ == '__main__':
     demo = Demo()
-    #test_strat_seq_carre(demo.controller)
+    test_tourn_deg(demo.controller)
 

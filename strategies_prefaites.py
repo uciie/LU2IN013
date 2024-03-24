@@ -1,5 +1,29 @@
 from MVC.controller.ai import Go, StrategieSequentielle, TournerDeg
 
+def test_tourn_deg(controller):
+    """ Tester le tourner deg avec -45 deg puis 90 """
+    tracer_parcours = True
+    liste = [TournerDeg(controller.adaptateur, -45, 50, True),
+             Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
+             Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
+             Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
+             Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
+             Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
+             Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
+             Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
+             Go(controller.adaptateur, 50, 50, 50, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours)
+             ]
+
+    strat = StrategieSequentielle(controller.adaptateur, liste)
+    controller.add_strat(strat)
 
 def test_avec_sans_tracer(controller):
     liste = []

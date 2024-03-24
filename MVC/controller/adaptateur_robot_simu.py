@@ -72,9 +72,14 @@ class AdaptateurRobotSimu(Adaptateur):
         """ Obtenir l'angle parcouru
         :return: l'angle parcouru
         """
-        angle = self._robot.theta - self._last_theta
+        angle_parcouru = self._robot.theta - self._last_theta
+        # Ajustement de l'angle parcouru selon le sens trigonométrique ou horloge
+        if angle_parcouru < -180:
+            angle_parcouru += 360
+        elif angle_parcouru > 180:
+            angle_parcouru -= 360
         self._last_theta = self._robot.theta
-        return angle
+        return angle_parcouru
 
     def stop(self):
         """ Arreter le robot irl
