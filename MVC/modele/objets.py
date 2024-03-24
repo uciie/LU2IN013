@@ -246,7 +246,12 @@ class SimuRobot(ProjectionMixin):
                 self.roue_droite.vitesse_angulaire - self.roue_gauche.vitesse_angulaire) / self.length * dt
         self._pos_x += x
         self._pos_y += y
-        self._theta = (self._theta + math.degrees(theta)) % 360
+        self._theta += math.degrees(theta)  # Incrémentation de l'angle sans ajustement
+        # Ajustement de l'angle entre -360 et 360 degrés
+        if self._theta > 360:
+            self._theta -= 360
+        elif self._theta < -360:
+            self._theta += 360
         self.vectDir = self.vectDir.rotation(math.degrees(theta))
 
     def info(self) -> str:
