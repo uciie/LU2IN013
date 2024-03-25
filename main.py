@@ -26,11 +26,11 @@ class Demo:
         # Initialisation de l'arene, robot, obstacle
         arene = Arene("Simulation de déplacement du robot", largeur, hauteur, echelle)
         self.robot = SimuRobot("R", int(largeur / 2), int(hauteur / 2), dim_robot_x, dim_robot_y, 10, 150, color="red")
-        obs1 = ObstacleRectangle(100, 100, Vecteur(50, 50), Vecteur(50, 50), color="orange")
-        obs2 = ObstacleRectangle(100, 400, Vecteur(50, 50), Vecteur(50, 50), color="orange")
+        obs1 = ObstacleRectangle(100, 170, Vecteur(50, 50), Vecteur(50, 50), color="orange")
+        obs2 = ObstacleRectangle(150, 410, Vecteur(50, 50), Vecteur(50, 50), color="orange")
         obs3 = ObstacleRectangle(250, 100, Vecteur(50, 50), Vecteur(50, 50), color="orange")
-        obs4 = ObstacleRectangle(400, 100, Vecteur(50, 50), Vecteur(50, 50), color="orange")
-        obs5 = ObstacleRectangle(400, 400, Vecteur(50, 50), Vecteur(50, 50), color="orange")
+        obs4 = ObstacleRectangle(340, 120, Vecteur(50, 50), Vecteur(50, 50), color="orange")
+        obs5 = ObstacleRectangle(400, 340, Vecteur(50, 50), Vecteur(50, 50), color="orange")
 
         
         # Ajouter un obstacle dans l'arene
