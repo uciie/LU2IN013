@@ -285,7 +285,8 @@ class Affichage(Thread):
         with self.lock:
             if self._simu.robot.rect_id and self._simu.robot.arrow_id:
                 self.delete_draw(self._simu.robot.arrow_id, self._simu.robot.rect_id)  # effacer le robot
-                self.delete_draw(self._simu.arene.liste_Obstacles[0])  # effacer l'obstacle
+                for obstacle in self._simu.arene.liste_Obstacles:
+                    self.delete_draw(obstacle)
 
             if self._simu.robot.tracer_parcours:
                 self.draw_parcours(self._simu.robot)
@@ -293,7 +294,8 @@ class Affichage(Thread):
                 self.last_pos_x = self._simu.robot.pos_x
                 self.last_pos_y = self._simu.robot.pos_y
             self._simu.robot.rect_id, self._simu.robot.arrow_id = self.draw_obj(self._simu.robot)
-            self.draw_obj(self._simu.arene.liste_Obstacles[0])
+            for obstacle in self._simu.arene.liste_Obstacles:
+                self.draw_obj(obstacle)
 
             self.root.update()
 
