@@ -309,6 +309,14 @@ class Obstacle(ABC, ProjectionMixin):
         self._color = color
 
     @property
+    def color(self) -> str:
+        return self._color
+    @color.setter
+    def color(self, color: str) :
+        """setter de la couleur de l'obstacle """
+        self._color = color
+
+    @property
     def pos_x(self) -> float:
         """ Propriété pour l'attribut pos_x """
         return self._pos_x
@@ -391,6 +399,15 @@ class ObstacleRectangle(Obstacle):
         # Vecteurs directeurs de l'obstacle
         self._coin1 = coin1
         self._coin2 = coin2
+
+    @property
+    def color(self) -> str:
+        return self._color
+
+    @color.setter
+    def color(self, color: str):
+        """setter de la couleur de l'obstacle """
+        self._color = color
 
     @property
     def coin1(self) -> Vecteur:
