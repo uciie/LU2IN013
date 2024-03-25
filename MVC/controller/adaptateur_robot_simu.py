@@ -119,6 +119,6 @@ class AdaptateurRobotSimu(Adaptateur):
         # self._simulation.update()
         pass
 
-    def active_trace(self, val: bool):
+    def dessine(self, val: bool):
         """Activer ou désactiver le tracage du robot."""
         self._robot.activer_tracer_parcours(val)

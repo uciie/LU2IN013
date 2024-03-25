@@ -177,6 +177,7 @@ class Affichage(Thread):
             strat = StrategieSequentielle(self._controller.adaptateur, steps)
             self._controller.add_strat(strat)
 
+    
     def test_collision_button_clicked(self):
         """ Handle tracer_carre button click
         """
@@ -213,7 +214,7 @@ class Affichage(Thread):
         """
         self.message_label['text'] = ''
 
-    def draw_obj(self, objet: Any) -> int | tuple[int, int]:
+    def draw_obj(self, objet: Any):
         """Dessine un objet sur le canevas de l'Affichage.
 
         :param objet: objet à dessiner.

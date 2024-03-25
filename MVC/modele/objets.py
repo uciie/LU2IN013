@@ -353,7 +353,7 @@ class Arene:
 
         # listed'obstacle dans l'Arene
         self.liste_Obstacles = []
-
+        self.ballon = None
         self.color = "white"
 
     def add_obstacle(self, obstacle: Obstacle):
@@ -361,6 +361,9 @@ class Arene:
 
         """
         self.liste_Obstacles.append(obstacle)
+
+    def add_ballon(self, ballon : Ballon):
+        self.ballon = ballon
 
     def is_obstacle(self, pos_x: float, pos_y: float):
         """ Renvoie vrai si (pos_x, pos_y) fait partie d'un obstacle
@@ -427,3 +430,41 @@ class ObstacleRectangle(Obstacle):
             if self_interval[0] <= robot_interval[1] and robot_interval[0] <= self_interval[1]:
                 cpt += 1
         return cpt == 4
+
+############
+
+class Ballon(ProjectionMixin):
+    """Classe qui permet de creer un ballon"""
+    def __init__(self, name, pos_x, pos_y, color):
+        self.name = name
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+        self.color = color
+        self.vecVitesse = Vecteur(0,0)
+        self.vitesse = vecVitesse.norme
+        self.vectDir = Vecteur(0, -1)
+
+    def test_collision(self, robot):
+        vect_dir_normal = robot.vectDir.rotation(90)
+        axes = [[1, 0], [0, 1], [robot.vectDir.x, robot.vectDir.y], [vect_dir_normal.x, vect_dir_normal.y]]
+        cpt = 0
+        for axe in axes:
+            self_interval = self.project(axe, self.coins)
+            robot_interval = robot.project(axe, robot.coins)
+            if self_interval[0] <= robot_interval[1] and robot_interval[0] <= self_interval[1]:
+                cpt += 1
+        return cpt == 4
+    
+    def but(self):
+        self.vecVitesse = (0.0)
+        self.vitesse = 0
+
+    
+    def actualiser(self, dt : float):
+        if self.test_collision(robot):
+            self.vecVitesse = self.vecVitesse.addition((robot.vectDir.multiplication(robot.vitesse)).multiplication(2))
+
+        else:
+            self.vitesse = max(0, self.vitesse- dt(0.01* self.vitesse * self.vitesse) - 0.06* self.vitesse )
+
+

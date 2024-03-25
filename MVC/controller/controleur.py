@@ -82,7 +82,7 @@ class Adaptateur(ABC):
         pass
 
     @abstractmethod
-    def active_trace(self, val: bool):
+    def dessine(self, val: bool):
         """ Activation du tracage de parcours"""
         pass
 

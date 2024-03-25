@@ -17,7 +17,7 @@ class Simulation(Thread):
     """ Simulation class
     """
 
-    def __init__(self, name: str, fps: float, robot: SimuRobot, arene: Arene, lock_aff: threading.RLock):
+    def __init__(self, name: str, fps: float, robot: SimuRobot, ballon : Ballon, arene: Arene, lock_aff: threading.RLock):
         """ Initialisation d'une simulation
 
         :param name: le nom de la simulation
@@ -30,6 +30,7 @@ class Simulation(Thread):
         self._running = False
         self._robot = robot
         self._arene = arene
+        self.ballon = ballon
         self.dt = fps
 
         self.lock_aff = lock_aff
@@ -58,7 +59,11 @@ class Simulation(Thread):
         """
         if not self._robot:
             self._robot = robot
+    def add_ballon(self, ballon : Ballon):
 
+        if self.ballon == None:
+            self.ballon = ballon
+    
     def remove_robot(self):
         """ Retirer le robot 
         """

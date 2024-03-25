@@ -34,7 +34,7 @@ class Go(Strategie):
     def start(self):
         """Commencer la strategie"""
         self.logger.info("Starting Go strategy")
-        self.adaptateur.active_trace(self.active_trace)
+        self.adaptateur.dessine(self.active_trace)
         self.adaptateur.set_vitesse_roue(self.v_ang_d, self.v_ang_g)
         self.pos_ini = self.adaptateur.distance_parcourue
         self.parcouru = 0.
@@ -75,7 +75,7 @@ class TournerDeg(Strategie):
     def start(self):
         """Commencer la strategie"""
         self.logger.info("Starting TournerDeg strategy")
-        self.adaptateur.active_trace(self.active_trace)
+        self.adaptateur.dessine(self.active_trace)
         if self.angle > 0:
             self.v_ang_d, self.v_ang_g = self.v_ang, -self.v_ang
             self.adaptateur.set_vitesse_roue(self.v_ang, -self.v_ang)
