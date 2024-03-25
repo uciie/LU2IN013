@@ -2,7 +2,7 @@ import threading
 
 from MVC.controller.adaptateur_robot_simu import AdaptateurRobotSimu
 from MVC.controller.controleur import Controleur
-from MVC.controller.ai import Go, StrategieSequentielle
+from MVC.controller.ai import Go, StrategieSequentielle, TournerDeg
 from MVC.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from MVC.modele.simulation import Simulation
 from MVC.modele.vecteur import Vecteur
@@ -81,8 +81,26 @@ def q1_3(demo):
     strat_seq = StrategieSequentielle(demo.controller.adaptateur, liste_strat)
     demo.controller.add_strat(strat_seq)
 
+def q1_5(demo):
+    trace = True
+    strat_a_faire = []
+    for k in range (4):
+        strat_a_faire.append(TournerDeg(demo.controller.adaptateur, 90, 50, trace))
+        for j in range (3-k%2):
+            for i in range(3):
+                strat_a_faire.append(Go(demo.controller.adaptateur, 20, 50, 50, trace))
+                if i%2 == 0:
+                    strat_a_faire.append(TournerDeg(demo.controller.adaptateur, 60, 50, trace))
+                else:
+                    strat_a_faire.append(TournerDeg(demo.controller.adaptateur, -120, 50, trace))
+        strat_a_faire.append(Go(demo.controller.adaptateur, 20, 50, 50, trace))
+    strat_seq = StrategieSequentielle(demo.controller.adaptateur, strat_a_faire)
+    demo.controller.add_strat(strat_seq)
+
+#def q2_1():
 
 
 #q1_1(demo)
 #q1_2(demo.arene.liste_Obstacles)
 #q1_3(demo)
+q1_5(demo)
