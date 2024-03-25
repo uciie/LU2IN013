@@ -293,7 +293,8 @@ class Affichage(Thread):
                 self.last_pos_x = self._simu.robot.pos_x
                 self.last_pos_y = self._simu.robot.pos_y
             self._simu.robot.rect_id, self._simu.robot.arrow_id = self.draw_obj(self._simu.robot)
-            self.draw_obj(self._simu.arene.liste_Obstacles[0])
+            for i in range (len(self._simu.arene.liste_Obstacles)):
+                self.draw_obj(self._simu.arene.liste_Obstacles[i])
 
             self.root.update()
 
