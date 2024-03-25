@@ -14,9 +14,9 @@ class Demo():
         lock_aff = threading.RLock()
         lock_sim = threading.RLock()
 
-        dt_simu = 1 / 27000
-        dt_controller = 1 / 3000000
-        dt_affichage = 1 / 300000
+        self.dt_simu = 1 / 27000
+        self.dt_controller = 1 / 3000000
+        self.dt_affichage = 1 / 300000
         echelle = 5
         largeur, hauteur = 500, 500
         dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
@@ -26,16 +26,16 @@ class Demo():
         self.robot = SimuRobot("R", int(largeur / 2), int(hauteur / 2), dim_robot_x, dim_robot_y, 10, 150, color="red")
 
         # Créer la simulation
-        simu = Simulation("Simulation", dt_simu, self.robot, self.arene, lock_sim)
+        simu = Simulation("Simulation", self.dt_simu, self.robot, self.arene, lock_sim)
 
         # Créer l'adaptateur
         self.adaptateur = AdaptateurRobotSimu(self.robot, simu)
 
         # Création du module View
-        self.view = Affichage(simu, dt_affichage, lock_aff)
+        self.view = Affichage(simu, self.dt_affichage, lock_aff)
 
         # Création du module Controller
-        self.controller = Controleur(self.adaptateur, dt_controller)
+        self.controller = Controleur(self.adaptateur, self.dt_controller)
 
         # Ajout du lien de communication entre view et controller
         self.view.controller = self.controller
@@ -46,9 +46,6 @@ class Demo():
         view_thread.start()
         simu.start()
         self.controller.start()
-
-        # Ajout du lien de communication entre view et controller
-        self.view.controller = self.controller
 
 demo = Demo()
 def q1_1(demo: Demo):
@@ -97,10 +94,21 @@ def q1_5(demo):
     strat_seq = StrategieSequentielle(demo.controller.adaptateur, strat_a_faire)
     demo.controller.add_strat(strat_seq)
 
-#def q2_1():
+def q2_1(demo: Demo):
+    lock_sim = threading.RLock()
+    dt_simu = 1 / 27000
+    ballon = SimuRobot("Ballon", 40, 40, 20,20, Vecteur(0, -1), 100,color="blue")
+    simu_b = Simulation("Simulation ballon", dt_simu, ballon, demo.arene, lock_sim)
+    adapt_ballon = AdaptateurRobotSimu(ballon, simu_b)
+
+    controller = Controleur(adapt_ballon, demo.dt_controller)
+    # Ajout du lien de communication entre view et controller
+    demo.view.controller = controller
+    controller.start()
 
 
 #q1_1(demo)
 #q1_2(demo.arene.liste_Obstacles)
 #q1_3(demo)
-q1_5(demo)
+#q1_5(demo)
+#q2_1(demo)
