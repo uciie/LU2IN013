@@ -2,6 +2,7 @@ import threading
 
 from MVC.controller.adaptateur_robot_simu import AdaptateurRobotSimu
 from MVC.controller.controleur import Controleur
+from MVC.controller.ai import Go, StrategieSequentielle
 from MVC.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from MVC.modele.simulation import Simulation
 from MVC.modele.vecteur import Vecteur
@@ -28,26 +29,26 @@ class Demo():
         simu = Simulation("Simulation", dt_simu, self.robot, self.arene, lock_sim)
 
         # Créer l'adaptateur
-        adaptateur = AdaptateurRobotSimu(self.robot, simu)
+        self.adaptateur = AdaptateurRobotSimu(self.robot, simu)
 
         # Création du module View
-        view = Affichage(simu, dt_affichage, lock_aff)
+        self.view = Affichage(simu, dt_affichage, lock_aff)
 
         # Création du module Controller
-        controller = Controleur(adaptateur, dt_controller)
+        self.controller = Controleur(self.adaptateur, dt_controller)
 
         # Ajout du lien de communication entre view et controller
-        view.controller = controller
+        self.view.controller = self.controller
 
         # demarrage des threads
-        view_thread = threading.Thread(target=view.run)
+        view_thread = threading.Thread(target=self.view.run)
 
         view_thread.start()
         simu.start()
-        controller.start()
+        self.controller.start()
 
         # Ajout du lien de communication entre view et controller
-        view.controller = controller
+        self.view.controller = self.controller
 
 demo = Demo()
 def q1_1(demo: Demo):
@@ -69,6 +70,19 @@ def q1_2(liste_obs : list[ObstacleRectangle]):
     for obs in liste_obs:
         obs.color = "#FFA500"
 
+def q1_3(demo):
+    # dessine(bool: b) = activer_tracer_parcours(True) fonction deja presente dans le code
+    demo.robot.activer_tracer_parcours(True)
+    liste_strat = []
+    liste_strat.append(Go(demo.controller.adaptateur, 50, 50, 50, demo.robot.tracer_parcours))
+    demo.robot.activer_tracer_parcours(False)
+    liste_strat.append(Go(demo.controller.adaptateur, 50, 50, 50, demo.robot.tracer_parcours))
 
-q1_1(demo)
-q1_2(demo.arene.liste_Obstacles)
+    strat_seq = StrategieSequentielle(demo.controller.adaptateur, liste_strat)
+    demo.controller.add_strat(strat_seq)
+
+
+
+#q1_1(demo)
+#q1_2(demo.arene.liste_Obstacles)
+#q1_3(demo)
