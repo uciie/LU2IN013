@@ -136,3 +136,50 @@ class StrategieSequentielle(Strategie):
             self.current_step += 1
             if self.current_step < len(self.steps):
                 self.steps[self.current_step].start()
+
+class Stop(Strategie):
+    def __init__(self, adaptateur: Adaptateur):
+        """
+        :param adaptateur: adaptateur du robot
+        """
+
+class StrategieIf(Strategie):
+    """Classe Strategie conditionnelle faire stratA si condition verifiée, sinon stratB"""
+    def __init__(self, adaptateur: Adaptateur, stratA: Strategie, stratB: Strategie, condition: float) -> None:
+        """
+        :param adaptateur: adaptateur du robot
+        :param stratA: strategie A
+        :param stratB: strategie B
+        :param condition: condition
+        """
+        super().__init__()
+        self.adaptateur = adaptateur
+        self.pos_ini = None
+        self.parcouru = 0.
+        self.stratA = stratA
+        self.stratB = stratB
+        self.condition = condition
+        self.current_step = 0
+
+        self.logger = logging.getLogger(__name__)
+
+    def start(self):
+        """commencer la strategie"""
+        self.logger.info("Starting condition strategy")
+        self.current_step = 0
+        if self.condition:
+            self.strat_a_faire = self.stratA
+        else:
+            self.strat_a_faire = self.stratB
+        self.strat_a_faire.start()
+
+
+    def stop(self) -> bool:
+        """Verifier si la strategie est finie
+        :return: True si la strategie est finie, False sinon"""
+        return self.strat_a_faire.stop()
+
+    def step(self):
+        """pas de la strategie sequentielle """
+        if self.stop():
+            return

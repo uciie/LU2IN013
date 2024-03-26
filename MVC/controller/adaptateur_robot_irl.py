@@ -57,13 +57,13 @@ class AdaptateurRobotIrl(Adaptateur):
         :returns : Renvoie l'angle parcourut du robot en degree
         """
         # obtenir la position des angles des roues
-        # pos_roues_x, pos_roues_y = self._robot.get_motor_position()
+        pos_roues_x, pos_roues_y = self._robot.get_motor_position()
         # moyenne d'angle parcourue
-        # angle_parcourue = (pos_roues_x + pos_roues_y) / 2
+        angle_parcourue = (pos_roues_x + pos_roues_y) / 2
 
-        # self._robot.offset_motor_encoder("roue_droite", 0)
-        # self._robot.offset_motor_encoder("roue_gauche", 0)
-        angle_parcourue = 1
+        self._robot.offset_motor_encoder("roue_droite", 0)
+        self._robot.offset_motor_encoder("roue_gauche", 0)
+        #angle_parcourue = 1
         return angle_parcourue
 
     def stop(self):
