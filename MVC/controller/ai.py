@@ -4,7 +4,7 @@ import math
 from ..controller.controleur import Adaptateur, Strategie
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG, filename='ai.log', filemode='w',
+logging.basicConfig(level=logging.DEBUG, filename='logs/ai.log', filemode='w',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 

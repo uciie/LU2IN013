@@ -85,7 +85,8 @@ class AdaptateurRobotSimu(Adaptateur):
         :param v_ang_roue_d: Modifier la vitesse angulaire de la roue droite
         :param v_ang_roue_g: Modifier la vitesse angulaire de la roue gauche
         """
-        self._robot.set_vitesse_roue(v_ang_roue_d, v_ang_roue_g)
+        self._robot.roue_droite.vitesse_angulaire = v_ang_roue_d
+        self._robot.roue_gauche.vitesse_angulaire = v_ang_roue_g
 
     @property
     def distance_parcourue(self) -> float:
@@ -122,12 +123,6 @@ class AdaptateurRobotSimu(Adaptateur):
         :return: la vitesse angulaire des roues
         """
         return self._robot.roue_droite.vitesse_angulaire, self._robot.roue_gauche.vitesse_angulaire
-
-    def actualiser(self):
-        """Actualiser la simulation
-        """
-        # self._simulation.update()
-        pass
 
     def active_trace(self, val: bool):
         """Activer ou désactiver le tracage du robot."""

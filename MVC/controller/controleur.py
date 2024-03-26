@@ -76,13 +76,6 @@ class Adaptateur(ABC):
         """
         pass
 
-    @property
-    @abstractmethod
-    def actualiser(self):
-        """Actualiser la simulation
-        """
-        pass
-
     @abstractmethod
     def active_trace(self, val: bool):
         """ Activation du tracage de parcours"""

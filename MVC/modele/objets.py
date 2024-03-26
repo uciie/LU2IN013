@@ -219,25 +219,6 @@ class SimuRobot:
         return (self.roue_droite.rayon / self.length) * (
                 self.roue_droite.vitesse_angulaire - self.roue_gauche.vitesse_angulaire)
 
-    def set_vitesse_roue(self, v_ang_roue_d: float = 0, v_ang_roue_g: float = 0):
-        """ Mettre à jour les vitesse angulaires des roues du robot
-        :param v_ang_roue_d: Donne la vitesse de la roue droite
-        :param v_ang_roue_g: Donne le vitesse de la roue gauche
-        """
-        if v_ang_roue_d < -self.roue_droite.vmax_ang:
-            self.roue_droite.vitesse_angulaire = -self.roue_droite.vmax_ang
-        elif v_ang_roue_d > self.roue_droite.vmax_ang:
-            self.roue_droite.vitesse_angulaire = self.roue_droite.vmax_ang
-        else:
-            self.roue_droite.vitesse_angulaire = v_ang_roue_d
-
-        if v_ang_roue_g < -self.roue_gauche.vmax_ang:
-            self.roue_gauche.vitesse_angulaire = -self.roue_gauche.vmax_ang
-        elif v_ang_roue_g > self.roue_gauche.vmax_ang:
-            self.roue_gauche.vitesse_angulaire = self.roue_gauche.vmax_ang
-        else:
-            self.roue_gauche.vitesse_angulaire = v_ang_roue_g
-
     def actualiser(self, dt: float) -> None:
         """ Actualise le robot selon le dt ecoule
         :return: None

@@ -22,14 +22,20 @@ class Roue:
     @property
     def vitesse_angulaire(self) -> float:
         """Obtient la vitesse angulaire actuelle de la roue."""
+
         return self._vitesse_angulaire
 
     @vitesse_angulaire.setter
-    def vitesse_angulaire(self, value: float) -> None:
+    def vitesse_angulaire(self, value: float):
         """Modifie la vitesse angulaire de la roue, en s'assurant qu'elle ne dépasse pas la vitesse maximale.
 
         :param value: Nouvelle vitesse angulaire de la roue.
         """
-        self._vitesse_angulaire = min(value, self._vmax_ang)
+        if value < -self.vmax_ang:
+            self._vitesse_angulaire = -self.vmax_ang
+        elif value > self.vmax_ang:
+            self._vitesse_angulaire = self.vmax_ang
+        else:
+            self.vitesse_angulaire = value
 
 
