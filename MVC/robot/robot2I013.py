@@ -1,6 +1,6 @@
 import math
 import threading
-from random import random
+from random import randint, random
 
 
 class Robot2IN013:
@@ -56,7 +56,7 @@ class Robot2IN013:
         Lit les etats des moteurs en degre.
         :return: couple du  degre de rotation des moteurs
         """
-        return (random(0,180),random(0,180))
+        return (randint(0,180),randint(0,180))
 
 
     def offset_motor_encoder(self, port, offset):
@@ -80,7 +80,7 @@ class Robot2IN013:
         """
         if random() > 0.5:
             return 8190
-        return random(5, 8000)
+        return randint(5, 8000)
 
     def servo_rotate(self, position):
         """
