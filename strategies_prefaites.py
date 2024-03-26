@@ -2,10 +2,10 @@ from MVC.controller.ai import Go, StrategieSequentielle, TournerDeg, StrategieIf
 
 def test_if(controller) -> Strategie:
     stop = Stop(controller.adaptateur)
-    strat_a = test_go_avec_tracer(controller)
-    strat_b = test_strat_seq_carre(controller)
-
-    liste_strat = [StrategieIf(controller.adaptateur, strat_a, stop, 200), StrategieIf(controller.adaptateur, stop, strat_b, 200)]
+    strat_go = test_go_avec_tracer(controller)
+    strat_carre = test_strat_seq_carre(controller)
+    # faire strat_go si la distance >200 sinon rien faire puis rien faire si distance >200 sinon faire carre
+    liste_strat = [StrategieIf(controller.adaptateur, strat_go, stop, 200), StrategieIf(controller.adaptateur, stop, strat_carre, 200)]
     strat = StrategieSequentielle(controller.adaptateur, liste_strat)
     return strat
 
