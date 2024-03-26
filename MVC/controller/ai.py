@@ -185,7 +185,6 @@ class StrategieIf(Strategie):
 
         self.condition = condition
         self.current_step = 0
-        print("hello")
         self.logger = logging.getLogger(__name__)
 
         # Initialise strat_a_faire à None
@@ -195,7 +194,7 @@ class StrategieIf(Strategie):
         """commencer la strategie"""
         self.logger.info("Starting condition strategy")
         self.current_step = 0
-        print("hellos")
+        #self.logger.info(f"capteur distance {self.adaptateur.get_distance}")
         if self.adaptateur.get_distance >= self.condition:
             self.strat_a_faire = self.stratA
         else:
@@ -211,5 +210,5 @@ class StrategieIf(Strategie):
 
     def step(self):
         """pas de la strategie sequentielle """
-        if self.stop():
-            return
+        if self.strat_a_faire is not None:
+            self.strat_a_faire.step()

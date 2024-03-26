@@ -132,5 +132,4 @@ class AdaptateurRobotSimu(Adaptateur):
         """ Retourne la distance du robot et obstacle
         :return: la distance du robot
         """
-        print(self.simulation.detecte_distance(self.robot))
         return self.simulation.detecte_distance(self.robot)

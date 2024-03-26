@@ -1,12 +1,12 @@
 from MVC.controller.ai import Go, StrategieSequentielle, TournerDeg, StrategieIf, Stop, Strategie
 
-def test_if(controller) -> StrategieIf:
+def test_if(controller) -> Strategie:
     stop = Stop(controller.adaptateur)
     strat_a = test_go_avec_tracer(controller)
     strat_b = test_strat_seq_carre(controller)
 
-    strat = StrategieIf(controller.adaptateur, strat_a, stop, 200)#, StrategieIf(controller.adaptateur, strat_b, stop, 200)]
-
+    liste_strat = [StrategieIf(controller.adaptateur, strat_a, stop, 200), StrategieIf(controller.adaptateur, stop, strat_b, 200)]
+    strat = StrategieSequentielle(controller.adaptateur, liste_strat)
     return strat
 
 

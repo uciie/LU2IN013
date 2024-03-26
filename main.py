@@ -61,5 +61,4 @@ class Demo:
 
 if __name__ == '__main__':
     demo = Demo()
-    print(demo.adaptateur.get_distance)
     demo.controller.add_strat(test_if(demo.controller))
