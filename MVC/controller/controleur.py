@@ -2,10 +2,12 @@ import threading
 import time
 from abc import ABC, abstractmethod
 from threading import Thread
+from ..modele.vecteur import Vecteur
 
 
 class Adaptateur(ABC):
     """Classe mere d'adaptateur de robot'"""
+
     def __init__(self) -> None:
         """ Initialise l'adaptateur
         """
@@ -75,6 +77,7 @@ class Adaptateur(ABC):
         """
         pass
 
+    @property
     @abstractmethod
     def actualiser(self):
         """Actualiser la simulation
@@ -86,9 +89,15 @@ class Adaptateur(ABC):
         """ Activation du tracage de parcours"""
         pass
 
+    @abstractmethod
+    def get_distance(self) -> float:
+        """Le distance du robot et l'obstacle"""
+        pass
+
 
 class Strategie(ABC):
     """Classe mere de strategie"""
+
     def __init__(self):  # , adaptateur: Adaptateur):
         """ Initialise la classe Strategie
         """
@@ -112,6 +121,7 @@ class Strategie(ABC):
 
 class Controleur(Thread):
     """classe Controleur"""
+
     def __init__(self, adaptateur: Adaptateur, dt: float):
         """
         Initialise le contrôleur avec un robot, une vue et un intervalle de temps.
@@ -140,7 +150,7 @@ class Controleur(Thread):
         self.strat = strat
         self.strat.start()
 
-    def stop(self):
+    def stop(self)->bool:
         """Vérifie si toutes les étapes sont terminées
         """
         if not self.strat:
@@ -161,3 +171,49 @@ class Controleur(Thread):
             return
         # Faire la stratégie suivante
         self.strat.step()
+
+
+class Capteur(Thread):
+    def __init__(self, vecteur: Vecteur, adaptateur: Adaptateur):
+        """Initialisation du capteur
+
+        :param vecteur : Vecteur directeur envoyé
+        :param adaptateur : Adaptateur du robot
+        :returns : Retourne une instance de la classe Capteur
+        """
+        super(Capteur, self).__init__()
+        # Vecteur directeur
+        self._vecteur = vecteur
+        self._adaptateur = adaptateur
+        self._capteur_distance = None
+        self._deg_max = 10
+        self._running = False
+
+    @property
+    def vecteur(self):
+        """Propriété pour l'attribut vecteur"""
+        return self._vecteur
+
+    @property
+    def deg_max(self) -> float:
+        """Propriété pour l'attribut deg_max
+        :returns : Le degree maximale du capteur
+        """
+        return self._deg_max
+
+    @property
+    def running(self) -> bool:
+        """Propriété pour l'attribut running
+        :return: True si le capteur est_running et False sinon
+        """
+        return self._running
+
+    @running.setter
+    def running(self, value: bool):
+        self._running = value
+
+    def run(self):
+        """Commencer le capteur"""
+        self._running = True
+        while self._running:
+            self._capteur_distance = self._adaptateur.get_distance()

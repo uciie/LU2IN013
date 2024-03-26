@@ -36,37 +36,3 @@ class Roue:
         self._vitesse_angulaire = min(value, self._vmax_ang)
 
 
-class Capteur:
-    def __init__(self, vecteur: Vecteur):
-        """Initialisation du capteur
-
-        :param vecteur : Vecteur directeur envoyé
-        :returns : Retourne une instance de la classe Capteur
-        """
-        # Vecteur directeur
-        self._vecteur = vecteur
-        self._deg_max = 10
-        self._active = False
-
-    @property
-    def vecteur(self):
-        """Propriété pour l'attribut vecteur"""
-        return self._vecteur
-
-    @property
-    def deg_max(self) -> float:
-        """Propriété pour l'attribut deg_max
-        :returns : Le degree maximale du capteur
-        """
-        return self._deg_max
-
-    @property
-    def active(self) -> bool:
-        """Propriété pour l'attribut active
-        :return: True si le capteur est active et False sinon
-        """
-        return self._active
-
-    @active.setter
-    def active(self, value: bool):
-        self._active = value

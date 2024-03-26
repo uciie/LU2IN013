@@ -7,6 +7,8 @@ from MVC.modele.simulation import Simulation
 from MVC.modele.vecteur import Vecteur
 from MVC.view.affichage import Affichage
 
+from strategies_prefaites import test_if
+
 
 class Demo:
     """Demonstration du jour """
@@ -35,13 +37,13 @@ class Demo:
         simu = Simulation("Simulation", dt_simu, self.robot, arene, lock_sim)
 
         # Créer l'adaptateur
-        adaptateur = AdaptateurRobotSimu(self.robot, simu)
+        self.adaptateur = AdaptateurRobotSimu(self.robot, simu)
 
         # Création du module View
         view = Affichage(simu, dt_affichage, lock_aff)
 
         # Création du module Controller
-        self.controller = Controleur(adaptateur, dt_controller)
+        self.controller = Controleur(self.adaptateur, dt_controller)
 
         # Ajout du lien de communication entre view et controller
         view.controller = self.controller
@@ -59,3 +61,5 @@ class Demo:
 
 if __name__ == '__main__':
     demo = Demo()
+    print(demo.adaptateur.get_distance)
+    demo.controller.add_strat(test_if(demo.controller))

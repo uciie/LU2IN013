@@ -2,7 +2,7 @@ import math
 from abc import ABC, abstractmethod
 
 from .vecteur import Vecteur
-from ..robot.accessoirs import Capteur, Roue
+from ..robot.accessoirs import Roue
 
 
 class ProjectionMixin:
@@ -31,6 +31,7 @@ def intervals_overlap(interval1, interval2):
 
 class SimuRobot(ProjectionMixin):
     """Classe qui permet de creer un robot"""
+
     def __init__(self, name: str, pos_x: float, pos_y: float, dim_length: float, dim_width: float, rayon_roue: int,
                  vmax_ang: float, color: str):
         """Initialisation du robot.
@@ -81,9 +82,6 @@ class SimuRobot(ProjectionMixin):
         # Roues du robot
         self.roue_gauche = Roue(rayon_roue, vmax_ang)
         self.roue_droite = Roue(rayon_roue, vmax_ang)
-
-        # Capteur du robot
-        self.capteur = Capteur(Vecteur(self.vectDir.x, int(self.vectDir.y / abs(self.vectDir.y))))
 
     @property
     def tracer_parcours(self) -> bool:
@@ -207,9 +205,9 @@ class SimuRobot(ProjectionMixin):
         return [(x1, y1), (x2, y2), (x3, y3), (x4, y4)]
 
     def test_crash(self, max_x: int, max_y: int):
-        """ Tester si le robot entre ds un mur 
+        """ Tester si le robot entre ds un mur
 
-        :param max_x: La largeur de l'arene 
+        :param max_x: La largeur de l'arene
         :param max_y: La hauteur de l'arene
         :return bool: True si hors de l'arene, False sinon
         """
@@ -294,6 +292,7 @@ class SimuRobot(ProjectionMixin):
 ########################
 class Obstacle(ABC, ProjectionMixin):
     """Classe de l'obstacle'"""
+
     def __init__(self, pos_x: float, pos_y: float, color: str):
         """ Initialise un obstacle
 
@@ -309,6 +308,15 @@ class Obstacle(ABC, ProjectionMixin):
         self._color = color
 
     @property
+    def color(self) -> str:
+        return self._color
+
+    @color.setter
+    def color(self, color: str):
+        """setter de la couleur de l'obstacle """
+        self._color = color
+
+    @property
     def pos_x(self) -> float:
         """ Propriété pour l'attribut pos_x """
         return self._pos_x
@@ -317,11 +325,6 @@ class Obstacle(ABC, ProjectionMixin):
     def pos_y(self) -> float:
         """ Propriété pour l'attribut pos_y """
         return self._pos_y
-
-    @property
-    def color(self) -> str:
-        """ Propriété pour l'attribut color """
-        return self._color
 
     @abstractmethod
     def test_collision(self, robot):
@@ -338,9 +341,10 @@ class Obstacle(ABC, ProjectionMixin):
 #############
 class Arene:
     """ Classe de l'Arene"""
+
     def __init__(self, name: str, max_x: int, max_y: int, echelle: float):
-        """ Initisalisation d'une Arene 
-        
+        """ Initisalisation d'une Arene
+
         :param name: Nom de l'Arene
         :param max_x: La longeur maximale de l'Arene
         :param max_y: La largeur maximale de l'Arene
@@ -356,6 +360,15 @@ class Arene:
 
         self.color = "white"
 
+    def in_arene(self, pos_x: float, pos_y: float) -> bool:
+        """ Verifie si la position (pos_x, pos_y) est dans la grille
+
+        :param pos_x: Coordonnee en x
+        :param pos_y: Coordonnee en y
+        :retrun bool: Renvoie true si (x,y) est dans la grille, sinon false
+        """
+        return 0 <= pos_x < self.max_x and 0 <= pos_y < self.max_y
+
     def add_obstacle(self, obstacle: Obstacle):
         """Ajouter un obstacle dans l'arène
 
@@ -364,7 +377,7 @@ class Arene:
 
     def is_obstacle(self, pos_x: float, pos_y: float):
         """ Renvoie vrai si (pos_x, pos_y) fait partie d'un obstacle
-    
+
         :param pos_x: Coordonnée en x
         :param pos_y: Coordonnée en y
         :return: bool
@@ -378,7 +391,7 @@ class Arene:
 
 class ObstacleRectangle(Obstacle):
     def __init__(self, pos_x: float, pos_y: float, coin1: Vecteur, coin2: Vecteur, color: str):
-        """ Initialise un obstacle rectangulaire 
+        """ Initialise un obstacle rectangulaire
 
         :param pos_x: Coordonnée X de l'obstacle (float)
         :param pos_y: Coordonnée y de l'obstacle (float)
@@ -391,6 +404,15 @@ class ObstacleRectangle(Obstacle):
         # Vecteurs directeurs de l'obstacle
         self._coin1 = coin1
         self._coin2 = coin2
+
+    @property
+    def color(self) -> str:
+        return self._color
+
+    @color.setter
+    def color(self, color: str):
+        """setter de la couleur de l'obstacle """
+        self._color = color
 
     @property
     def coin1(self) -> Vecteur:
@@ -423,7 +445,23 @@ class ObstacleRectangle(Obstacle):
         cpt = 0
         for axe in axes:
             self_interval = self.project(axe, self.coins)
-            robot_interval = robot.project(axe, robot.coins)
-            if self_interval[0] <= robot_interval[1] and robot_interval[0] <= self_interval[1]:
+            point_interval = robot.project(axe, robot.coins)
+            if self_interval[0] <= point_interval[1] and point_interval[0] <= self_interval[1]:
                 cpt += 1
         return cpt == 4
+
+    def in_obstacle(self, pos_x: float, pos_y: float):
+        """Tester si le point (x,y) fait portie de l'obstacle
+
+        :param pos_x: x position
+        :param pos_y: y position
+        :return: True si collision, sinon False
+        """
+        axes = [[1, 0], [0, 1]]
+        cpt = 0
+        for axe in axes:
+            self_interval = self.project(axe, self.coins)
+            point_interval = self.project(axe, [(pos_x, pos_y)])
+            if self_interval[0] <= point_interval[1] and point_interval[0] <= self_interval[1]:
+                cpt += 1
+        return cpt == 2

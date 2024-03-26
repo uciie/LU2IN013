@@ -69,6 +69,10 @@ class AdaptateurRobotSimu(Adaptateur):
     def robot(self):
         return self._robot
 
+    @property
+    def simulation(self):
+        return self._simulation
+
     def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float):
         """ Modifier la vitesse des roues
 
@@ -122,3 +126,11 @@ class AdaptateurRobotSimu(Adaptateur):
     def active_trace(self, val: bool):
         """Activer ou désactiver le tracage du robot."""
         self._robot.activer_tracer_parcours(val)
+
+    @property
+    def get_distance(self) -> float:
+        """ Retourne la distance du robot et obstacle
+        :return: la distance du robot
+        """
+        print(self.simulation.detecte_distance(self.robot))
+        return self.simulation.detecte_distance(self.robot)
