@@ -3,7 +3,7 @@ import threading
 import time
 import logging
 from threading import Thread
-from .vecteur import Vecteur
+from .utilitaire import distance
 from .objets import Arene, SimuRobot
 
 # Configure logging
@@ -126,13 +126,13 @@ class Simulation(Thread):
                 if obstable.in_obstacle(new_x, new_y):
                     new_x -= rayon.x
                     new_y -= rayon.y
-                    return Vecteur(robot.pos_x + robot.vectDir.x * robot.width / 2 - new_x,
-                                   robot.pos_y + robot.vectDir.y * robot.length / 2 - new_y).norme
+                    return distance((robot.pos_x + robot.vectDir.x * robot.width / 2, robot.pos_y + robot.vectDir.y * robot.length / 2),
+                                    (new_x, new_y))
                 new_x += rayon.x
                 new_y += rayon.y
         new_x -= rayon.x
         new_y -= rayon.y
 
         # renvoie la norme, ie la distance
-        return Vecteur(robot.pos_x + robot.vectDir.x * robot.width / 2 - new_x,
-                       robot.pos_y + robot.vectDir.y * robot.length / 2 - new_y).norme
+        return distance((robot.pos_x + robot.vectDir.x * robot.width / 2, robot.pos_y + robot.vectDir.y * robot.length / 2),
+                                    (new_x, new_y))

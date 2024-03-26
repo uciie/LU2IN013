@@ -3,7 +3,7 @@ import logging
 from MVC.controller.controleur import Adaptateur
 from MVC.modele.objets import SimuRobot
 from MVC.modele.simulation import Simulation
-from MVC.modele.vecteur import Vecteur
+from MVC.modele.utilitaire import distance, point_le_plus_loin
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, filename='logs/simu.log', filemode='w',
@@ -28,6 +28,12 @@ class AdaptateurRobotSimu(Adaptateur):
         self._last_theta = self._robot.last_theta
         self._last_pos_x, self._last_pos_y = self._robot.last_pos_x, self._robot.last_pos_y
         self.logger = logging.getLogger(__name__)
+
+    @property
+    def rayon(self) -> float:
+        """Rayon de rotation"""
+        point_loin = point_le_plus_loin(self._robot.coins, self._robot.pos_x, self._robot.pos_y)
+        return distance((self._robot.pos_x, self._robot.pos_y), point_loin)
 
     @property
     def last_theta(self) -> float:
@@ -86,9 +92,9 @@ class AdaptateurRobotSimu(Adaptateur):
         """ Obtenir la distance parcourue
         :return: la distance parcourue
         """
-        distance = Vecteur(self._robot.pos_x - self._last_pos_x, self._robot.pos_y - self._last_pos_y)
+        dist = distance((self._robot.pos_x, self._robot.pos_y), (self._last_pos_x, self._last_pos_y))
         self._last_pos_x, self._last_pos_y = self._robot.pos_x, self._robot.pos_y
-        return distance.norme
+        return dist
 
     @property
     def angle_parcourue(self) -> float:

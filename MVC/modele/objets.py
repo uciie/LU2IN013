@@ -1,35 +1,11 @@
 import math
 from abc import ABC, abstractmethod
 
-from .vecteur import Vecteur
+from .utilitaire import Vecteur, project
 from ..robot.accessoirs import Roue
 
 
-class ProjectionMixin:
-    @staticmethod
-    def project(axes: list[float], coins: list[tuple[float, float]]) -> list[float]:
-        """ Projection des coins de l'obstacle sur un axe
-
-        :param axes: Les axes de la projection
-        :param coins: Les coordonnées des coins de l'obstacle
-        :returns: La plus petite et la plus grande valeur de projection
-        """
-        min_p = max_p = axes[0] * coins[0][0] + axes[1] * coins[0][1]
-        for coin_x, coin_y in coins:
-            projection = axes[0] * coin_x + axes[1] * coin_y
-            if projection < min_p:
-                min_p = projection
-            elif projection > max_p:
-                max_p = projection
-        return [min_p, max_p]
-
-
-def intervals_overlap(interval1, interval2):
-    """Vérifie si deux intervalles se chevauchent."""
-    return interval1[1] >= interval2[0] and interval1[0] <= interval2[1]
-
-
-class SimuRobot(ProjectionMixin):
+class SimuRobot:
     """Classe qui permet de creer un robot"""
 
     def __init__(self, name: str, pos_x: float, pos_y: float, dim_length: float, dim_width: float, rayon_roue: int,
@@ -54,7 +30,7 @@ class SimuRobot(ProjectionMixin):
         self.rect_id = None  # Identifiant du rectangle
         self.arrow_id = None  # Identifiant de la flèche
         self.line_id = None  # Identifiant de sa tracabilite
-        self.color = color  # couleur du robot
+        self._color = color  # couleur du robot
 
         self.vectDir = Vecteur(0, -1)  # vectDir
 
@@ -184,6 +160,15 @@ class SimuRobot(ProjectionMixin):
         return self.last_pos_x, self.last_pos_y
 
     @property
+    def color(self) -> str:
+        return self._color
+
+    @color.setter
+    def color(self, color: str):
+        """setter de la couleur de l'obstacle """
+        self._color = color
+
+    @property
     def coins(self):
         """ Renvoie les coordonnees des 4 coins du robot
 
@@ -290,7 +275,7 @@ class SimuRobot(ProjectionMixin):
 
 
 ########################
-class Obstacle(ABC, ProjectionMixin):
+class Obstacle(ABC):
     """Classe de l'obstacle'"""
 
     def __init__(self, pos_x: float, pos_y: float, color: str):
@@ -406,15 +391,6 @@ class ObstacleRectangle(Obstacle):
         self._coin2 = coin2
 
     @property
-    def color(self) -> str:
-        return self._color
-
-    @color.setter
-    def color(self, color: str):
-        """setter de la couleur de l'obstacle """
-        self._color = color
-
-    @property
     def coin1(self) -> Vecteur:
         """ Propriété pour l'attribut v1 """
         return self._coin1
@@ -444,8 +420,8 @@ class ObstacleRectangle(Obstacle):
         axes = [[1, 0], [0, 1], [robot.vectDir.x, robot.vectDir.y], [vect_dir_normal.x, vect_dir_normal.y]]
         cpt = 0
         for axe in axes:
-            self_interval = self.project(axe, self.coins)
-            point_interval = robot.project(axe, robot.coins)
+            self_interval = project(axe, self.coins)
+            point_interval = project(axe, robot.coins)
             if self_interval[0] <= point_interval[1] and point_interval[0] <= self_interval[1]:
                 cpt += 1
         return cpt == 4
@@ -460,8 +436,8 @@ class ObstacleRectangle(Obstacle):
         axes = [[1, 0], [0, 1]]
         cpt = 0
         for axe in axes:
-            self_interval = self.project(axe, self.coins)
-            point_interval = self.project(axe, [(pos_x, pos_y)])
+            self_interval = project(axe, self.coins)
+            point_interval = project(axe, [(pos_x, pos_y)])
             if self_interval[0] <= point_interval[1] and point_interval[0] <= self_interval[1]:
                 cpt += 1
         return cpt == 2

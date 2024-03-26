@@ -1,6 +1,3 @@
-from ..modele.vecteur import Vecteur
-
-
 class Roue:
     def __init__(self, rayon: float, vmax_ang: float):
         """Initialisation d'une roue

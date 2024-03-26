@@ -178,8 +178,6 @@ class StrategieIf(Strategie):
         """
         super().__init__()
         self.adaptateur = adaptateur
-        self.pos_ini = None
-        self.parcouru = 0.
         self.stratA = strat_a
         self.stratB = strat_b
 
@@ -193,7 +191,6 @@ class StrategieIf(Strategie):
     def start(self):
         """commencer la strategie"""
         self.logger.info("Starting condition strategy")
-        self.current_step = 0
         #self.logger.info(f"capteur distance {self.adaptateur.get_distance}")
         if self.adaptateur.get_distance >= self.condition:
             self.strat_a_faire = self.stratA
@@ -204,7 +201,7 @@ class StrategieIf(Strategie):
     def stop(self) -> bool:
         """Verifier si la strategie est finie
         :return: True si la strategie est finie, False sinon"""
-        # Check if strat_a_faire is None before accessing stop() method
+        # Verifier si strat_a_faire n'est pas vide
         if self.strat_a_faire is not None:
             return self.strat_a_faire.stop()
 
@@ -212,3 +209,38 @@ class StrategieIf(Strategie):
         """pas de la strategie sequentielle """
         if self.strat_a_faire is not None:
             self.strat_a_faire.step()
+
+
+class StrategieWhile(Strategie):
+    """Classe Strategie while: faire strategie tant que condition verifiée"""
+
+    def __init__(self, adaptateur: Adaptateur, strat: Strategie, condition: float) -> None:
+        """
+        :param adaptateur: adaptateur du robot
+        :param strat_a: strategie A
+        :param strat_b: strategie B
+        :param condition: condition
+        """
+        super().__init__()
+        self.adaptateur = adaptateur
+        self.strat = strat
+
+        self.condition = condition
+        self.logger = logging.getLogger(__name__)
+
+    def start(self):
+        """commencer la strategie"""
+        self.logger.info("Starting while strategy")
+        self.strat.start()
+
+    def stop(self) -> bool:
+        """Verifier si la strategie est finie
+        :return: True si la strategie est finie, False sinon"""
+        self.logger.info("Fin while")
+        return self.strat.stop() or self.adaptateur.get_distance > self.condition
+
+    def step(self):
+        """pas de la strategie sequentielle """
+        if self.stop():
+            self.strat.start()
+        self.strat.step()

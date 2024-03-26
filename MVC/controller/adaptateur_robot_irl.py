@@ -46,6 +46,11 @@ class AdaptateurRobotIrl(Adaptateur):
         self._robot.set_motor_dps("roue_gauche", v_ang_roue_g)
 
     @property
+    def rayon(self) -> float:
+        """ Rayon de rotation du robot"""
+        return self._robot.WHEEL_BASE_WIDTH
+
+    @property
     def distance_parcourue(self) -> float:
         """ Obtenir la distance parcourue
         :returns : Renvoie la distance parcourue du robot

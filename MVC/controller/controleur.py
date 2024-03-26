@@ -2,7 +2,6 @@ import threading
 import time
 from abc import ABC, abstractmethod
 from threading import Thread
-from ..modele.vecteur import Vecteur
 
 
 class Adaptateur(ABC):
@@ -92,6 +91,11 @@ class Adaptateur(ABC):
     @abstractmethod
     def get_distance(self) -> float:
         """Le distance du robot et l'obstacle"""
+        pass
+
+    @abstractmethod
+    def rayon(self)->float:
+        """Rayon de rotation"""
         pass
 
 
