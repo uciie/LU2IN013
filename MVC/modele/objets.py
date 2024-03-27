@@ -1,36 +1,13 @@
 import math
-import numpy as np
 from abc import ABC, abstractmethod
 
-from .vecteur import Vecteur
-from ..robot.accessoirs import Capteur, Roue
+from .utilitaire import Vecteur, project
+from ..robot.accessoirs import Roue
 
 
-class ProjectionMixin:
-    @staticmethod
-    def project(axes: list[float], coins: list[tuple[float, float]]) -> list[float]:
-        """ Projection des coins de l'obstacle sur un axe
+class SimuRobot:
+    """Classe qui permet de creer un robot"""
 
-        :param axes: Les axes de la projection
-        :param coins: Les coordonnées des coins de l'obstacle
-        :returns: La plus petite et la plus grande valeur de projection
-        """
-        min_p = max_p = axes[0] * coins[0][0] + axes[1] * coins[0][1]
-        for coin_x, coin_y in coins:
-            projection = axes[0] * coin_x + axes[1] * coin_y
-            if projection < min_p:
-                min_p = projection
-            elif projection > max_p:
-                max_p = projection
-        return [min_p, max_p]
-
-
-def intervals_overlap(interval1, interval2):
-    """Vérifie si deux intervalles se chevauchent."""
-    return interval1[1] >= interval2[0] and interval1[0] <= interval2[1]
-
-
-class SimuRobot(ProjectionMixin):
     def __init__(self, name: str, pos_x: float, pos_y: float, dim_length: float, dim_width: float, rayon_roue: int,
                  vmax_ang: float, color: str):
         """Initialisation du robot.
@@ -53,7 +30,7 @@ class SimuRobot(ProjectionMixin):
         self.rect_id = None  # Identifiant du rectangle
         self.arrow_id = None  # Identifiant de la flèche
         self.line_id = None  # Identifiant de sa tracabilite
-        self.color = color  # couleur du robot
+        self._color = color  # couleur du robot
 
         self.vectDir = Vecteur(0, -1)  # vectDir
 
@@ -75,62 +52,95 @@ class SimuRobot(ProjectionMixin):
         # Ancienne angle
         self._last_theta = 0.  # angle en degré
 
+        # Activation du tracage du parcours
+        self._tracer_parcours = None
+
         # Roues du robot
         self.roue_gauche = Roue(rayon_roue, vmax_ang)
         self.roue_droite = Roue(rayon_roue, vmax_ang)
 
-        # Capteur du robot
-        self.capteur = Capteur(Vecteur(self.vectDir.x, int(self.vectDir.y / abs(self.vectDir.y))))
+    @property
+    def tracer_parcours(self) -> bool:
+        """Savoir si le tracer est active ou non"""
+        return self._tracer_parcours
+
+    def activer_tracer_parcours(self, valeur: bool):
+        """Activer ou désactiver le traçage du parcours du robot."""
+        self._tracer_parcours = valeur
 
     # Propriété pour l'attribut pos_x
     @property
-    def pos_x(self):
+    def pos_x(self) -> float:
+        """Getter Position en x du robot
+        :return: Position en x du robot"""
         return self._pos_x
 
     @pos_x.setter
     def pos_x(self, value):
+        """Setter Position en x du robot
+        :param value: Nouvelle position en x du robot"""
         self._pos_x = value
 
     # Propriété pour l'attribut pos_y
     @property
-    def pos_y(self):
+    def pos_y(self) -> float:
+        """Getter Position en y du robot
+        :return: Position en y du robot"""
         return self._pos_y
 
     @pos_y.setter
-    def pos_y(self, value):
-        self._pos_x = value
+    def pos_y(self, value: float):
+        """Setter Position en y du robot
+        :param value: Nouvelle position en y du robot"""
+        self._pos_y = value
 
     @property
     def last_pos_x(self) -> float:
+        """Getter de la derniere position en x du robot
+        :return: derniere position en x du robot """
         return self._last_pos_x
 
     @last_pos_x.setter
     def last_pos_x(self, value: float):
+        """setter de la derniere position en x du robot
+        :param value: Nouvelle de la derniere position en x """
         self._last_pos_x = value
 
     @property
     def last_pos_y(self) -> float:
+        """getter de la derniere position en y du robot
+        :return: derniere position en y du robot"""
         return self._last_pos_y
 
     @last_pos_y.setter
     def last_pos_y(self, value: float):
+        """setter de la derniere position en y
+        :param value: Nouvelle de la derniere position en y"""
         self._last_pos_y = value
 
     # Propriété pour l'attribut theta
     @property
-    def theta(self):
+    def theta(self) -> float:
+        """getter du theta du robot
+        :return: theta du robot"""
         return self._theta
 
     @theta.setter
     def theta(self, value):
+        """setter du theta du robot
+        :param value: nouveau theta du robot"""
         self._theta = value
 
     @property
-    def last_theta(self):
+    def last_theta(self) -> float:
+        """Le dernier theta du robot
+        :return: Le dernier theta du robot"""
         return self._last_theta
 
     @last_theta.setter
     def last_theta(self, value):
+        """setter du dernier theta du robot
+        :param value: nouveau dernier theta """
         self._last_theta = value
 
     @property
@@ -148,6 +158,15 @@ class SimuRobot(ProjectionMixin):
         :returns: Renvoie l'avant-dernière coordonnée du robot (tuple).
         """
         return self.last_pos_x, self.last_pos_y
+
+    @property
+    def color(self) -> str:
+        return self._color
+
+    @color.setter
+    def color(self, color: str):
+        """setter de la couleur de l'obstacle """
+        self._color = color
 
     @property
     def coins(self):
@@ -171,18 +190,16 @@ class SimuRobot(ProjectionMixin):
         return [(x1, y1), (x2, y2), (x3, y3), (x4, y4)]
 
     def test_crash(self, max_x: int, max_y: int):
-        """ Tester si le robot entre ds un mur 
+        """ Tester si le robot entre ds un mur
 
-        :param max_x: La largeur de l'arene 
+        :param max_x: La largeur de l'arene
         :param max_y: La hauteur de l'arene
         :return bool: True si hors de l'arene, False sinon
         """
         # Verifier si les coins du robot sont à l'interieur de l'arene
         for coin_x, coin_y in self.coins:
             if coin_x < 0 or coin_x >= max_x or coin_y < 0 or coin_y >= max_y:
-                print("True")
                 return True
-        print("False")
         return False
 
     @property
@@ -202,27 +219,6 @@ class SimuRobot(ProjectionMixin):
         return (self.roue_droite.rayon / self.length) * (
                 self.roue_droite.vitesse_angulaire - self.roue_gauche.vitesse_angulaire)
 
-    def set_vitesse_roue(self, v_ang_roue_d: float = 0, v_ang_roue_g: float = 0):
-        """ Mettre à jour les vitesse angulaires des roues du robot
-        :param v_ang_roue_d: Donne la vitesse de la roue droite
-        :param v_ang_roue_g: Donne le vitesse de la roue gauche
-        """
-        if v_ang_roue_d < -self.roue_droite.vmax_ang:
-            self.roue_droite.vitesse_angulaire = -self.roue_droite.vmax_ang
-        elif v_ang_roue_d > self.roue_droite.vmax_ang:
-            self.roue_droite.vitesse_angulaire = self.roue_droite.vmax_ang
-        else:
-            self.roue_droite.vitesse_angulaire = v_ang_roue_d
-
-        if v_ang_roue_g < -self.roue_gauche.vmax_ang:
-            self.roue_gauche.vitesse_angulaire = -self.roue_gauche.vmax_ang
-        elif v_ang_roue_g > self.roue_gauche.vmax_ang:
-            self.roue_gauche.vitesse_angulaire = self.roue_gauche.vmax_ang
-        else:
-            self.roue_gauche.vitesse_angulaire = v_ang_roue_g
-
-        print(self.roue_droite.vitesse_angulaire, self.roue_gauche.vitesse_angulaire)
-
     def actualiser(self, dt: float) -> None:
         """ Actualise le robot selon le dt ecoule
         :return: None
@@ -238,13 +234,16 @@ class SimuRobot(ProjectionMixin):
             self.vectDir.angle) * self.roue_droite.rayon / 2 * dt
         theta = self.roue_droite.rayon * (
                 self.roue_droite.vitesse_angulaire - self.roue_gauche.vitesse_angulaire) / self.length * dt
-        # print("x", x, "y", y)
         self._pos_x += x
         self._pos_y += y
-        self._theta = (self._theta + math.degrees(theta)) % 360
+        self._theta += math.degrees(theta)  # Incrémentation de l'angle sans ajustement
+        # Ajustement de l'angle entre -360 et 360 degrés
+        if self._theta > 360:
+            self._theta -= 360
+        elif self._theta < -360:
+            self._theta += 360
         self.vectDir = self.vectDir.rotation(math.degrees(theta))
 
-    @property
     def info(self) -> str:
         """ afficher les informations du robot
         :return str: informations du robot
@@ -257,7 +256,9 @@ class SimuRobot(ProjectionMixin):
 
 
 ########################
-class Obstacle(ABC, ProjectionMixin):
+class Obstacle(ABC):
+    """Classe de l'obstacle'"""
+
     def __init__(self, pos_x: float, pos_y: float, color: str):
         """ Initialise un obstacle
 
@@ -273,6 +274,15 @@ class Obstacle(ABC, ProjectionMixin):
         self._color = color
 
     @property
+    def color(self) -> str:
+        return self._color
+
+    @color.setter
+    def color(self, color: str):
+        """setter de la couleur de l'obstacle """
+        self._color = color
+
+    @property
     def pos_x(self) -> float:
         """ Propriété pour l'attribut pos_x """
         return self._pos_x
@@ -281,11 +291,6 @@ class Obstacle(ABC, ProjectionMixin):
     def pos_y(self) -> float:
         """ Propriété pour l'attribut pos_y """
         return self._pos_y
-
-    @property
-    def color(self) -> str:
-        """ Propriété pour l'attribut color """
-        return self._color
 
     @abstractmethod
     def test_collision(self, robot):
@@ -301,9 +306,11 @@ class Obstacle(ABC, ProjectionMixin):
 
 #############
 class Arene:
+    """ Classe de l'Arene"""
+
     def __init__(self, name: str, max_x: int, max_y: int, echelle: float):
-        """ Initisalisation d'une Arene 
-        
+        """ Initisalisation d'une Arene
+
         :param name: Nom de l'Arene
         :param max_x: La longeur maximale de l'Arene
         :param max_y: La largeur maximale de l'Arene
@@ -319,6 +326,15 @@ class Arene:
 
         self.color = "white"
 
+    def in_arene(self, pos_x: float, pos_y: float) -> bool:
+        """ Verifie si la position (pos_x, pos_y) est dans la grille
+
+        :param pos_x: Coordonnee en x
+        :param pos_y: Coordonnee en y
+        :retrun bool: Renvoie true si (x,y) est dans la grille, sinon false
+        """
+        return 0 <= pos_x < self.max_x and 0 <= pos_y < self.max_y
+
     def add_obstacle(self, obstacle: Obstacle):
         """Ajouter un obstacle dans l'arène
 
@@ -327,7 +343,7 @@ class Arene:
 
     def is_obstacle(self, pos_x: float, pos_y: float):
         """ Renvoie vrai si (pos_x, pos_y) fait partie d'un obstacle
-    
+
         :param pos_x: Coordonnée en x
         :param pos_y: Coordonnée en y
         :return: bool
@@ -341,7 +357,7 @@ class Arene:
 
 class ObstacleRectangle(Obstacle):
     def __init__(self, pos_x: float, pos_y: float, coin1: Vecteur, coin2: Vecteur, color: str):
-        """ Initialise un obstacle rectangulaire 
+        """ Initialise un obstacle rectangulaire
 
         :param pos_x: Coordonnée X de l'obstacle (float)
         :param pos_y: Coordonnée y de l'obstacle (float)
@@ -385,8 +401,24 @@ class ObstacleRectangle(Obstacle):
         axes = [[1, 0], [0, 1], [robot.vectDir.x, robot.vectDir.y], [vect_dir_normal.x, vect_dir_normal.y]]
         cpt = 0
         for axe in axes:
-            self_interval = self.project(axe, self.coins)
-            robot_interval = robot.project(axe, robot.coins)
-            if self_interval[0] <= robot_interval[1] and robot_interval[0] <= self_interval[1]:
+            self_interval = project(axe, self.coins)
+            point_interval = project(axe, robot.coins)
+            if self_interval[0] <= point_interval[1] and point_interval[0] <= self_interval[1]:
                 cpt += 1
         return cpt == 4
+
+    def in_obstacle(self, pos_x: float, pos_y: float):
+        """Tester si le point (x,y) fait portie de l'obstacle
+
+        :param pos_x: x position
+        :param pos_y: y position
+        :return: True si collision, sinon False
+        """
+        axes = [[1, 0], [0, 1]]
+        cpt = 0
+        for axe in axes:
+            self_interval = project(axe, self.coins)
+            point_interval = project(axe, [(pos_x, pos_y)])
+            if self_interval[0] <= point_interval[1] and point_interval[0] <= self_interval[1]:
+                cpt += 1
+        return cpt == 2

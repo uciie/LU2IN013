@@ -1,6 +1,6 @@
 import unittest
-from MVC.modele.robot.robot_mere import Roue
-from MVC.modele.robot.robot_fils import Robot
+from MVC.modele.robot.robot import Roue
+from MVC.modele.robot.simu_robot import Robot
 
 class TestRoue(unittest.TestCase):
 

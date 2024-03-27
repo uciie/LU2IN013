@@ -1,9 +1,8 @@
 import threading
 
-from MVC.modele.vecteur import Vecteur
+from MVC.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from MVC.modele.simulation import Simulation
-from MVC.modele.objets import SimuRobot, Arene, ObstacleRectangle
-
+from MVC.modele.vecteur import Vecteur
 
 def main():
     # Création du verrou
@@ -28,9 +27,12 @@ def main():
     # donner une vitesse au robot
     robot.set_vitesse_roue(0, 50)
 
+    print(robot.info())
     # demarer la simulation
     simu.run()
 
 
+
 if __name__ == '__main__':
     main()
+

@@ -1,6 +1,3 @@
-from ..modele.vecteur import Vecteur
-
-
 class Roue:
     def __init__(self, rayon: float, vmax_ang: float):
         """Initialisation d'une roue
@@ -25,48 +22,20 @@ class Roue:
     @property
     def vitesse_angulaire(self) -> float:
         """Obtient la vitesse angulaire actuelle de la roue."""
+
         return self._vitesse_angulaire
 
     @vitesse_angulaire.setter
-    def vitesse_angulaire(self, value: float) -> None:
+    def vitesse_angulaire(self, value: float):
         """Modifie la vitesse angulaire de la roue, en s'assurant qu'elle ne dépasse pas la vitesse maximale.
 
         :param value: Nouvelle vitesse angulaire de la roue.
         """
-        self._vitesse_angulaire = min(value, self._vmax_ang)
+        if value < -self.vmax_ang:
+            self._vitesse_angulaire = -self.vmax_ang
+        elif value > self.vmax_ang:
+            self._vitesse_angulaire = self.vmax_ang
+        else:
+            self._vitesse_angulaire = value
 
 
-class Capteur:
-    def __init__(self, vecteur: Vecteur):
-        """Initialisation du capteur
-
-        :param vecteur : Vecteur directeur envoyé
-        :returns : Retourne une instance de la classe Capteur
-        """
-        # Vecteur directeur
-        self._vecteur = vecteur
-        self._deg_max = 10
-        self._active = False
-
-    @property
-    def vecteur(self):
-        """Propriété pour l'attribut vecteur"""
-        return self._vecteur
-
-    @property
-    def deg_max(self) -> float:
-        """Propriété pour l'attribut deg_max
-        :returns : Le degree maximale du capteur
-        """
-        return self._deg_max
-
-    @property
-    def active(self) -> bool:
-        """Propriété pour l'attribut active
-        :return: True si le capteur est active et False sinon
-        """
-        return self._active
-
-    @active.setter
-    def active(self, value: bool):
-        self._active = value
