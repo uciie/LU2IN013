@@ -36,6 +36,6 @@ class Roue:
         elif value > self.vmax_ang:
             self._vitesse_angulaire = self.vmax_ang
         else:
-            self.vitesse_angulaire = value
+            self._vitesse_angulaire = value
 
 
