@@ -4,8 +4,10 @@ from MVC.controller.adaptateur_robot_simu import AdaptateurRobotSimu
 from MVC.controller.controleur import Controleur
 from MVC.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from MVC.modele.simulation import Simulation
-from MVC.modele.vecteur import Vecteur
+from MVC.modele.utilitaire import Vecteur
 from MVC.view.affichage import Affichage
+
+from strategies_prefaites import test_if, test_while
 
 
 class Demo:
@@ -23,25 +25,25 @@ class Demo:
         largeur, hauteur = 500, 500
         dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
 
-        # Initialisation de l'arene, robot, obstacle
-        arene = Arene("Simulation de déplacement du robot", largeur, hauteur, echelle)
+        # Initialisation de l'self.arene, robot, obstacle
+        self.arene = Arene("Simulation de déplacement du robot", largeur, hauteur, echelle)
         self.robot = SimuRobot("R", int(largeur / 2), int(hauteur / 2), dim_robot_x, dim_robot_y, 10, 150, color="red")
         obs = ObstacleRectangle(100, 100, Vecteur(10, 10), Vecteur(20, 20), color="blue")
 
         # Ajouter un obstacle dans l'arene
-        arene.add_obstacle(obs)
+        #self.arene.add_obstacle(obs)
 
         # Créer la simulation
-        simu = Simulation("Simulation", dt_simu, self.robot, arene, lock_sim)
+        simu = Simulation("Simulation", dt_simu, self.robot, self.arene, lock_sim)
 
         # Créer l'adaptateur
-        adaptateur = AdaptateurRobotSimu(self.robot, simu)
+        self.adaptateur = AdaptateurRobotSimu(self.robot, simu)
 
         # Création du module View
         view = Affichage(simu, dt_affichage, lock_aff)
 
         # Création du module Controller
-        self.controller = Controleur(adaptateur, dt_controller)
+        self.controller = Controleur(self.adaptateur, dt_controller)
 
         # Ajout du lien de communication entre view et controller
         view.controller = self.controller
@@ -59,3 +61,18 @@ class Demo:
 
 if __name__ == '__main__':
     demo = Demo()
+    # Obstacle
+    obs1 = ObstacleRectangle(40, 40, Vecteur(10, 10), Vecteur(20, 20), color="blue")
+    obs2 = ObstacleRectangle(400, 400, Vecteur(10, 10), Vecteur(20, 20), color="blue")
+    obs3 = ObstacleRectangle(400, 40, Vecteur(10, 10), Vecteur(20, 20), color="blue")
+    obs4 = ObstacleRectangle(40, 400, Vecteur(10, 10), Vecteur(20, 20), color="blue")
+    obs5 = ObstacleRectangle(demo.robot.pos_x, 40, Vecteur(10, 10), Vecteur(20, 20), color="blue")
+
+    # Ajouter obstacle dans l'arene
+    demo.arene.add_obstacle(obs1)
+    demo.arene.add_obstacle(obs2)
+    demo.arene.add_obstacle(obs3)
+    demo.arene.add_obstacle(obs4)
+    demo.arene.add_obstacle(obs5)
+
+    demo.controller.add_strat(test_while(demo.controller))

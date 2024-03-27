@@ -6,6 +6,7 @@ from threading import Thread
 
 class Adaptateur(ABC):
     """Classe mere d'adaptateur de robot'"""
+
     def __init__(self) -> None:
         """ Initialise l'adaptateur
         """
@@ -76,19 +77,24 @@ class Adaptateur(ABC):
         pass
 
     @abstractmethod
-    def actualiser(self):
-        """Actualiser la simulation
-        """
+    def active_trace(self, val: bool):
+        """ Activation du tracage de parcours"""
         pass
 
     @abstractmethod
-    def active_trace(self, val: bool):
-        """ Activation du tracage de parcours"""
+    def get_distance(self) -> float:
+        """Le distance du robot et l'obstacle"""
+        pass
+
+    @abstractmethod
+    def rayon(self)->float:
+        """Rayon de rotation"""
         pass
 
 
 class Strategie(ABC):
     """Classe mere de strategie"""
+
     def __init__(self):  # , adaptateur: Adaptateur):
         """ Initialise la classe Strategie
         """
@@ -112,6 +118,7 @@ class Strategie(ABC):
 
 class Controleur(Thread):
     """classe Controleur"""
+
     def __init__(self, adaptateur: Adaptateur, dt: float):
         """
         Initialise le contrôleur avec un robot, une vue et un intervalle de temps.
@@ -140,7 +147,7 @@ class Controleur(Thread):
         self.strat = strat
         self.strat.start()
 
-    def stop(self):
+    def stop(self)->bool:
         """Vérifie si toutes les étapes sont terminées
         """
         if not self.strat:

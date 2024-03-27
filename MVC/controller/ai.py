@@ -4,7 +4,7 @@ import math
 from ..controller.controleur import Adaptateur, Strategie
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG, filename='ai.log', filemode='w',
+logging.basicConfig(level=logging.DEBUG, filename='logs/ai.log', filemode='w',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
@@ -13,6 +13,7 @@ logging.basicConfig(level=logging.DEBUG, filename='ai.log', filemode='w',
 
 class Go(Strategie):
     """ Classe responsable d'avancer le robot """
+
     def __init__(self, adaptateur: Adaptateur, distance: float, v_ang_d: float, v_ang_g: float,
                  active_trace: bool = False) -> None:
         """
@@ -57,6 +58,7 @@ class Go(Strategie):
 
 class TournerDeg(Strategie):
     """Classe qui permet de tourner le robot d'un certain degree"""
+
     def __init__(self, adaptateur: Adaptateur, angle: float, v_ang: float, active_trace: bool = False) -> None:
         """
         :param adaptateur: l'adaptateur du robot
@@ -102,6 +104,7 @@ class TournerDeg(Strategie):
 
 class StrategieSequentielle(Strategie):
     """Classe Strategie sequentielle permettant de faire des combinaisons de la strategie basique"""
+
     def __init__(self, adaptateur: Adaptateur, steps: list[Strategie]) -> None:
         """
         :param adaptateur: adaptateur du robot
@@ -136,3 +139,108 @@ class StrategieSequentielle(Strategie):
             self.current_step += 1
             if self.current_step < len(self.steps):
                 self.steps[self.current_step].start()
+
+
+class Stop(Strategie):
+    """Strategie qui ne fait rien/ arrete le robot"""
+
+    def __init__(self, adaptateur: Adaptateur):
+        """
+        :param adaptateur: adaptateur du robot
+        """
+        super().__init__()
+        self.adaptateur = adaptateur
+        self.logger = logging.getLogger(__name__)
+
+    def start(self):
+        """commencer la strategie"""
+        self.logger.info("Starting STOP strategy")
+        self.adaptateur.set_vitesse_roue(0, 0)
+
+    def stop(self) -> bool:
+        """Verifier si la strategie est finie
+        :return: True si la strategie est finie, False sinon"""
+        return True
+
+    def step(self):
+        pass
+
+
+class StrategieIf(Strategie):
+    """Classe Strategie conditionnelle faire strat_a si condition verifiée, sinon strat_b"""
+
+    def __init__(self, adaptateur: Adaptateur, strat_a: Strategie, strat_b: Strategie, condition: float) -> None:
+        """
+        :param adaptateur: adaptateur du robot
+        :param strat_a: strategie A
+        :param strat_b: strategie B
+        :param condition: condition
+        """
+        super().__init__()
+        self.adaptateur = adaptateur
+        self.stratA = strat_a
+        self.stratB = strat_b
+
+        self.condition = condition
+        self.current_step = 0
+        self.logger = logging.getLogger(__name__)
+
+        # Initialise strat_a_faire à None
+        self.strat_a_faire = None
+
+    def start(self):
+        """commencer la strategie"""
+        self.logger.info("Starting condition strategy")
+        #self.logger.info(f"capteur distance {self.adaptateur.get_distance}")
+        if self.adaptateur.get_distance >= self.condition:
+            self.strat_a_faire = self.stratA
+        else:
+            self.strat_a_faire = self.stratB
+        self.strat_a_faire.start()
+
+    def stop(self) -> bool:
+        """Verifier si la strategie est finie
+        :return: True si la strategie est finie, False sinon"""
+        # Verifier si strat_a_faire n'est pas vide
+        if self.strat_a_faire is not None:
+            return self.strat_a_faire.stop()
+
+    def step(self):
+        """pas de la strategie sequentielle """
+        if self.strat_a_faire is not None:
+            self.strat_a_faire.step()
+
+
+class StrategieWhile(Strategie):
+    """Classe Strategie while: faire strategie tant que condition verifiée"""
+
+    def __init__(self, adaptateur: Adaptateur, strat: Strategie, condition: float) -> None:
+        """
+        :param adaptateur: adaptateur du robot
+        :param strat_a: strategie A
+        :param strat_b: strategie B
+        :param condition: condition
+        """
+        super().__init__()
+        self.adaptateur = adaptateur
+        self.strat = strat
+
+        self.condition = condition
+        self.logger = logging.getLogger(__name__)
+
+    def start(self):
+        """commencer la strategie"""
+        self.logger.info("Starting while strategy")
+        self.strat.start()
+
+    def stop(self) -> bool:
+        """Verifier si la strategie est finie
+        :return: True si la strategie est finie, False sinon"""
+        self.logger.info("Fin while")
+        return self.strat.stop() or self.adaptateur.get_distance > self.condition
+
+    def step(self):
+        """pas de la strategie sequentielle """
+        if self.stop():
+            self.strat.start()
+        self.strat.step()

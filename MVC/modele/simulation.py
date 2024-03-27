@@ -3,7 +3,7 @@ import threading
 import time
 import logging
 from threading import Thread
-
+from .utilitaire import distance
 from .objets import Arene, SimuRobot
 
 # Configure logging
@@ -22,7 +22,7 @@ class Simulation(Thread):
 
         :param name: le nom de la simulation
         :param fps: le dt
-        :param robot: Le robot 
+        :param robot: Le robot
         :param arene: L'arene
         """
         super(Simulation, self).__init__()
@@ -60,7 +60,7 @@ class Simulation(Thread):
             self._robot = robot
 
     def remove_robot(self):
-        """ Retirer le robot 
+        """ Retirer le robot
         """
         self._robot = None
 
@@ -108,3 +108,31 @@ class Simulation(Thread):
         # end_time = time.time()  # Temps final de l'itération
         # self._fps = end_time - start_time  # Temps écoulé pour cette itération
         # time.sleep(1 / self._wait)
+
+    def detecte_distance(self, robot: SimuRobot) -> float:
+        """ Renvoie la distance entre l'osbtacle et le capteur
+
+        :return : la distance en float
+        """
+        # rayon du capteur capteur du robot
+        rayon = robot.vectDir
+
+        # position à verifier
+        new_x, new_y = robot.pos_x + robot.vectDir.x * robot.width / 2 + rayon.x, robot.pos_y + robot.vectDir.y * robot.length / 2 + rayon.y
+
+        # Verifier chaque pas de rayon
+        while self.arene.in_arene(new_x, new_y):
+            for obstable in self.arene.liste_Obstacles:
+                if obstable.in_obstacle(new_x, new_y):
+                    new_x -= rayon.x
+                    new_y -= rayon.y
+                    return distance((robot.pos_x + robot.vectDir.x * robot.width / 2, robot.pos_y + robot.vectDir.y * robot.length / 2),
+                                    (new_x, new_y))
+                new_x += rayon.x
+                new_y += rayon.y
+        new_x -= rayon.x
+        new_y -= rayon.y
+
+        # renvoie la norme, ie la distance
+        return distance((robot.pos_x + robot.vectDir.x * robot.width / 2, robot.pos_y + robot.vectDir.y * robot.length / 2),
+                                    (new_x, new_y))
