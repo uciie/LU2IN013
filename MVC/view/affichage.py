@@ -113,7 +113,8 @@ class Affichage(Thread):
         """
         # Efface les stratégies
         self._controller.strat = None
-        self._simu.robot.set_vitesse_roue(0, 0)
+        self._simu.robot.roue_droite.vitesse_angulaire = 0
+        self._simu.robot.roue_gauche.vitesse_angulaire = 0
         self._simu.robot.vectDir = self.initial_vectDir
         # Remettre le robot a la position initial
         self._simu.robot.pos_x, self._simu.robot.pos_y = self.initial_position
