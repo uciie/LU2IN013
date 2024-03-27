@@ -96,15 +96,15 @@ class Simulation(Thread):
         # Verifier si le robot a crash avec un obstacle
         for obstacle in self._arene.liste_Obstacles:
             if obstacle.test_collision(self._robot):
-                self._simu.robot.roue_droite.vitesse_angulaire = 0
-                self._simu.robot.roue_gauche.vitesse_angulaire = 0
+                self.robot.roue_droite.vitesse_angulaire = 0
+                self.robot.roue_gauche.vitesse_angulaire = 0
                 sys.exit()
                 # self.remove_robot()
 
         # Verifier si le robot a crash sur un mur
         if self._robot.test_crash(self._arene.max_x, self._arene.max_y):
-            self._simu.robot.roue_droite.vitesse_angulaire = 0
-            self._simu.robot.roue_gauche.vitesse_angulaire = 0
+            self.robot.roue_droite.vitesse_angulaire = 0
+            self.robot.roue_gauche.vitesse_angulaire = 0
             sys.exit()
             # self.remove_robot()
         # end_time = time.time()  # Temps final de l'itération
