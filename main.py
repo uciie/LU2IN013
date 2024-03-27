@@ -5,7 +5,7 @@ from MVC.controller.controleur import Controleur
 from MVC.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from MVC.modele.simulation import Simulation
 from MVC.modele.utilitaire import Vecteur
-from MVC.view.affichage import Affichage
+from MVC.view.affichage2d import Affichage2D
 
 from strategies_prefaites import test_if, test_while
 
@@ -40,7 +40,7 @@ class Demo:
         self.adaptateur = AdaptateurRobotSimu(self.robot, simu)
 
         # Création du module View
-        view = Affichage(simu, dt_affichage, lock_aff)
+        view = Affichage2D(simu, dt_affichage, lock_aff)
 
         # Création du module Controller
         self.controller = Controleur(self.adaptateur, dt_controller)

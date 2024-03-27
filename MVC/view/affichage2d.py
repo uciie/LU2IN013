@@ -13,14 +13,14 @@ from ..modele.simulation import Simulation
 # , Go_cap, Tourner_deg, Test_collision
 
 
-class Affichage(Thread):
+class Affichage2D(Thread):
     """Classe view qui permet d'afficher l'interface graphique"""
     def __init__(self, simu: Simulation, dt: float, lock: threading.RLock):
-        """Initialise un Affichage graphique.
+        """Initialise un Affichage2D graphique.
 
         :param simu : L'arène qui sera affichée
         """
-        super(Affichage, self).__init__()
+        super(Affichage2D, self).__init__()
 
         # Configure logging
         logging.basicConfig(level=logging.DEBUG, filename='ai.log', filemode='w',
@@ -215,7 +215,7 @@ class Affichage(Thread):
         self.message_label['text'] = ''
 
     def draw_obj(self, objet: Any) -> 'int | tuple[int, int]':
-        """Dessine un objet sur le canevas de l'Affichage.
+        """Dessine un objet sur le canevas de l'Affichage2D.
 
         :param objet: objet à dessiner.
         :returns: Identifiant unique de l'objet sur le canevas.
@@ -254,7 +254,7 @@ class Affichage(Thread):
             self.delete_draw(pas)
 
     def delete_draw(self, *obj_ids: int):
-        """Supprime un ou plusieurs dessins de l'Affichage.
+        """Supprime un ou plusieurs dessins de l'Affichage2D.
 
         :param obj_ids: Identifiants des objets à supprimer du canevas.
         """
