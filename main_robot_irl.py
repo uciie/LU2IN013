@@ -1,10 +1,10 @@
 import threading
 
-from MVC.controller.adaptateur_robot_irl import AdaptateurRobotIrl
-from MVC.controller.controleur import Controleur
-from MVC.robot.robot2I013 import Robot2IN013
+from src.controller.adaptateur_robot_irl import AdaptateurRobotIrl
+from src.controller.controleur import Controleur
+from src.robot.robot2I013 import Robot2IN013
 
-from MVC.controller.ai import Go, TournerDeg
+from src.controller.ai import Go, TournerDeg
 
 
 def main():
@@ -12,7 +12,7 @@ def main():
 
     dt_controller = 1 / 1000
 
-    # Initialisation de l'arene, robot, obstacle
+    # Initialisation de l'_arene, robot, obstacle
     robot = Robot2IN013()
 
     # Créer l'adaptateur
@@ -27,7 +27,7 @@ def main():
 
     # Tourner
     strat2 = TournerDeg(controller.adaptateur, 90, 10)
-    controller.add_strat(strat2)
+    #controller.add_strat(strat2)
 
     controller.start()
     controller.join()

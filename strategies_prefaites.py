@@ -1,4 +1,4 @@
-from MVC.controller.ai import Go, StrategieSequentielle, TournerDeg, StrategieIf, Stop, Strategie, StrategieWhile
+from src.controller.ai import Go, StrategieSequentielle, TournerDeg, StrategieIf, Stop, Strategie, StrategieWhile
 
 def test_while(controller) -> Strategie:
     tracer_parcours = True

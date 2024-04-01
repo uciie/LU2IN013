@@ -1,10 +1,10 @@
 import unittest
 import threading
-from MVC.controller.controleur import Controleur
-from MVC.controller.adaptateur_robot_simu import AdaptateurRobotSimu
-from MVC.modele.objets import Arene, SimuRobot, ObstacleRectangle
-from MVC.modele.simulation import Simulation
-from MVC.modele.vecteur import Vecteur
+from src.controller.controleur import Controleur
+from src.controller.adaptateur_robot_simu import AdaptateurRobotSimu
+from src.modele.objets import Arene, SimuRobot, ObstacleRectangle
+from src.modele.simulation import Simulation
+from src.modele.utilitaire import Vecteur
 from strategies_prefaites import test_go_sans_tracer
 
 class TestSansView(unittest.TestCase):
@@ -18,12 +18,12 @@ class TestSansView(unittest.TestCase):
         largeur, hauteur = 500, 500
         dim_robot_x, dim_robot_y = int(largeur / 10), int(hauteur / 10)
 
-        # Initialisation de l'arene, robot, obstacle
+        # Initialisation de l'_arene, robot, obstacle
         arene = Arene("Simulation de déplacement du robot", largeur, hauteur, echelle)
         robot = SimuRobot("R", int(largeur / 2), int(hauteur / 2), dim_robot_x, dim_robot_y, 10, 150, color="red")
         obs = ObstacleRectangle(100, 100, Vecteur(10, 10), Vecteur(20, 20), color="blue")
 
-        # Ajouter un obstacle dans l'arene
+        # Ajouter un obstacle dans l'_arene
         arene.add_obstacle(obs)
 
         # Créer la simulation
