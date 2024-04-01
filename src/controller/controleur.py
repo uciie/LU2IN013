@@ -43,13 +43,6 @@ class Adaptateur(ABC):
 
     @property
     @abstractmethod
-    def vitesse_ang_roues(self) -> tuple[float, float]:
-        """ Obtenir la vitesse angulaire des roues
-        """
-        pass
-
-    @property
-    @abstractmethod
     def distance_parcourue(self) -> float:
         """ Obtenir la distance parcourue
         """
@@ -69,13 +62,6 @@ class Adaptateur(ABC):
         """
         pass
 
-    @property
-    @abstractmethod
-    def robot(self):
-        """ robot
-        """
-        pass
-
     @abstractmethod
     def active_trace(self, val: bool):
         """ Activation du tracage de parcours"""
@@ -87,7 +73,7 @@ class Adaptateur(ABC):
         pass
 
     @abstractmethod
-    def rayon(self)->float:
+    def rayon(self) -> float:
         """Rayon de rotation"""
         pass
 
@@ -147,7 +133,7 @@ class Controleur(Thread):
         self.strat = strat
         self.strat.start()
 
-    def stop(self)->bool:
+    def stop(self) -> bool:
         """Vérifie si toutes les étapes sont terminées
         """
         if not self.strat:
@@ -165,6 +151,7 @@ class Controleur(Thread):
         """Faire la commande suivante"""
         # with self.lock:
         if self.stop():
+            self._running = False
             return
         # Faire la stratégie suivante
         self.strat.step()

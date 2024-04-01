@@ -49,7 +49,7 @@ class SimuRobot:
 
         # Direction
         self._theta = 0.  # angle en degré
-        # Ancienne angle
+        # Ancien angle
         self._last_theta = 0.  # angle en degré
 
         # Activation du tracage du parcours
@@ -102,20 +102,20 @@ class SimuRobot:
 
     @last_pos_x.setter
     def last_pos_x(self, value: float):
-        """setter de la derniere position en x du robot
-        :param value: Nouvelle de la derniere position en x """
+        """Setter de la derniere position en x du robot
+        :param value: Nouvelle de la derniere position en """
         self._last_pos_x = value
 
     @property
     def last_pos_y(self) -> float:
-        """getter de la derniere position en y du robot
+        """Getter de la derniere position en y du robot
         :return: derniere position en y du robot"""
         return self._last_pos_y
 
     @last_pos_y.setter
     def last_pos_y(self, value: float):
-        """setter de la derniere position en y
-        :param value: Nouvelle de la derniere position en y"""
+        """Setter de la derniere position en y
+        :param value: Nouvelle de la derniere position en"""
         self._last_pos_y = value
 
     # Propriété pour l'attribut theta
@@ -127,8 +127,7 @@ class SimuRobot:
 
     @theta.setter
     def theta(self, value):
-        """setter du theta du robot
-        :param value: nouveau theta du robot"""
+        """Setter du theta du nouveau robot : param value : theta du robot"""
         self._theta = value
 
     @property
@@ -139,7 +138,7 @@ class SimuRobot:
 
     @last_theta.setter
     def last_theta(self, value):
-        """setter du dernier theta du robot
+        """Setter du dernier theta du robot
         :param value: nouveau dernier theta """
         self._last_theta = value
 
@@ -165,12 +164,12 @@ class SimuRobot:
 
     @color.setter
     def color(self, color: str):
-        """setter de la couleur de l'obstacle """
+        """Setter de la couleur de l'obstacle """
         self._color = color
 
     @property
     def coins(self):
-        """ Renvoie les coordonnees des 4 coins du robot
+        """ Renvoyer les coordonnees des 4 coins du robot
 
         :returns: list[float]
         """
@@ -279,7 +278,7 @@ class Obstacle(ABC):
 
     @color.setter
     def color(self, color: str):
-        """setter de la couleur de l'obstacle """
+        """Setter de la couleur de l'obstacle """
         self._color = color
 
     @property
@@ -408,7 +407,7 @@ class ObstacleRectangle(Obstacle):
         return cpt == 4
 
     def in_obstacle(self, pos_x: float, pos_y: float):
-        """Tester si le point (x,y) fait portie de l'obstacle
+        """Tester si le point (x, y) fait portie de l'obstacle
 
         :param pos_x: x position
         :param pos_y: y position

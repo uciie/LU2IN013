@@ -12,6 +12,8 @@ from ..modele.simulation import Simulation
 
 # , Go_cap, Tourner_deg, Test_collision
 
+# bibliotheque pour la 3d
+
 
 class Affichage2D(Thread):
     """Classe view qui permet d'afficher l'interface graphique"""

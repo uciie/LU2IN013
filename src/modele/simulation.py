@@ -23,7 +23,7 @@ class Simulation(Thread):
         :param name: le nom de la simulation
         :param fps: le dt
         :param robot: Le robot
-        :param arene: L'arene
+        :param arene: L'_arene
         """
         super(Simulation, self).__init__()
         self.name = name
@@ -85,7 +85,7 @@ class Simulation(Thread):
             time.sleep(sleep_time)
 
     def update(self):
-        """ Actualiser l'arene selon le dt ecoule
+        """ Actualiser l'_arene selon le dt ecoule
         """
 
         with self.lock_aff:
@@ -96,15 +96,13 @@ class Simulation(Thread):
         # Verifier si le robot a crash avec un obstacle
         for obstacle in self._arene.liste_Obstacles:
             if obstacle.test_collision(self._robot):
-                self.robot.roue_droite.vitesse_angulaire = 0
-                self.robot.roue_gauche.vitesse_angulaire = 0
                 sys.exit()
                 # self.remove_robot()
 
         # Verifier si le robot a crash sur un mur
         if self._robot.test_crash(self._arene.max_x, self._arene.max_y):
-            self.robot.roue_droite.vitesse_angulaire = 0
-            self.robot.roue_gauche.vitesse_angulaire = 0
+            self._robot.roue_droite.vitesse_angulaire = 0
+            self._robot.roue_gauche.vitesse_angulaire = 0
             sys.exit()
             # self.remove_robot()
         # end_time = time.time()  # Temps final de l'itération
@@ -123,12 +121,13 @@ class Simulation(Thread):
         new_x, new_y = robot.pos_x + robot.vectDir.x * robot.width / 2 + rayon.x, robot.pos_y + robot.vectDir.y * robot.length / 2 + rayon.y
 
         # Verifier chaque pas de rayon
-        while self.arene.in_arene(new_x, new_y):
-            for obstable in self.arene.liste_Obstacles:
+        while self._arene.in_arene(new_x, new_y):
+            for obstable in self._arene.liste_Obstacles:
                 if obstable.in_obstacle(new_x, new_y):
                     new_x -= rayon.x
                     new_y -= rayon.y
-                    return distance((robot.pos_x + robot.vectDir.x * robot.width / 2, robot.pos_y + robot.vectDir.y * robot.length / 2),
+                    return distance((robot.pos_x + robot.vectDir.x * robot.width / 2,
+                                     robot.pos_y + robot.vectDir.y * robot.length / 2),
                                     (new_x, new_y))
                 new_x += rayon.x
                 new_y += rayon.y
@@ -136,5 +135,6 @@ class Simulation(Thread):
         new_y -= rayon.y
 
         # renvoie la norme, ie la distance
-        return distance((robot.pos_x + robot.vectDir.x * robot.width / 2, robot.pos_y + robot.vectDir.y * robot.length / 2),
-                                    (new_x, new_y))
+        return distance(
+            (robot.pos_x + robot.vectDir.x * robot.width / 2, robot.pos_y + robot.vectDir.y * robot.length / 2),
+            (new_x, new_y))

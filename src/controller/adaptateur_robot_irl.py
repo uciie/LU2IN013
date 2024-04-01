@@ -30,10 +30,6 @@ class AdaptateurRobotIrl(Adaptateur):
     def v_ang_g(self, v_ang_roue_g: float):
         self._v_ang_roue_g = v_ang_roue_g
 
-    @property
-    def robot(self) -> Robot2IN013:
-        return self._robot
-
     def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float):
         """ Modifier la vitesse des roues
 
@@ -42,8 +38,8 @@ class AdaptateurRobotIrl(Adaptateur):
         """
         self._v_ang_roue_d = v_ang_roue_d
         self._v_ang_roue_g = v_ang_roue_g
-        self._robot.set_motor_dps("roue_droite", v_ang_roue_d) # port : 1
-        self._robot.set_motor_dps("roue_gauche", v_ang_roue_g) # port : 2
+        self._robot.set_motor_dps(self._robot.MOTOR_RIGHT, v_ang_roue_d)  # port : 1
+        self._robot.set_motor_dps(self._robot.MOTOR_LEFT, v_ang_roue_g)  # port : 2
 
     @property
     def rayon(self) -> float:
@@ -65,26 +61,17 @@ class AdaptateurRobotIrl(Adaptateur):
         # obtenir la position des angles des roues
         pos_roues_x, pos_roues_y = self._robot.get_motor_position()
         # moyenne d'angle parcourue
-        angle_parcourue = (pos_roues_x + pos_roues_y) / 2
+        angle = (pos_roues_x + pos_roues_y) / 2
 
-        # self.offset_motor_encoder(self.MOTOR_LEFT, self.read_encoders()[0])
-        # self.offset_motor_encoder(self.MOTOR_RIGHT, self.read_encoders()[1])
-        self._robot.offset_motor_encoder("roue_droite", 0)
-        self._robot.offset_motor_encoder("roue_gauche", 0)
+        self._robot.offset_motor_encoder(self._robot.MOTOR_LEFT, self._robot.read_encoders()[0])
+        self._robot.offset_motor_encoder(self._robot.MOTOR_RIGHT, self._robot.read_encoders()[1])
 
-        return angle_parcourue
+        return angle
 
     def stop(self):
         """ Arreter le robot irl
         """
         self.set_vitesse_roue(0, 0)
-
-    @property
-    def vitesse_ang_roues(self) -> tuple[float, float]:
-        """ Obtenir la vitesse angulaire des roues droite et gauche
-        :return: la vitesse angulaire des roues
-        """
-        return self._v_ang_roue_d, self._v_ang_roue_g
 
     @property
     def info(self) -> str:
@@ -107,5 +94,4 @@ class AdaptateurRobotIrl(Adaptateur):
             1. L'intervalle est de **5-8,000** millimeters.
             2. Lorsque la valeur est en dehors de l'intervalle, le retour est **8190**.
         """
-        #        return self.distanceSensor.read_range_single(False)
-        return self.robot.get_distance()
+        return self._robot.get_distance()
