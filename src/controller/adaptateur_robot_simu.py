@@ -1,9 +1,9 @@
 import logging
 
-from MVC.controller.controleur import Adaptateur
-from MVC.modele.objets import SimuRobot
-from MVC.modele.simulation import Simulation
-from MVC.modele.utilitaire import distance, point_le_plus_loin
+from src.controller.controleur import Adaptateur
+from src.modele.objets import SimuRobot
+from src.modele.simulation import Simulation
+from src.modele.utilitaire import distance, point_le_plus_loin
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, filename='logs/simu.log', filemode='w',
@@ -25,8 +25,8 @@ class AdaptateurRobotSimu(Adaptateur):
         self._robot = robot
         self._simulation = simulation
 
-        self.last_theta = self._robot.last_theta
-        self.last_pos_x, self.last_pos_y = self._robot.last_pos_x, self._robot.last_pos_y
+        self._last_theta = self._robot.last_theta
+        self._last_pos_x, self._last_pos_y = self._robot.last_pos_x, self._robot.last_pos_y
         self.logger = logging.getLogger(__name__)
 
     @property
@@ -39,37 +39,37 @@ class AdaptateurRobotSimu(Adaptateur):
     def last_theta(self) -> float:
         """Getter dernier tetha enregistre depuis le dernier appel
         :return float: l'angle theta du robot'"""
-        return self.last_theta
+        return self._last_theta
 
     @last_theta.setter
     def last_theta(self, theta: float):
-        """setter du dernier angle theta enregistre depuis le dernier appel
-        :param float theta: nouveau angle theta '"""
-        self.last_theta = theta
+        """Setter du dernier angle theta enregistre depuis le dernier appel
+        :param float theta: nouvel angle theta '"""
+        self._last_theta = theta
 
     @property
     def last_pos_x(self) -> float:
         """Getter de la derniere position en x enregistree depuis le dernier appel
         :return float: derniere position en x enregistree"""
-        return self.last_pos_x
+        return self._last_pos_x
 
     @last_pos_x.setter
     def last_pos_x(self, x: float):
         """Setter de la derniere position en x enregistree
         :param float x: nouvelle position"""
-        self.last_pos_x = x
+        self._last_pos_x = x
 
     @property
     def last_pos_y(self) -> float:
         """Getter de la derniere position en y enregistree depuis le dernier appel
         :return float: derniere position en y enregistree"""
-        return self.last_pos_y
+        return self._last_pos_y
 
     @last_pos_y.setter
     def last_pos_y(self, y: float):
         """Setter de la derniere position en y enregistree
         :param float y: nouvelle position"""
-        self.last_pos_y = y
+        self._last_pos_y = y
 
     def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float):
         """ Modifier la vitesse des roues
@@ -80,13 +80,12 @@ class AdaptateurRobotSimu(Adaptateur):
         self._robot.roue_droite.vitesse_angulaire = v_ang_roue_d
         self._robot.roue_gauche.vitesse_angulaire = v_ang_roue_g
 
-    @property
     def distance_parcourue(self) -> float:
         """ Obtenir la distance parcourue
         :return: la distance parcourue
         """
-        dist = distance((self._robot.pos_x, self._robot.pos_y), (self.last_pos_x, self.last_pos_y))
-        self.last_pos_x, self.last_pos_y = self._robot.pos_x, self._robot.pos_y
+        dist = distance((self._robot.pos_x, self._robot.pos_y), (self._last_pos_x, self._last_pos_y))
+        self._last_pos_x, self._last_pos_y = self._robot.pos_x, self._robot.pos_y
         return dist
 
     @property
@@ -94,13 +93,13 @@ class AdaptateurRobotSimu(Adaptateur):
         """ Obtenir l'angle parcouru
         :return: l'angle parcouru
         """
-        angle_parcouru = self._robot.theta - self.last_theta
+        angle_parcouru = self._robot.theta - self._last_theta
         # Ajustement de l'angle parcouru selon le sens trigonométrique ou horloge
         if angle_parcouru < -180:
             angle_parcouru += 360
         elif angle_parcouru > 180:
             angle_parcouru -= 360
-        self.last_theta = self._robot.theta
+        self._last_theta = self._robot.theta
         return angle_parcouru
 
     def stop(self):

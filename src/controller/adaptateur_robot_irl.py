@@ -1,7 +1,7 @@
 import math
 
-from MVC.controller.controleur import Adaptateur
-from MVC.robot.robot2I013 import Robot2IN013
+from src.controller.controleur import Adaptateur
+from src.robot.robot2I013 import Robot2IN013
 
 
 class AdaptateurRobotIrl(Adaptateur):
@@ -46,7 +46,6 @@ class AdaptateurRobotIrl(Adaptateur):
         """ Rayon de rotation du robot"""
         return self._robot.WHEEL_BASE_WIDTH
 
-    @property
     def distance_parcourue(self) -> float:
         """ Obtenir la distance parcourue
         :returns : Renvoie la distance parcourue du robot
@@ -90,7 +89,7 @@ class AdaptateurRobotIrl(Adaptateur):
     def get_distance(self) -> float:
         """
         Lit le capteur de distance (en mm).
-        :returns: entier distance en millimetre.
+        :returns: Entier distance en millimetre.
             1. L'intervalle est de **5-8,000** millimeters.
             2. Lorsque la valeur est en dehors de l'intervalle, le retour est **8190**.
         """

@@ -191,8 +191,8 @@ class StrategieIf(Strategie):
     def start(self):
         """commencer la strategie"""
         self.logger.info("Starting condition strategy")
-        #self.logger.info(f"capteur distance {self.adaptateur.get_distance}")
-        if self.adaptateur.get_distance >= self.condition:
+        #self.logger.info(f"capteur distance {self.adaptateur.get_distance()}")
+        if self.adaptateur.get_distance() >= self.condition:
             self.strat_a_faire = self.stratA
         else:
             self.strat_a_faire = self.stratB
@@ -236,7 +236,7 @@ class StrategieWhile(Strategie):
         """Verifier si la strategie est finie
         :return: True si la strategie est finie, False sinon"""
         self.logger.info("Fin while")
-        return self.strat.stop() or self.adaptateur.get_distance > self.condition
+        return self.strat.stop() or self.adaptateur.get_distance() > self.condition
 
     def step(self):
         """pas de la strategie sequentielle """

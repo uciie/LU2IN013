@@ -37,5 +37,3 @@ class Roue:
             self._vitesse_angulaire = self.vmax_ang
         else:
             self._vitesse_angulaire = value
-
-

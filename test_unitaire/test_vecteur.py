@@ -1,5 +1,5 @@
 import unittest
-from MVC.modele.vecteur import Vecteur
+from src.modele.utilitaire import Vecteur
 
 class TestVecteur(unittest.TestCase):
 
