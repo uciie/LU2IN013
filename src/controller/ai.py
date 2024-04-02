@@ -217,8 +217,7 @@ class StrategieWhile(Strategie):
     def __init__(self, adaptateur: Adaptateur, strat: Strategie, condition: float) -> None:
         """
         :param adaptateur: adaptateur du robot
-        :param strat_a: strategie A
-        :param strat_b: strategie B
+        :param strat: strategie
         :param condition: condition
         """
         super().__init__()

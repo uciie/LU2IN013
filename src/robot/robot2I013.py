@@ -131,7 +131,9 @@ class Robot2IN013:
             1. L'intervalle est de **5-8,000** millimeters.
             2. Lorsque la valeur est en dehors de l'intervalle, le retour est **8190**.
         """
-        return self.distanceSensor.read_range_single(False)
+        if random.random() > 0.5:
+            return 8190
+        return random.randint(5, 8000)
 
     def servo_rotate(self, position):
         """
