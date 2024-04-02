@@ -6,7 +6,7 @@ from src.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from src.modele.simulation import Simulation
 from src.modele.utilitaire import Vecteur
 from src.view.affichage2d import Affichage2D
-
+from src.controller.ai import Go, StrategieWhile
 from strategies_prefaites import test_if, test_while
 
 

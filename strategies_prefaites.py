@@ -75,8 +75,7 @@ def test_strat_seq_carre(controller) -> StrategieSequentielle:
 
 
 def test_go_sans_tracer(controller) -> Strategie:
-    tracer_parcours = False
-    strat = Go(controller.adaptateur, 50, 50, 50, tracer_parcours)
+    strat = Go(controller.adaptateur, 50, 50, 50)
     return strat
 
 

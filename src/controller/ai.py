@@ -44,7 +44,6 @@ class Go(Strategie):
         """Verifier si la strategie est fini ou non
         :return: True si la strategie est finie, False sinon"""
         self.logger.info(f"distance parcourue {self.parcouru}, distance {self.distance}")
-
         # v_roue_d, v_roue_g = self.adaptateur.vitesse_ang_roues
         return math.fabs(self.parcouru) >= math.fabs(self.distance)
 
@@ -85,19 +84,18 @@ class TournerDeg(Strategie):
         else:
             self.v_ang_d, self.v_ang_g = -self.v_ang, self.v_ang
             self.adaptateur.set_vitesse_roue(-self.v_ang, self.v_ang)
-        self.pos_ini = 1. * self.adaptateur.angle_parcourue()
+        self.pos_ini = 1. * self.adaptateur.angle_parcouru()
         self.parcouru = 0.
 
     def stop(self) -> bool:
         """Verifier si la strategie est fini ou non
         :return: True si la strategie est finie ou False sinon"""
         self.logger.info(f"angle parcourue {self.parcouru}, angle {self.angle}")
-        self.logger.info(self.adaptateur.info)
         return math.fabs(self.parcouru) >= math.fabs(self.angle)
 
     def step(self):
         """pas de la strategie"""
-        self.parcouru += self.adaptateur.angle_parcourue()
+        self.parcouru += self.adaptateur.angle_parcouru()
         if self.stop():
             self.adaptateur.stop()
             self.logger.info("TournerDeg strategy finished")
@@ -219,7 +217,8 @@ class StrategieWhile(Strategie):
     def __init__(self, adaptateur: Adaptateur, strat: Strategie, condition: float) -> None:
         """
         :param adaptateur: adaptateur du robot
-        :param strat: strategie
+        :param strat_a: strategie A
+        :param strat_b: strategie B
         :param condition: condition
         """
         super().__init__()

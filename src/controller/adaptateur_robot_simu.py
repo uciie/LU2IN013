@@ -19,7 +19,7 @@ class AdaptateurRobotSimu(Adaptateur):
     def __init__(self, robot: SimuRobot, simulation: Simulation):
         """ initialise la classe adaptateur_robot_simu
         :param robot: Robot simule
-        :param simulation: Simulation robot _arene
+        :param simulation: Simulation robot arene
         """
         super().__init__()
         self._robot = robot
@@ -88,18 +88,18 @@ class AdaptateurRobotSimu(Adaptateur):
         self._last_pos_x, self._last_pos_y = self._robot.pos_x, self._robot.pos_y
         return dist
 
-    def angle_parcourue(self) -> float:
+    def angle_parcouru(self) -> float:
         """ Obtenir l'angle parcouru
         :return: l'angle parcouru
         """
-        angle_parcouru = self._robot.theta - self._last_theta
+        angle = self._robot.theta - self._last_theta
         # Ajustement de l'angle parcouru selon le sens trigonométrique ou horloge
-        if angle_parcouru < -180:
-            angle_parcouru += 360
-        elif angle_parcouru > 180:
-            angle_parcouru -= 360
+        if angle < -180:
+            angle += 360
+        elif angle > 180:
+            angle -= 360
         self._last_theta = self._robot.theta
-        return angle_parcouru
+        return angle
 
     def stop(self):
         """ Arreter le robot irl
@@ -111,7 +111,6 @@ class AdaptateurRobotSimu(Adaptateur):
         """Activer ou désactiver le tracage du robot."""
         self._robot.activer_tracer_parcours(val)
 
-    @property
     def get_distance(self) -> float:
         """ Retourne la distance du robot et obstacle
         :return: la distance du robot

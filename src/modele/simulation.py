@@ -23,7 +23,7 @@ class Simulation(Thread):
         :param name: le nom de la simulation
         :param fps: le dt
         :param robot: Le robot
-        :param arene: L'_arene
+        :param arene: L'arene
         """
         super(Simulation, self).__init__()
         self.name = name
@@ -85,7 +85,7 @@ class Simulation(Thread):
             time.sleep(sleep_time)
 
     def update(self):
-        """ Actualiser l'_arene selon le dt ecoule
+        """ Actualiser l'arene selon le dt ecoule
         """
 
         with self.lock_aff:
@@ -112,7 +112,7 @@ class Simulation(Thread):
 
         :return : la distance en float
         """
-        # rayon du capteur capteur du robot
+        # rayon du capteur du robot
         rayon = robot.vectDir
 
         # position à verifier

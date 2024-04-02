@@ -48,7 +48,7 @@ class Adaptateur(ABC):
         pass
 
     @abstractmethod
-    def angle_parcourue(self) -> float:
+    def angle_parcouru(self) -> float:
         """ Obtenir l'angle parcouru
         """
         pass
@@ -67,7 +67,7 @@ class Adaptateur(ABC):
 
     @abstractmethod
     def get_distance(self) -> float:
-        """Le distance du robot et l'obstacle"""
+        """La distance du robot et l'obstacle"""
         pass
 
     @abstractmethod
@@ -149,7 +149,6 @@ class Controleur(Thread):
         """Faire la commande suivante"""
         # with self.lock:
         if self.stop():
-            self._running = False
             return
         # Faire la stratégie suivante
         self.strat.step()
