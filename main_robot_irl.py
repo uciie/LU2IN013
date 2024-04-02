@@ -1,5 +1,4 @@
 import threading
-
 from src.controller.adaptateur_robot_irl import AdaptateurRobotIrl
 from src.controller.controleur import Controleur
 
@@ -8,40 +7,26 @@ try:
 except ModuleNotFoundError:
     from src.robot.robot2I013 import Robot2IN013
 
-from src.controller.ai import Go, StrategieSequentielle, TournerDeg
-from strategies_prefaites import test_strat_seq_carre
+from src.controller.ai import Go, StrategieSequentielle, TournerDeg, StrategieIf, StrategieWhile
+from strategies_prefaites import test_strat_seq_carre, test_go_sans_tracer, test_tourner90, test_while
 
+class DemoIrl:
+    def __init__(self):
+        # Création du verrou
 
-def main():
-    # Création du verrou
+        dt_controller = 1 / 1000
 
-    dt_controller = 1 / 1000
+        # Initialisation de l'_arene, robot, obstacle
+        self.robot = Robot2IN013()
 
-    # Initialisation de l'_arene, robot, obstacle
-    robot = Robot2IN013()
+        # Créer l'adaptateur
+        self.adaptateur = AdaptateurRobotIrl(self.robot)
 
-    # Créer l'adaptateur
-    adaptateur = AdaptateurRobotIrl(robot)
+        # Création du module Controller
+        self.controller = Controleur(self.adaptateur, dt_controller)
 
-    # Création du module Controller
-    controller = Controleur(adaptateur, dt_controller)
-
-    # Avancer
-    strat1 = Go(controller.adaptateur, 100, 50, 50)
-    #controller.add_strat(strat1)
-
-    # Tourner
-    strat2 = TournerDeg(controller.adaptateur, 90, 50)
-    #controller.add_strat(strat2)
-
-    l_strat = [StrategieSequentielle(adaptateur, [strat1,strat2]) for _ in range(4)]
-    strat = StrategieSequentielle(adaptateur, l_strat)
-    controller.add_strat(strat)
-
-    #controller.add_strat(test_strat_seq_carre)
-    controller.start()
-    controller.join()
-
+        self.controller.start()
 
 if __name__ == '__main__':
-    main()
+    demo = DemoIrl()
+    demo.controller.add_strat(test_go_sans_tracer(demo.controller))
