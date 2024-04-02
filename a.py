@@ -56,18 +56,19 @@ class Affichage3D(ShowBase):
             # mise à jour de l'ancienne position de la souris
             self.last_mouse_x = mouse_x
             self.last_mouse_y = mouse_y
+        return task.cont
 
     def setupControls(self):
         """Configure les controles de la simulation"""
         
         
         # Définition des touches de contrôles
-        self.accept('arrow_up', self.changeHeight, [1]) # Augmenter la hauteur
-        self.accept('arrow_down', self.changeHeight, [-1]) # Diminuer la hauteur
-        self.accept('arrow_left', self.rotate, [-1]) # Rotation vers la gauche
-        self.accept('arrow_right', self.rotate, [1]) # Rotation vers la droite
-        self.accept('d', self.move, [1]) # Avancer
-        self.accept('q', self.move, [-1]) # Reculer
+        #self.accept('arrow_up', self.changeHeight, [1]) # Augmenter la hauteur
+        #self.accept('arrow_down', self.changeHeight, [-1]) # Diminuer la hauteur
+        #self.accept('arrow_left', self.rotate, [-1]) # Rotation vers la gauche
+        #self.accept('arrow_right', self.rotate, [1]) # Rotation vers la droite
+        #self.accept('d', self.move, [1]) # Avancer
+        #self.accept('q', self.move, [-1]) # Reculer
 
         self.accept('escape', self.releaseMouse) # Libère la souris
         self.accept('mouse1', self.captureMouse) # Capture la souris
