@@ -41,14 +41,12 @@ class Adaptateur(ABC):
         """
         pass
 
-    @property
     @abstractmethod
     def distance_parcourue(self) -> float:
         """ Obtenir la distance parcourue
         """
         pass
 
-    @property
     @abstractmethod
     def angle_parcourue(self) -> float:
         """ Obtenir l'angle parcouru

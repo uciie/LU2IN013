@@ -88,7 +88,6 @@ class AdaptateurRobotSimu(Adaptateur):
         self._last_pos_x, self._last_pos_y = self._robot.pos_x, self._robot.pos_y
         return dist
 
-    @property
     def angle_parcourue(self) -> float:
         """ Obtenir l'angle parcouru
         :return: l'angle parcouru

@@ -13,6 +13,7 @@ class AdaptateurRobotIrl(Adaptateur):
         super().__init__()
         self._robot = robot
         self._v_ang_roue_d, self._v_ang_roue_g = 0., 0.
+        self._last_motor_positions = self._robot.get_motor_position()
 
     @property
     def v_ang_d(self) -> float:
@@ -50,22 +51,36 @@ class AdaptateurRobotIrl(Adaptateur):
         """ Obtenir la distance parcourue
         :returns : Renvoie la distance parcourue du robot
         """
-        return self.angle_parcourue / 360 * self._robot.WHEEL_DIAMETER * math.pi
+        current_motor_positions = self._robot.get_motor_position()
+        
+        # Calcul de la distance parcourue par chaque roue
+        delta_motor_positions = [current_pos - last_pos for current_pos, last_pos in zip(current_motor_positions, self._last_motor_positions)]
+        
+        # Calcul de la distance totale parcourue
+        distance_left_wheel = (delta_motor_positions[0] / 360) * self._robot.WHEEL_CIRCUMFERENCE
+        distance_right_wheel = (delta_motor_positions[1] / 360) * self._robot.WHEEL_CIRCUMFERENCE
+        distance_parcourue = (distance_left_wheel + distance_right_wheel) / 2  # Moyenne des deux distances
 
-    @property
+        self._last_motor_positions = current_motor_positions
+
+        return distance_parcourue
+
     def angle_parcourue(self) -> float:
         """ Obtenir l'angle parcouru
         :returns : Renvoie l'angle parcourut du robot en degree
         """
-        # obtenir la position des angles des roues
-        pos_roues_x, pos_roues_y = self._robot.get_motor_position()
-        # moyenne d'angle parcourue
-        angle = (pos_roues_x + pos_roues_y) / 2
+        current_motor_positions = self._robot.get_motor_position()
+        
+        # Calcul de la différence entre les positions des moteurs gauche et droit
+        delta_left_motor = current_motor_positions[0] - self._last_motor_positions[0]
+        delta_right_motor = current_motor_positions[1] - self._last_motor_positions[1]
+        
+        # Calcul de la différence d'angle parcouru
+        delta_angle = (delta_right_motor - delta_left_motor) / 2  # Utilisation de la moyenne pour compenser la base des roues
 
-        self._robot.offset_motor_encoder(self._robot.MOTOR_LEFT, self._robot.read_encoders()[0])
-        self._robot.offset_motor_encoder(self._robot.MOTOR_RIGHT, self._robot.read_encoders()[1])
+        self._last_motor_positions = current_motor_positions
 
-        return angle
+        return delta_angle
 
     def stop(self):
         """ Arreter le robot irl

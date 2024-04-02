@@ -2,9 +2,9 @@ import threading
 
 from src.controller.adaptateur_robot_irl import AdaptateurRobotIrl
 from src.controller.controleur import Controleur
-from src.robot.robot2I013 import Robot2IN013
-
-from src.controller.ai import Go, TournerDeg
+from robot2IN013 import Robot2IN013
+from strategies_prefaites import test_strat_seq_carre
+from src.controller.ai import Go, TournerDeg, StrategieSequentielle
 
 
 def main():
@@ -22,13 +22,16 @@ def main():
     controller = Controleur(adaptateur, dt_controller)
 
     # Avancer
-    strat1 = Go(controller.adaptateur, 50, 50, 50)
-    controller.add_strat(strat1)
+    strat1 = Go(controller.adaptateur, 100, 50, 50)
+    #controller.add_strat(strat1)
 
     # Tourner
-    strat2 = TournerDeg(controller.adaptateur, 90, 10)
+    strat2 = TournerDeg(controller.adaptateur, 90, 50)
     #controller.add_strat(strat2)
-
+    l_strat = [StrategieSequentielle(adaptateur, [strat1,strat2]) for _ in range(4)]
+    strat = StrategieSequentielle(adaptateur, l_strat)
+    controller.add_strat(strat)
+    #controller.add_strat(test_strat_seq_carre)
     controller.start()
     controller.join()
 
