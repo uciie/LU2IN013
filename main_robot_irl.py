@@ -2,9 +2,14 @@ import threading
 
 from src.controller.adaptateur_robot_irl import AdaptateurRobotIrl
 from src.controller.controleur import Controleur
-from robot2IN013 import Robot2IN013
+
+try:
+    from robot2IN013 import Robot2IN013
+except ModuleNotFoundError:
+    from src.robot.robot2I013 import Robot2IN013
+
+from src.controller.ai import Go, StrategieSequentielle, TournerDeg
 from strategies_prefaites import test_strat_seq_carre
-from src.controller.ai import Go, TournerDeg, StrategieSequentielle
 
 
 def main():
