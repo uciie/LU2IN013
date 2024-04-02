@@ -104,10 +104,11 @@ class AdaptateurRobotIrl(Adaptateur):
 
     def get_distance(self) -> float:
         """
-        Lit le capteur de distance (en mm).
-        :returns: Entier distance en millimetre.
-            1. L'intervalle est de **5-8,000** millimeters.
-            2. Lorsque la valeur est en dehors de l'intervalle, le retour est **8190**.
+        Lit le capteur de distance (en m)
         """
-        #        return self.distanceSensor.read_range_single(False)
-        return self._robot.get_distance()
+        distance = self._robot.get_distance()/1000
+        if distance >= 8.190:
+            print("sup", distance*10)
+            return distance*10
+        print("inf", distance)
+        return distance
