@@ -1,15 +1,17 @@
 import time
 import math
-from easygopigo3 import EasyGoPiGo3, Servo, DistanceSensor, MotionSensor
-import picamera
-from io import BytesIO
-from PIL import Image
-from di_sensors import distance_sensor as ds_sensor
-from di_sensors import inertial_measurement_unit as imu
+import random
 import threading
-from collections import deque
 import numpy as np
+import logging
 
+# Configure logging
+logging.basicConfig(level=logging.DEBUG, filename='logs/robot2I013.log', filemode='w',
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+
+# Désactiver les messages de journalisation pour le module spécifié
+# logging.getLogger('src.robot.robot2I013').setLevel(logging.WARNING)
 
 class Robot2IN013:
     """
@@ -26,6 +28,14 @@ class Robot2IN013:
     WHEEL_BASE_CIRCUMFERENCE = WHEEL_BASE_WIDTH * math.pi  # perimetre du cercle de rotation (mm)
     WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * math.pi  # perimetre de la roue (mm)
 
+    MOTOR_LEFT = 1 # moteur gauche
+    MOTOR_RIGHT = 2 # moteur droit
+    
+    position_moteurs = [0, 0] # positions des moteurs entre 0 (0°) et 1 (360°)
+
+    v_ang_roue_d = 0 # vitesse angulaire de la roue droite
+    v_ang_roue_g = 0 # vitesse angulaire de la roue gauche
+
     def __init__(self, nb_img=10, fps=25, resolution=None, servoPort="SERVO1", motionPort="AD1"):
         """
             Initialise le robot
@@ -33,40 +43,18 @@ class Robot2IN013:
             :servoPort: port du servo (SERVO1 ou SERVO2)
             :motionPort: port pour l'accelerometre (AD1 ou AD2)
         """
-
-        self._gpg = EasyGoPiGo3()
         self.fps = fps
         self._img_queue = None
         self.nb_img = nb_img
-        try:
-            self.camera = picamera.PiCamera()
-            if resolution:
-                self.camera.resolution = resolution
-        except Exception as e:
-            print("Camera not found", e)
-        try:
-            self.servo = Servo(servoPort, self._gpg)
-        except Exception as e:
-            print("Servo not found", e)
-        try:
-            self.distanceSensor = ds_sensor.DistanceSensor()
-        except Exception as e:
-            print("Distance Sensor not found", e)
-        try:
-            self.imu = imu.inertial_measurement_unit()
-        except Exception as e:
-            print("IMU sensor not found", e)
-        self._gpg.set_motor_limits(self._gpg.MOTOR_LEFT + self._gpg.MOTOR_RIGHT, 0)
+        
         self._recording = False
         self._thread = None
         self.start_recording()
+        self.logger = logging.getLogger(__name__)
 
     def stop(self):
         """ Arrete le robot """
-        self.set_motor_dps(self.MOTOR_LEFT + self.MOTOR_RIGHT, 0)
-        self._gpg.set_led(
-            self.LED_LEFT_BLINKER + self.LED_LEFT_EYE + self.LED_LEFT_BLINKER + self.LED_RIGHT_EYE + self.LED_WIFI, 0,
-            0, 0)
+        self.v_ang_roue_d , self.v_ang_roue_g = 0, 0
 
     def get_image(self):
         try:
@@ -87,15 +75,36 @@ class Robot2IN013:
         :port: une constante moteur,  MOTOR_LEFT ou MOTOR_RIGHT (ou les deux MOTOR_LEFT+MOTOR_RIGHT).
         :dps: la vitesse cible en nombre de degres par seconde
         """
-        self._gpg.set_motor_dps(port, dps)
-        self._gpg.set_motor_limits(port, dps)
+        self.logger.info(f"Set moteur : {port}, vitesse : {dps}")
+        if (port == self.MOTOR_LEFT):
+            self.vit_roue_gauche = dps
+        elif (port == self.MOTOR_RIGHT):
+            self.vit_roue_droite = dps
+        else:
+            self.vit_roue_gauche = dps
+            self.vit_roue_droite = dps
 
     def get_motor_position(self):
         """
         Lit les etats des moteurs en degre.
         :return: couple du  degre de rotation des moteurs
         """
-        return self._gpg.read_encoders()
+        # Simule la variation des positions des moteurs en fonction de leurs vitesses
+        if self.v_ang_roue_g >= 0:
+            self.position_moteurs[0] += random.randint(0, 1) / 360  # Ajoute un changement aléatoire entre 0 et 5 degrés
+        else:
+            self.position_moteurs[0] -= random.randint(0, 1) / 360  # Soustrait un changement aléatoire entre 0 et 5 degrés
+
+        if self.v_ang_roue_d >= 0:
+            self.position_moteurs[1] += random.randint(0, 1) / 360  # Ajoute un changement aléatoire entre 0 et 5 degrés
+        else:
+            self.position_moteurs[1] -= random.randint(0, 1) / 360  # Soustrait un changement aléatoire entre 0 et 5 degrés
+        
+        # les positions des moteurs restent dans la plage [0, 1]
+        self.position_moteurs = [max(0, min(1, position)) for position in self.position_moteurs]
+        
+        # Retourne les positions simulées des moteurs
+        return self.position_moteurs
 
     def offset_motor_encoder(self, port, offset):
         """
@@ -107,7 +116,13 @@ class Robot2IN013:
 
         Zero the encoder by offsetting it by the current position
         """
-        self._gpg.offset_motor_encoder(port, offset)
+        if port == self.MOTOR_LEFT :
+            self.position_moteurs[0] = offset
+        elif port == self.MOTOR_RIGHT :
+            self.position_moteurs[1] = offset
+        elif port == self.MOTOR_LEFT+ self.MOTOR_RIGHT :
+            self.position_moteurs[0] = offset
+            self.position_moteurs[1] = offset
 
     def get_distance(self):
         """
@@ -123,14 +138,16 @@ class Robot2IN013:
         Tourne le servo a l'angle en parametre.
         :param int position: Angle de rotation, de **0** a **180** degres, 90 pour le milieu.
         """
-        self.servo.rotate_servo(position)
+        #self.servo.rotate_servo(position)
+        pass
 
     def start_recording(self):
-        if self._recording or self._thread is not None:
-            self._stop_recording()
-        self._recording = True
-        self._thread = threading.Thread(target=self._start_recording)
-        self._thread.start()
+        #if self._recording or self._thread is not None:
+        #    self._stop_recording()
+        #self._recording = True
+        #self._thread = threading.Thread(target=self._start_recording)
+        #self._thread.start()
+        pass
 
     def _stop_recording(self):
         self._recording = False
@@ -138,20 +155,21 @@ class Robot2IN013:
         self._thread = None
 
     def _start_recording(self):
-        try:
-            self._img_queue = deque(maxlen=self.nb_img)
-            with  picamera.PiCamera() as camera:
-                camera.resolution = self.resolution
-                camera.framerate = 24
-                camera.start_preview()
-                i = 0
-                while self._recording:
-                    time.sleep(1 / self.fps_camera)
-                    out = np.zeros((self.resolution[1], self.resolution[0], 3), dtype=np.uint8)
-                    camera.capture(out, 'rgb', use_video_port=True)
-                    self._img_queue.append((out, time.time()))
-        except Exception as e:
-            print("Camera not found", e)
+        #try:
+            #self._img_queue = deque(maxlen=self.nb_img)
+            #with  picamera.PiCamera() as camera:
+                #camera.resolution = self.resolution
+                #camera.framerate = 24
+                #camera.start_preview()
+                #i = 0
+                #while self._recording:
+                    #time.sleep(1 / self.fps_camera)
+                    #out = np.zeros((self.resolution[1], self.resolution[0], 3), dtype=np.uint8)
+                    #camera.capture(out, 'rgb', use_video_port=True)
+                    #self._img_queue.append((out, time.time()))
+        #except Exception as e:
+            #print("Camera not found", e)
+        pass
 
     def __getattr__(self, attr):
         """ Méthodes héritées de GPG :
@@ -163,5 +181,6 @@ class Robot2IN013:
             :green:  composante verte (0-255)
             :blue: composante bleu (0-255)
         """
-        return self._gpg.__getattribute__(attr)
+        #return self._gpg.__getattribute__(attr)
+        pass
 
