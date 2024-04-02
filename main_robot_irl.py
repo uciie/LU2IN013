@@ -8,7 +8,7 @@ except ModuleNotFoundError:
     from src.robot.robot2I013 import Robot2IN013
 
 from src.controller.ai import Go, StrategieSequentielle, TournerDeg, StrategieIf, StrategieWhile
-from strategies_prefaites import test_strat_seq_carre, test_go_sans_tracer, test_tourner90, test_while
+from strategies_prefaites import test_strat_seq_carre, test_go_sans_tracer, test_while
 
 class DemoIrl:
     def __init__(self):
