@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.DEBUG, filename='logs/simu.log', filemode='w',
 
 
 # Désactiver les messages de journalisation pour le module spécifié
-# logging.getLogger('MVC.controller.ai').setLevel(logging.WARNING)
+# logging.getLogger('src.controller.ai').setLevel(logging.WARNING)
 
 class AdaptateurRobotSimu(Adaptateur):
     """Classe de l'adaptateur d'un robot simule '"""
