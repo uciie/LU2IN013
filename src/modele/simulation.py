@@ -91,7 +91,7 @@ class Simulation(Thread):
         with self.lock_aff:
             # Actualiser le robot
             self._robot.actualiser(self.dt)
-            self.logger.info(self._robot.info())
+            #self.logger.info(self._robot.info())
 
         # Verifier si le robot a crash avec un obstacle
         for obstacle in self._arene.liste_Obstacles:

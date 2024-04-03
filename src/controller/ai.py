@@ -3,10 +3,19 @@ import math
 
 from ..controller.controleur import Adaptateur, Strategie
 
-# Configure logging
-logging.basicConfig(level=logging.DEBUG, filename='logs/ai.log', filemode='w',
+# Configure logging to write to both terminal and file
+logging.basicConfig(level=logging.DEBUG, filename='logs/simu.log', filemode='w',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
+# Créer un gestionnaire pour afficher les messages dans le terminal
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)  # Définir le niveau de logging pour la sortie terminal
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+console_handler.setFormatter(formatter)
+
+# Récupérer le logger racine
+root_logger = logging.getLogger()
+root_logger.addHandler(console_handler)
 
 # Désactiver les messages de journalisation pour le module spécifié
 # logging.getLogger('src.controller.ai').setLevel(logging.WARNING)

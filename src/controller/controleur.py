@@ -13,28 +13,6 @@ class Adaptateur(ABC):
         self._v_ang_roue_d = 0
         self._v_ang_roue_g = 0
 
-    @property
-    def v_ang_d(self) -> float:
-        """ Obtenir la vitesse angulaire de la route droite
-        """
-        return self._v_ang_roue_d
-
-    @v_ang_d.setter
-    def v_ang_d(self, value: float):
-        """ Mettre à jour la vitesse angulaire de la route droite"""
-        self._v_ang_roue_d = value
-
-    @property
-    def v_ang_g(self) -> float:
-        """ Obtenir la vitesse angulaire de la route droite
-        """
-        return self._v_ang_roue_g
-
-    @v_ang_g.setter
-    def v_ang_g(self, value: float):
-        """ Mettre à jour la vitesse angulaire de la route gauche"""
-        self._v_ang_roue_g = value
-
     @abstractmethod
     def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float):
         """ Modifier la vitesse des roues

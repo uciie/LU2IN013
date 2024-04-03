@@ -18,22 +18,6 @@ class AdaptateurRobotIrl(Adaptateur):
         self._v_ang_roue_d, self._v_ang_roue_g = 0., 0.
         self._last_motor_positions = self._robot.get_motor_position()
 
-    @property
-    def v_ang_d(self) -> float:
-        return self._v_ang_roue_d
-
-    @v_ang_d.setter
-    def v_ang_d(self, v_ang_roue_d: float):
-        self._v_ang_roue_d = v_ang_roue_d
-
-    @property
-    def v_ang_g(self) -> float:
-        return self._v_ang_roue_g
-
-    @v_ang_g.setter
-    def v_ang_g(self, v_ang_roue_g: float):
-        self._v_ang_roue_g = v_ang_roue_g
-
     def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float):
         """ Modifier la vitesse des roues
 
