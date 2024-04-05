@@ -110,7 +110,7 @@ class Affichage3D(ShowBase):
     def setupCamera(self):
         """Configure la caméra de la simulation"""
         self.disableMouse()
-        self.camera.setPos(0, 3, 3)
+        self.camera.setPos(0, 0, 3)
 
         crosshairs = OnscreenImage(
             image = path + '/src/view/modeles_3d/crosshairs.png',

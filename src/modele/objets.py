@@ -378,6 +378,19 @@ class Arene:
         """
         self.liste_Obstacles.append(obstacle)
 
+    def is_obstacle(self, pos_x: float, pos_y: float):
+        """ Renvoie vrai si (pos_x, pos_y) fait partie d'un obstacle
+
+        :param pos_x: Coordonnée en x
+        :param pos_y: Coordonnée en y
+        :return: bool
+        """
+        for obstacle in self.liste_Obstacles:
+            l_coins = obstacle.coins
+            if (l_coins[4] <= pos_x <= l_coins[0]) and (l_coins[1] <= pos_y <= l_coins[5]):
+                return True
+        return False
+
 
 class ObstacleRectangle(Obstacle):
     def __init__(self, pos_x: float, pos_y: float, coin1: Vecteur, coin2: Vecteur, color: str):
@@ -394,6 +407,16 @@ class ObstacleRectangle(Obstacle):
         # Vecteurs directeurs de l'obstacle
         self._coin1 = coin1
         self._coin2 = coin2
+
+    @property
+    def coin1(self) -> Vecteur:
+        """ Propriété pour l'attribut v1 """
+        return self._coin1
+
+    @property
+    def coin2(self) -> Vecteur:
+        """ Propriété pour l'attribut v2 """
+        return self._coin2
 
     @property
     def coins(self):

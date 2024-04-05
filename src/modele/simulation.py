@@ -36,6 +36,12 @@ class Simulation(Thread):
         self.logger = logging.getLogger(__name__)
 
     @property
+    def running(self) -> bool:
+        """ Retourne si la simulation tourne
+        """
+        return self._running
+
+    @property
     def robot(self) -> SimuRobot:
         """ Retourne le robot
         """

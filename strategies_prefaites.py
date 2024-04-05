@@ -4,10 +4,10 @@ def test_while(controller) -> Strategie:
     tracer_parcours = True
     valeur = controller.adaptateur.rayon
     print (valeur)
-    strat_go = Go(controller.adaptateur, valeur/2, 50, 50, tracer_parcours)
+    strat_go = Go(controller.adaptateur, 3, 50, 50, tracer_parcours)
     strat_tourner = TournerDeg(controller.adaptateur, 90, 50, tracer_parcours)
     # tant que la distance > valeur faire strategie
-    strat = [StrategieSequentielle(controller,[StrategieWhile(controller.adaptateur, strat_go, valeur), strat_tourner])
+    strat = [StrategieSequentielle(controller,[StrategieWhile(controller.adaptateur, strat_go, 10), strat_tourner])
              for _ in range(4)]
 
     return StrategieSequentielle(controller, strat)
@@ -15,11 +15,11 @@ def test_while(controller) -> Strategie:
 
 def test_if(controller) -> Strategie:
     stop = Stop(controller.adaptateur)
-    strat_go = test_go_sans_tracer(controller)
+    strat_go = test_go_avec_tracer(controller)
     strat_carre = test_strat_seq_carre(controller)
     # faire strat_go si la distance >200 sinon rien faire
     # puis rien faire si distance >200 sinon faire carre
-    liste_strat = [StrategieIf(controller.adaptateur, strat_go, stop, 10), StrategieIf(controller.adaptateur, stop, strat_carre, 200)]
+    liste_strat = [StrategieIf(controller.adaptateur, strat_go, stop, 200), StrategieIf(controller.adaptateur, stop, strat_carre, 200)]
     strat = StrategieSequentielle(controller.adaptateur, liste_strat)
     return strat
 
@@ -79,7 +79,7 @@ def test_tourner90(controller)->Strategie:
     return strat
 
 def test_go_sans_tracer(controller) -> Strategie:
-    strat = Go(controller.adaptateur, 15, 100, 100)
+    strat = Go(controller.adaptateur, 2, 100, 100)
     return strat
 
 

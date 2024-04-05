@@ -21,10 +21,12 @@ except ModuleNotFoundError:
     from src.robot.robot2I013Fake import Robot2IN013
     
 
+    
+
 class AdaptateurRobotIrl(Adaptateur):
     """Classe de l'adaptateur du robot irl"""
 
-    def __init__(self, robot):
+    def __init__(self, robot: Robot2IN013):
         """ Adaptateur du robot irl
         """
         super().__init__()
