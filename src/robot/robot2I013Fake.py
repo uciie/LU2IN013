@@ -1,8 +1,5 @@
-import time
 import math
 import random
-import threading
-import numpy as np
 import logging
 
 # Configure logging
@@ -91,14 +88,14 @@ class Robot2IN013:
         """
         # Simule la variation des positions des moteurs en fonction de leurs vitesses
         if self.v_ang_roue_g >= 0:
-            self.position_moteurs[0] += random.randint(0, 1) / 360  # Ajoute un changement aléatoire entre 0 et 5 degrés
+            self.position_moteurs[0] += random.randint(0, 1)  # Ajoute un changement aléatoire entre 0 et 5 degrés
         else:
-            self.position_moteurs[0] -= random.randint(0, 1) / 360  # Soustrait un changement aléatoire entre 0 et 5 degrés
+            self.position_moteurs[0] -= random.randint(0, 1)  # Soustrait un changement aléatoire entre 0 et 5 degrés
 
         if self.v_ang_roue_d >= 0:
-            self.position_moteurs[1] += random.randint(0, 1) / 360  # Ajoute un changement aléatoire entre 0 et 5 degrés
+            self.position_moteurs[1] += random.randint(0, 1)  # Ajoute un changement aléatoire entre 0 et 5 degrés
         else:
-            self.position_moteurs[1] -= random.randint(0, 1) / 360  # Soustrait un changement aléatoire entre 0 et 5 degrés
+            self.position_moteurs[1] -= random.randint(0, 1)  # Soustrait un changement aléatoire entre 0 et 5 degrés
         
         # les positions des moteurs restent dans la plage [0, 1]
         self.position_moteurs = [max(0, min(1, position)) for position in self.position_moteurs]

@@ -3,15 +3,12 @@ from src.modele.simulation import Simulation
 # bibliotheque pour la 3d
 import os
 from direct.showbase.ShowBase import ShowBase
-from direct.interval.IntervalGlobal import Sequence
-from panda3d.core import Point3
 from panda3d.core import loadPrcFile, Filename, Vec4
 from panda3d.core import DirectionalLight, AmbientLight
 from panda3d.core import TransparencyAttrib
 from panda3d.core import WindowProperties
 from panda3d.core import CollisionTraverser, CollisionNode, CollisionBox, CollisionRay, CollisionHandlerQueue
 from direct.gui.OnscreenImage import OnscreenImage
-from panda3d.core import PandaNode
 
 path = Filename.fromOsSpecific(os.path.dirname(os.path.realpath(__file__))).getFullpath()
 loadPrcFile(path + "/src/view/modeles_3d/config.prc")
@@ -34,7 +31,6 @@ class Affichage3D(ShowBase):
         self.setupControls() # Configuration des controles
 
         self.taskMgr.add(self.update, 'update') # Mise à jour de la simulation
-        self.move_robot()
 
     def update(self, task):
         """Mise à jour de la simulation"""
@@ -110,7 +106,7 @@ class Affichage3D(ShowBase):
     def setupCamera(self):
         """Configure la caméra de la simulation"""
         self.disableMouse()
-        self.camera.setPos(0, 3, 3)
+        self.camera.setPos(0, 0, 3)
 
         crosshairs = OnscreenImage(
             image = path + '/src/view/modeles_3d/crosshairs.png',
@@ -120,13 +116,13 @@ class Affichage3D(ShowBase):
         crosshairs.setTransparency(TransparencyAttrib.MAlpha)
 
     def generateTerrain(self):
-        for z in range(1):
-            for y in range(self.max_y):
-                for x in range(self.max_x):
+        for z in range(10):
+            for y in range(20):
+                for x in range(20):
                     self.createNewBlock(
                         x * 2 - 20,
                         y * 2 - 20,
-                        0,
+                        -z * 2,
                         'grass' if z == 0 else 'dirt'
                     )
 
@@ -158,32 +154,19 @@ class Affichage3D(ShowBase):
         blockNode.addSolid(blockSolid)
         collider = newBlockNode.attachNewNode(blockNode)
         collider.setPythonTag('owner', newBlockNode)
-
-    def move_robot(self):
-        """Déplace le robot dans la simulation"""
-        # Définir la séquence d'animation
-        self.animation_sequence = Sequence(
-            self.robot_node.posInterval(2, Point3(0, 5, 0), startPos=Point3(0, 0, 0)),  # Déplacer l'objet de sa position actuelle à (x,y,z) en 2 secondes
-            self.robot_node.posInterval(2, Point3(0, 0, 0), startPos=Point3(0,5,0))   # Déplacer l'objet de (x,y,z) à sa position initiale en 2 secondes
-        )
-
-        # Lancer l'animation en boucle
-        self.animation_sequence.loop()
                 
     def loadModels(self):
-            """Telecharge les modeles 3D et les ajoute a la scene"""
-            # Créer un noeud pour robot
-            self.robot_node = self.render.attachNewNode(PandaNode("RobotNode"))
-            # Charger le modèle du robot
-            self.robot = self.loader.loadModel(path + "/src/view/modeles_3d/robot_metale.glb")
-            #self.robot.setScale(.5)  # Redimensionne le modèle 
-            self.robot.reparentTo(self.robot_node)
-            self.robot.setPos(20, 20, 1)  # Positionne le modèle
+        """Telecharge les modeles 3D et les ajoute a la scene"""
+        # Charger le modèle du robot
+        self.robot = self.loader.loadModel(path + "/src/view/modeles_3d/robot_metale.glb")
+        #self.robot.setScale(.5)  # Redimensionne le modèle 
+        self.robot.reparentTo(self.render)
+        self.robot.setPos(-self.max_x/2, -self.max_y/2, -2)  # Positionne le modèle
 
-            # Charger les modèles du sol
-            self.solBlock = self.loader.loadModel(path + "/src/view/modeles_3d/sol-block.glb")
-            self.grassBlock = self.loader.loadModel(path + "/src/view/modeles_3d/grass-block.glb")
-            self.dirtBlock = self.loader.loadModel(path + "/src/view/modeles_3d/dirt-block.glb")
+        # Charger les modèles du sol
+        self.solBlock = self.loader.loadModel(path + "/src/view/modeles_3d/sol-block.glb")
+        self.grassBlock = self.loader.loadModel(path + "/src/view/modeles_3d/grass-block.glb")
+        self.dirtBlock = self.loader.loadModel(path + "/src/view/modeles_3d/dirt-block.glb")
         
         # Point the camera at the robot
         #self.camera.lookAt(self.robot)

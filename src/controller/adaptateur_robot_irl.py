@@ -15,13 +15,16 @@ console_handler.setFormatter(formatter)
 root_logger = logging.getLogger()
 root_logger.addHandler(console_handler)
 
-from robot2IN013 import Robot2IN013
+try :
+    from robot2IN013 import Robot2IN013
+except ModuleNotFoundError:
+    from src.robot.robot2I013Fake import Robot2IN013
     
 
 class AdaptateurRobotIrl(Adaptateur):
     """Classe de l'adaptateur du robot irl"""
 
-    def __init__(self, robot: Robot2IN013):
+    def __init__(self, robot):
         """ Adaptateur du robot irl
         """
         super().__init__()
@@ -99,9 +102,6 @@ class AdaptateurRobotIrl(Adaptateur):
         """
         Lit le capteur de distance (en m)
         """
-        distance = self._robot.get_distance()/1000
-        if distance >= 8.190:
-            print("sup", distance*10)
-            return distance*10
-        print("inf", distance)
+        distance = self._robot.get_distance()
+        self.logger.info(f"capteur distance: {distance}")
         return distance

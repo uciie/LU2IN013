@@ -11,3 +11,5 @@ logs/*.log
 robot2I013/
 a.txt
 robot2I013Fake/
+test_reconnaisance_im.py
+balise.jpg

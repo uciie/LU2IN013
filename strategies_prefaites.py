@@ -15,11 +15,11 @@ def test_while(controller) -> Strategie:
 
 def test_if(controller) -> Strategie:
     stop = Stop(controller.adaptateur)
-    strat_go = test_go_avec_tracer(controller)
+    strat_go = test_go_sans_tracer(controller)
     strat_carre = test_strat_seq_carre(controller)
     # faire strat_go si la distance >200 sinon rien faire
     # puis rien faire si distance >200 sinon faire carre
-    liste_strat = [StrategieIf(controller.adaptateur, strat_go, stop, 200), StrategieIf(controller.adaptateur, stop, strat_carre, 200)]
+    liste_strat = [StrategieIf(controller.adaptateur, strat_go, stop, 10), StrategieIf(controller.adaptateur, stop, strat_carre, 200)]
     strat = StrategieSequentielle(controller.adaptateur, liste_strat)
     return strat
 
