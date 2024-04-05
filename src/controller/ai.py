@@ -247,14 +247,15 @@ class StrategieWhile(Strategie):
         self.logger.info(f"capteur distance :  {self.adaptateur.get_distance()}, condition :{self.condition}")
         if self.adaptateur.get_distance() < self.condition : 
             self.logger.info(f"STOP !!! ")
+            self.adaptateur.stop()
             return True
         else : 
             if self.strat.stop():
                 self.strat.start()
+                return False
 
     def step(self):
         """pas de la strategie sequentielle """
         if self.stop():
-            self.adaptateur.stop()
             return 
         self.strat.step()
