@@ -246,6 +246,7 @@ class StrategieWhile(Strategie):
         :return: True si la strategie est finie, False sinon"""
         self.logger.info(f"capteur distance :  {self.adaptateur.get_distance()}, condition :{self.condition}")
         if self.adaptateur.get_distance() < self.condition : 
+            self.logger.info(f"STOP !!! ")
             return True
         else : 
             if self.strat.stop():

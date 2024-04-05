@@ -1,416 +1,361 @@
-2023-01-06 20:37:54,446 - src.controller.ai - INFO - Starting while strategy
-2023-01-06 20:37:54,447 - src.controller.ai - INFO - Starting Go strategy
-2023-01-06 20:37:54,524 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 325
-2023-01-06 20:37:54,525 - src.controller.ai - INFO - capteur distance :  325, condition :100
-2023-01-06 20:37:54,574 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 319
-2023-01-06 20:37:54,576 - src.controller.ai - INFO - distance parcourue 0.0, distance 2
-2023-01-06 20:37:54,619 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 318
-2023-01-06 20:37:54,620 - src.controller.ai - INFO - capteur distance :  318, condition :100
-2023-01-06 20:37:54,663 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 317
-2023-01-06 20:37:54,664 - src.controller.ai - INFO - distance parcourue 0.0, distance 2
-2023-01-06 20:37:54,666 - src.controller.ai - INFO - distance parcourue 0.581875, distance 2
-2023-01-06 20:37:54,710 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 313
-2023-01-06 20:37:54,711 - src.controller.ai - INFO - capteur distance :  313, condition :100
-2023-01-06 20:37:54,755 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 307
-2023-01-06 20:37:54,756 - src.controller.ai - INFO - distance parcourue 0.581875, distance 2
-2023-01-06 20:37:54,799 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 306
-2023-01-06 20:37:54,800 - src.controller.ai - INFO - capteur distance :  306, condition :100
-2023-01-06 20:37:54,844 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 306
-2023-01-06 20:37:54,846 - src.controller.ai - INFO - distance parcourue 0.581875, distance 2
-2023-01-06 20:37:54,849 - src.controller.ai - INFO - distance parcourue 1.197, distance 2
-2023-01-06 20:37:54,895 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 298
-2023-01-06 20:37:54,896 - src.controller.ai - INFO - capteur distance :  298, condition :100
-2023-01-06 20:37:54,938 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 300
-2023-01-06 20:37:54,940 - src.controller.ai - INFO - distance parcourue 1.197, distance 2
-2023-01-06 20:37:54,986 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 298
-2023-01-06 20:37:54,988 - src.controller.ai - INFO - capteur distance :  298, condition :100
-2023-01-06 20:37:55,031 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 292
-2023-01-06 20:37:55,032 - src.controller.ai - INFO - distance parcourue 1.197, distance 2
-2023-01-06 20:37:55,034 - src.controller.ai - INFO - distance parcourue 1.812125, distance 2
-2023-01-06 20:37:55,078 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 289
-2023-01-06 20:37:55,079 - src.controller.ai - INFO - capteur distance :  289, condition :100
-2023-01-06 20:37:55,123 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 288
-2023-01-06 20:37:55,124 - src.controller.ai - INFO - distance parcourue 1.812125, distance 2
-2023-01-06 20:37:55,168 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 289
-2023-01-06 20:37:55,169 - src.controller.ai - INFO - capteur distance :  289, condition :100
-2023-01-06 20:37:55,211 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 280
-2023-01-06 20:37:55,213 - src.controller.ai - INFO - distance parcourue 1.812125, distance 2
-2023-01-06 20:37:55,214 - src.controller.ai - INFO - distance parcourue 2.410625, distance 2
-2023-01-06 20:37:55,216 - src.controller.ai - INFO - Go strategy finished
-2023-01-06 20:37:55,260 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 281
-2023-01-06 20:37:55,261 - src.controller.ai - INFO - capteur distance :  281, condition :100
-2023-01-06 20:37:55,307 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 282
-2023-01-06 20:37:55,307 - src.controller.ai - INFO - distance parcourue 2.410625, distance 2
-2023-01-06 20:37:55,308 - src.controller.ai - INFO - Starting Go strategy
-2023-01-06 20:37:55,354 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 277
-2023-01-06 20:37:55,355 - src.controller.ai - INFO - capteur distance :  277, condition :100
-2023-01-06 20:37:55,399 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 279
-2023-01-06 20:37:55,400 - src.controller.ai - INFO - distance parcourue 0.0, distance 2
-2023-01-06 20:37:55,401 - src.controller.ai - INFO - distance parcourue 0.149625, distance 2
-2023-01-06 20:37:55,445 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 278
-2023-01-06 20:37:55,446 - src.controller.ai - INFO - capteur distance :  278, condition :100
-2023-01-06 20:37:55,489 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 271
-2023-01-06 20:37:55,490 - src.controller.ai - INFO - distance parcourue 0.149625, distance 2
-2023-01-06 20:37:55,532 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 273
-2023-01-06 20:37:55,533 - src.controller.ai - INFO - capteur distance :  273, condition :100
-2023-01-06 20:37:55,576 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 269
-2023-01-06 20:37:55,577 - src.controller.ai - INFO - distance parcourue 0.149625, distance 2
-2023-01-06 20:37:55,578 - src.controller.ai - INFO - distance parcourue 0.76475, distance 2
-2023-01-06 20:37:55,623 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 267
-2023-01-06 20:37:55,623 - src.controller.ai - INFO - capteur distance :  267, condition :100
-2023-01-06 20:37:55,668 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 260
-2023-01-06 20:37:55,669 - src.controller.ai - INFO - distance parcourue 0.76475, distance 2
-2023-01-06 20:37:55,723 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 260
-2023-01-06 20:37:55,724 - src.controller.ai - INFO - capteur distance :  260, condition :100
-2023-01-06 20:37:55,771 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 256
-2023-01-06 20:37:55,772 - src.controller.ai - INFO - distance parcourue 0.76475, distance 2
-2023-01-06 20:37:55,773 - src.controller.ai - INFO - distance parcourue 1.413125, distance 2
-2023-01-06 20:37:55,817 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 256
-2023-01-06 20:37:55,819 - src.controller.ai - INFO - capteur distance :  256, condition :100
-2023-01-06 20:37:55,862 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 251
-2023-01-06 20:37:55,863 - src.controller.ai - INFO - distance parcourue 1.413125, distance 2
-2023-01-06 20:37:55,906 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 247
-2023-01-06 20:37:55,908 - src.controller.ai - INFO - capteur distance :  247, condition :100
-2023-01-06 20:37:55,951 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 244
-2023-01-06 20:37:55,952 - src.controller.ai - INFO - distance parcourue 1.413125, distance 2
-2023-01-06 20:37:55,953 - src.controller.ai - INFO - distance parcourue 2.011625, distance 2
-2023-01-06 20:37:55,955 - src.controller.ai - INFO - Go strategy finished
-2023-01-06 20:37:56,000 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 244
-2023-01-06 20:37:56,001 - src.controller.ai - INFO - capteur distance :  244, condition :100
-2023-01-06 20:37:56,045 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 238
-2023-01-06 20:37:56,046 - src.controller.ai - INFO - distance parcourue 2.011625, distance 2
-2023-01-06 20:37:56,053 - src.controller.ai - INFO - Starting Go strategy
-2023-01-06 20:37:56,100 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 242
-2023-01-06 20:37:56,101 - src.controller.ai - INFO - capteur distance :  242, condition :100
-2023-01-06 20:37:56,146 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 240
-2023-01-06 20:37:56,147 - src.controller.ai - INFO - distance parcourue 0.0, distance 2
-2023-01-06 20:37:56,148 - src.controller.ai - INFO - distance parcourue 0.16625, distance 2
-2023-01-06 20:37:56,193 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 235
-2023-01-06 20:37:56,194 - src.controller.ai - INFO - capteur distance :  235, condition :100
-2023-01-06 20:37:56,237 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 233
-2023-01-06 20:37:56,238 - src.controller.ai - INFO - distance parcourue 0.16625, distance 2
-2023-01-06 20:37:56,281 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 232
-2023-01-06 20:37:56,282 - src.controller.ai - INFO - capteur distance :  232, condition :100
-2023-01-06 20:37:56,325 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 228
-2023-01-06 20:37:56,326 - src.controller.ai - INFO - distance parcourue 0.16625, distance 2
-2023-01-06 20:37:56,327 - src.controller.ai - INFO - distance parcourue 0.798, distance 2
-2023-01-06 20:37:56,372 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 225
-2023-01-06 20:37:56,372 - src.controller.ai - INFO - capteur distance :  225, condition :100
-2023-01-06 20:37:56,415 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 223
-2023-01-06 20:37:56,416 - src.controller.ai - INFO - distance parcourue 0.798, distance 2
-2023-01-06 20:37:56,467 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 217
-2023-01-06 20:37:56,467 - src.controller.ai - INFO - capteur distance :  217, condition :100
-2023-01-06 20:37:56,512 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 216
-2023-01-06 20:37:56,513 - src.controller.ai - INFO - distance parcourue 0.798, distance 2
-2023-01-06 20:37:56,514 - src.controller.ai - INFO - distance parcourue 1.42975, distance 2
-2023-01-06 20:37:56,559 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 217
-2023-01-06 20:37:56,560 - src.controller.ai - INFO - capteur distance :  217, condition :100
-2023-01-06 20:37:56,603 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 211
-2023-01-06 20:37:56,604 - src.controller.ai - INFO - distance parcourue 1.42975, distance 2
-2023-01-06 20:37:56,647 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 209
-2023-01-06 20:37:56,648 - src.controller.ai - INFO - capteur distance :  209, condition :100
-2023-01-06 20:37:56,691 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 205
-2023-01-06 20:37:56,691 - src.controller.ai - INFO - distance parcourue 1.42975, distance 2
-2023-01-06 20:37:56,693 - src.controller.ai - INFO - distance parcourue 2.02825, distance 2
-2023-01-06 20:37:56,694 - src.controller.ai - INFO - Go strategy finished
-2023-01-06 20:37:56,738 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 203
-2023-01-06 20:37:56,739 - src.controller.ai - INFO - capteur distance :  203, condition :100
-2023-01-06 20:37:56,783 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 202
-2023-01-06 20:37:56,783 - src.controller.ai - INFO - distance parcourue 2.02825, distance 2
-2023-01-06 20:37:56,784 - src.controller.ai - INFO - Starting Go strategy
-2023-01-06 20:37:56,829 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 205
-2023-01-06 20:37:56,830 - src.controller.ai - INFO - capteur distance :  205, condition :100
-2023-01-06 20:37:56,873 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 200
-2023-01-06 20:37:56,874 - src.controller.ai - INFO - distance parcourue 0.0, distance 2
-2023-01-06 20:37:56,876 - src.controller.ai - INFO - distance parcourue 0.149625, distance 2
-2023-01-06 20:37:56,920 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 198
-2023-01-06 20:37:56,927 - src.controller.ai - INFO - capteur distance :  198, condition :100
-2023-01-06 20:37:56,973 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 197
-2023-01-06 20:37:56,974 - src.controller.ai - INFO - distance parcourue 0.149625, distance 2
-2023-01-06 20:37:57,018 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 191
-2023-01-06 20:37:57,019 - src.controller.ai - INFO - capteur distance :  191, condition :100
-2023-01-06 20:37:57,062 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 188
-2023-01-06 20:37:57,063 - src.controller.ai - INFO - distance parcourue 0.149625, distance 2
-2023-01-06 20:37:57,064 - src.controller.ai - INFO - distance parcourue 0.814625, distance 2
-2023-01-06 20:37:57,108 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 185
-2023-01-06 20:37:57,109 - src.controller.ai - INFO - capteur distance :  185, condition :100
-2023-01-06 20:37:57,152 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 187
-2023-01-06 20:37:57,153 - src.controller.ai - INFO - distance parcourue 0.814625, distance 2
-2023-01-06 20:37:57,197 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 181
-2023-01-06 20:37:57,197 - src.controller.ai - INFO - capteur distance :  181, condition :100
-2023-01-06 20:37:57,240 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 177
-2023-01-06 20:37:57,241 - src.controller.ai - INFO - distance parcourue 0.814625, distance 2
-2023-01-06 20:37:57,242 - src.controller.ai - INFO - distance parcourue 1.3798750000000002, distance 2
-2023-01-06 20:37:57,286 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 173
-2023-01-06 20:37:57,287 - src.controller.ai - INFO - capteur distance :  173, condition :100
-2023-01-06 20:37:57,330 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 176
-2023-01-06 20:37:57,331 - src.controller.ai - INFO - distance parcourue 1.3798750000000002, distance 2
-2023-01-06 20:37:57,374 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 171
-2023-01-06 20:37:57,375 - src.controller.ai - INFO - capteur distance :  171, condition :100
-2023-01-06 20:37:57,418 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 168
-2023-01-06 20:37:57,419 - src.controller.ai - INFO - distance parcourue 1.3798750000000002, distance 2
-2023-01-06 20:37:57,420 - src.controller.ai - INFO - distance parcourue 1.9783750000000002, distance 2
-2023-01-06 20:37:57,472 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 162
-2023-01-06 20:37:57,473 - src.controller.ai - INFO - capteur distance :  162, condition :100
-2023-01-06 20:37:57,516 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 160
-2023-01-06 20:37:57,517 - src.controller.ai - INFO - distance parcourue 1.9783750000000002, distance 2
-2023-01-06 20:37:57,560 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 156
-2023-01-06 20:37:57,560 - src.controller.ai - INFO - capteur distance :  156, condition :100
-2023-01-06 20:37:57,604 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 153
-2023-01-06 20:37:57,604 - src.controller.ai - INFO - distance parcourue 1.9783750000000002, distance 2
-2023-01-06 20:37:57,606 - src.controller.ai - INFO - distance parcourue 2.610125, distance 2
-2023-01-06 20:37:57,607 - src.controller.ai - INFO - Go strategy finished
-2023-01-06 20:37:57,651 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 153
-2023-01-06 20:37:57,652 - src.controller.ai - INFO - capteur distance :  153, condition :100
-2023-01-06 20:37:57,695 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 150
-2023-01-06 20:37:57,695 - src.controller.ai - INFO - distance parcourue 2.610125, distance 2
-2023-01-06 20:37:57,696 - src.controller.ai - INFO - Starting Go strategy
-2023-01-06 20:37:57,741 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 151
-2023-01-06 20:37:57,742 - src.controller.ai - INFO - capteur distance :  151, condition :100
-2023-01-06 20:37:57,784 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 152
-2023-01-06 20:37:57,785 - src.controller.ai - INFO - distance parcourue 0.0, distance 2
-2023-01-06 20:37:57,786 - src.controller.ai - INFO - distance parcourue 0.133, distance 2
-2023-01-06 20:37:57,830 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 148
-2023-01-06 20:37:57,831 - src.controller.ai - INFO - capteur distance :  148, condition :100
-2023-01-06 20:37:57,874 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 146
-2023-01-06 20:37:57,875 - src.controller.ai - INFO - distance parcourue 0.133, distance 2
-2023-01-06 20:37:57,918 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 141
-2023-01-06 20:37:57,918 - src.controller.ai - INFO - capteur distance :  141, condition :100
-2023-01-06 20:37:57,971 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 136
-2023-01-06 20:37:57,972 - src.controller.ai - INFO - distance parcourue 0.133, distance 2
-2023-01-06 20:37:57,974 - src.controller.ai - INFO - distance parcourue 0.781375, distance 2
-2023-01-06 20:37:58,018 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 132
-2023-01-06 20:37:58,019 - src.controller.ai - INFO - capteur distance :  132, condition :100
-2023-01-06 20:37:58,062 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 133
-2023-01-06 20:37:58,063 - src.controller.ai - INFO - distance parcourue 0.781375, distance 2
-2023-01-06 20:37:58,106 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 130
-2023-01-06 20:37:58,107 - src.controller.ai - INFO - capteur distance :  130, condition :100
-2023-01-06 20:37:58,149 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 128
-2023-01-06 20:37:58,150 - src.controller.ai - INFO - distance parcourue 0.781375, distance 2
-2023-01-06 20:37:58,151 - src.controller.ai - INFO - distance parcourue 1.3798750000000002, distance 2
-2023-01-06 20:37:58,195 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 123
-2023-01-06 20:37:58,196 - src.controller.ai - INFO - capteur distance :  123, condition :100
-2023-01-06 20:37:58,239 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 121
-2023-01-06 20:37:58,240 - src.controller.ai - INFO - distance parcourue 1.3798750000000002, distance 2
-2023-01-06 20:37:58,283 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 119
-2023-01-06 20:37:58,284 - src.controller.ai - INFO - capteur distance :  119, condition :100
-2023-01-06 20:37:58,327 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 114
-2023-01-06 20:37:58,328 - src.controller.ai - INFO - distance parcourue 1.3798750000000002, distance 2
-2023-01-06 20:37:58,329 - src.controller.ai - INFO - distance parcourue 1.9617500000000003, distance 2
-2023-01-06 20:37:58,373 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 111
-2023-01-06 20:37:58,374 - src.controller.ai - INFO - capteur distance :  111, condition :100
-2023-01-06 20:37:58,417 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 110
-2023-01-06 20:37:58,418 - src.controller.ai - INFO - distance parcourue 1.9617500000000003, distance 2
-2023-01-06 20:37:58,467 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 107
-2023-01-06 20:37:58,468 - src.controller.ai - INFO - capteur distance :  107, condition :100
-2023-01-06 20:37:58,513 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 103
-2023-01-06 20:37:58,513 - src.controller.ai - INFO - distance parcourue 1.9617500000000003, distance 2
-2023-01-06 20:37:58,515 - src.controller.ai - INFO - distance parcourue 2.5768750000000002, distance 2
-2023-01-06 20:37:58,516 - src.controller.ai - INFO - Go strategy finished
-2023-01-06 20:37:58,560 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 102
-2023-01-06 20:37:58,561 - src.controller.ai - INFO - capteur distance :  102, condition :100
-2023-01-06 20:37:58,604 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 97
-2023-01-06 20:37:58,648 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 102
-2023-01-06 20:37:58,649 - src.controller.ai - INFO - capteur distance :  102, condition :100
-2023-01-06 20:37:58,692 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 102
-2023-01-06 20:37:58,693 - src.controller.ai - INFO - distance parcourue 2.5768750000000002, distance 2
-2023-01-06 20:37:58,693 - src.controller.ai - INFO - Starting Go strategy
-2023-01-06 20:37:58,738 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 103
-2023-01-06 20:37:58,738 - src.controller.ai - INFO - capteur distance :  103, condition :100
-2023-01-06 20:37:58,781 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 101
-2023-01-06 20:37:58,782 - src.controller.ai - INFO - distance parcourue 0.0, distance 2
-2023-01-06 20:37:58,783 - src.controller.ai - INFO - distance parcourue 0.149625, distance 2
-2023-01-06 20:37:58,827 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 98
-2023-01-06 20:37:58,828 - src.controller.ai - INFO - capteur distance :  98, condition :100
-2023-01-06 20:37:58,870 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 98
-2023-01-06 20:37:58,914 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 87
-2023-01-06 20:37:58,915 - src.controller.ai - INFO - capteur distance :  87, condition :100
-2023-01-06 20:37:58,964 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 88
-2023-01-06 20:37:59,010 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 83
-2023-01-06 20:37:59,010 - src.controller.ai - INFO - capteur distance :  83, condition :100
-2023-01-06 20:37:59,054 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 81
-2023-01-06 20:37:59,098 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 79
-2023-01-06 20:37:59,099 - src.controller.ai - INFO - capteur distance :  79, condition :100
-2023-01-06 20:37:59,143 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 75
-2023-01-06 20:37:59,187 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 74
-2023-01-06 20:37:59,188 - src.controller.ai - INFO - capteur distance :  74, condition :100
-2023-01-06 20:37:59,230 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 68
-2023-01-06 20:37:59,274 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 65
-2023-01-06 20:37:59,275 - src.controller.ai - INFO - capteur distance :  65, condition :100
-2023-01-06 20:37:59,322 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 66
-2023-01-06 20:37:59,366 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 60
-2023-01-06 20:37:59,367 - src.controller.ai - INFO - capteur distance :  60, condition :100
-2023-01-06 20:37:59,409 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 58
-2023-01-06 20:37:59,454 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 57
-2023-01-06 20:37:59,454 - src.controller.ai - INFO - capteur distance :  57, condition :100
-2023-01-06 20:37:59,498 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 51
-2023-01-06 20:37:59,542 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 51
-2023-01-06 20:37:59,550 - src.controller.ai - INFO - capteur distance :  51, condition :100
-2023-01-06 20:37:59,596 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 51
-2023-01-06 20:37:59,642 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 43
-2023-01-06 20:37:59,643 - src.controller.ai - INFO - capteur distance :  43, condition :100
-2023-01-06 20:37:59,686 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 44
-2023-01-06 20:37:59,729 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 37
-2023-01-06 20:37:59,730 - src.controller.ai - INFO - capteur distance :  37, condition :100
-2023-01-06 20:37:59,772 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 34
-2023-01-06 20:37:59,816 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 35
-2023-01-06 20:37:59,817 - src.controller.ai - INFO - capteur distance :  35, condition :100
-2023-01-06 20:37:59,860 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 29
-2023-01-06 20:37:59,905 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 33
-2023-01-06 20:37:59,905 - src.controller.ai - INFO - capteur distance :  33, condition :100
-2023-01-06 20:37:59,948 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 35
-2023-01-06 20:37:59,993 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 30
-2023-01-06 20:37:59,994 - src.controller.ai - INFO - capteur distance :  30, condition :100
-2023-01-06 20:38:00,046 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 30
-2023-01-06 20:38:00,106 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 27
-2023-01-06 20:38:00,108 - src.controller.ai - INFO - capteur distance :  27, condition :100
-2023-01-06 20:38:00,155 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 26
-2023-01-06 20:38:00,201 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 23
-2023-01-06 20:38:00,202 - src.controller.ai - INFO - capteur distance :  23, condition :100
-2023-01-06 20:38:00,248 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 27
-2023-01-06 20:38:00,303 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 28
-2023-01-06 20:38:00,304 - src.controller.ai - INFO - capteur distance :  28, condition :100
-2023-01-06 20:38:00,355 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 28
-2023-01-06 20:38:00,400 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 32
-2023-01-06 20:38:00,401 - src.controller.ai - INFO - capteur distance :  32, condition :100
-2023-01-06 20:38:00,444 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 32
-2023-01-06 20:38:00,487 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 32
-2023-01-06 20:38:00,488 - src.controller.ai - INFO - capteur distance :  32, condition :100
-2023-01-06 20:38:00,530 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 25
-2023-01-06 20:38:00,574 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 33
-2023-01-06 20:38:00,575 - src.controller.ai - INFO - capteur distance :  33, condition :100
-2023-01-06 20:38:00,618 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 29
-2023-01-06 20:38:00,663 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 27
-2023-01-06 20:38:00,663 - src.controller.ai - INFO - capteur distance :  27, condition :100
-2023-01-06 20:38:00,714 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 33
-2023-01-06 20:38:00,759 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 29
-2023-01-06 20:38:00,760 - src.controller.ai - INFO - capteur distance :  29, condition :100
-2023-01-06 20:38:00,805 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 29
-2023-01-06 20:38:00,849 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 29
-2023-01-06 20:38:00,850 - src.controller.ai - INFO - capteur distance :  29, condition :100
-2023-01-06 20:38:00,893 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 33
-2023-01-06 20:38:00,936 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 31
-2023-01-06 20:38:00,937 - src.controller.ai - INFO - capteur distance :  31, condition :100
-2023-01-06 20:38:00,979 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 32
-2023-01-06 20:38:01,023 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 28
-2023-01-06 20:38:01,024 - src.controller.ai - INFO - capteur distance :  28, condition :100
-2023-01-06 20:38:01,067 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 32
-2023-01-06 20:38:01,110 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 30
-2023-01-06 20:38:01,111 - src.controller.ai - INFO - capteur distance :  30, condition :100
-2023-01-06 20:38:01,153 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 29
-2023-01-06 20:38:01,196 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 28
-2023-01-06 20:38:01,197 - src.controller.ai - INFO - capteur distance :  28, condition :100
-2023-01-06 20:38:01,239 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 24
-2023-01-06 20:38:01,283 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 27
-2023-01-06 20:38:01,284 - src.controller.ai - INFO - capteur distance :  27, condition :100
-2023-01-06 20:38:01,326 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 28
-2023-01-06 20:38:01,370 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 30
-2023-01-06 20:38:01,371 - src.controller.ai - INFO - capteur distance :  30, condition :100
-2023-01-06 20:38:01,413 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 35
-2023-01-06 20:38:01,464 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 34
-2023-01-06 20:38:01,465 - src.controller.ai - INFO - capteur distance :  34, condition :100
-2023-01-06 20:38:01,512 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 42
-2023-01-06 20:38:01,559 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 47
-2023-01-06 20:38:01,560 - src.controller.ai - INFO - capteur distance :  47, condition :100
-2023-01-06 20:38:01,603 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 47
-2023-01-06 20:38:01,647 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 57
-2023-01-06 20:38:01,648 - src.controller.ai - INFO - capteur distance :  57, condition :100
-2023-01-06 20:38:01,691 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 60
-2023-01-06 20:38:01,734 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 61
-2023-01-06 20:38:01,735 - src.controller.ai - INFO - capteur distance :  61, condition :100
-2023-01-06 20:38:01,777 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 59
-2023-01-06 20:38:01,821 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 58
-2023-01-06 20:38:01,821 - src.controller.ai - INFO - capteur distance :  58, condition :100
-2023-01-06 20:38:01,864 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 64
-2023-01-06 20:38:01,907 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 64
-2023-01-06 20:38:01,908 - src.controller.ai - INFO - capteur distance :  64, condition :100
-2023-01-06 20:38:01,951 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 78
-2023-01-06 20:38:01,995 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 90
-2023-01-06 20:38:01,996 - src.controller.ai - INFO - capteur distance :  90, condition :100
-2023-01-06 20:38:02,038 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 107
-2023-01-06 20:38:02,039 - src.controller.ai - INFO - distance parcourue 0.149625, distance 2
-2023-01-06 20:38:02,089 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 133
-2023-01-06 20:38:02,089 - src.controller.ai - INFO - capteur distance :  133, condition :100
-2023-01-06 20:38:02,134 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 134
-2023-01-06 20:38:02,135 - src.controller.ai - INFO - distance parcourue 0.149625, distance 2
-2023-01-06 20:38:02,136 - src.controller.ai - INFO - distance parcourue 11.305, distance 2
-2023-01-06 20:38:02,137 - src.controller.ai - INFO - Go strategy finished
-2023-01-06 20:38:02,181 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 137
-2023-01-06 20:38:02,182 - src.controller.ai - INFO - capteur distance :  137, condition :100
-2023-01-06 20:38:02,224 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 145
-2023-01-06 20:38:02,225 - src.controller.ai - INFO - distance parcourue 11.305, distance 2
-2023-01-06 20:38:02,226 - src.controller.ai - INFO - Starting Go strategy
-2023-01-06 20:38:02,270 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 151
-2023-01-06 20:38:02,271 - src.controller.ai - INFO - capteur distance :  151, condition :100
-2023-01-06 20:38:02,314 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 163
-2023-01-06 20:38:02,315 - src.controller.ai - INFO - distance parcourue 0.0, distance 2
-2023-01-06 20:38:02,316 - src.controller.ai - INFO - distance parcourue 0.16625, distance 2
-2023-01-06 20:38:02,360 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 183
-2023-01-06 20:38:02,361 - src.controller.ai - INFO - capteur distance :  183, condition :100
-2023-01-06 20:38:02,403 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 173
-2023-01-06 20:38:02,404 - src.controller.ai - INFO - distance parcourue 0.16625, distance 2
-2023-01-06 20:38:02,447 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 168
-2023-01-06 20:38:02,447 - src.controller.ai - INFO - capteur distance :  168, condition :100
-2023-01-06 20:38:02,490 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 153
-2023-01-06 20:38:02,491 - src.controller.ai - INFO - distance parcourue 0.16625, distance 2
-2023-01-06 20:38:02,492 - src.controller.ai - INFO - distance parcourue 0.76475, distance 2
-2023-01-06 20:38:02,536 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 142
-2023-01-06 20:38:02,537 - src.controller.ai - INFO - capteur distance :  142, condition :100
-2023-01-06 20:38:02,579 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 165
-2023-01-06 20:38:02,580 - src.controller.ai - INFO - distance parcourue 0.76475, distance 2
-2023-01-06 20:38:02,622 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 183
-2023-01-06 20:38:02,623 - src.controller.ai - INFO - capteur distance :  183, condition :100
-2023-01-06 20:38:02,667 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 201
-2023-01-06 20:38:02,668 - src.controller.ai - INFO - distance parcourue 0.76475, distance 2
-2023-01-06 20:38:02,669 - src.controller.ai - INFO - distance parcourue 1.36325, distance 2
-2023-01-06 20:38:02,721 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 235
-2023-01-06 20:38:02,722 - src.controller.ai - INFO - capteur distance :  235, condition :100
-2023-01-06 20:38:02,765 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 326
-2023-01-06 20:38:02,766 - src.controller.ai - INFO - distance parcourue 1.36325, distance 2
-2023-01-06 20:38:02,809 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 735
-2023-01-06 20:38:02,809 - src.controller.ai - INFO - capteur distance :  735, condition :100
-2023-01-06 20:38:02,853 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1018
-2023-01-06 20:38:02,854 - src.controller.ai - INFO - distance parcourue 1.36325, distance 2
-2023-01-06 20:38:02,855 - src.controller.ai - INFO - distance parcourue 1.96175, distance 2
-2023-01-06 20:38:02,899 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1141
-2023-01-06 20:38:02,900 - src.controller.ai - INFO - capteur distance :  1141, condition :100
-2023-01-06 20:38:02,942 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1173
-2023-01-06 20:38:02,943 - src.controller.ai - INFO - distance parcourue 1.96175, distance 2
-2023-01-06 20:38:02,986 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1176
-2023-01-06 20:38:02,986 - src.controller.ai - INFO - capteur distance :  1176, condition :100
-2023-01-06 20:38:03,029 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1176
-2023-01-06 20:38:03,030 - src.controller.ai - INFO - distance parcourue 1.96175, distance 2
-2023-01-06 20:38:03,031 - src.controller.ai - INFO - distance parcourue 2.5768750000000002, distance 2
-2023-01-06 20:38:03,032 - src.controller.ai - INFO - Go strategy finished
-2023-01-06 20:38:03,076 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1194
-2023-01-06 20:38:03,077 - src.controller.ai - INFO - capteur distance :  1194, condition :100
-2023-01-06 20:38:03,119 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1200
-2023-01-06 20:38:03,120 - src.controller.ai - INFO - distance parcourue 2.5768750000000002, distance 2
-2023-01-06 20:38:03,121 - src.controller.ai - INFO - Starting Go strategy
-2023-01-06 20:38:03,165 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1200
-2023-01-06 20:38:03,165 - src.controller.ai - INFO - capteur distance :  1200, condition :100
-2023-01-06 20:38:03,215 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1216
-2023-01-06 20:38:03,216 - src.controller.ai - INFO - distance parcourue 0.0, distance 2
-2023-01-06 20:38:03,217 - src.controller.ai - INFO - distance parcourue 0.182875, distance 2
-2023-01-06 20:38:03,262 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1209
-2023-01-06 20:38:03,263 - src.controller.ai - INFO - capteur distance :  1209, condition :100
-2023-01-06 20:38:03,306 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1207
-2023-01-06 20:38:03,307 - src.controller.ai - INFO - distance parcourue 0.182875, distance 2
-2023-01-06 20:38:03,350 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1197
-2023-01-06 20:38:03,351 - src.controller.ai - INFO - capteur distance :  1197, condition :100
-2023-01-06 20:38:03,394 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1202
-2023-01-06 20:38:03,395 - src.controller.ai - INFO - distance parcourue 0.182875, distance 2
-2023-01-06 20:38:03,396 - src.controller.ai - INFO - distance parcourue 0.814625, distance 2
-2023-01-06 20:38:03,440 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1186
-2023-01-06 20:38:03,440 - src.controller.ai - INFO - capteur distance :  1186, condition :100
-2023-01-06 20:38:03,483 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1217
-2023-01-06 20:38:03,484 - src.controller.ai - INFO - distance parcourue 0.814625, distance 2
-2023-01-06 20:38:03,527 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1213
-2023-01-06 20:38:03,528 - src.controller.ai - INFO - capteur distance :  1213, condition :100
-2023-01-06 20:38:03,570 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1214
-2023-01-06 20:38:03,571 - src.controller.ai - INFO - distance parcourue 0.814625, distance 2
-2023-01-06 20:38:03,572 - src.controller.ai - INFO - distance parcourue 1.3798750000000002, distance 2
-2023-01-06 20:38:03,616 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1200
-2023-01-06 20:38:03,617 - src.controller.ai - INFO - capteur distance :  1200, condition :100
-2023-01-06 20:38:03,660 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 1215
-2023-01-06 20:38:03,661 - src.controller.ai - INFO - distance parcourue 1.3798750000000002, distance 2
+2023-01-06 20:45:13,909 - src.controller.ai - INFO - Starting while strategy
+2023-01-06 20:45:13,911 - src.controller.ai - INFO - Starting Go strategy
+2023-01-06 20:45:13,987 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 316
+2023-01-06 20:45:13,988 - src.controller.ai - INFO - capteur distance :  316, condition :100
+2023-01-06 20:45:14,031 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 313
+2023-01-06 20:45:14,032 - src.controller.ai - INFO - distance parcourue 0.0, distance 2
+2023-01-06 20:45:14,074 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 310
+2023-01-06 20:45:14,075 - src.controller.ai - INFO - capteur distance :  310, condition :100
+2023-01-06 20:45:14,118 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 308
+2023-01-06 20:45:14,119 - src.controller.ai - INFO - distance parcourue 0.0, distance 2
+2023-01-06 20:45:14,120 - src.controller.ai - INFO - distance parcourue 0.515375, distance 2
+2023-01-06 20:45:14,165 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 301
+2023-01-06 20:45:14,165 - src.controller.ai - INFO - capteur distance :  301, condition :100
+2023-01-06 20:45:14,208 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 298
+2023-01-06 20:45:14,209 - src.controller.ai - INFO - distance parcourue 0.515375, distance 2
+2023-01-06 20:45:14,252 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 302
+2023-01-06 20:45:14,253 - src.controller.ai - INFO - capteur distance :  302, condition :100
+2023-01-06 20:45:14,297 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 295
+2023-01-06 20:45:14,298 - src.controller.ai - INFO - distance parcourue 0.515375, distance 2
+2023-01-06 20:45:14,299 - src.controller.ai - INFO - distance parcourue 1.1138750000000002, distance 2
+2023-01-06 20:45:14,348 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 294
+2023-01-06 20:45:14,349 - src.controller.ai - INFO - capteur distance :  294, condition :100
+2023-01-06 20:45:14,392 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 293
+2023-01-06 20:45:14,393 - src.controller.ai - INFO - distance parcourue 1.1138750000000002, distance 2
+2023-01-06 20:45:14,435 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 286
+2023-01-06 20:45:14,436 - src.controller.ai - INFO - capteur distance :  286, condition :100
+2023-01-06 20:45:14,478 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 284
+2023-01-06 20:45:14,479 - src.controller.ai - INFO - distance parcourue 1.1138750000000002, distance 2
+2023-01-06 20:45:14,480 - src.controller.ai - INFO - distance parcourue 1.7123750000000002, distance 2
+2023-01-06 20:45:14,523 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 280
+2023-01-06 20:45:14,524 - src.controller.ai - INFO - capteur distance :  280, condition :100
+2023-01-06 20:45:14,570 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 282
+2023-01-06 20:45:14,570 - src.controller.ai - INFO - distance parcourue 1.7123750000000002, distance 2
+2023-01-06 20:45:14,613 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 277
+2023-01-06 20:45:14,613 - src.controller.ai - INFO - capteur distance :  277, condition :100
+2023-01-06 20:45:14,656 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 276
+2023-01-06 20:45:14,657 - src.controller.ai - INFO - distance parcourue 1.7123750000000002, distance 2
+2023-01-06 20:45:14,658 - src.controller.ai - INFO - distance parcourue 2.3108750000000002, distance 2
+2023-01-06 20:45:14,660 - src.controller.ai - INFO - Go strategy finished
+2023-01-06 20:45:14,703 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 272
+2023-01-06 20:45:14,704 - src.controller.ai - INFO - capteur distance :  272, condition :100
+2023-01-06 20:45:14,746 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 273
+2023-01-06 20:45:14,747 - src.controller.ai - INFO - distance parcourue 2.3108750000000002, distance 2
+2023-01-06 20:45:14,748 - src.controller.ai - INFO - Starting Go strategy
+2023-01-06 20:45:14,791 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 267
+2023-01-06 20:45:14,792 - src.controller.ai - INFO - capteur distance :  267, condition :100
+2023-01-06 20:45:14,835 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 269
+2023-01-06 20:45:14,836 - src.controller.ai - INFO - distance parcourue 0.0, distance 2
+2023-01-06 20:45:14,837 - src.controller.ai - INFO - distance parcourue 0.133, distance 2
+2023-01-06 20:45:14,880 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 268
+2023-01-06 20:45:14,881 - src.controller.ai - INFO - capteur distance :  268, condition :100
+2023-01-06 20:45:14,930 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 261
+2023-01-06 20:45:14,931 - src.controller.ai - INFO - distance parcourue 0.133, distance 2
+2023-01-06 20:45:14,976 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 261
+2023-01-06 20:45:14,977 - src.controller.ai - INFO - capteur distance :  261, condition :100
+2023-01-06 20:45:15,019 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 260
+2023-01-06 20:45:15,020 - src.controller.ai - INFO - distance parcourue 0.133, distance 2
+2023-01-06 20:45:15,021 - src.controller.ai - INFO - distance parcourue 0.76475, distance 2
+2023-01-06 20:45:15,066 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 254
+2023-01-06 20:45:15,066 - src.controller.ai - INFO - capteur distance :  254, condition :100
+2023-01-06 20:45:15,109 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 255
+2023-01-06 20:45:15,110 - src.controller.ai - INFO - distance parcourue 0.76475, distance 2
+2023-01-06 20:45:15,152 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 250
+2023-01-06 20:45:15,153 - src.controller.ai - INFO - capteur distance :  250, condition :100
+2023-01-06 20:45:15,195 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 245
+2023-01-06 20:45:15,196 - src.controller.ai - INFO - distance parcourue 0.76475, distance 2
+2023-01-06 20:45:15,197 - src.controller.ai - INFO - distance parcourue 1.36325, distance 2
+2023-01-06 20:45:15,241 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 245
+2023-01-06 20:45:15,242 - src.controller.ai - INFO - capteur distance :  245, condition :100
+2023-01-06 20:45:15,284 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 245
+2023-01-06 20:45:15,285 - src.controller.ai - INFO - distance parcourue 1.36325, distance 2
+2023-01-06 20:45:15,328 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 240
+2023-01-06 20:45:15,329 - src.controller.ai - INFO - capteur distance :  240, condition :100
+2023-01-06 20:45:15,371 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 240
+2023-01-06 20:45:15,372 - src.controller.ai - INFO - distance parcourue 1.36325, distance 2
+2023-01-06 20:45:15,373 - src.controller.ai - INFO - distance parcourue 1.9285, distance 2
+2023-01-06 20:45:15,417 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 236
+2023-01-06 20:45:15,417 - src.controller.ai - INFO - capteur distance :  236, condition :100
+2023-01-06 20:45:15,460 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 228
+2023-01-06 20:45:15,460 - src.controller.ai - INFO - distance parcourue 1.9285, distance 2
+2023-01-06 20:45:15,503 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 228
+2023-01-06 20:45:15,503 - src.controller.ai - INFO - capteur distance :  228, condition :100
+2023-01-06 20:45:15,553 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 227
+2023-01-06 20:45:15,553 - src.controller.ai - INFO - distance parcourue 1.9285, distance 2
+2023-01-06 20:45:15,555 - src.controller.ai - INFO - distance parcourue 2.543625, distance 2
+2023-01-06 20:45:15,556 - src.controller.ai - INFO - Go strategy finished
+2023-01-06 20:45:15,602 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 229
+2023-01-06 20:45:15,602 - src.controller.ai - INFO - capteur distance :  229, condition :100
+2023-01-06 20:45:15,645 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 223
+2023-01-06 20:45:15,645 - src.controller.ai - INFO - distance parcourue 2.543625, distance 2
+2023-01-06 20:45:15,646 - src.controller.ai - INFO - Starting Go strategy
+2023-01-06 20:45:15,691 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 225
+2023-01-06 20:45:15,691 - src.controller.ai - INFO - capteur distance :  225, condition :100
+2023-01-06 20:45:15,733 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 218
+2023-01-06 20:45:15,734 - src.controller.ai - INFO - distance parcourue 0.0, distance 2
+2023-01-06 20:45:15,735 - src.controller.ai - INFO - distance parcourue 0.16625, distance 2
+2023-01-06 20:45:15,779 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 219
+2023-01-06 20:45:15,780 - src.controller.ai - INFO - capteur distance :  219, condition :100
+2023-01-06 20:45:15,822 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 211
+2023-01-06 20:45:15,823 - src.controller.ai - INFO - distance parcourue 0.16625, distance 2
+2023-01-06 20:45:15,865 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 210
+2023-01-06 20:45:15,866 - src.controller.ai - INFO - capteur distance :  210, condition :100
+2023-01-06 20:45:15,909 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 212
+2023-01-06 20:45:15,909 - src.controller.ai - INFO - distance parcourue 0.16625, distance 2
+2023-01-06 20:45:15,911 - src.controller.ai - INFO - distance parcourue 0.76475, distance 2
+2023-01-06 20:45:15,954 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 209
+2023-01-06 20:45:15,955 - src.controller.ai - INFO - capteur distance :  209, condition :100
+2023-01-06 20:45:15,997 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 205
+2023-01-06 20:45:15,998 - src.controller.ai - INFO - distance parcourue 0.76475, distance 2
+2023-01-06 20:45:16,041 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 204
+2023-01-06 20:45:16,041 - src.controller.ai - INFO - capteur distance :  204, condition :100
+2023-01-06 20:45:16,083 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 201
+2023-01-06 20:45:16,084 - src.controller.ai - INFO - distance parcourue 0.76475, distance 2
+2023-01-06 20:45:16,085 - src.controller.ai - INFO - distance parcourue 1.33, distance 2
+2023-01-06 20:45:16,129 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 194
+2023-01-06 20:45:16,129 - src.controller.ai - INFO - capteur distance :  194, condition :100
+2023-01-06 20:45:16,179 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 190
+2023-01-06 20:45:16,180 - src.controller.ai - INFO - distance parcourue 1.33, distance 2
+2023-01-06 20:45:16,224 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 189
+2023-01-06 20:45:16,225 - src.controller.ai - INFO - capteur distance :  189, condition :100
+2023-01-06 20:45:16,267 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 184
+2023-01-06 20:45:16,268 - src.controller.ai - INFO - distance parcourue 1.33, distance 2
+2023-01-06 20:45:16,269 - src.controller.ai - INFO - distance parcourue 1.9285, distance 2
+2023-01-06 20:45:16,313 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 186
+2023-01-06 20:45:16,314 - src.controller.ai - INFO - capteur distance :  186, condition :100
+2023-01-06 20:45:16,357 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 180
+2023-01-06 20:45:16,357 - src.controller.ai - INFO - distance parcourue 1.9285, distance 2
+2023-01-06 20:45:16,400 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 178
+2023-01-06 20:45:16,400 - src.controller.ai - INFO - capteur distance :  178, condition :100
+2023-01-06 20:45:16,443 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 177
+2023-01-06 20:45:16,444 - src.controller.ai - INFO - distance parcourue 1.9285, distance 2
+2023-01-06 20:45:16,445 - src.controller.ai - INFO - distance parcourue 2.527, distance 2
+2023-01-06 20:45:16,447 - src.controller.ai - INFO - Go strategy finished
+2023-01-06 20:45:16,490 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 170
+2023-01-06 20:45:16,491 - src.controller.ai - INFO - capteur distance :  170, condition :100
+2023-01-06 20:45:16,533 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 172
+2023-01-06 20:45:16,534 - src.controller.ai - INFO - distance parcourue 2.527, distance 2
+2023-01-06 20:45:16,534 - src.controller.ai - INFO - Starting Go strategy
+2023-01-06 20:45:16,578 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 173
+2023-01-06 20:45:16,579 - src.controller.ai - INFO - capteur distance :  173, condition :100
+2023-01-06 20:45:16,621 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 171
+2023-01-06 20:45:16,622 - src.controller.ai - INFO - distance parcourue 0.0, distance 2
+2023-01-06 20:45:16,623 - src.controller.ai - INFO - distance parcourue 0.133, distance 2
+2023-01-06 20:45:16,667 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 171
+2023-01-06 20:45:16,668 - src.controller.ai - INFO - capteur distance :  171, condition :100
+2023-01-06 20:45:16,711 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 167
+2023-01-06 20:45:16,711 - src.controller.ai - INFO - distance parcourue 0.133, distance 2
+2023-01-06 20:45:16,754 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 162
+2023-01-06 20:45:16,754 - src.controller.ai - INFO - capteur distance :  162, condition :100
+2023-01-06 20:45:16,805 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 159
+2023-01-06 20:45:16,806 - src.controller.ai - INFO - distance parcourue 0.133, distance 2
+2023-01-06 20:45:16,807 - src.controller.ai - INFO - distance parcourue 0.76475, distance 2
+2023-01-06 20:45:16,852 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 159
+2023-01-06 20:45:16,853 - src.controller.ai - INFO - capteur distance :  159, condition :100
+2023-01-06 20:45:16,895 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 154
+2023-01-06 20:45:16,896 - src.controller.ai - INFO - distance parcourue 0.76475, distance 2
+2023-01-06 20:45:16,939 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 149
+2023-01-06 20:45:16,940 - src.controller.ai - INFO - capteur distance :  149, condition :100
+2023-01-06 20:45:16,982 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 149
+2023-01-06 20:45:16,983 - src.controller.ai - INFO - distance parcourue 0.76475, distance 2
+2023-01-06 20:45:16,984 - src.controller.ai - INFO - distance parcourue 1.36325, distance 2
+2023-01-06 20:45:17,028 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 145
+2023-01-06 20:45:17,029 - src.controller.ai - INFO - capteur distance :  145, condition :100
+2023-01-06 20:45:17,071 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 141
+2023-01-06 20:45:17,072 - src.controller.ai - INFO - distance parcourue 1.36325, distance 2
+2023-01-06 20:45:17,115 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 137
+2023-01-06 20:45:17,115 - src.controller.ai - INFO - capteur distance :  137, condition :100
+2023-01-06 20:45:17,158 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 139
+2023-01-06 20:45:17,159 - src.controller.ai - INFO - distance parcourue 1.36325, distance 2
+2023-01-06 20:45:17,160 - src.controller.ai - INFO - distance parcourue 1.9285, distance 2
+2023-01-06 20:45:17,204 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 134
+2023-01-06 20:45:17,204 - src.controller.ai - INFO - capteur distance :  134, condition :100
+2023-01-06 20:45:17,247 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 130
+2023-01-06 20:45:17,247 - src.controller.ai - INFO - distance parcourue 1.9285, distance 2
+2023-01-06 20:45:17,289 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 129
+2023-01-06 20:45:17,290 - src.controller.ai - INFO - capteur distance :  129, condition :100
+2023-01-06 20:45:17,333 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 124
+2023-01-06 20:45:17,333 - src.controller.ai - INFO - distance parcourue 1.9285, distance 2
+2023-01-06 20:45:17,335 - src.controller.ai - INFO - distance parcourue 2.527, distance 2
+2023-01-06 20:45:17,336 - src.controller.ai - INFO - Go strategy finished
+2023-01-06 20:45:17,380 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 123
+2023-01-06 20:45:17,380 - src.controller.ai - INFO - capteur distance :  123, condition :100
+2023-01-06 20:45:17,430 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 121
+2023-01-06 20:45:17,432 - src.controller.ai - INFO - distance parcourue 2.527, distance 2
+2023-01-06 20:45:17,433 - src.controller.ai - INFO - Starting Go strategy
+2023-01-06 20:45:17,478 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 123
+2023-01-06 20:45:17,479 - src.controller.ai - INFO - capteur distance :  123, condition :100
+2023-01-06 20:45:17,521 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 122
+2023-01-06 20:45:17,522 - src.controller.ai - INFO - distance parcourue 0.0, distance 2
+2023-01-06 20:45:17,523 - src.controller.ai - INFO - distance parcourue 0.133, distance 2
+2023-01-06 20:45:17,566 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 120
+2023-01-06 20:45:17,567 - src.controller.ai - INFO - capteur distance :  120, condition :100
+2023-01-06 20:45:17,610 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 117
+2023-01-06 20:45:17,610 - src.controller.ai - INFO - distance parcourue 0.133, distance 2
+2023-01-06 20:45:17,653 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 113
+2023-01-06 20:45:17,653 - src.controller.ai - INFO - capteur distance :  113, condition :100
+2023-01-06 20:45:17,696 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 110
+2023-01-06 20:45:17,697 - src.controller.ai - INFO - distance parcourue 0.133, distance 2
+2023-01-06 20:45:17,698 - src.controller.ai - INFO - distance parcourue 0.748125, distance 2
+2023-01-06 20:45:17,741 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 105
+2023-01-06 20:45:17,742 - src.controller.ai - INFO - capteur distance :  105, condition :100
+2023-01-06 20:45:17,784 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 103
+2023-01-06 20:45:17,785 - src.controller.ai - INFO - distance parcourue 0.748125, distance 2
+2023-01-06 20:45:17,827 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 100
+2023-01-06 20:45:17,828 - src.controller.ai - INFO - capteur distance :  100, condition :100
+2023-01-06 20:45:17,871 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 97
+2023-01-06 20:45:17,871 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:17,915 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:17,916 - src.controller.ai - INFO - capteur distance :  95, condition :100
+2023-01-06 20:45:17,959 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 92
+2023-01-06 20:45:17,959 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:18,003 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 96
+2023-01-06 20:45:18,003 - src.controller.ai - INFO - capteur distance :  96, condition :100
+2023-01-06 20:45:18,054 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:18,055 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:18,102 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:18,104 - src.controller.ai - INFO - capteur distance :  95, condition :100
+2023-01-06 20:45:18,148 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:18,149 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:18,193 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 96
+2023-01-06 20:45:18,195 - src.controller.ai - INFO - capteur distance :  96, condition :100
+2023-01-06 20:45:18,238 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 92
+2023-01-06 20:45:18,239 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:18,283 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:18,284 - src.controller.ai - INFO - capteur distance :  95, condition :100
+2023-01-06 20:45:18,327 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 98
+2023-01-06 20:45:18,328 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:18,372 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:18,374 - src.controller.ai - INFO - capteur distance :  95, condition :100
+2023-01-06 20:45:18,416 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:18,418 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:18,462 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 96
+2023-01-06 20:45:18,463 - src.controller.ai - INFO - capteur distance :  96, condition :100
+2023-01-06 20:45:18,506 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 97
+2023-01-06 20:45:18,514 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:18,561 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 97
+2023-01-06 20:45:18,563 - src.controller.ai - INFO - capteur distance :  97, condition :100
+2023-01-06 20:45:18,606 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 93
+2023-01-06 20:45:18,608 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:18,653 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 93
+2023-01-06 20:45:18,654 - src.controller.ai - INFO - capteur distance :  93, condition :100
+2023-01-06 20:45:18,698 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:18,699 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:18,743 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 96
+2023-01-06 20:45:18,745 - src.controller.ai - INFO - capteur distance :  96, condition :100
+2023-01-06 20:45:18,788 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 96
+2023-01-06 20:45:18,790 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:18,834 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:18,835 - src.controller.ai - INFO - capteur distance :  94, condition :100
+2023-01-06 20:45:18,878 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 98
+2023-01-06 20:45:18,880 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:18,931 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 93
+2023-01-06 20:45:18,934 - src.controller.ai - INFO - capteur distance :  93, condition :100
+2023-01-06 20:45:18,978 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:18,979 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:19,023 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:19,024 - src.controller.ai - INFO - capteur distance :  94, condition :100
+2023-01-06 20:45:19,067 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:19,069 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:19,113 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:19,114 - src.controller.ai - INFO - capteur distance :  95, condition :100
+2023-01-06 20:45:19,157 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 92
+2023-01-06 20:45:19,159 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:19,203 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 98
+2023-01-06 20:45:19,204 - src.controller.ai - INFO - capteur distance :  98, condition :100
+2023-01-06 20:45:19,248 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:19,249 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:19,293 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:19,295 - src.controller.ai - INFO - capteur distance :  95, condition :100
+2023-01-06 20:45:19,338 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 97
+2023-01-06 20:45:19,339 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:19,390 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 96
+2023-01-06 20:45:19,392 - src.controller.ai - INFO - capteur distance :  96, condition :100
+2023-01-06 20:45:19,436 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 93
+2023-01-06 20:45:19,437 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:19,481 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 100
+2023-01-06 20:45:19,482 - src.controller.ai - INFO - capteur distance :  100, condition :100
+2023-01-06 20:45:19,524 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:19,526 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:19,570 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 93
+2023-01-06 20:45:19,571 - src.controller.ai - INFO - capteur distance :  93, condition :100
+2023-01-06 20:45:19,614 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:19,615 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:19,659 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:19,660 - src.controller.ai - INFO - capteur distance :  95, condition :100
+2023-01-06 20:45:19,702 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 96
+2023-01-06 20:45:19,703 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:19,747 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 97
+2023-01-06 20:45:19,748 - src.controller.ai - INFO - capteur distance :  97, condition :100
+2023-01-06 20:45:19,791 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:19,792 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:19,836 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:19,837 - src.controller.ai - INFO - capteur distance :  94, condition :100
+2023-01-06 20:45:19,880 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:19,881 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:19,932 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 93
+2023-01-06 20:45:19,933 - src.controller.ai - INFO - capteur distance :  93, condition :100
+2023-01-06 20:45:19,976 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:19,977 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:20,020 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 93
+2023-01-06 20:45:20,021 - src.controller.ai - INFO - capteur distance :  93, condition :100
+2023-01-06 20:45:20,063 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 92
+2023-01-06 20:45:20,064 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:20,108 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 93
+2023-01-06 20:45:20,109 - src.controller.ai - INFO - capteur distance :  93, condition :100
+2023-01-06 20:45:20,151 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 97
+2023-01-06 20:45:20,152 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:20,195 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:20,196 - src.controller.ai - INFO - capteur distance :  94, condition :100
+2023-01-06 20:45:20,239 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:20,239 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:20,283 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 93
+2023-01-06 20:45:20,283 - src.controller.ai - INFO - capteur distance :  93, condition :100
+2023-01-06 20:45:20,326 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 96
+2023-01-06 20:45:20,327 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:20,370 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 97
+2023-01-06 20:45:20,371 - src.controller.ai - INFO - capteur distance :  97, condition :100
+2023-01-06 20:45:20,413 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:20,414 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:20,458 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 98
+2023-01-06 20:45:20,458 - src.controller.ai - INFO - capteur distance :  98, condition :100
+2023-01-06 20:45:20,501 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:20,502 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:20,552 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 96
+2023-01-06 20:45:20,553 - src.controller.ai - INFO - capteur distance :  96, condition :100
+2023-01-06 20:45:20,597 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:20,597 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:20,642 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:20,643 - src.controller.ai - INFO - capteur distance :  95, condition :100
+2023-01-06 20:45:20,685 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 96
+2023-01-06 20:45:20,686 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:20,730 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:20,730 - src.controller.ai - INFO - capteur distance :  94, condition :100
+2023-01-06 20:45:20,773 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 98
+2023-01-06 20:45:20,773 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:20,817 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 96
+2023-01-06 20:45:20,818 - src.controller.ai - INFO - capteur distance :  96, condition :100
+2023-01-06 20:45:20,860 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 97
+2023-01-06 20:45:20,861 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:20,905 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:20,905 - src.controller.ai - INFO - capteur distance :  95, condition :100
+2023-01-06 20:45:20,947 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 95
+2023-01-06 20:45:20,948 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:20,992 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 91
+2023-01-06 20:45:20,992 - src.controller.ai - INFO - capteur distance :  91, condition :100
+2023-01-06 20:45:21,034 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:21,035 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:21,079 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 97
+2023-01-06 20:45:21,080 - src.controller.ai - INFO - capteur distance :  97, condition :100
+2023-01-06 20:45:21,122 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 93
+2023-01-06 20:45:21,123 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:21,166 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 92
+2023-01-06 20:45:21,167 - src.controller.ai - INFO - capteur distance :  92, condition :100
+2023-01-06 20:45:21,210 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 92
+2023-01-06 20:45:21,211 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:21,254 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 94
+2023-01-06 20:45:21,255 - src.controller.ai - INFO - capteur distance :  94, condition :100
+2023-01-06 20:45:21,304 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 97
+2023-01-06 20:45:21,305 - src.controller.ai - INFO - STOP !!! 
+2023-01-06 20:45:21,351 - src.controller.adaptateur_robot_irl - INFO - capteur distance: 96
+2023-01-06 20:45:21,351 - src.controller.ai - INFO - capteur distance :  96, condition :100
