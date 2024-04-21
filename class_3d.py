@@ -1,19 +1,17 @@
-from src.modele.simulation import Simulation
-
+import math
 # bibliotheque pour la 3d
 import os
-import math
 
-from direct.showbase.ShowBase import ShowBase
-from direct.interval.IntervalGlobal import Sequence
-from panda3d.core import Point3
-from panda3d.core import loadPrcFile, Filename, Vec4
-from panda3d.core import DirectionalLight, AmbientLight
-from panda3d.core import TransparencyAttrib
-from panda3d.core import WindowProperties
-from panda3d.core import CollisionTraverser, CollisionNode, CollisionBox, CollisionRay, CollisionHandlerQueue
 from direct.gui.OnscreenImage import OnscreenImage
-from panda3d.core import PandaNode
+from direct.interval.IntervalGlobal import Sequence
+from direct.showbase.ShowBase import ShowBase
+from panda3d.core import (AmbientLight, CollisionBox, CollisionHandlerQueue,
+                          CollisionNode, CollisionRay, CollisionTraverser,
+                          DirectionalLight, Filename, PandaNode, Point3,
+                          TransparencyAttrib, Vec4, WindowProperties,
+                          loadPrcFile)
+
+from src.modele.simulation import Simulation
 
 path = Filename.fromOsSpecific(os.path.dirname(os.path.realpath(__file__))).getFullpath()
 loadPrcFile(path + "/src/view/modeles_3d/config.prc")
@@ -28,7 +26,7 @@ class Affichage3D(ShowBase):
         
         self.loadModels() # Chargement des modeles 3D
         self.setupLights() # Configuration des lumières
-        self.generateTerrain() # Génération de l'arene
+        self.generateArene() # Génération de l'arene
         self.setupSkybox() # Configuration du ciel
         self.setupCamera() # Configuration de la caméra
         self.setupControls() # Configuration des controles
