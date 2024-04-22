@@ -2,6 +2,9 @@ from src.modele.simulation import Simulation
 
 # bibliotheque pour la 3d
 import os
+import time
+import logging
+import threading
 from direct.showbase.ShowBase import ShowBase
 from direct.interval.IntervalGlobal import Sequence
 from panda3d.core import Point3
@@ -18,85 +21,106 @@ loadPrcFile(path + "/src/view/modeles_3d/config.prc")
 
 class Affichage3D(ShowBase):
     """ Classe pour l'affichage 3D de la simulation"""
-    def __init__(self):#, simu: Simulation):
+    def __init__(self, vitesse: float):#, simu: Simulation):
         #self.simu = simu
         self.max_x = 100
         self.max_y = 100
         self.echelle = 1
+        self.dt = 1/2
         ShowBase.__init__(self)
+        #configuraiton du logging 
+        self.logger = logging.getLogger(__name__)
+        self.vitesse = vitesse
         
         self.loadModels() # Chargement des modeles 3D
         self.setupLights() # Configuration des lumières
-        self.generateTerrain() # Génération de l'arene
+        self.generateArene() # Génération de l'arene
         self.setupSkybox() # Configuration du ciel
         self.setupCamera() # Configuration de la caméra
-        self.captureMouse() # Capture de la souris
         self.setupControls() # Configuration des controles
 
         self.taskMgr.add(self.update, 'update') # Mise à jour de la simulation
-        self.move_robot()
+        #self.move_robot()
 
     def update(self, task):
         """Mise à jour de la simulation"""
-        if self.cameraSwingActivated: # Si la caméra est activée
-            dt = globalClock.getDt()
-            md = self.win.getPointer(0) # Récupère la position de la souris
-            mouse_x = md.getX()
-            mouse_y = md.getY()
+        self.logger.info(f"vitesse robot {self.vitesse}, dt {self.dt}")
+        
+            # Déplacement 
+        if self.dico_cles['vers_haut']:
+            # Incliner la caméra de 1 degré
+            self.camera.setP(self.camera.getP() + 1)
+            self.logger.info(f"Camera vers le haut: {self.camera.getP()}")
+        elif self.dico_cles['vers_bas']:
+            self.camera.setP(self.camera.getP() - 1)
+            self.logger.info(f"Camera vers le bas: {self.camera.getP()}")
+        elif self.dico_cles['vers_gauche']:
+            self.robot_node.setH(self.robot_node.getH() + self.vitesse*self.dt)
+            self.logger.info(f"Robot vers la gauche: {self.robot_node.getX()}, {self.robot_node.getY()}")
+        elif self.dico_cles['vers_droite']:
+            self.robot_node.setH(self.robot_node.getH() - self.vitesse*self.dt)
+            self.logger.info(f"Robot vers la droite: {self.robot_node.getX()}, {self.robot_node.getY()}")
+        elif self.dico_cles['avancer']:
+            self.robot_node.setY(self.robot_node.getY() + self.vitesse*self.dt)
+            self.logger.info(f"Robot avance: {self.robot_node.getX()}, {self.robot_node.getY()}")
+        elif self.dico_cles['reculer']:
+            self.robot_node.setY(self.robot_node.getY() - self.vitesse*self.dt)
+            self.logger.info(f"Robot recule: {self.robot_node.getX()}, {self.robot_node.getY()}")
 
-            mouse_dx = mouse_x - self.last_mouse_x
-            mouse_dy = mouse_y - self.last_mouse_y
+        #self.robot_node.setPos(self.pos_x, self.pos_y, 5)
+        self.logger.info(f"Robot position: {self.robot_node.getX()}, {self.robot_node.getY()}")
 
-            self.cameraSwingFactor = 10 # Facteur de rotation de la caméra
-
-            currentH, currentP, currentR = self.camera.getHpr() # Récupère l'angle de la caméra
-            # Rotation de la caméra
-            self.camera.setHpr(
-                currentH - mouse_dx * dt * self.cameraSwingFactor,
-                min(90, max(-90, currentP - mouse_dy * dt * self.cameraSwingFactor)),
-                0
-            )
-
-            # mise à jour de l'ancienne position de la souris
-            self.last_mouse_x = mouse_x
-            self.last_mouse_y = mouse_y
+        # Mettre à jour la position de la caméra
+        self.camera.setPos(self.robot_node.getX(), self.robot_node.getY(), self.camera.getZ())  # Place la caméra derrière et légèrement au-dessus du robot
+        self.camera.setH(self.robot_node.getH())  # Oriente la caméra vers le robot
+            
         return task.cont
 
     def setupControls(self):
         """Configure les controles de la simulation"""
-        
+        self.dico_cles= {
+            'vers_haut': False, # Augmenter la hauteur
+            'vers_bas': False, # Diminuer la hauteur
+            'vers_gauche': False, # Rotation vers la gauche
+            'vers_droite': False, # Rotation vers la droite
+            'avancer': False, # Avancer
+            'reculer': False, # Reculer
+            'vue_3D': True # Changer de vue3d en 2d (vue de dessus)
+        }
         
         # Définition des touches de contrôles
-        #self.accept('arrow_up', self.changeHeight, [1]) # Augmenter la hauteur
-        #self.accept('arrow_down', self.changeHeight, [-1]) # Diminuer la hauteur
-        #self.accept('arrow_left', self.rotate, [-1]) # Rotation vers la gauche
-        #self.accept('arrow_right', self.rotate, [1]) # Rotation vers la droite
-        #self.accept('d', self.move, [1]) # Avancer
-        #self.accept('q', self.move, [-1]) # Reculer
+        self.accept('arrow_up',self.updateDico_cles, ['vers_haut',True])
+        self.accept('arrow_up-up',self.updateDico_cles, ['vers_haut',False])
+        self.accept('arrow_down',self.updateDico_cles, ['vers_bas',True])
+        self.accept('arrow_down-up',self.updateDico_cles, ['vers_bas',False])
+        self.accept('arrow_left',self.updateDico_cles, ['vers_gauche',True])
+        self.accept('arrow_left-up',self.updateDico_cles, ['vers_gauche',False])
+        self.accept('arrow_right',self.updateDico_cles, ['vers_droite',True])
+        self.accept('arrow_right-up',self.updateDico_cles, ['vers_droite',False])
+        self.accept('d',self.updateDico_cles, ['avancer',True])
+        self.accept('d-up',self.updateDico_cles, ['avancer',False])
+        self.accept('q',self.updateDico_cles, ['reculer',True])
+        self.accept('q-up',self.updateDico_cles, ['reculer',False])
 
-        self.accept('escape', self.releaseMouse) # Libère la souris
-        self.accept('mouse1', self.captureMouse) # Capture la souris
+        # changer de point de vue 
+        self.accept('escape', self.changeView)
 
-    def captureMouse(self):
-        """Capture la souris"""
-        self.cameraSwingActivated = True
-        md = self.win.getPointer(0) # Récupère la position de la souris
-        self.last_mouse_x = md.getX()
-        self.last_mouse_y = md.getY()
+    def changeView(self):
+        """Changer de point de vue"""
+        # Passer en 2d
+        if self.dico_cles['vue_3D']:
+            self.dico_cles['vue_3D'] = False
+            self.camera.setPos(0, 0, 30)
+            self.camera.setHpr(0, -90, 0)
+        else: # Passer en 3d
+            self.dico_cles['vue_3D'] = True
+            self.camera.setPos(0, 0, 5)
+            self.camera.setHpr(0, 0, 0)
 
-        props = WindowProperties()
-        props.setCursorHidden(True)
-        props.setMouseMode(WindowProperties.M_relative)
-        self.win.requestProperties(props)
-
-    def releaseMouse(self):
-        """Libère la souris"""
-        self.cameraSwingActivated = False
-
-        props = WindowProperties()
-        props.setCursorHidden(False)
-        props.setMouseMode(WindowProperties.M_absolute)
-        self.win.requestProperties(props)
+    def updateDico_cles(self, key, value):
+        """Met à jour le dictionnaire de touches"""
+        if key in self.dico_cles:
+            self.dico_cles[key] = value
     
     def setupSkybox(self):
         """Configure le ciel de la simulation"""
@@ -110,7 +134,7 @@ class Affichage3D(ShowBase):
     def setupCamera(self):
         """Configure la caméra de la simulation"""
         self.disableMouse()
-        self.camera.setPos(0, 0, 3)
+        self.camera.setPos(0, 0, 5)  # Place la caméra derrière et légèrement au-dessus du robot
 
         crosshairs = OnscreenImage(
             image = path + '/src/view/modeles_3d/crosshairs.png',
@@ -119,27 +143,16 @@ class Affichage3D(ShowBase):
         )
         crosshairs.setTransparency(TransparencyAttrib.MAlpha)
 
-    def generateTerrain(self):
-        for z in range(1):
-            for y in range(self.max_y):
-                for x in range(self.max_x):
-                    self.createNewBlock(
-                        x * 2 - 20,
-                        y * 2 - 20,
-                        0,
-                        'grass' if z == 0 else 'dirt'
-                    )
-
-    #def generateTerrain(self):
-        #"""Génère l'arene """
-        #for y in range(self.max_y):
-            #for x in range(self.max_x):
-                #self.createNewBlock(
-                    #x - self.max_x,
-                    #y - self.max_y,
-                    #0,
-                    #'grass' #if z == 0 else 'dirt'
-                #)
+    def generateArene(self):
+        """Génère l'arene' de la simulation"""
+        for y in range(self.max_y):
+            for x in range(self.max_x):
+                self.createNewBlock(
+                    x*2 - self.max_x,
+                    y*2 - self.max_y,
+                    0,
+                    'grass'
+                )
 
     def createNewBlock(self, x, y, z, type):
         """Crée un nouveau bloc à la position spécifiée"""
@@ -158,35 +171,21 @@ class Affichage3D(ShowBase):
         blockNode.addSolid(blockSolid)
         collider = newBlockNode.attachNewNode(blockNode)
         collider.setPythonTag('owner', newBlockNode)
-
-    def move_robot(self):
-        """Déplace le robot dans la simulation"""
-        # Définir la séquence d'animation
-        self.animation_sequence = Sequence(
-            self.robot_node.posInterval(2, Point3(0, 5, 0), startPos=Point3(0, 0, 0)),  # Déplacer l'objet de sa position actuelle à (x,y,z) en 2 secondes
-            self.robot_node.posInterval(2, Point3(0, 0, 0), startPos=Point3(0,5,0))   # Déplacer l'objet de (x,y,z) à sa position initiale en 2 secondes
-        )
-
-        # Lancer l'animation en boucle
-        self.animation_sequence.loop()
                 
     def loadModels(self):
-            """Telecharge les modeles 3D et les ajoute a la scene"""
-            # Créer un noeud pour robot
-            self.robot_node = self.render.attachNewNode(PandaNode("RobotNode"))
-            # Charger le modèle du robot
-            self.robot = self.loader.loadModel(path + "/src/view/modeles_3d/robot_metale.glb")
-            #self.robot.setScale(.5)  # Redimensionne le modèle 
-            self.robot.reparentTo(self.robot_node)
-            self.robot.setPos(20, 20, 1)  # Positionne le modèle
+        """Telecharge les modeles 3D et les ajoute a la scene"""
+        # Créer un noeud pour robot
+        self.robot_node = self.render.attachNewNode(PandaNode("RobotNode"))
+        # Charger le modèle du robot
+        self.robot = self.loader.loadModel(path + "/src/view/modeles_3d/robot_3roues.glb")
+        self.robot.reparentTo(self.robot_node)
+        self.robot.setPos(0, 0, 2)  # Positionne le modèle
+        self.robot.setH(self.robot.getH() + 180)
 
-            # Charger les modèles du sol
-            self.solBlock = self.loader.loadModel(path + "/src/view/modeles_3d/sol-block.glb")
-            self.grassBlock = self.loader.loadModel(path + "/src/view/modeles_3d/grass-block.glb")
-            self.dirtBlock = self.loader.loadModel(path + "/src/view/modeles_3d/dirt-block.glb")
-        
-        # Point the camera at the robot
-        #self.camera.lookAt(self.robot)
+        # Charger les modèles du sol
+        self.solBlock = self.loader.loadModel(path + "/src/view/modeles_3d/sol-block.glb")
+        self.grassBlock = self.loader.loadModel(path + "/src/view/modeles_3d/grass-block.glb")
+        self.dirtBlock = self.loader.loadModel(path + "/src/view/modeles_3d/dirt-block.glb")
 
     def setupLights(self):
         """Configure les lumières de la scène"""
@@ -209,5 +208,5 @@ class Affichage3D(ShowBase):
 
 
 if __name__ == "__main__":
-    app = Affichage3D()
+    app = Affichage3D(10)
     app.run()
