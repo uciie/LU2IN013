@@ -54,7 +54,7 @@ class Go(Strategie):
         :return: True si la strategie est finie, False sinon"""
         self.logger.info(f"distance parcourue {self.parcouru}, distance {self.distance}")
         # v_roue_d, v_roue_g = self.adaptateur.vitesse_ang_roues
-        return math.fabs(self.parcouru) >= math.fabs(self.distance)
+        return math.fabs(self.parcouru) >= math.fabs(self.distance) #or self.adaptateur.get_distance() < self.condition
 
     def step(self):
         """pas de la strategie """
@@ -244,11 +244,18 @@ class StrategieWhile(Strategie):
     def stop(self) -> bool:
         """Verifier si la strategie est finie
         :return: True si la strategie est finie, False sinon"""
-        self.logger.info("Fin while")
-        return self.strat.stop() or self.adaptateur.get_distance() > self.condition
+        self.logger.info(f"capteur distance :  {self.adaptateur.get_distance()}, condition :{self.condition}")
+        if self.adaptateur.get_distance() < self.condition : 
+            self.logger.info(f"STOP !!! ")
+            self.adaptateur.stop()
+            return True
+        else : 
+            if self.strat.stop():
+                self.strat.start()
+                return False
 
     def step(self):
         """pas de la strategie sequentielle """
         if self.stop():
-            self.strat.start()
+            return 
         self.strat.step()
