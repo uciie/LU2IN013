@@ -7,6 +7,7 @@ from src.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from src.modele.simulation import Simulation
 from src.modele.utilitaire import Vecteur
 from src.view.affichage2d import Affichage2D
+from src.view.class_3d import Affichage3D
 from strategies_prefaites import test_if, test_while
 
 
@@ -41,6 +42,9 @@ class Demo:
 
         # Création du module View
         view = Affichage2D(simu, dt_affichage, lock_aff)
+
+        # Création du module View3D
+        view3D = Affichage3D(simu)
 
         # Création du module Controller
         self.controller = Controleur(self.adaptateur, dt_controller)
