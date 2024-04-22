@@ -11,17 +11,18 @@ from panda3d.core import (AmbientLight, CollisionBox, CollisionHandlerQueue,
                           TransparencyAttrib, Vec4, WindowProperties,
                           loadPrcFile)
 
-from src.modele.simulation import Simulation
+from ..modele.simulation import Simulation
 
 path = Filename.fromOsSpecific(os.path.dirname(os.path.realpath(__file__))).getFullpath()
-loadPrcFile(path + "/src/view/modeles_3d/config.prc")
+loadPrcFile(path + "/modeles_3d/config.prc")
 
 class Affichage3D(ShowBase):
     """ Classe pour l'affichage 3D de la simulation"""
-    def __init__(self):
-        self.max_x = 100
-        self.max_y = 100
-        self.echelle = 1
+    def __init__(self, simu : Simulation):
+        self.simu = simu
+        self.max_x = self.simu._arene.max_x
+        self.max_y = self.simu._arene.max_y
+        self.echelle = self.simu._arene.echelle
         ShowBase.__init__(self)
         
         self.loadModels() # Chargement des modeles 3D
@@ -102,7 +103,7 @@ class Affichage3D(ShowBase):
     
     def setupSkybox(self):
         """Configure le ciel de la simulation"""
-        skybox = self.loader.loadModel(path + "/src/view/modeles_3d/skybox/skybox.egg")
+        skybox = self.loader.loadModel(path + "/modeles_3d/skybox/skybox.egg")
         skybox.setScale(500)
         skybox.setBin('background', 1)
         skybox.setDepthWrite(0)
@@ -115,7 +116,7 @@ class Affichage3D(ShowBase):
         self.camera.setPos(0, 0, 3)  # Place la caméra derrière et légèrement au-dessus du robot
 
         crosshairs = OnscreenImage(
-            image = path + '/src/view/modeles_3d/crosshairs.png',
+            image = path + '/modeles_3d/crosshairs.png',
             pos = (0, 0, 0),
             scale = 0.05,
         )
@@ -158,21 +159,21 @@ class Affichage3D(ShowBase):
 
         # Lancer l'animation en boucle
         self.animation_sequence.loop()
-                
+
     def loadModels(self):
         """Telecharge les modeles 3D et les ajoute a la scene"""
         # Créer un noeud pour robot
         self.robot_node = self.render.attachNewNode(PandaNode("RobotNode"))
         # Charger le modèle du robot
-        self.robot = self.loader.loadModel(path + "/src/view/modeles_3d/robot_metale.glb")
+        self.robot = self.loader.loadModel(path + "/modeles_3d/robot_metale.glb")
         self.robot.reparentTo(self.robot_node)
         self.robot.setPos(0, 0, 0)  # Positionne le modèle
         self.robot.setH(self.robot.getH() + 180)
 
         # Charger les modèles du sol
-        self.solBlock = self.loader.loadModel(path + "/src/view/modeles_3d/sol-block.glb")
-        self.grassBlock = self.loader.loadModel(path + "/src/view/modeles_3d/grass-block.glb")
-        self.dirtBlock = self.loader.loadModel(path + "/src/view/modeles_3d/dirt-block.glb")
+        self.solBlock = self.loader.loadModel(path + "/modeles_3d/sol-block.glb")
+        self.grassBlock = self.loader.loadModel(path + "/modeles_3d/grass-block.glb")
+        self.dirtBlock = self.loader.loadModel(path + "/modeles_3d/dirt-block.glb")
         
     def setupLights(self):
         """Configure les lumières de la scène"""
