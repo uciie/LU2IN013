@@ -22,9 +22,9 @@ class Affichage3D(ShowBase):
     """ Classe pour l'affichage 3D de la simulation"""
     def __init__(self, vitesse: float, simu: Simulation):
         self.simu = simu
-        self.max_x =  125 #self.simu._arene.max_x
-        self.max_y = 125 #self.simu._arene.max_y
-        self.echelle = self.simu._arene.echelle
+        self.max_x =  self.simu._arene.max_y
+        self.max_y = self.simu._arene.max_x
+        self.echelle = 1/4
         self.dt = 1/2
         ShowBase.__init__(self)
         #configuraiton du logging 
@@ -68,8 +68,8 @@ class Affichage3D(ShowBase):
             self.logger.info(f"Robot recule: {self.robot_node.getX()}, {self.robot_node.getY()}")
         
         #Mise à jour des coordonnées du robot
-        self.robot_node.setY(self.simu.robot.pos_x - 250)
-        self.robot_node.setX(self.simu.robot.pos_y - 250)
+        self.robot_node.setY((self.simu.robot.pos_x  - self.max_x//2)* self.echelle)
+        self.robot_node.setX((self.simu.robot.pos_y - self.max_y//2) * self.echelle)
         self.robot_node.setH(self.simu.robot._theta + 90)
         #self.robot_node.setPos(self.pos_x, self.pos_y, 5)
         self.logger.info(f"Robot position: {self.robot_node.getX()}, {self.robot_node.getY()}")
@@ -140,7 +140,7 @@ class Affichage3D(ShowBase):
     def setupCamera(self):
         """Configure la caméra de la simulation"""
         self.disableMouse()
-        self.camera.setPos(self.simu.robot.pos_x - 250 , self.simu.robot.pos_y - 250, 5)  # Place la caméra derrière et légèrement au-dessus du robot
+        self.camera.setPos((self.simu.robot.pos_x  - self.max_x) * self.echelle , (self.simu.robot.pos_y  - self.max_y) * self.echelle, 5)  # Place la caméra derrière et légèrement au-dessus du robot
 
         crosshairs = OnscreenImage(
             image = path + '/modeles_3d/crosshairs.png',
@@ -151,11 +151,11 @@ class Affichage3D(ShowBase):
 
     def generateArene(self):
         """Génère l'arene' de la simulation"""
-        for y in range(self.max_y):
-            for x in range(self.max_x):
+        for y in range(int(self.max_y*self.echelle)):
+            for x in range(int((self.max_x//2)*self.echelle)):
                 self.createNewBlock(
-                    x*2 - self.max_x,
-                    y*2 - self.max_y,
+                    x*2 - int((self.max_x//2)*self.echelle),
+                    y*2 - int((self.max_y//2)*self.echelle),
                     0,
                     'grass'
                 )
@@ -185,7 +185,7 @@ class Affichage3D(ShowBase):
         # Charger le modèle du robot
         self.robot = self.loader.loadModel(path + "/modeles_3d/robot_3roues.glb")
         self.robot.reparentTo(self.robot_node)
-        self.robot.setPos(self.simu.robot.pos_y - 250 , self.simu.robot.pos_x - 250, 2)  # Positionne le modèle
+        self.robot.setPos((self.simu.robot.pos_y - self.max_y//2) * self.echelle ,(self.simu.robot.pos_x - self.max_x//2) * self.echelle, 2)  # Positionne le modèle
         self.robot.setH(self.simu.robot._theta + 180)
         self.robot.setP(90)
         # Charger les modèles du sol
