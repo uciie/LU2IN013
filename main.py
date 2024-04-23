@@ -33,6 +33,21 @@ class Demo:
         # Ajouter un obstacle dans l'_arene
         #self._arene.add_obstacle(obs)
 
+        
+        # Obstacle
+        obs1 = ObstacleRectangle(40, 40, Vecteur(10, 10), Vecteur(20, 20), color="blue")
+        obs2 = ObstacleRectangle(400, 400, Vecteur(10, 10), Vecteur(20, 20), color="blue")
+        obs3 = ObstacleRectangle(400, 40, Vecteur(10, 10), Vecteur(20, 20), color="blue")
+        obs4 = ObstacleRectangle(70, 400, Vecteur(10, 10), Vecteur(20, 20), color="blue")
+        obs5 = ObstacleRectangle(self.robot.pos_x, 40, Vecteur(10, 10), Vecteur(20, 20), color="blue")
+
+        # Ajouter obstacle dans l'_arene
+        self.arene.add_obstacle(obs1)
+        self.arene.add_obstacle(obs2)
+        self.arene.add_obstacle(obs3)
+        self.arene.add_obstacle(obs4)
+        self.arene.add_obstacle(obs5)
+
         # Créer la simulation
         simu = Simulation("Simulation", dt_simu, self.robot, self.arene, lock_sim)
 
@@ -68,19 +83,6 @@ class Demo:
 if __name__ == '__main__':
     demo = Demo()
 
-    # Obstacle
-    obs1 = ObstacleRectangle(40, 40, Vecteur(10, 10), Vecteur(20, 20), color="blue")
-    obs2 = ObstacleRectangle(400, 400, Vecteur(10, 10), Vecteur(20, 20), color="blue")
-    obs3 = ObstacleRectangle(400, 40, Vecteur(10, 10), Vecteur(20, 20), color="blue")
-    obs4 = ObstacleRectangle(70, 400, Vecteur(10, 10), Vecteur(20, 20), color="blue")
-    obs5 = ObstacleRectangle(demo.robot.pos_x, 40, Vecteur(10, 10), Vecteur(20, 20), color="blue")
 
-    # Ajouter obstacle dans l'_arene
-    demo.arene.add_obstacle(obs1)
-    demo.arene.add_obstacle(obs2)
-    demo.arene.add_obstacle(obs3)
-    demo.arene.add_obstacle(obs4)
-    demo.arene.add_obstacle(obs5)
-
-    demo.controller.add_strat(test_while(demo.controller))
+    #demo.controller.add_strat(test_while(demo.controller))
     demo.view3D.run()

@@ -148,15 +148,16 @@ class Affichage3D(ShowBase):
         cpt = 0 
         self.logger.info(f"Nb Obstacle {len(self.simu.arene.liste_Obstacles)} a ajouter")
         for obstacle in self.simu.arene.liste_Obstacles:
-            cpt += 1
-            self.logger.info(f"Obstacle {cpt} rectangle ajouté ")
-            if obstacle.isinstance(ObstacleRectangle):
+            if isinstance(obstacle, ObstacleRectangle):
                 self.createNewBlock(
-                    obstacle.position.x - obstacle.dim.x,
-                    obstacle.position.y - obstacle.dim.y,
+                    obstacle.pos_x - 2,
+                    obstacle.pos_y - 2,
                     0,
                     'dirt'
                 )
+                
+                cpt += 1
+                self.logger.info(f"Obstacle {cpt} rectangle ajouté ")
                 
             
     def createNewBlock(self, x, y, z, type):
