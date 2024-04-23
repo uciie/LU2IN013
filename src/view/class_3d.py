@@ -25,11 +25,10 @@ class Affichage3D(ShowBase):
         self.max_x =  self.simu._arene.max_y
         self.max_y = self.simu._arene.max_x
         self.echelle = 1/4
-        self.dt = 1/2
         ShowBase.__init__(self)
         #configuraiton du logging 
         self.logger = logging.getLogger(__name__)
-        self.vitesse = vitesse
+
         
         self.loadModels() # Chargement des modeles 3D
         self.setupLights() # Configuration des lumières
@@ -43,9 +42,7 @@ class Affichage3D(ShowBase):
 
     def update(self, task):
         """Mise à jour de la simulation"""
-        self.logger.info(f"vitesse robot {self.vitesse}, dt {self.dt}")
-        
-        
+ 
             # Déplacement 
         if self.dico_cles['vers_haut']:
             # Incliner la caméra de 1 degré
@@ -54,18 +51,6 @@ class Affichage3D(ShowBase):
         elif self.dico_cles['vers_bas']:
             self.camera.setP(self.camera.getP() - 1)
             self.logger.info(f"Camera vers le bas: {self.camera.getP()}")
-        elif self.dico_cles['vers_gauche']:
-            self.robot_node.setH(self.robot_node.getH() + self.vitesse*self.dt)
-            self.logger.info(f"Robot vers la gauche: {self.robot_node.getX()}, {self.robot_node.getY()}")
-        elif self.dico_cles['vers_droite']:
-            self.robot_node.setH(self.robot_node.getH() - self.vitesse*self.dt)
-            self.logger.info(f"Robot vers la droite: {self.robot_node.getX()}, {self.robot_node.getY()}")
-        elif self.dico_cles['avancer']:
-            self.robot_node.setY(self.robot_node.getY() + self.vitesse*self.dt)
-            self.logger.info(f"Robot avance: {self.robot_node.getX()}, {self.robot_node.getY()}")
-        elif self.dico_cles['reculer']:
-            self.robot_node.setY(self.robot_node.getY() - self.vitesse*self.dt)
-            self.logger.info(f"Robot recule: {self.robot_node.getX()}, {self.robot_node.getY()}")
         
         #Mise à jour des coordonnées du robot
         self.robot_node.setY((self.simu.robot.pos_x  - self.max_x//2)* self.echelle)
@@ -103,10 +88,7 @@ class Affichage3D(ShowBase):
         self.accept('arrow_left-up',self.updateDico_cles, ['vers_gauche',False])
         self.accept('arrow_right',self.updateDico_cles, ['vers_droite',True])
         self.accept('arrow_right-up',self.updateDico_cles, ['vers_droite',False])
-        self.accept('d',self.updateDico_cles, ['avancer',True])
-        self.accept('d-up',self.updateDico_cles, ['avancer',False])
-        self.accept('q',self.updateDico_cles, ['reculer',True])
-        self.accept('q-up',self.updateDico_cles, ['reculer',False])
+
 
         # changer de point de vue 
         self.accept('escape', self.changeView)
