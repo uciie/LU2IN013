@@ -44,7 +44,7 @@ class Demo:
         view = Affichage2D(simu, dt_affichage, lock_aff)
 
         # Création du module View3D
-        view3D = Affichage3D(simu)
+        view3D = Affichage3D(10, simu)
 
         # Création du module Controller
         self.controller = Controleur(self.adaptateur, dt_controller)
@@ -58,6 +58,7 @@ class Demo:
         view_thread.start()
         simu.start()
         self.controller.start()
+        view3D.run()
 
         # Ajout du lien de communication entre view et controller
         view.controller = self.controller
@@ -65,6 +66,7 @@ class Demo:
 
 if __name__ == '__main__':
     demo = Demo()
+
     # Obstacle
     obs1 = ObstacleRectangle(40, 40, Vecteur(10, 10), Vecteur(20, 20), color="blue")
     obs2 = ObstacleRectangle(400, 400, Vecteur(10, 10), Vecteur(20, 20), color="blue")

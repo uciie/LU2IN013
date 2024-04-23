@@ -13,19 +13,19 @@ from panda3d.core import (AmbientLight, CollisionBox, CollisionHandlerQueue,
                           TransparencyAttrib, Vec4, WindowProperties,
                           loadPrcFile)
 
-#from ..modele.simulation import Simulation
+from ..modele.simulation import Simulation
 
 path = Filename.fromOsSpecific(os.path.dirname(os.path.realpath(__file__))).getFullpath()
 loadPrcFile(path + "/modeles_3d/config.prc")
 
 class Affichage3D(ShowBase):
     """ Classe pour l'affichage 3D de la simulation"""
-    def __init__(self, vitesse: float):#, simu: Simulation):
-        #self.simu = simu
-        self.max_x = 100
-        self.max_y = 100
-        self.echelle = 1
-        self.dt = 1/2
+    def __init__(self, vitesse: float, simu: Simulation):
+        self.simu = simu
+        self.max_x =  125 #self.simu._arene.max_x
+        self.max_y = 125 #self.simu._arene.max_y
+        self.echelle = self.simu._arene.echelle
+        self.dt = self.simu.dt
         ShowBase.__init__(self)
         #configuraiton du logging 
         self.logger = logging.getLogger(__name__)
