@@ -187,12 +187,14 @@ class Affichage3D(ShowBase):
         self.robot.reparentTo(self.robot_node)
         self.robot.setPos(self.simu.robot.pos_y - 250 , self.simu.robot.pos_x - 250, 2)  # Positionne le modèle
         self.robot.setH(self.simu.robot._theta + 180)
-
+        self.robot.setP(90)
         # Charger les modèles du sol
         self.solBlock = self.loader.loadModel(path + "/modeles_3d/sol-block.glb")
         self.grassBlock = self.loader.loadModel(path + "/modeles_3d/grass-block.glb")
         self.dirtBlock = self.loader.loadModel(path + "/modeles_3d/dirt-block.glb")
-
+        self.solBlock.setP(90)
+        self.grassBlock.setP(90)
+        self.dirtBlock.setP(90)
     def setupLights(self):
         """Configure les lumières de la scène"""
         # Créer une nouvelle lumière ambiante
