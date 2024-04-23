@@ -12,6 +12,7 @@ from panda3d.core import (AmbientLight, CollisionBox, CollisionHandlerQueue,
                           DirectionalLight, Filename, PandaNode, Point3,
                           TransparencyAttrib, Vec4, WindowProperties,
                           loadPrcFile)
+
 from ..modele.objets import ObstacleRectangle
 from ..modele.simulation import Simulation
 
@@ -150,8 +151,8 @@ class Affichage3D(ShowBase):
         for obstacle in self.simu.arene.liste_Obstacles:
             if isinstance(obstacle, ObstacleRectangle):
                 self.createNewBlock(
-                    obstacle.pos_x - 2,
-                    obstacle.pos_y - 2,
+                    (obstacle.pos_y - self.max_y//2)* self.echelle,
+                    (obstacle.pos_x - self.max_x//2)* self.echelle,
                     0,
                     'dirt'
                 )
