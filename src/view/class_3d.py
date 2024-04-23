@@ -45,6 +45,7 @@ class Affichage3D(ShowBase):
         """Mise à jour de la simulation"""
         self.logger.info(f"vitesse robot {self.vitesse}, dt {self.dt}")
         
+        
             # Déplacement 
         if self.dico_cles['vers_haut']:
             # Incliner la caméra de 1 degré
@@ -66,15 +67,16 @@ class Affichage3D(ShowBase):
             self.robot_node.setY(self.robot_node.getY() - self.vitesse*self.dt)
             self.logger.info(f"Robot recule: {self.robot_node.getX()}, {self.robot_node.getY()}")
         
-        self.robot_node.setY(self.simu.robot.pos_y - 250)
-        self.robot_node.setX(self.simu.robot.pos_x - 250)
-
+        #Mise à jour des coordonnées du robot
+        self.robot_node.setY(self.simu.robot.pos_x - 250)
+        self.robot_node.setX(self.simu.robot.pos_y - 250)
+        self.robot_node.setH(self.simu.robot._theta + 90)
         #self.robot_node.setPos(self.pos_x, self.pos_y, 5)
         self.logger.info(f"Robot position: {self.robot_node.getX()}, {self.robot_node.getY()}")
 
         # Mettre à jour la position de la caméra
         self.camera.setPos(self.robot_node.getX(), self.robot_node.getY(), self.camera.getZ())  # Place la caméra derrière et légèrement au-dessus du robot
-        self.camera.setH(self.robot_node.getH())  # Oriente la caméra vers le robot
+        self.camera.setH(self.robot_node.getH() )  # Oriente la caméra vers le robot
         
 
 
@@ -183,8 +185,8 @@ class Affichage3D(ShowBase):
         # Charger le modèle du robot
         self.robot = self.loader.loadModel(path + "/modeles_3d/robot_3roues.glb")
         self.robot.reparentTo(self.robot_node)
-        self.robot.setPos(self.simu.robot.pos_x - 250 , self.simu.robot.pos_y - 250, 2)  # Positionne le modèle
-        self.robot.setH(self.robot.getH() + 180)
+        self.robot.setPos(self.simu.robot.pos_y - 250 , self.simu.robot.pos_x - 250, 2)  # Positionne le modèle
+        self.robot.setH(self.simu.robot._theta + 180)
 
         # Charger les modèles du sol
         self.solBlock = self.loader.loadModel(path + "/modeles_3d/sol-block.glb")
