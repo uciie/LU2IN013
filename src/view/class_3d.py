@@ -25,7 +25,7 @@ class Affichage3D(ShowBase):
         self.max_x =  125 #self.simu._arene.max_x
         self.max_y = 125 #self.simu._arene.max_y
         self.echelle = self.simu._arene.echelle
-        self.dt = self.simu.dt
+        self.dt = 1/2
         ShowBase.__init__(self)
         #configuraiton du logging 
         self.logger = logging.getLogger(__name__)
@@ -65,6 +65,9 @@ class Affichage3D(ShowBase):
         elif self.dico_cles['reculer']:
             self.robot_node.setY(self.robot_node.getY() - self.vitesse*self.dt)
             self.logger.info(f"Robot recule: {self.robot_node.getX()}, {self.robot_node.getY()}")
+        
+        self.robot_node.setY(self.simu.robot.pos_y - 250)
+        self.robot_node.setX(self.simu.robot.pos_x - 250)
 
         #self.robot_node.setPos(self.pos_x, self.pos_y, 5)
         self.logger.info(f"Robot position: {self.robot_node.getX()}, {self.robot_node.getY()}")
@@ -72,7 +75,9 @@ class Affichage3D(ShowBase):
         # Mettre à jour la position de la caméra
         self.camera.setPos(self.robot_node.getX(), self.robot_node.getY(), self.camera.getZ())  # Place la caméra derrière et légèrement au-dessus du robot
         self.camera.setH(self.robot_node.getH())  # Oriente la caméra vers le robot
-            
+        
+
+
         return task.cont
 
     def setupControls(self):
@@ -133,7 +138,7 @@ class Affichage3D(ShowBase):
     def setupCamera(self):
         """Configure la caméra de la simulation"""
         self.disableMouse()
-        self.camera.setPos(0, 0, 5)  # Place la caméra derrière et légèrement au-dessus du robot
+        self.camera.setPos(self.simu.robot.pos_x - 250 , self.simu.robot.pos_y - 250, 5)  # Place la caméra derrière et légèrement au-dessus du robot
 
         crosshairs = OnscreenImage(
             image = path + '/modeles_3d/crosshairs.png',
@@ -178,7 +183,7 @@ class Affichage3D(ShowBase):
         # Charger le modèle du robot
         self.robot = self.loader.loadModel(path + "/modeles_3d/robot_3roues.glb")
         self.robot.reparentTo(self.robot_node)
-        self.robot.setPos(0, 0, 2)  # Positionne le modèle
+        self.robot.setPos(self.simu.robot.pos_x - 250 , self.simu.robot.pos_y - 250, 2)  # Positionne le modèle
         self.robot.setH(self.robot.getH() + 180)
 
         # Charger les modèles du sol
