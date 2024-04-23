@@ -9,7 +9,6 @@ from ..controller.ai import Go, StrategieSequentielle, TournerDeg
 from ..controller.controleur import Controleur
 from ..modele.simulation import Simulation
 
-
 # , Go_cap, Tourner_deg, Test_collision
 
 # bibliotheque pour la 3d
@@ -121,6 +120,7 @@ class Affichage2D(Thread):
         # Remettre le robot a la position initial
         self._simu.robot.pos_x, self._simu.robot.pos_y = self.initial_position
         self._simu.robot.last_pos_x, self._simu.robot.last_pos_y = self.initial_position
+        self._simu.robot._theta = 0
         # Suppression des parcours
         self.delete_parcours(self.liste_id_draw)
         self.canvas.delete("all")
