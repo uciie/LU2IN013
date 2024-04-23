@@ -137,7 +137,7 @@ class Affichage3D(ShowBase):
             for x in range(int((self.max_x//2)*self.echelle)):
                 self.createNewBlock(
                     x*2 - int((self.max_x//2)*self.echelle),
-                    y*2 - int((self.max_y//2)*self.echelle),
+                    y - int((self.max_y//2)*self.echelle),
                     0,
                     'grass'
                 )
