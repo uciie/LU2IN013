@@ -153,7 +153,7 @@ class Affichage3D(ShowBase):
                 self.createNewBlock(
                     (obstacle.pos_y - self.max_y//2)* self.echelle,
                     (obstacle.pos_x - self.max_x//2)* self.echelle,
-                    0,
+                    2,
                     'dirt'
                 )
                 
