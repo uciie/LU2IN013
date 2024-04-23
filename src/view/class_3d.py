@@ -218,8 +218,3 @@ class Affichage3D(ShowBase):
 
         # Ajouter la lumière à la scène
         self.render.setLight(self.dir_light_node_left)
-
-
-if __name__ == "__main__":
-    app = Affichage3D(10)
-    app.run()
