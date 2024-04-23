@@ -12,7 +12,7 @@ from panda3d.core import (AmbientLight, CollisionBox, CollisionHandlerQueue,
                           DirectionalLight, Filename, PandaNode, Point3,
                           TransparencyAttrib, Vec4, WindowProperties,
                           loadPrcFile)
-
+from ..modele.objets import ObstacleRectangle
 from ..modele.simulation import Simulation
 
 path = Filename.fromOsSpecific(os.path.dirname(os.path.realpath(__file__))).getFullpath()
@@ -33,6 +33,7 @@ class Affichage3D(ShowBase):
         self.loadModels() # Chargement des modeles 3D
         self.setupLights() # Configuration des lumières
         self.generateArene() # Génération de l'arene
+        self.generateObstacles() # Génération des obstacles
         self.setupSkybox() # Configuration du ciel
         self.setupCamera() # Configuration de la caméra
         self.setupControls() # Configuration des controles
@@ -142,6 +143,22 @@ class Affichage3D(ShowBase):
                     'grass'
                 )
 
+    def generateObstacles(self):
+        """Génère les obstacles de la simulation"""
+        cpt = 0 
+        self.logger.info(f"Nb Obstacle {len(self.simu.arene.liste_Obstacles)} a ajouter")
+        for obstacle in self.simu.arene.liste_Obstacles:
+            cpt += 1
+            self.logger.info(f"Obstacle {cpt} rectangle ajouté ")
+            if obstacle.isinstance(ObstacleRectangle):
+                self.createNewBlock(
+                    obstacle.position.x - obstacle.dim.x,
+                    obstacle.position.y - obstacle.dim.y,
+                    0,
+                    'dirt'
+                )
+                
+            
     def createNewBlock(self, x, y, z, type):
         """Crée un nouveau bloc à la position spécifiée"""
         newBlockNode = self.render.attachNewNode('new-block-placeholder')
