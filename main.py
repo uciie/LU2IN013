@@ -74,15 +74,12 @@ class Demo:
         simu.start()
         self.controller.start()
         
-        
         # Ajout du lien de communication entre view et controller
         view.controller = self.controller
-
 
 
 if __name__ == '__main__':
     demo = Demo()
 
-
-    #demo.controller.add_strat(test_while(demo.controller))
+    demo.controller.add_strat(test_while(demo.controller))
     demo.view3D.run()
