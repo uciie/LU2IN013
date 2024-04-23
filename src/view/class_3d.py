@@ -20,7 +20,7 @@ loadPrcFile(path + "/modeles_3d/config.prc")
 
 class Affichage3D(ShowBase):
     """ Classe pour l'affichage 3D de la simulation"""
-    def __init__(self, vitesse: float, simu: Simulation):
+    def __init__(self, simu: Simulation):
         self.simu = simu
         self.max_x =  self.simu._arene.max_y
         self.max_y = self.simu._arene.max_x

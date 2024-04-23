@@ -44,7 +44,7 @@ class Demo:
         view = Affichage2D(simu, dt_affichage, lock_aff)
 
         # Création du module View3D
-        view3D = Affichage3D(10, simu)
+        view3D = Affichage3D(simu)
 
         # Création du module Controller
         self.controller = Controleur(self.adaptateur, dt_controller)
