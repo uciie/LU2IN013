@@ -1,6 +1,8 @@
-import math
+import logging
 # bibliotheque pour la 3d
 import os
+import threading
+import time
 
 from direct.gui.OnscreenImage import OnscreenImage
 from direct.interval.IntervalGlobal import Sequence
@@ -11,19 +13,23 @@ from panda3d.core import (AmbientLight, CollisionBox, CollisionHandlerQueue,
                           TransparencyAttrib, Vec4, WindowProperties,
                           loadPrcFile)
 
-from ..modele.simulation import Simulation
+#from ..modele.simulation import Simulation
 
 path = Filename.fromOsSpecific(os.path.dirname(os.path.realpath(__file__))).getFullpath()
 loadPrcFile(path + "/modeles_3d/config.prc")
 
 class Affichage3D(ShowBase):
     """ Classe pour l'affichage 3D de la simulation"""
-    def __init__(self, simu : Simulation):
-        self.simu = simu
-        self.max_x = self.simu._arene.max_x
-        self.max_y = self.simu._arene.max_y
-        self.echelle = self.simu._arene.echelle
+    def __init__(self, vitesse: float):#, simu: Simulation):
+        #self.simu = simu
+        self.max_x = 100
+        self.max_y = 100
+        self.echelle = 1
+        self.dt = 1/2
         ShowBase.__init__(self)
+        #configuraiton du logging 
+        self.logger = logging.getLogger(__name__)
+        self.vitesse = vitesse
         
         self.loadModels() # Chargement des modeles 3D
         self.setupLights() # Configuration des lumières
@@ -37,22 +43,36 @@ class Affichage3D(ShowBase):
 
     def update(self, task):
         """Mise à jour de la simulation"""
-        # Déplacement 
+        self.logger.info(f"vitesse robot {self.vitesse}, dt {self.dt}")
+        
+            # Déplacement 
         if self.dico_cles['vers_haut']:
             # Incliner la caméra de 1 degré
             self.camera.setP(self.camera.getP() + 1)
-        if self.dico_cles['vers_bas']:
+            self.logger.info(f"Camera vers le haut: {self.camera.getP()}")
+        elif self.dico_cles['vers_bas']:
             self.camera.setP(self.camera.getP() - 1)
-        if self.dico_cles['vers_gauche']:
-            self.robot_node.setX(self.robot_node.getX() - 1)
-        if self.dico_cles['vers_droite']:
-            self.robot_node.setX(self.robot_node.getX() + 1)
-        if self.dico_cles['avancer']:
-            self.robot_node.setY(self.robot_node.getY() + 1)
-        if self.dico_cles['reculer']:
-            self.robot_node.setY(self.robot_node.getY() - 1)
-        self.camera.setPos(self.robot_node.getX(), self.robot_node.getY(), self.camera.getZ())  # Place la caméra derrière et légèrement au-dessus du robot
+            self.logger.info(f"Camera vers le bas: {self.camera.getP()}")
+        elif self.dico_cles['vers_gauche']:
+            self.robot_node.setH(self.robot_node.getH() + self.vitesse*self.dt)
+            self.logger.info(f"Robot vers la gauche: {self.robot_node.getX()}, {self.robot_node.getY()}")
+        elif self.dico_cles['vers_droite']:
+            self.robot_node.setH(self.robot_node.getH() - self.vitesse*self.dt)
+            self.logger.info(f"Robot vers la droite: {self.robot_node.getX()}, {self.robot_node.getY()}")
+        elif self.dico_cles['avancer']:
+            self.robot_node.setY(self.robot_node.getY() + self.vitesse*self.dt)
+            self.logger.info(f"Robot avance: {self.robot_node.getX()}, {self.robot_node.getY()}")
+        elif self.dico_cles['reculer']:
+            self.robot_node.setY(self.robot_node.getY() - self.vitesse*self.dt)
+            self.logger.info(f"Robot recule: {self.robot_node.getX()}, {self.robot_node.getY()}")
 
+        #self.robot_node.setPos(self.pos_x, self.pos_y, 5)
+        self.logger.info(f"Robot position: {self.robot_node.getX()}, {self.robot_node.getY()}")
+
+        # Mettre à jour la position de la caméra
+        self.camera.setPos(self.robot_node.getX(), self.robot_node.getY(), self.camera.getZ())  # Place la caméra derrière et légèrement au-dessus du robot
+        self.camera.setH(self.robot_node.getH())  # Oriente la caméra vers le robot
+            
         return task.cont
 
     def setupControls(self):
@@ -93,7 +113,7 @@ class Affichage3D(ShowBase):
             self.camera.setHpr(0, -90, 0)
         else: # Passer en 3d
             self.dico_cles['vue_3D'] = True
-            self.camera.setPos(0, 0, 3)
+            self.camera.setPos(0, 0, 5)
             self.camera.setHpr(0, 0, 0)
 
     def updateDico_cles(self, key, value):
@@ -113,7 +133,7 @@ class Affichage3D(ShowBase):
     def setupCamera(self):
         """Configure la caméra de la simulation"""
         self.disableMouse()
-        self.camera.setPos(0, 0, 3)  # Place la caméra derrière et légèrement au-dessus du robot
+        self.camera.setPos(0, 0, 5)  # Place la caméra derrière et légèrement au-dessus du robot
 
         crosshairs = OnscreenImage(
             image = path + '/modeles_3d/crosshairs.png',
@@ -127,8 +147,8 @@ class Affichage3D(ShowBase):
         for y in range(self.max_y):
             for x in range(self.max_x):
                 self.createNewBlock(
-                    x * 2 - 20,
-                    y * 2 - 20,
+                    x*2 - self.max_x,
+                    y*2 - self.max_y,
                     0,
                     'grass'
                 )
@@ -140,6 +160,8 @@ class Affichage3D(ShowBase):
 
         if type == 'grass':
             self.grassBlock.instanceTo(newBlockNode)
+        elif type == 'dirt':
+            self.dirtBlock.instanceTo(newBlockNode)
         elif type == 'sol':
             self.solBlock.instanceTo(newBlockNode)
 
@@ -148,33 +170,22 @@ class Affichage3D(ShowBase):
         blockNode.addSolid(blockSolid)
         collider = newBlockNode.attachNewNode(blockNode)
         collider.setPythonTag('owner', newBlockNode)
-
-    def move_robot(self):
-        """Déplace le robot dans la simulation"""
-        # Définir la séquence d'animation
-        self.animation_sequence = Sequence(
-            self.robot_node.posInterval(2, Point3(0, 5, 0), startPos=Point3(0, 0, 0)),  # Déplacer l'objet de sa position actuelle à (x,y,z) en 2 secondes
-            self.robot_node.posInterval(2, Point3(0, 0, 0), startPos=Point3(0,5,0))   # Déplacer l'objet de (x,y,z) à sa position initiale en 2 secondes
-        )
-
-        # Lancer l'animation en boucle
-        self.animation_sequence.loop()
-
+                
     def loadModels(self):
         """Telecharge les modeles 3D et les ajoute a la scene"""
         # Créer un noeud pour robot
         self.robot_node = self.render.attachNewNode(PandaNode("RobotNode"))
         # Charger le modèle du robot
-        self.robot = self.loader.loadModel(path + "/modeles_3d/robot_metale.glb")
+        self.robot = self.loader.loadModel(path + "/modeles_3d/robot_3roues.glb")
         self.robot.reparentTo(self.robot_node)
-        self.robot.setPos(0, 0, 0)  # Positionne le modèle
+        self.robot.setPos(0, 0, 2)  # Positionne le modèle
         self.robot.setH(self.robot.getH() + 180)
 
         # Charger les modèles du sol
         self.solBlock = self.loader.loadModel(path + "/modeles_3d/sol-block.glb")
         self.grassBlock = self.loader.loadModel(path + "/modeles_3d/grass-block.glb")
         self.dirtBlock = self.loader.loadModel(path + "/modeles_3d/dirt-block.glb")
-        
+
     def setupLights(self):
         """Configure les lumières de la scène"""
         # Créer une nouvelle lumière ambiante
@@ -194,6 +205,7 @@ class Affichage3D(ShowBase):
         # Ajouter la lumière à la scène
         self.render.setLight(self.dir_light_node_left)
 
+
 if __name__ == "__main__":
-    app = Affichage3D()
+    app = Affichage3D(10)
     app.run()
