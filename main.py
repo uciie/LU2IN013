@@ -18,7 +18,6 @@ class Demo:
         # Création du verrou
         lock_aff = threading.RLock()
         lock_sim = threading.RLock()
-
         dt_simu = 1 / 27000
         dt_controller = 1 / 3000000
         dt_affichage = 1 / 300000
@@ -44,24 +43,26 @@ class Demo:
         view = Affichage2D(simu, dt_affichage, lock_aff)
 
         # Création du module View3D
-        view3D = Affichage3D(simu)
-
+        self.view3D = Affichage3D(simu)
+        
         # Création du module Controller
         self.controller = Controleur(self.adaptateur, dt_controller)
 
         # Ajout du lien de communication entre view et controller
         view.controller = self.controller
-
+        
         # demarrage des threads
         view_thread = threading.Thread(target=view.run)
-
+        
         view_thread.start()
+        
         simu.start()
         self.controller.start()
-        view3D.run()
-
+        
+        
         # Ajout du lien de communication entre view et controller
         view.controller = self.controller
+
 
 
 if __name__ == '__main__':
@@ -82,3 +83,4 @@ if __name__ == '__main__':
     demo.arene.add_obstacle(obs5)
 
     demo.controller.add_strat(test_while(demo.controller))
+    demo.view3D.run()
