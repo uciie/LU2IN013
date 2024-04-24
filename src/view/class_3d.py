@@ -143,7 +143,9 @@ class Affichage3D(ShowBase):
                     x*2 - int((self.max_x//2)*self.echelle),
                     y*2 - int((self.max_y//2)*self.echelle),
                     0,
-                    'grass'
+                    'grass',
+                    1,
+                    1
                 )
 
     def generateObstacles(self):
@@ -152,21 +154,25 @@ class Affichage3D(ShowBase):
         self.logger.info(f"Nb Obstacle {len(self.simu.arene.liste_Obstacles)} a ajouter")
         for obstacle in self.simu.arene.liste_Obstacles:
             if isinstance(obstacle, ObstacleRectangle):
-                for i in range(15):
+                for i in range(7):
+                    c1 = obstacle._coin1._x
+                    c2 = obstacle._coin2._x
                     self.createNewBlock(
                         (obstacle.pos_y - self.max_y//2)* self.echelle,
                         (obstacle.pos_x - self.max_x//2)* self.echelle,
                         i,
-                        'dirt'
+                        'dirt',
+                        c2 * self.echelle,
+                        c1*self.echelle    
                     )
-                    
+                    """
                     for x,y in obstacle.coins:
                         self.createNewBlock(
                         (y - self.max_y//2)* self.echelle,
                         (x - self.max_x//2)* self.echelle,
                         i,
                         'dirt'
-                        )
+                        )"""
                     
                 cpt += 1
                 self.logger.info(f"Obstacle {cpt} rectangle ajouté ")
@@ -177,30 +183,30 @@ class Affichage3D(ShowBase):
         self.createNewBlock((self.simu.robot.pos_y - self.max_y//2) * self.echelle ,
                             (self.simu.robot.pos_x - self.max_x//2) * self.echelle, 
                             2,
-                            'balise'
+                            'balise',
+                            1,
+                            1
                             )
         
             
-    def createNewBlock(self, x, y, z, type):
+    def createNewBlock(self, x, y, z, type, scale_x, scale_y):
         """Crée un nouveau bloc à la position spécifiée"""
         newBlockNode = self.render.attachNewNode('new-block-placeholder')
         newBlockNode.setPos(x, y, z)
-
+        newBlockNode.setScale(scale_x,scale_y,1)
         if type == 'grass':
             self.grassBlock.instanceTo(newBlockNode)
         elif type == 'dirt':
             self.dirtBlock.instanceTo(newBlockNode)
         elif type == 'sol':
             self.solBlock.instanceTo(newBlockNode)
-        elif type == 'balise':
-            self.balise.instanceTo(newBlockNode)
 
         blockSolid = CollisionBox((-1, -1, -1), (1, 1, 1))
         blockNode = CollisionNode('block-collision-node')
         blockNode.addSolid(blockSolid)
         collider = newBlockNode.attachNewNode(blockNode)
         collider.setPythonTag('owner', newBlockNode)
-                
+
     def loadModels(self):
         """Telecharge les modeles 3D et les ajoute a la scene"""
         # Créer un noeud pour robot
