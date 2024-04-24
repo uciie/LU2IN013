@@ -36,6 +36,7 @@ class Affichage3D(ShowBase):
         self.setupLights() # Configuration des lumières
         self.generateArene() # Génération de l'arene
         self.generateObstacles() # Génération des obstacles
+        self.generateBalise() # Génération de la balise
         self.setupSkybox() # Configuration du ciel
         self.setupCamera() # Configuration de la caméra
         self.setupControls() # Configuration des controles
@@ -170,6 +171,15 @@ class Affichage3D(ShowBase):
                 cpt += 1
                 self.logger.info(f"Obstacle {cpt} rectangle ajouté ")
                 
+    def generateBalise(self):
+        """Génère la balise de la simulation"""
+        # Créer un noeud pour balise
+        self.createNewBlock((self.simu.robot.pos_y - self.max_y//2) * self.echelle ,
+                            (self.simu.robot.pos_x - self.max_x//2) * self.echelle, 
+                            2,
+                            'balise'
+                            )
+        
             
     def createNewBlock(self, x, y, z, type):
         """Crée un nouveau bloc à la position spécifiée"""
@@ -182,6 +192,8 @@ class Affichage3D(ShowBase):
             self.dirtBlock.instanceTo(newBlockNode)
         elif type == 'sol':
             self.solBlock.instanceTo(newBlockNode)
+        elif type == 'balise':
+            self.balise.instanceTo(newBlockNode)
 
         blockSolid = CollisionBox((-1, -1, -1), (1, 1, 1))
         blockNode = CollisionNode('block-collision-node')
@@ -200,13 +212,9 @@ class Affichage3D(ShowBase):
         self.robot.setH(self.simu.robot._theta + 180)
         self.robot.setP(90)
         self.robot.setScale(5,5,5)
-
+        
         # Charger le modèle de balise 
         self.balise = self.loader.loadModel(path + "/modeles_3d/balise.glb")
-        self.balise.reparentTo(self.robot_node)
-        self.balise.setPos((self.simu.robot.pos_y - self.max_y//2) * self.echelle ,(self.simu.robot.pos_x - self.max_x//2) * self.echelle, 2)  # Positionne le modèle
-        self.balise.setH(self.simu.robot._theta + 180)
-        self.balise.setP(90)
 
         # Charger les modèles du sol
         self.solBlock = self.loader.loadModel(path + "/modeles_3d/sol-block.glb")
@@ -217,6 +225,7 @@ class Affichage3D(ShowBase):
         self.solBlock.setP(90)
         self.grassBlock.setP(90)
         self.dirtBlock.setP(90)
+        self.balise.setP(90)
 
     def setupLights(self):
         """Configure les lumières de la scène"""
