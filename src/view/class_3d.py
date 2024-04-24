@@ -200,6 +200,14 @@ class Affichage3D(ShowBase):
         self.robot.setH(self.simu.robot._theta + 180)
         self.robot.setP(90)
         self.robot.setScale(5,5,5)
+
+        # Charger le modèle de balise 
+        self.balise = self.loader.loadModel(path + "/modeles_3d/balise.glb")
+        self.balise.reparentTo(self.robot_node)
+        self.balise.setPos((self.simu.robot.pos_y - self.max_y//2) * self.echelle ,(self.simu.robot.pos_x - self.max_x//2) * self.echelle, 2)  # Positionne le modèle
+        self.balise.setH(self.simu.robot._theta + 180)
+        self.balise.setP(90)
+
         # Charger les modèles du sol
         self.solBlock = self.loader.loadModel(path + "/modeles_3d/sol-block.glb")
         self.grassBlock = self.loader.loadModel(path + "/modeles_3d/grass-block.glb")
