@@ -35,11 +35,11 @@ class Demo:
 
         
         # Obstacle
-        obs1 = ObstacleRectangle(40, 40, Vecteur(10, 10), Vecteur(20, 20), color="blue")
-        obs2 = ObstacleRectangle(400, 400, Vecteur(10, 10), Vecteur(20, 20), color="blue")
+        obs1 = ObstacleRectangle(40, 40, Vecteur(10, 10), Vecteur(20, 20), color="red")
+        obs2 = ObstacleRectangle(400, 400, Vecteur(10, 10), Vecteur(20, 20), color="green")
         obs3 = ObstacleRectangle(400, 40, Vecteur(10, 10), Vecteur(20, 20), color="blue")
-        obs4 = ObstacleRectangle(70, 400, Vecteur(10, 10), Vecteur(20, 20), color="blue")
-        obs5 = ObstacleRectangle(self.robot.pos_x, 40, Vecteur(10, 10), Vecteur(20, 20), color="blue")
+        obs4 = ObstacleRectangle(70, 400, Vecteur(10, 10), Vecteur(20, 20), color="yellow")
+        obs5 = ObstacleRectangle(self.robot.pos_x, 40, Vecteur(10, 10), Vecteur(20, 20), color="purple")
 
         # Ajouter obstacle dans l'_arene
         self.arene.add_obstacle(obs1)
@@ -81,5 +81,4 @@ class Demo:
 if __name__ == '__main__':
     demo = Demo()
 
-    demo.controller.add_strat(test_while(demo.controller))
     demo.view3D.run()
