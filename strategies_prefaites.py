@@ -61,15 +61,16 @@ def test_avec_sans_tracer(controller) -> StrategieSequentielle:
 
 def test_strat_seq_carre(controller) -> StrategieSequentielle:
     tracer_parcours = True
-    distance = 15
-    steps = [Go(controller.adaptateur, distance, 50, 50, tracer_parcours),
-             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
-             Go(controller.adaptateur, distance, 50, 50, tracer_parcours),
-             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
-             Go(controller.adaptateur, distance, 50, 50, tracer_parcours),
-             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours),
-             Go(controller.adaptateur, distance, 50, 50, tracer_parcours),
-             TournerDeg(controller.adaptateur, 90, 50, tracer_parcours)
+    vitesse = 100
+    distance = 200
+    steps = [Go(controller.adaptateur, distance, vitesse, vitesse, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, vitesse, tracer_parcours),
+             Go(controller.adaptateur, distance, vitesse, vitesse, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, vitesse, tracer_parcours),
+             Go(controller.adaptateur, distance, vitesse, vitesse, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, vitesse, tracer_parcours),
+             Go(controller.adaptateur, distance, vitesse, vitesse, tracer_parcours),
+             TournerDeg(controller.adaptateur, 90, vitesse, tracer_parcours)
              ]
     strat = StrategieSequentielle(controller.adaptateur, steps)
     return strat
@@ -79,7 +80,7 @@ def test_tourner90(controller)->Strategie:
     return strat
 
 def test_go_sans_tracer(controller) -> Strategie:
-    strat = Go(controller.adaptateur, 2, 100, 100)
+    strat = Go(controller.adaptateur, 10, 100, 100)
     return strat
 
 

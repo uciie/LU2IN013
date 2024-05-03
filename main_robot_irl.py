@@ -1,6 +1,9 @@
 import threading
 from src.controller.adaptateur_robot_irl import AdaptateurRobotIrl
 from src.controller.controleur import Controleur
+#deactivate logging
+import logging
+logging.disable(logging.CRITICAL)
 
 try:
     from robot2IN013 import Robot2IN013
@@ -29,6 +32,11 @@ class DemoIrl:
 
 if __name__ == '__main__':
     demo = DemoIrl()
-    go = test_go_sans_tracer(demo.controller)
-    strat = StrategieIf(demo.controller.adaptateur, go , Stop(demo.adaptateur), 100)
-    demo.controller.add_strat(go)
+
+    demo.robot._start_recording()
+    print("Start recording")
+    print(demo.robot._img_queue)
+
+    #go = test_go_sans_tracer(demo.controller)
+    #strat = StrategieIf(demo.controller.adaptateur, go , Stop(demo.adaptateur), 100)
+    #demo.controller.add_strat(go)
