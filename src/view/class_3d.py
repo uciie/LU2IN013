@@ -226,7 +226,7 @@ class Affichage3D(ShowBase):
         
         # Charger le modèle de balise 
         self.balise = self.loader.loadModel(path + "/modeles_3d/balise.glb")
-        #self.balise.setScale(-10,-10,-10)
+    
         # Charger les modèles du sol
         self.solBlock = self.loader.loadModel(path + "/modeles_3d/sol-block.glb")
         self.grassBlock = self.loader.loadModel(path + "/modeles_3d/grass-block.glb")
