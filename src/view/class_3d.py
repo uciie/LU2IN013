@@ -145,6 +145,7 @@ class Affichage3D(ShowBase):
                     0,
                     'grass',
                     1,
+                    1,
                     1
                 )
 
@@ -163,7 +164,8 @@ class Affichage3D(ShowBase):
                         i,
                         'dirt',
                         c2 * self.echelle,
-                        c1*self.echelle    
+                        c1*self.echelle,
+                        1   
                     )
                     """
                     for x,y in obstacle.coins:
@@ -184,16 +186,17 @@ class Affichage3D(ShowBase):
                             (self.simu.robot.pos_x - self.max_x//2) * self.echelle, 
                             10,
                             'balise',
-                            1,
-                            1
+                            10,
+                            10,
+                            10
                             )
         
             
-    def createNewBlock(self, x, y, z, type, scale_x, scale_y):
+    def createNewBlock(self, x, y, z, type, scale_x, scale_y, scale_z):
         """Crée un nouveau bloc à la position spécifiée"""
         newBlockNode = self.render.attachNewNode('new-block-placeholder')
         newBlockNode.setPos(x, y, z)
-        newBlockNode.setScale(scale_x,scale_y,1)
+        newBlockNode.setScale(scale_x,scale_y,scale_z)
         if type == 'grass':
             self.grassBlock.instanceTo(newBlockNode)
         elif type == 'dirt':
@@ -223,7 +226,7 @@ class Affichage3D(ShowBase):
         
         # Charger le modèle de balise 
         self.balise = self.loader.loadModel(path + "/modeles_3d/balise.glb")
-        self.balise.setScale(10,10,10)
+        #self.balise.setScale(-10,-10,-10)
         # Charger les modèles du sol
         self.solBlock = self.loader.loadModel(path + "/modeles_3d/sol-block.glb")
         self.grassBlock = self.loader.loadModel(path + "/modeles_3d/grass-block.glb")
