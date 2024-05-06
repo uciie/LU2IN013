@@ -182,7 +182,7 @@ class Affichage3D(ShowBase):
         # Créer un noeud pour balise
         self.createNewBlock((self.simu.robot.pos_y - self.max_y//2) * self.echelle ,
                             (self.simu.robot.pos_x - self.max_x//2) * self.echelle, 
-                            2,
+                            10,
                             'balise',
                             1,
                             1
@@ -200,6 +200,8 @@ class Affichage3D(ShowBase):
             self.dirtBlock.instanceTo(newBlockNode)
         elif type == 'sol':
             self.solBlock.instanceTo(newBlockNode)
+        elif type == 'balise':
+            self.balise.instanceTo(newBlockNode)
 
         blockSolid = CollisionBox((-1, -1, -1), (1, 1, 1))
         blockNode = CollisionNode('block-collision-node')
@@ -221,7 +223,7 @@ class Affichage3D(ShowBase):
         
         # Charger le modèle de balise 
         self.balise = self.loader.loadModel(path + "/modeles_3d/balise.glb")
-
+        self.balise.setScale(10,10,10)
         # Charger les modèles du sol
         self.solBlock = self.loader.loadModel(path + "/modeles_3d/sol-block.glb")
         self.grassBlock = self.loader.loadModel(path + "/modeles_3d/grass-block.glb")
