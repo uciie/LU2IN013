@@ -52,16 +52,19 @@ class AdaptateurRobotIrl(Adaptateur):
         return self._robot.WHEEL_BASE_WIDTH/2
 
     def distance_parcourue(self) -> float:
-        """ Obtenir la distance parcourue
+        """ Obtenir la distance parcourue en mm 
         :returns : Renvoie la distance parcourue du robot
         """
         current_motor_positions = self._robot.get_motor_position()
 
-        # Calcul de la distance totale parcourue
-        distance_left_wheel = math.fabs((current_motor_positions[0] - self._last_motor_positions[0]) * self._robot.WHEEL_DIAMETER/2000)
-        distance_right_wheel = math.fabs((current_motor_positions[1] - self._last_motor_positions[1]) * self._robot.WHEEL_DIAMETER/2000)
-        distance_parcourue = (distance_left_wheel + distance_right_wheel) / 2  # Moyenne des deux distances
+        # Calcul de la distance parcourue par chaque roue
+        distance_left_wheel = math.fabs((current_motor_positions[0] - self._last_motor_positions[0]) * self._robot.WHEEL_DIAMETER*math.pi) /360
+        distance_right_wheel = math.fabs((current_motor_positions[1] - self._last_motor_positions[1]) * self._robot.WHEEL_DIAMETER*math.pi)/360
 
+        # Calcul de la distance totale parcourue (moyenne des deux distances)
+        distance_parcourue = (distance_left_wheel + distance_right_wheel) / 2
+
+        # Mise à jour de la dernière position des moteurs
         self._last_motor_positions = current_motor_positions
 
         return distance_parcourue
@@ -102,7 +105,7 @@ class AdaptateurRobotIrl(Adaptateur):
 
     def get_distance(self) -> float:
         """
-        Lit le capteur de distance (en m)
+        Lit le capteur de distance (en mm)
         """
         distance = self._robot.get_distance()
         self.logger.info(f"capteur distance: {distance}")

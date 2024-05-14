@@ -7,8 +7,9 @@ src/view/__pycache__
 test_unitaire/__pycache__
 __pycache__
 .idea/
-logs/*
 !logs/cam*
 robot2I013/
 a.txt
 robot2I013Fake/
+*.log
+a.py

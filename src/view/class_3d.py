@@ -4,6 +4,7 @@ import os
 import threading
 import time
 
+from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenImage import OnscreenImage
 from direct.interval.IntervalGlobal import Sequence
 from direct.showbase.ShowBase import ShowBase
@@ -35,6 +36,7 @@ class Affichage3D(ShowBase):
         self.setupLights() # Configuration des lumières
         self.generateArene() # Génération de l'arene
         self.generateObstacles() # Génération des obstacles
+        self.generateBalise() # Génération de la balise
         self.setupSkybox() # Configuration du ciel
         self.setupCamera() # Configuration de la caméra
         self.setupControls() # Configuration des controles
@@ -100,11 +102,11 @@ class Affichage3D(ShowBase):
         # Passer en 2d
         if self.dico_cles['vue_3D']:
             self.dico_cles['vue_3D'] = False
-            self.camera.setPos(0, 0, 30)
+            self.camera.setPos(0, 0, 30*5)
             self.camera.setHpr(0, -90, 0)
         else: # Passer en 3d
             self.dico_cles['vue_3D'] = True
-            self.camera.setPos(0, 0, 5)
+            self.camera.setPos(0, 0, 25)
             self.camera.setHpr(0, 0, 0)
 
     def updateDico_cles(self, key, value):
@@ -124,7 +126,7 @@ class Affichage3D(ShowBase):
     def setupCamera(self):
         """Configure la caméra de la simulation"""
         self.disableMouse()
-        self.camera.setPos((self.simu.robot.pos_x  - self.max_x) * self.echelle , (self.simu.robot.pos_y  - self.max_y) * self.echelle, 5)  # Place la caméra derrière et légèrement au-dessus du robot
+        self.camera.setPos((self.simu.robot.pos_x  - self.max_x) * self.echelle , (self.simu.robot.pos_y  - self.max_y) * self.echelle, 5*5)  # Place la caméra derrière et légèrement au-dessus du robot
 
         crosshairs = OnscreenImage(
             image = path + '/modeles_3d/crosshairs.png',
@@ -135,13 +137,16 @@ class Affichage3D(ShowBase):
 
     def generateArene(self):
         """Génère l'arene' de la simulation"""
-        for y in range(int(self.max_y*self.echelle)):
-            for x in range(int((self.max_x//2)*self.echelle)):
+        for y in range(int(self.max_y//2*self.echelle)):
+            for x in range(int(self.max_x//2*self.echelle)):
                 self.createNewBlock(
                     x*2 - int((self.max_x//2)*self.echelle),
-                    y - int((self.max_y//2)*self.echelle),
+                    y*2 - int((self.max_y//2)*self.echelle),
                     0,
-                    'grass'
+                    'grass',
+                    1,
+                    1,
+                    1
                 )
 
     def generateObstacles(self):
@@ -150,35 +155,63 @@ class Affichage3D(ShowBase):
         self.logger.info(f"Nb Obstacle {len(self.simu.arene.liste_Obstacles)} a ajouter")
         for obstacle in self.simu.arene.liste_Obstacles:
             if isinstance(obstacle, ObstacleRectangle):
-                self.createNewBlock(
-                    (obstacle.pos_y - self.max_y//2)* self.echelle,
-                    (obstacle.pos_x - self.max_x//2)* self.echelle,
-                    2,
-                    'dirt'
-                )
-                
+                for i in range(7):
+                    c1 = obstacle._coin1._x
+                    c2 = obstacle._coin2._x
+                    self.createNewBlock(
+                        (obstacle.pos_y - self.max_y//2)* self.echelle,
+                        (obstacle.pos_x - self.max_x//2)* self.echelle,
+                        i,
+                        'dirt',
+                        c2 * self.echelle,
+                        c1*self.echelle,
+                        1   
+                    )
+                    """
+                    for x,y in obstacle.coins:
+                        self.createNewBlock(
+                        (y - self.max_y//2)* self.echelle,
+                        (x - self.max_x//2)* self.echelle,
+                        i,
+                        'dirt'
+                        )"""
+                    
                 cpt += 1
                 self.logger.info(f"Obstacle {cpt} rectangle ajouté ")
                 
+    def generateBalise(self):
+        """Génère la balise de la simulation"""
+        # Créer un noeud pour balise
+        self.createNewBlock((self.simu.robot.pos_y - self.max_y//2) * self.echelle ,
+                            (self.simu.robot.pos_x - self.max_x//2) * self.echelle, 
+                            10,
+                            'balise',
+                            10,
+                            10,
+                            10
+                            )
+        
             
-    def createNewBlock(self, x, y, z, type):
+    def createNewBlock(self, x, y, z, type, scale_x, scale_y, scale_z):
         """Crée un nouveau bloc à la position spécifiée"""
         newBlockNode = self.render.attachNewNode('new-block-placeholder')
         newBlockNode.setPos(x, y, z)
-
+        newBlockNode.setScale(scale_x,scale_y,scale_z)
         if type == 'grass':
             self.grassBlock.instanceTo(newBlockNode)
         elif type == 'dirt':
             self.dirtBlock.instanceTo(newBlockNode)
         elif type == 'sol':
             self.solBlock.instanceTo(newBlockNode)
+        elif type == 'balise':
+            self.balise.instanceTo(newBlockNode)
 
         blockSolid = CollisionBox((-1, -1, -1), (1, 1, 1))
         blockNode = CollisionNode('block-collision-node')
         blockNode.addSolid(blockSolid)
         collider = newBlockNode.attachNewNode(blockNode)
         collider.setPythonTag('owner', newBlockNode)
-                
+
     def loadModels(self):
         """Telecharge les modeles 3D et les ajoute a la scene"""
         # Créer un noeud pour robot
@@ -189,7 +222,11 @@ class Affichage3D(ShowBase):
         self.robot.setPos((self.simu.robot.pos_y - self.max_y//2) * self.echelle ,(self.simu.robot.pos_x - self.max_x//2) * self.echelle, 2)  # Positionne le modèle
         self.robot.setH(self.simu.robot._theta + 180)
         self.robot.setP(90)
-
+        self.robot.setScale(5,5,5)
+        
+        # Charger le modèle de balise 
+        self.balise = self.loader.loadModel(path + "/modeles_3d/balise.glb")
+    
         # Charger les modèles du sol
         self.solBlock = self.loader.loadModel(path + "/modeles_3d/sol-block.glb")
         self.grassBlock = self.loader.loadModel(path + "/modeles_3d/grass-block.glb")
@@ -199,6 +236,7 @@ class Affichage3D(ShowBase):
         self.solBlock.setP(90)
         self.grassBlock.setP(90)
         self.dirtBlock.setP(90)
+        self.balise.setP(90)
 
     def setupLights(self):
         """Configure les lumières de la scène"""
