@@ -150,6 +150,14 @@ class AdaptateurRobotIrl(Adaptateur):
         self.logger.info(f"capteur distance: {distance}")
         return distance
     
+    def servo_rotate(self, angle: int):
+        """
+        Fait tourner le servo moteur
+        :param angle: Angle de rotation du servo moteur
+        """
+        self._robot.servo_rotate(angle)
+        self._angle = angle
+    
     def reconnaissance_im(self, image, num)->tuple[bool, int]:
         """Reconnaissance d'image balise 
         :param image: Image à traiter
