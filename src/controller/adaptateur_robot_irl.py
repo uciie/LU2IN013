@@ -73,6 +73,8 @@ class AdaptateurRobotIrl(Adaptateur):
         self._v_ang_roue_d, self._v_ang_roue_g = 0., 0.
         self._last_motor_positions = self._robot.get_motor_position()
         self.logger = logging.getLogger(__name__)
+        self._angle = 0
+        self.servo_rotate(0) # initialiser l'angle du servo moteur
 
     def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float):
         """ Modifier la vitesse des roues
@@ -149,6 +151,11 @@ class AdaptateurRobotIrl(Adaptateur):
         distance = self._robot.get_distance()
         self.logger.info(f"capteur distance: {distance}")
         return distance
+    
+    @property
+    def angle(self)->int:
+        """"""
+        return self._angle
     
     def start_recording(self):
         """
