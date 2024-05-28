@@ -1,6 +1,7 @@
 import logging
 import math
-
+import cv2
+from PIL import Image
 from ..controller.controleur import Adaptateur, Strategie
 
 # Configure logging to write to both terminal and file
@@ -86,7 +87,13 @@ class TournerDeg(Strategie):
     def start(self):
         """Commencer la strategie"""
         self.logger.info("Starting TournerDeg strategy")
+        #self.logger.info(f"adapateur angle {self.adaptateur.angle}")
         self.adaptateur.active_trace(self.active_trace)
+        if self.angle is None : 
+            if self.adaptateur.angle < 90:
+                self.angle = 90 - self.adaptateur.angle
+            else : 
+                self.angle = self.adaptateur.angle-90
         if self.angle > 0:
             self.v_ang_d, self.v_ang_g = self.v_ang, -self.v_ang
             self.adaptateur.set_vitesse_roue(self.v_ang, -self.v_ang)
@@ -94,19 +101,21 @@ class TournerDeg(Strategie):
             self.v_ang_d, self.v_ang_g = -self.v_ang, self.v_ang
             self.adaptateur.set_vitesse_roue(-self.v_ang, self.v_ang)
         self.pos_ini = 1. * self.adaptateur.angle_parcouru()
-        self.parcouru = 0.
+        self.parcouru = 0
 
     def stop(self) -> bool:
         """Verifier si la strategie est fini ou non
         :return: True si la strategie est finie ou False sinon"""
         self.logger.info(f"angle parcourue {self.parcouru}, angle {self.angle}")
-        return math.fabs(self.parcouru) >= math.fabs(self.angle)
+        if self.angle == 0 or math.fabs(self.parcouru) >= math.fabs(self.angle):
+            self.adaptateur.stop()
+            return True
+        return False
 
     def step(self):
         """pas de la strategie"""
         self.parcouru += self.adaptateur.angle_parcouru()
         if self.stop():
-            self.adaptateur.stop()
             self.logger.info("TournerDeg strategy finished")
             return
 
