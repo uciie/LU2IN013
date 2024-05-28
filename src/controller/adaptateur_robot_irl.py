@@ -150,6 +150,18 @@ class AdaptateurRobotIrl(Adaptateur):
         self.logger.info(f"capteur distance: {distance}")
         return distance
     
+    def start_recording(self):
+        """
+        Démarre l'enregistrement des images
+        """
+        self._robot.start_recording()
+
+    def stop_recording(self):
+        """
+        Arrête l'enregistrement des images
+        """
+        self._robot.stop_recording()
+    
     def servo_rotate(self, angle: int):
         """
         Fait tourner le servo moteur
