@@ -44,9 +44,9 @@ class Affichage2D(Thread):
         self.root = None
 
         # Les valeurs initiales des variables
-        self.initial_v_ang_d = 50
-        self.initial_v_ang_g = 50
-        self.initial_v_ang = 50
+        self.initial_v_ang_d = 10
+        self.initial_v_ang_g = 10
+        self.initial_v_ang = 10
         self.initial_angle = 90
         self.initial_distance = 50
         self.initial_position = (self._simu.robot.pos_x, self._simu.robot.pos_y)
