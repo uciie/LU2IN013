@@ -71,6 +71,11 @@ class AdaptateurRobotSimu(Adaptateur):
         :param float y: nouvelle position"""
         self._last_pos_y = y
 
+    def set_affichage3d(self, affichage3d):
+        """Setter de l'affichage 3d
+        :param affichage3d: l'affichage 3d"""
+        self._affichage3d = affichage3d
+
     def set_vitesse_roue(self, v_ang_roue_d: float, v_ang_roue_g: float):
         """ Modifier la vitesse des roues
 
@@ -116,3 +121,7 @@ class AdaptateurRobotSimu(Adaptateur):
         :return: la distance du robot
         """
         return self._simulation.detecte_distance(self._robot)
+
+    def get_image(self):
+        """Obtenir l'image du robot"""
+        return self._affichage3d.screenshot("yourfile.png", False)
