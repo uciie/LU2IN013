@@ -168,6 +168,13 @@ class AdaptateurRobotIrl(Adaptateur):
         Arrête l'enregistrement des images
         """
         self._robot.stop_recording()
+
+    def get_image(self):
+        """
+        Capture la derniere image avec la caméra du robot
+        :return: Image capturée par la caméra du robot
+        """
+        return self._robot.get_image()
     
     def servo_rotate(self, angle: int):
         """
