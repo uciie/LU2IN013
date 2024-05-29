@@ -78,7 +78,7 @@ class Simulation(Thread):
             self.update()
             end_time = time.time() - start_time
             sleep_time = self.dt - end_time
-            self.logger.info(f"temps utilise {end_time}")
+            #self.logger.info(f"temps utilise {end_time}")
             if sleep_time < 0:
                 self.dt = -sleep_time
                 sleep_time = 0

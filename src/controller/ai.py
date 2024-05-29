@@ -1,6 +1,7 @@
 import logging
 import math
-
+import cv2
+from PIL import Image
 from ..controller.controleur import Adaptateur, Strategie
 
 # Configure logging to write to both terminal and file
@@ -86,7 +87,13 @@ class TournerDeg(Strategie):
     def start(self):
         """Commencer la strategie"""
         self.logger.info("Starting TournerDeg strategy")
+        #self.logger.info(f"adapateur angle {self.adaptateur.angle}")
         self.adaptateur.active_trace(self.active_trace)
+        if self.angle is None : 
+            if self.adaptateur.angle < 90:
+                self.angle = 90 - self.adaptateur.angle
+            else : 
+                self.angle = self.adaptateur.angle-90
         if self.angle > 0:
             self.v_ang_d, self.v_ang_g = self.v_ang, -self.v_ang
             self.adaptateur.set_vitesse_roue(self.v_ang, -self.v_ang)
@@ -94,19 +101,21 @@ class TournerDeg(Strategie):
             self.v_ang_d, self.v_ang_g = -self.v_ang, self.v_ang
             self.adaptateur.set_vitesse_roue(-self.v_ang, self.v_ang)
         self.pos_ini = 1. * self.adaptateur.angle_parcouru()
-        self.parcouru = 0.
+        self.parcouru = 0
 
     def stop(self) -> bool:
         """Verifier si la strategie est fini ou non
         :return: True si la strategie est finie ou False sinon"""
         self.logger.info(f"angle parcourue {self.parcouru}, angle {self.angle}")
-        return math.fabs(self.parcouru) >= math.fabs(self.angle)
+        if self.angle == 0 or math.fabs(self.parcouru) >= math.fabs(self.angle):
+            self.adaptateur.stop()
+            return True
+        return False
 
     def step(self):
         """pas de la strategie"""
         self.parcouru += self.adaptateur.angle_parcouru()
         if self.stop():
-            self.adaptateur.stop()
             self.logger.info("TournerDeg strategy finished")
             return
 
@@ -259,3 +268,62 @@ class StrategieWhile(Strategie):
         if self.stop():
             return 
         self.strat.step()
+
+class StrategieTrouverBalise(Strategie):
+    """Classe Strategie pour trouver une balise"""
+    def __init__(self, adaptateur: Adaptateur, angle: int =20, pas_angle: int=10, seuil_cpt:int = 15) -> None:
+        """
+        :param adaptateur: adaptateur du robot
+        :param angle: angle de rotation au depart
+        :param pas_angle: pas de rotation du servo moteur
+        :param seuil_cpt: seuil du nb de capture d'image
+        :param vitesse: vitesse du robot
+        """
+        super().__init__()
+        self.adaptateur = adaptateur
+        self.angle = angle
+        self.pas_angle = pas_angle # Pas de rotation du servo moteur
+        self.cpt = 0
+        self.image = None
+        self.seuil_cpt = seuil_cpt # Seuil du nb de capture d'image
+        self.logger = logging.getLogger(__name__)
+
+    def start(self):
+        """Commencer la strategie"""
+        self.logger.info("Starting StrategieTrouverBalise strategy")
+        self.adaptateur.start_recording()
+        self.adaptateur.servo_rotate(self.angle)
+
+    def stop(self) -> bool:
+        """Vérifier si la stratégie est finie
+        :return: True si la stratégie est finie, False sinon"""
+        if self._process_image():
+            self.logger.info(f"Balise trouvée: {self.num}")
+            return True
+        self.logger.info(self.cpt)
+        return self.cpt > self.seuil_cpt
+    
+    def step(self):
+        """Pas de la stratégie"""
+        if self.stop():
+            self.adaptateur.stop_recording()
+            return
+        self.image = self.adaptateur.get_image()
+        if self.image is not None: 
+            self.angle += self.pas_angle
+            self.adaptateur.servo_rotate(self.angle)
+            self.cpt += 1
+
+    def _process_image(self) -> bool:
+        """Traite l'image capturée pour vérifier la présence de la balise
+        :return: True si la balise est trouvée, False sinon"""
+        if self.image is not None:
+            image_path = f"image{self.cpt}.png"
+            im = Image.fromarray(self.image)
+            im.save(image_path)
+            image_charge = cv2.imread(image_path)
+            res, self.num = self.adaptateur.reconnaissance_im(image_charge, self.cpt)
+            return res
+        else:
+            self.logger.info("Aucune image n'a été capturée.")
+        return False

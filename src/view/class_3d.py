@@ -67,8 +67,6 @@ class Affichage3D(ShowBase):
         self.camera.setPos(self.robot_node.getX(), self.robot_node.getY(), self.camera.getZ())  # Place la caméra derrière et légèrement au-dessus du robot
         self.camera.setH(self.robot_node.getH() )  # Oriente la caméra vers le robot
         
-
-
         return task.cont
 
     def setupControls(self):
@@ -169,14 +167,6 @@ class Affichage3D(ShowBase):
                         c1*self.echelle,
                         1   
                     )
-                    """
-                    for x,y in obstacle.coins:
-                        self.createNewBlock(
-                        (y - self.max_y//2)* self.echelle,
-                        (x - self.max_x//2)* self.echelle,
-                        i,
-                        'dirt'
-                        )"""
                     
                 cpt += 1
                 self.logger.info(f"Obstacle {cpt} rectangle ajouté ")
