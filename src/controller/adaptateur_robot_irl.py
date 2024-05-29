@@ -1,7 +1,5 @@
 import math
 import logging
-import cv2
-import numpy as np
 from src.controller.controleur import Adaptateur
 # Configure logging to write to both terminal and file
 logging.basicConfig(level=logging.DEBUG, filename='logs/simu.log', filemode='w',
@@ -21,46 +19,7 @@ try :
     from robot2IN013 import Robot2IN013
 except ModuleNotFoundError:
     from src.robot.robot2I013Fake import Robot2IN013
-    
 
-# plage de couleurs pour la reconnaissance d'image (balise)
-plages_couleurs = {
-    'jaune': {
-        'lower': np.array([90, 90, 30]),  # foncé
-        'upper': np.array([220, 200, 100])  # clair
-    },
-    'rouge': {
-        'lower': np.array([90, 0, 10]),
-        'upper': np.array([210, 80, 80])
-    },
-    'bleu': {
-        'lower': np.array([0, 10, 100]),
-        'upper': np.array([20, 80, 170])
-    },
-    'vert': {
-        'lower': np.array([0, 40, 50]),
-        'upper': np.array([70, 150, 140])
-    }
-}
-
-def masque_couleur(image):
-    """Trouver les contours des couleurs dans l'image
-    :param image: Image à traiter
-    :return: Dictionnaire des contours pour chaque couleur"""
-    # Convertir l'image en RVB
-    rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
-    # Créer un masque pour chaque couleur dans l'image
-    masks = {}
-    for color, values in plages_couleurs.items():
-        masks[color] = cv2.inRange(rgb, values['lower'], values['upper'])
-
-    # Trouver les contours pour chaque couleur
-    contours = {}
-    for color, mask in masks.items():
-        contours[color], _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-    return contours, image    
 
 class AdaptateurRobotIrl(Adaptateur):
     """Classe de l'adaptateur du robot irl"""
@@ -184,53 +143,3 @@ class AdaptateurRobotIrl(Adaptateur):
         self._robot.servo_rotate(angle)
         self._angle = angle
     
-    def reconnaissance_im(self, image, num)->tuple[bool, int]:
-        """Reconnaissance d'image balise 
-        :param image: Image à traiter
-        :param num: numero de l'image
-        :return: Tuple (bool, int) : (True, num) si la reconnaissance est un succès, sinon (False, -1)
-        """
-        self.logger.info("Reconnaissance d'image")
-        contours, resized = masque_couleur(image)
-
-        # Filtrer les contours pour ne garder que ceux qui ressemblent à un rectangle
-        rectangles = {}
-        dico_rectangles = dict()
-        for color, color_contours in contours.items():
-            rectangles[color] = []
-            for contour in color_contours:
-                # Approximer le contour pour un polygone
-                epsilon = 0.1 * cv2.arcLength(contour, True)
-                approx = cv2.approxPolyDP(contour, epsilon, True)
-                # Si le polygone a 4 côtés, il est probablement un rectangle
-                if len(approx) == 4:
-                    self.logger.info(f"Rectangle {color}")
-                    dico_rectangles[color] = approx
-                    rectangles[color].append(approx)
-
-        # Vérifier si les clés de dico_rectangles sont bien les couleurs (rouge, vert, jaune, bleu)
-        expected_colors = ['rouge', 'vert', 'jaune', 'bleu']
-        if set(dico_rectangles.keys()) == set(expected_colors):
-            # Calculer les coordonnées du rectangle englobant
-            min_x = min([rect[0][0][0] for rect in dico_rectangles.values()])
-            max_x = max([rect[2][0][0] for rect in dico_rectangles.values()])
-            min_y = min([rect[0][0][1] for rect in dico_rectangles.values()])
-            max_y = max([rect[2][0][1] for rect in dico_rectangles.values()])
-
-            # Dessiner les rectangles sur l'image originale
-            #for color, rect in dico_rectangles.items():
-            #    cv2.drawContours(image, [rect], -1, (0, 255, 0), 2)  # Dessiner le rectangle vert
-
-            # Vérifier si le rectangle englobant est un rectangle
-            width = max_x - min_x
-            height = max_y - min_y
-            if width > 0 and height > 0:
-                self.logger.info("Le rectangle englobant est un rectangle.")
-                # Dessiner le rectangle englobant
-                # cv2.rectangle(image, (min_x, min_y), (max_x, max_y), (255, 0, 0), 2)
-                return True, num
-            else:
-                self.logger.info("Le rectangle englobant n'est pas un rectangle.")
-                return False, -1
-        else:
-            return False, -1
