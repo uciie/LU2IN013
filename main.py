@@ -60,6 +60,9 @@ class Demo:
         # Création du module View3D
         self.view3D = Affichage3D(simu)
         
+        # Ajouter l'affichage 3D dans l'adaptateur
+        self.adaptateur.set_affichage3d(self.view3D)
+        
         # Création du module Controller
         self.controller = Controleur(self.adaptateur, dt_controller)
 
