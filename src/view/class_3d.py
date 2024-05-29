@@ -67,8 +67,6 @@ class Affichage3D(ShowBase):
         self.camera.setPos(self.robot_node.getX(), self.robot_node.getY(), self.camera.getZ())  # Place la caméra derrière et légèrement au-dessus du robot
         self.camera.setH(self.robot_node.getH() )  # Oriente la caméra vers le robot
         
-
-
         return task.cont
 
     def setupControls(self):
@@ -93,21 +91,22 @@ class Affichage3D(ShowBase):
         self.accept('arrow_right',self.updateDico_cles, ['vers_droite',True])
         self.accept('arrow_right-up',self.updateDico_cles, ['vers_droite',False])
 
-
         # changer de point de vue 
         self.accept('escape', self.changeView)
+        #
+        self.accept('s', lambda: self.screenshot("yourfile.png", False))
 
     def changeView(self):
         """Changer de point de vue"""
         # Passer en 2d
         if self.dico_cles['vue_3D']:
             self.dico_cles['vue_3D'] = False
-            self.camera.setPos(0, 0, 30*5)
-            self.camera.setHpr(0, -90, 0)
+            self.camera.setPos(0, 0, 25)
+            self.camera.setHpr(0, -15, 0)
         else: # Passer en 3d
             self.dico_cles['vue_3D'] = True
-            self.camera.setPos(0, 0, 25)
-            self.camera.setHpr(0, 0, 0)
+            self.camera.setPos(0, 0, 50*5)
+            self.camera.setHpr(0, -90, 0)
 
     def updateDico_cles(self, key, value):
         """Met à jour le dictionnaire de touches"""
@@ -127,6 +126,7 @@ class Affichage3D(ShowBase):
         """Configure la caméra de la simulation"""
         self.disableMouse()
         self.camera.setPos((self.simu.robot.pos_x  - self.max_x) * self.echelle , (self.simu.robot.pos_y  - self.max_y) * self.echelle, 5*5)  # Place la caméra derrière et légèrement au-dessus du robot
+        self.camera.setHpr(0, -15, 0)
 
         crosshairs = OnscreenImage(
             image = path + '/modeles_3d/crosshairs.png',
@@ -167,14 +167,6 @@ class Affichage3D(ShowBase):
                         c1*self.echelle,
                         1   
                     )
-                    """
-                    for x,y in obstacle.coins:
-                        self.createNewBlock(
-                        (y - self.max_y//2)* self.echelle,
-                        (x - self.max_x//2)* self.echelle,
-                        i,
-                        'dirt'
-                        )"""
                     
                 cpt += 1
                 self.logger.info(f"Obstacle {cpt} rectangle ajouté ")
@@ -182,8 +174,9 @@ class Affichage3D(ShowBase):
     def generateBalise(self):
         """Génère la balise de la simulation"""
         # Créer un noeud pour balise
-        self.createNewBlock((self.simu.robot.pos_y - self.max_y//2) * self.echelle ,
-                            (self.simu.robot.pos_x - self.max_x//2) * self.echelle, 
+        self.createNewBlock(
+                            -50, 
+                            -10,
                             10,
                             'balise',
                             10,
@@ -205,7 +198,8 @@ class Affichage3D(ShowBase):
             self.solBlock.instanceTo(newBlockNode)
         elif type == 'balise':
             self.balise.instanceTo(newBlockNode)
-
+            self.balise.setHpr(180, 0, 90) 
+        
         blockSolid = CollisionBox((-1, -1, -1), (1, 1, 1))
         blockNode = CollisionNode('block-collision-node')
         blockNode.addSolid(blockSolid)
