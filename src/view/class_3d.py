@@ -55,6 +55,13 @@ class Affichage3D(ShowBase):
         elif self.dico_cles['vers_bas']:
             self.camera.setP(self.camera.getP() - 1)
             self.logger.info(f"Camera vers le bas: {self.camera.getP()}")
+        elif self.dico_cles['vers_gauche']:
+            self.camera.setH(self.camera.getH() + 1)
+            self.logger.info(f"Camera vers la gauche: {self.camera.getH()}")
+        elif self.dico_cles['vers_droite']:
+            self.camera.setH(self.camera.getH() - 1)
+            self.logger.info(f"Camera vers la droite: {self.camera.getH()}")
+        
         
         #Mise à jour des coordonnées du robot
         self.robot_node.setY((self.simu.robot.pos_x  - self.max_x//2)* self.echelle)
@@ -65,7 +72,7 @@ class Affichage3D(ShowBase):
 
         # Mettre à jour la position de la caméra
         self.camera.setPos(self.robot_node.getX(), self.robot_node.getY(), self.camera.getZ())  # Place la caméra derrière et légèrement au-dessus du robot
-        self.camera.setH(self.robot_node.getH() )  # Oriente la caméra vers le robot
+        self.camera.setH(self.camera.getH())
         
         return task.cont
 
@@ -78,7 +85,7 @@ class Affichage3D(ShowBase):
             'vers_droite': False, # Rotation vers la droite
             'avancer': False, # Avancer
             'reculer': False, # Reculer
-            'vue_3D': True # Changer de vue3d en 2d (vue de dessus)
+            'vue_3D': False # Changer de vue3d en 2d (vue de dessus)
         }
         
         # Définition des touches de contrôles
@@ -126,7 +133,7 @@ class Affichage3D(ShowBase):
         """Configure la caméra de la simulation"""
         self.disableMouse()
         self.camera.setPos((self.simu.robot.pos_x  - self.max_x) * self.echelle , (self.simu.robot.pos_y  - self.max_y) * self.echelle, 5*5)  # Place la caméra derrière et légèrement au-dessus du robot
-        self.camera.setHpr(0, -15, 0)
+        self.camera.setHpr(self.robot_node.getH()+90, -15, 0)
 
         crosshairs = OnscreenImage(
             image = path + '/modeles_3d/crosshairs.png',
