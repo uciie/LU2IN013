@@ -2,7 +2,9 @@
 
 Nom de l'équipe : HELMS
 Effectif de l'équipe : 5
+
 [Trello](https://trello.com/b/f5t3CRXe/lu2in013-projet-robot)
+
 [Github](https://github.com/uciie/LU2IN013/)
 
 | Nom         | Prenom  | Mail                                      |
