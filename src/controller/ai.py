@@ -38,7 +38,7 @@ class Go(Strategie):
         self.pos_ini = None
         self.distance = distance
         self.v_ang_d, self.v_ang_g = v_ang_d, v_ang_g
-        self.parcouru = 0.
+        self.parcouru = 0
         self.active_trace = active_trace
         self.logger = logging.getLogger(__name__)
 
@@ -48,7 +48,7 @@ class Go(Strategie):
         self.adaptateur.active_trace(self.active_trace)
         self.adaptateur.set_vitesse_roue(self.v_ang_d, self.v_ang_g)
         self.pos_ini = self.adaptateur.distance_parcourue()
-        self.parcouru = 0.
+        self.parcouru = 0
 
     def stop(self):
         """Verifier si la strategie est fini ou non
@@ -80,14 +80,13 @@ class TournerDeg(Strategie):
         self.pos_ini = None
         self.adaptateur = adaptateur
         self.angle, self.v_ang = angle, v_ang
-        self.parcouru = 0.
+        self.parcouru = 0
         self.active_trace = active_trace
         self.logger = logging.getLogger(__name__)
 
     def start(self):
         """Commencer la strategie"""
         self.logger.info("Starting TournerDeg strategy")
-        #self.logger.info(f"adapateur angle {self.adaptateur.angle}")
         self.adaptateur.active_trace(self.active_trace)
         if self.angle is None : 
             if self.adaptateur.angle < 90:
@@ -116,6 +115,7 @@ class TournerDeg(Strategie):
         """pas de la strategie"""
         self.parcouru += self.adaptateur.angle_parcouru()
         if self.stop():
+            self.adaptateur.stop()
             self.logger.info("TournerDeg strategy finished")
             return
 
@@ -146,7 +146,7 @@ class StrategieSequentielle(Strategie):
     def stop(self) -> bool:
         """Verifier si la strategie est finie
         :return: True si la strategie est finie, False sinon"""
-        return self.current_step >= len(self.steps) or self.steps[self.current_step].stop()
+        return self.current_step >= len(self.steps) #or self.steps[self.current_step].stop()
 
     def step(self):
         """pas de la strategie sequentielle """
@@ -158,6 +158,43 @@ class StrategieSequentielle(Strategie):
             if self.current_step < len(self.steps):
                 self.steps[self.current_step].start()
 
+class StrategieFor(Strategie):
+    """Classe Strategie For permettant de répetter une stratégie un certain nombre de fois"""
+
+    def __init__(self, adaptateur: Adaptateur, strategie: Strategie, nombre_repetition: int) -> None:
+        """
+        :param adaptateur: adaptateur du robot
+        :param steps: liste des steps
+        """
+        super().__init__()
+        self.adaptateur = adaptateur
+        self.strategie = strategie
+        self.nombre_repetition = nombre_repetition
+        self.cpt = 0
+
+        self.logger = logging.getLogger(__name__)
+
+    def start(self):
+        """commencer la strategie"""
+        self.logger.info("Starting For strategy")
+        self.cpt = 0
+        self.strategie.start()
+
+    def stop(self) -> bool:
+        """Verifier si la strategie est finie
+        :return: True si la strategie est finie, False sinon"""
+        if self.strategie.stop():
+            self.cpt += 1
+            if self.cpt >= self.nombre_repetition:
+                return True
+            self.strategie.start()
+            return False
+
+    def step(self):
+        """pas de la strategie sequentielle """
+        if self.stop():
+            return
+        self.strategie.step()
 
 class Stop(Strategie):
     """Strategie qui ne fait rien/ arrete le robot"""
