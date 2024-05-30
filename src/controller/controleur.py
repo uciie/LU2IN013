@@ -98,6 +98,11 @@ class Adaptateur(ABC):
         """Obtenir l'image du robot"""
         pass
 
+    @abstractmethod
+    def servo_rotate(self, angle: int):
+        """Faire tourner le servo moteur"""
+        pass
+
     def reconnaissance_im(self, image, num)->tuple[bool, int]:
         """Reconnaissance d'image balise 
         :param image: Image à traiter

@@ -124,4 +124,9 @@ class AdaptateurRobotSimu(Adaptateur):
 
     def get_image(self):
         """Obtenir l'image du robot"""
-        return self._affichage3d.screenshot("yourfile.png", False)
+        self._affichage3d.screenshot("image.png", False)
+        return "image.png"
+    
+    def servo_rotate(self, angle: int):
+        """Faire tourner le servo moteur"""
+        self._affichage3d.camera.setH(angle)
