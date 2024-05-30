@@ -32,11 +32,9 @@ class DemoIrl:
 
 if __name__ == '__main__':
     demo = DemoIrl()
-
-    demo.robot._start_recording()
-    print("Start recording")
-    print(demo.robot._img_queue)
-
-    #go = test_go_sans_tracer(demo.controller)
-    #strat = StrategieIf(demo.controller.adaptateur, go , Stop(demo.adaptateur), 100)
-    #demo.controller.add_strat(go)
+    distance = 50
+    vitesse = 50
+    seuil_collision = 50
+    avancer = Go(demo.controller.adaptateur, distance, vitesse, vitesse, True)
+    strat = StrategieWhile(demo.adaptateur, avancer, seuil_collision)
+    demo.controller.add_strat(go)

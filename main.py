@@ -1,7 +1,7 @@
 import threading
 
 from src.controller.adaptateur_robot_simu import AdaptateurRobotSimu
-from src.controller.ai import Go, StrategieWhile
+from src.controller.ai import Go, StrategieWhile, StrategieTrouverBalise, StrategieFor, TournerDeg, StrategieSequentielle
 from src.controller.controleur import Controleur
 from src.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from src.modele.simulation import Simulation
@@ -83,5 +83,22 @@ class Demo:
 
 if __name__ == '__main__':
     demo = Demo()
+    #variable pour les strategies
+    distance = 50
+    vitesse = 10
+    angle = 90
+    seuil_collision = 50
+    activer_tracer = True
+    nb_repetition = 4
 
+    # strategies pour aller vers obstacle et à chaque rencontre tourner de 90 degres
+    avancer = Go(demo.adaptateur, distance, vitesse, vitesse, activer_tracer)
+    avancer_jusqua = StrategieWhile(demo.adaptateur, avancer, seuil_collision)
+    touner = TournerDeg(demo.adaptateur, angle, vitesse, activer_tracer)
+    strat_repeter = StrategieSequentielle(demo.adaptateur, [avancer_jusqua, touner])
+    tracer_carre = StrategieFor(demo.adaptateur, strat_repeter, nb_repetition)
+
+    #ajout de la strategie
+    demo.controller.add_strat(tracer_carre)
+    
     demo.view3D.run()
