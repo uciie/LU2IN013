@@ -1,7 +1,9 @@
 import threading
 
 from src.controller.adaptateur_robot_simu import AdaptateurRobotSimu
-from src.controller.ai import Go, StrategieWhile, StrategieTrouverBalise, StrategieFor, TournerDeg, StrategieSequentielle
+from src.controller.ai import (Go, StrategieFor, StrategieSequentielle,
+                               StrategieTrouverBalise, StrategieWhile,
+                               TournerDeg)
 from src.controller.controleur import Controleur
 from src.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from src.modele.simulation import Simulation
@@ -54,32 +56,36 @@ class Demo:
         # Créer l'adaptateur
         self.adaptateur = AdaptateurRobotSimu(self.robot, simu)
 
-        # Création du module View
-        view = Affichage2D(simu, dt_affichage, lock_aff)
-
-        # Création du module View3D
-        self.view3D = Affichage3D(simu)
-        
-        # Ajouter l'affichage 3D dans l'adaptateur
-        self.adaptateur.set_affichage3d(self.view3D)
-        
         # Création du module Controller
         self.controller = Controleur(self.adaptateur, dt_controller)
 
-        # Ajout du lien de communication entre view et controller
-        view.controller = self.controller
-        
-        # demarrage des threads
-        view_thread = threading.Thread(target=view.run)
-        
-        view_thread.start()
-        
         simu.start()
         self.controller.start()
-        
-        # Ajout du lien de communication entre view et controller
-        view.controller = self.controller
 
+
+        #Choix entre la 2D et la 3D
+        self.choix = input("0 : 2D      1 : 3D      2 : 2D et 3D\n")
+
+        if (self.choix == "0" or self.choix == "2"):
+            # Création du module View
+            view = Affichage2D(simu, dt_affichage, lock_aff)
+            # Ajout du lien de communication entre view et controller
+            view.controller = self.controller
+            
+            # demarrage des threads
+            view_thread = threading.Thread(target=view.run)
+            
+            view_thread.start()
+            
+            # Ajout du lien de communication entre view et controller
+            view.controller = self.controller
+
+        if (self.choix == "1" or self.choix == "2"):
+            # Création du module View3D
+            self.view3D = Affichage3D(simu)
+            
+            # Ajouter l'affichage 3D dans l'adaptateur
+            self.adaptateur.set_affichage3d(self.view3D)
 
 if __name__ == '__main__':
     demo = Demo()
@@ -100,5 +106,5 @@ if __name__ == '__main__':
 
     #ajout de la strategie
     demo.controller.add_strat(tracer_carre)
-    
-    demo.view3D.run()
+    if (demo.choix == "1" or demo.choix == "2"):
+        demo.view3D.run()
