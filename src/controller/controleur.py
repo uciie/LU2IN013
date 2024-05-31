@@ -60,14 +60,8 @@ class Adaptateur(ABC):
         pass
 
     @abstractmethod
-    def distance_parcourue(self) -> float:
-        """ Obtenir la distance parcourue
-        """
-        pass
-
-    @abstractmethod
-    def angle_parcouru(self) -> float:
-        """ Obtenir l'angle parcouru
+    def distance_et_angle_parcourus(self) -> tuple[float, float]:
+        """ Obtenir la distance  et l'angle parcourus
         """
         pass
 
