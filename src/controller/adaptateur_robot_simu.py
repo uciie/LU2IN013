@@ -85,18 +85,15 @@ class AdaptateurRobotSimu(Adaptateur):
         self._robot.roue_droite.vitesse_angulaire = v_ang_roue_d
         self._robot.roue_gauche.vitesse_angulaire = v_ang_roue_g
 
-    def distance_parcourue(self) -> float:
-        """ Obtenir la distance parcourue
-        :return: la distance parcourue
+    def distance_et_angle_parcourus(self) -> tuple[float, float]:
+        """ Obtenir la distance et l'angle parcourus
+        :return: un tuple contenant la distance parcourue et l'angle parcouru
         """
+        # Calcul de la distance parcourue
         dist = distance((self._robot.pos_x, self._robot.pos_y), (self._last_pos_x, self._last_pos_y))
         self._last_pos_x, self._last_pos_y = self._robot.pos_x, self._robot.pos_y
-        return dist
 
-    def angle_parcouru(self) -> float:
-        """ Obtenir l'angle parcouru
-        :return: l'angle parcouru
-        """
+        # Calcul de l'angle parcouru
         angle = self._robot.theta - self._last_theta
         # Ajustement de l'angle parcouru selon le sens trigonométrique ou horloge
         if angle < -180:
@@ -104,7 +101,8 @@ class AdaptateurRobotSimu(Adaptateur):
         elif angle > 180:
             angle -= 360
         self._last_theta = self._robot.theta
-        return angle
+
+        return dist, angle
 
     def stop(self):
         """ Arreter le robot irl

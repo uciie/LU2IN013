@@ -47,8 +47,8 @@ class Go(Strategie):
         self.logger.info("Starting Go strategy")
         self.adaptateur.active_trace(self.active_trace)
         self.adaptateur.set_vitesse_roue(self.v_ang_d, self.v_ang_g)
-        self.pos_ini = self.adaptateur.distance_parcourue()
-        self.parcouru = 0
+        self.pos_ini = self.adaptateur.distance_et_angle_parcourus()[0]
+        self.parcouru = 0.
 
     def stop(self):
         """Verifier si la strategie est fini ou non
@@ -59,7 +59,7 @@ class Go(Strategie):
 
     def step(self):
         """pas de la strategie """
-        self.parcouru += self.adaptateur.distance_parcourue()
+        self.parcouru += self.adaptateur.distance_et_angle_parcourus()[0]
         if self.stop():
             self.adaptateur.stop()
             self.logger.info("Go strategy finished")
@@ -99,7 +99,7 @@ class TournerDeg(Strategie):
         else:
             self.v_ang_d, self.v_ang_g = -self.v_ang, self.v_ang
             self.adaptateur.set_vitesse_roue(-self.v_ang, self.v_ang)
-        self.pos_ini = 1. * self.adaptateur.angle_parcouru()
+        self.pos_ini = 1. * self.adaptateur.distance_et_angle_parcourus()[1]
         self.parcouru = 0
 
     def stop(self) -> bool:
@@ -113,7 +113,7 @@ class TournerDeg(Strategie):
 
     def step(self):
         """pas de la strategie"""
-        self.parcouru += self.adaptateur.angle_parcouru()
+        self.parcouru += self.adaptateur.distance_et_angle_parcourus()[1]
         if self.stop():
             self.adaptateur.stop()
             self.logger.info("TournerDeg strategy finished")

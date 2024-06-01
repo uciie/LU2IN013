@@ -51,7 +51,7 @@ class AdaptateurRobotIrl(Adaptateur):
         """ Rayon de rotation du robot"""
         return self._robot.WHEEL_BASE_WIDTH/2
 
-    def distance_parcourue(self) -> float:
+    def distance_et_angle_parcourus(self) -> float:
         """ Obtenir la distance parcourue en mm 
         :returns : Renvoie la distance parcourue du robot
         """
@@ -67,13 +67,6 @@ class AdaptateurRobotIrl(Adaptateur):
         # Mise à jour de la dernière position des moteurs
         self._last_motor_positions = current_motor_positions
 
-        return distance_parcourue
-
-    def angle_parcouru(self) -> float:
-        """ Obtenir l'angle parcouru
-        :returns : Renvoie l'angle parcourut du robot en degree
-        """
-        current_motor_positions = self._robot.get_motor_position()
         # Calcul de la différence entre les positions des moteurs gauche et droit
         delta_left_motor = (current_motor_positions[0] - self._last_motor_positions[0])
         delta_right_motor = (current_motor_positions[1] - self._last_motor_positions[1])
@@ -83,7 +76,7 @@ class AdaptateurRobotIrl(Adaptateur):
         self.logger.info(f"angle parcouru left: {delta_left_motor}, angle parcouru right: {delta_right_motor}")
         self._last_motor_positions = current_motor_positions
 
-        return angle_cur
+        return distance_parcourue, angle_cur
 
     def stop(self):
         """ Arreter le robot irl
