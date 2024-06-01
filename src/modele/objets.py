@@ -1,4 +1,5 @@
 import math
+import numpy as np
 from abc import ABC, abstractmethod
 
 from .utilitaire import Vecteur, project
@@ -459,3 +460,35 @@ class ObstacleRectangle(Obstacle):
             if self_interval[0] <= point_interval[1] and point_interval[0] <= self_interval[1]:
                 cpt += 1
         return cpt == 2
+
+
+class Balise(ObstacleRectangle):
+    def __init__(self, pos_x: float, pos_y: float, color2d: str):
+        """Initialisation d'une balise
+
+        :param pos_x: Coordonnée X de la balise (float)
+        :param pos_y: Coordonnée y de la balise (float)
+        :param color: Couleur de la balise
+        """
+        super().__init__(pos_x, pos_y, color2d)
+    
+    
+        # plage de couleurs pour la reconnaissance d'image (balise)
+        self.plages_couleurs = {
+            'jaune': {
+                'lower': np.array([90, 90, 30]),  # foncé
+                'upper': np.array([220, 200, 100])  # clair
+            },
+            'rouge': {
+                'lower': np.array([90, 0, 10]),
+                'upper': np.array([210, 80, 80])
+            },
+            'bleu': {
+                'lower': np.array([0, 10, 100]),
+                'upper': np.array([20, 80, 170])
+            },
+            'vert': {
+                'lower': np.array([0, 40, 50]),
+                'upper': np.array([70, 150, 140])
+            }
+        } 
