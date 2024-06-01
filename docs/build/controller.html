@@ -135,15 +135,8 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.angle_parcouru">
-<span class="sig-name descname"><span class="pre">angle_parcouru</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.angle_parcouru" title="Lien vers cette définition"></a></dt>
-<dd><p>Obtenir l’angle parcouru
-:returns : Renvoie l’angle parcourut du robot en degree</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.distance_parcourue">
-<span class="sig-name descname"><span class="pre">distance_parcourue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.distance_parcourue" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.distance_et_angle_parcourus">
+<span class="sig-name descname"><span class="pre">distance_et_angle_parcourus</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.distance_et_angle_parcourus" title="Lien vers cette définition"></a></dt>
 <dd><p>Obtenir la distance parcourue en mm 
 :returns : Renvoie la distance parcourue du robot</p>
 </dd></dl>
@@ -230,17 +223,10 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.angle_parcouru">
-<span class="sig-name descname"><span class="pre">angle_parcouru</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.angle_parcouru" title="Lien vers cette définition"></a></dt>
-<dd><p>Obtenir l’angle parcouru
-:return: l’angle parcouru</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.distance_parcourue">
-<span class="sig-name descname"><span class="pre">distance_parcourue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.distance_parcourue" title="Lien vers cette définition"></a></dt>
-<dd><p>Obtenir la distance parcourue
-:return: la distance parcourue</p>
+<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.distance_et_angle_parcourus">
+<span class="sig-name descname"><span class="pre">distance_et_angle_parcourus</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.distance_et_angle_parcourus" title="Lien vers cette définition"></a></dt>
+<dd><p>Obtenir la distance et l’angle parcourus
+:return: un tuple contenant la distance parcourue et l’angle parcouru</p>
 </dd></dl>
 
 <dl class="py method">
@@ -545,15 +531,9 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="controller.controleur.Adaptateur.angle_parcouru">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">angle_parcouru</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.controleur.Adaptateur.angle_parcouru" title="Lien vers cette définition"></a></dt>
-<dd><p>Obtenir l’angle parcouru</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="controller.controleur.Adaptateur.distance_parcourue">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distance_parcourue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.controleur.Adaptateur.distance_parcourue" title="Lien vers cette définition"></a></dt>
-<dd><p>Obtenir la distance parcourue</p>
+<dt class="sig sig-object py" id="controller.controleur.Adaptateur.distance_et_angle_parcourus">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distance_et_angle_parcourus</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#controller.controleur.Adaptateur.distance_et_angle_parcourus" title="Lien vers cette définition"></a></dt>
+<dd><p>Obtenir la distance  et l’angle parcourus</p>
 </dd></dl>
 
 <dl class="py method">
