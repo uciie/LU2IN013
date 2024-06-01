@@ -110,7 +110,8 @@ class AdaptateurRobotSimu(Adaptateur):
         self.set_vitesse_roue(0, 0)
 
     def active_trace(self, val: bool):
-        """Activer ou désactiver le tracage du robot."""
+        """Activer ou désactiver le tracage du robot.
+        :param val: True pour activer le tracage, False pour le désactiver"""
         self._robot.activer_tracer_parcours(val)
 
     def get_distance(self) -> float:

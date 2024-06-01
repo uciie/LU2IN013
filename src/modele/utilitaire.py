@@ -19,14 +19,21 @@ def project(axes: list[float], coins: list[tuple[float, float]]) -> list[float]:
 
 
 def distance(point1: tuple[float, float], point2: tuple[float, float]) -> float:
-    """Calcul de la distance euclidienne entre deux points."""
+    """Calcul de la distance euclidienne entre deux points.
+    :param point1: Premier point (x, y).
+    :param point2: Deuxième point (x, y).
+    :returns: La distance euclidienne entre les deux points."""
     x1, y1 = point1
     x2, y2 = point2
     return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
 
 def point_le_plus_loin(points: list[tuple[float, float]], x_ref: float, y_ref: float) -> tuple[float, float]:
-    """Trouver le point le plus loin d'un point de référence."""
+    """Trouver le point le plus loin d'un point de référence.
+    :param points: Liste des points (x, y).
+    :param x_ref: Coordonnée x du point de référence.
+    :param y_ref: Coordonnée y du point de référence.
+    :returns: Le point le plus loin du point de référence."""
     plus_loin = points[0]
     distance_min = distance(points[0], (x_ref, y_ref))
 

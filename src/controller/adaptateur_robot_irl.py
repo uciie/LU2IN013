@@ -27,6 +27,7 @@ class AdaptateurRobotIrl(Adaptateur):
 
     def __init__(self, robot: Robot2IN013):
         """ Adaptateur du robot irl
+        :param robot: Robot irl
         """
         super().__init__()
         self._robot = robot

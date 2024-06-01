@@ -18,6 +18,8 @@ class Affichage2D(Thread):
         """Initialise un Affichage2D graphique.
 
         :param simu : L'arène qui sera affichée
+        :param dt : Le pas de temps de la simulation
+        :param lock : Le verrou pour l'affichage
         """
         super(Affichage2D, self).__init__()
 
@@ -145,11 +147,6 @@ class Affichage2D(Thread):
                            self.v_ang_g_var.get(), self.activer_trace_var.get())
                 self._controller.add_strat(strat)
 
-    def go_cap_button_clicked(self):
-        """ Handle go button click
-        """
-        pass
-
     def turn_button_clicked(self):
         """ Handle turn button click
         """
@@ -177,16 +174,6 @@ class Affichage2D(Thread):
                 TournerDeg(self._controller.adaptateur, 90, self.v_ang_var.get(), self.activer_trace_var.get())]
             strat = StrategieSequentielle(self._controller.adaptateur, steps)
             self._controller.add_strat(strat)
-
-    def test_collision_button_clicked(self):
-        """ Handle tracer_carre button click
-        """
-        pass
-
-    def go_cap_max_button_clicked(self):
-        """ Handle go_cap_max button click
-        """
-        pass
 
     @staticmethod
     def reset_entry_color(var_entry: tk.Entry):
@@ -390,20 +377,6 @@ class Affichage2D(Thread):
         # Creation du boutton Go
         self.go_button = tk.Button(self.root, text="Go", command=self.go_button_clicked)
         self.go_button.grid(row=7, column=0, sticky="wsn", padx=5, pady=8)
-
-        # Creation du boutton Go avec un capteur de distance
-        # self.go_cap_button = tk.Button(self.root, text="Go avec Capteur", command=self.go_cap_button_clicked)
-        # self.go_cap_button.grid(row=8, column=0, sticky="wsn", padx=5, pady=8)
-
-        # Creation du boutton Test osbtacle avec un capteur de distance
-        # self.test_collision_button = tk.Button(self.root, text="Test de collision avec diff angle",
-        #                                       command=self.test_collision_button_clicked)
-        # self.test_collision_button.grid(row=9, column=0, sticky="wsn", padx=5, pady=8)
-
-        # Creation du bouton Go cap max
-        # self.go_cap_max_button = tk.Button(self.root, text="Go avec Capteur et Vmax",
-        #                                   command=self.go_cap_max_button_clicked)
-        # self.go_cap_max_button.grid(row=10, column=0, sticky="wsn", padx=5, pady=8)
 
         # Creation du button Reset
         self.reset_button = tk.Button(self.root, text="Reset", command=self.reset_button_clicked)

@@ -146,10 +146,9 @@ class Adaptateur(ABC):
 class Strategie(ABC):
     """Classe mere de strategie"""
 
-    def __init__(self):  # , adaptateur: Adaptateur):
+    def __init__(self):
         """ Initialise la classe Strategie
         """
-        # self._adaptateur = adaptateur
 
     @abstractmethod
     def start(self):
@@ -186,7 +185,6 @@ class Controleur(Thread):
 
         # Le dt
         self.dt = dt
-        # self.lock = lock
         self._running = False
         self.strat = None
 
@@ -214,7 +212,6 @@ class Controleur(Thread):
 
     def step(self):
         """Faire la commande suivante"""
-        # with self.lock:
         if self.stop():
             return
         # Faire la stratégie suivante

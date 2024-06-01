@@ -24,6 +24,7 @@ class Simulation(Thread):
         :param fps: le dt
         :param robot: Le robot
         :param arene: L'arene
+        :param lock_aff: Le verrou pour l'affichage
         """
         super(Simulation, self).__init__()
         self.name = name
@@ -55,6 +56,7 @@ class Simulation(Thread):
 
     def add_robot(self, robot: SimuRobot):
         """ Ajouter un robot dans la simulation
+        :param robot: Le robot
         """
         if not self._robot:
             self._robot = robot
@@ -91,21 +93,15 @@ class Simulation(Thread):
         with self.lock_aff:
             # Actualiser le robot
             self._robot.actualiser(self.dt)
-            #self.logger.info(self._robot.info())
 
         # Verifier si le robot a crash avec un obstacle
         for obstacle in self._arene.liste_Obstacles:
             if obstacle.test_collision(self._robot):
                 sys.exit()
-                # self.remove_robot()
 
         # Verifier si le robot a crash sur un mur
         if self._robot.test_crash(self._arene.max_x, self._arene.max_y):
             sys.exit()
-            # self.remove_robot()
-        # end_time = time.time()  # Temps final de l'itération
-        # self._fps = end_time - start_time  # Temps écoulé pour cette itération
-        # time.sleep(1 / self._wait)
 
     def detecte_distance(self, robot: SimuRobot) -> float:
         """ Renvoie la distance entre l'osbtacle et le capteur

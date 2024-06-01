@@ -104,7 +104,9 @@ class SimuRobot:
         return self._tracer_parcours
 
     def activer_tracer_parcours(self, valeur: bool):
-        """Activer ou désactiver le traçage du parcours du robot."""
+        """Activer ou désactiver le traçage du parcours du robot.
+
+        :param valeur: True pour activer le traçage, False pour le désactiver"""
         self._tracer_parcours = valeur
 
     # Propriété pour l'attribut pos_x
@@ -166,7 +168,8 @@ class SimuRobot:
 
     @theta.setter
     def theta(self, value):
-        """Setter du theta du nouveau robot : param value : theta du robot"""
+        """Setter du theta du nouveau robot 
+        :param value: theta du robot"""
         self._theta = value
 
     @property
@@ -227,7 +230,7 @@ class SimuRobot:
 
         return [(x1, y1), (x2, y2), (x3, y3), (x4, y4)]
 
-    def test_crash(self, max_x: int, max_y: int):
+    def test_crash(self, max_x: int, max_y: int)-> bool:
         """ Tester si le robot entre ds un mur
 
         :param max_x: La largeur de l'arene
@@ -259,6 +262,8 @@ class SimuRobot:
 
     def actualiser(self, dt: float) -> None:
         """ Actualise le robot selon le dt ecoule
+
+        :param dt: Temps ecoule
         :return: None
         """
         self._last_pos_x = self._pos_x
@@ -317,17 +322,20 @@ class Obstacle(ABC):
 
     @color.setter
     def color(self, color: str):
-        """Setter de la couleur de l'obstacle """
+        """Setter de la couleur de l'obstacle 
+        :param color: Nouvelle couleur de l'obstacle"""
         self._color = color
 
     @property
     def pos_x(self) -> float:
-        """ Propriété pour l'attribut pos_x """
+        """ Propriété pour l'attribut pos_x 
+        :return: float"""
         return self._pos_x
 
     @property
     def pos_y(self) -> float:
-        """ Propriété pour l'attribut pos_y """
+        """ Propriété pour l'attribut pos_y 
+        :return: float"""
         return self._pos_y
 
     @abstractmethod
@@ -376,6 +384,7 @@ class Arene:
     def add_obstacle(self, obstacle: Obstacle):
         """Ajouter un obstacle dans l'arène
 
+        :param obstacle: Obstacle à ajouter
         """
         self.liste_Obstacles.append(obstacle)
 
@@ -445,7 +454,7 @@ class ObstacleRectangle(Obstacle):
                 cpt += 1
         return cpt == 4
 
-    def in_obstacle(self, pos_x: float, pos_y: float):
+    def in_obstacle(self, pos_x: float, pos_y: float)-> bool:
         """Tester si le point (x, y) fait portie de l'obstacle
 
         :param pos_x: x position
