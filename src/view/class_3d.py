@@ -1,8 +1,6 @@
 import logging
 # bibliotheque pour la 3d
 import os
-import threading
-import time
 
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenImage import OnscreenImage
@@ -14,8 +12,8 @@ from panda3d.core import (AmbientLight, CollisionBox, CollisionHandlerQueue,
                           TransparencyAttrib, Vec4, WindowProperties,
                           loadPrcFile)
 
-from ..modele.objets import ObstacleRectangle
-from ..modele.simulation import Simulation
+from src.modele.objets import ObstacleRectangle
+from src.modele.simulation import Simulation
 
 path = Filename.fromOsSpecific(os.path.dirname(os.path.realpath(__file__))).getFullpath()
 loadPrcFile(path + "/modeles_3d/config.prc")

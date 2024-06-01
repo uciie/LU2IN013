@@ -1,6 +1,6 @@
 import math
 import logging
-from src.controller.controleur import Adaptateur
+from .controleur import Adaptateur
 # Configure logging to write to both terminal and file
 logging.basicConfig(level=logging.DEBUG, filename='logs/simu.log', filemode='w',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')

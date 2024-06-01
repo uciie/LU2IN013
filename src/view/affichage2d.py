@@ -5,13 +5,11 @@ import tkinter as tk
 from threading import Thread
 from typing import Any
 
-from ..controller.ai import Go, StrategieSequentielle, TournerDeg
-from ..controller.controleur import Controleur
-from ..modele.simulation import Simulation
+from src.controller.ai import Go, StrategieSequentielle, TournerDeg
+from src.controller.controleur import Controleur
+from src.modele.simulation import Simulation
 
 # , Go_cap, Tourner_deg, Test_collision
-
-# bibliotheque pour la 3d
 
 
 class Affichage2D(Thread):

@@ -2,7 +2,7 @@ import logging
 import math
 import cv2
 from PIL import Image
-from ..controller.controleur import Adaptateur, Strategie
+from src.controller.controleur import Adaptateur, Strategie
 
 # Configure logging to write to both terminal and file
 logging.basicConfig(level=logging.DEBUG, filename='logs/simu.log', filemode='w',
@@ -54,8 +54,8 @@ class Go(Strategie):
         """Verifier si la strategie est fini ou non
         :return: True si la strategie est finie, False sinon"""
         self.logger.info(f"distance parcourue {self.parcouru}, distance {self.distance}")
-        # v_roue_d, v_roue_g = self.adaptateur.vitesse_ang_roues
-        return math.fabs(self.parcouru) >= math.fabs(self.distance) #or self.adaptateur.get_distance() < self.condition
+        
+        return math.fabs(self.parcouru) >= math.fabs(self.distance)
 
     def step(self):
         """pas de la strategie """
@@ -146,7 +146,7 @@ class StrategieSequentielle(Strategie):
     def stop(self) -> bool:
         """Verifier si la strategie est finie
         :return: True si la strategie est finie, False sinon"""
-        return self.current_step >= len(self.steps) #or self.steps[self.current_step].stop()
+        return self.current_step >= len(self.steps)
 
     def step(self):
         """pas de la strategie sequentielle """

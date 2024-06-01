@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>controller package &mdash; Documentation LU2IN013 Projet Robotique Documentation 1.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=7a28dfa3"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=bf059b8c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="modele package" href="modele.html" />
+    <link rel="prev" title="src" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            LU2IN013 Projet Robotique Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">controller package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-controller.adaptateur_robot_irl">controller.adaptateur_robot_irl module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl"><code class="docutils literal notranslate"><span class="pre">AdaptateurRobotIrl</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-controller.adaptateur_robot_simu">controller.adaptateur_robot_simu module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu"><code class="docutils literal notranslate"><span class="pre">AdaptateurRobotSimu</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-controller.ai">controller.ai module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#controller.ai.Go"><code class="docutils literal notranslate"><span class="pre">Go</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controller.ai.Stop"><code class="docutils literal notranslate"><span class="pre">Stop</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controller.ai.StrategieFor"><code class="docutils literal notranslate"><span class="pre">StrategieFor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controller.ai.StrategieIf"><code class="docutils literal notranslate"><span class="pre">StrategieIf</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controller.ai.StrategieSequentielle"><code class="docutils literal notranslate"><span class="pre">StrategieSequentielle</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controller.ai.StrategieTrouverBalise"><code class="docutils literal notranslate"><span class="pre">StrategieTrouverBalise</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controller.ai.StrategieWhile"><code class="docutils literal notranslate"><span class="pre">StrategieWhile</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controller.ai.TournerDeg"><code class="docutils literal notranslate"><span class="pre">TournerDeg</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-controller.controleur">controller.controleur module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#controller.controleur.Adaptateur"><code class="docutils literal notranslate"><span class="pre">Adaptateur</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controller.controleur.Controleur"><code class="docutils literal notranslate"><span class="pre">Controleur</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controller.controleur.Strategie"><code class="docutils literal notranslate"><span class="pre">Strategie</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controller.controleur.masque_couleur"><code class="docutils literal notranslate"><span class="pre">masque_couleur()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-controller">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modele.html">modele package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robot.html">robot package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view.html">view package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">LU2IN013 Projet Robotique Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">src</a></li>
+      <li class="breadcrumb-item active">controller package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/controller.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="controller-package">
+<h1>controller package<a class="headerlink" href="#controller-package" title="Lien vers cette rubrique"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Lien vers cette rubrique"></a></h2>
+</section>
+<section id="module-controller.adaptateur_robot_irl">
+<span id="controller-adaptateur-robot-irl-module"></span><h2>controller.adaptateur_robot_irl module<a class="headerlink" href="#module-controller.adaptateur_robot_irl" title="Lien vers cette rubrique"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">controller.adaptateur_robot_irl.</span></span><span class="sig-name descname"><span class="pre">AdaptateurRobotIrl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">robot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Robot2IN013</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <a class="reference internal" href="#controller.controleur.Adaptateur" title="controller.controleur.Adaptateur"><code class="xref py py-class docutils literal notranslate"><span class="pre">Adaptateur</span></code></a></p>
+<p>Classe de l’adaptateur du robot irl</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.active_trace">
+<span class="sig-name descname"><span class="pre">active_trace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.active_trace" title="Lien vers cette définition"></a></dt>
+<dd><p>Activation du tracage de parcours</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.angle">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">angle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.angle" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.angle_parcouru">
+<span class="sig-name descname"><span class="pre">angle_parcouru</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.angle_parcouru" title="Lien vers cette définition"></a></dt>
+<dd><p>Obtenir l’angle parcouru
+:returns : Renvoie l’angle parcourut du robot en degree</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.distance_parcourue">
+<span class="sig-name descname"><span class="pre">distance_parcourue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.distance_parcourue" title="Lien vers cette définition"></a></dt>
+<dd><p>Obtenir la distance parcourue en mm 
+:returns : Renvoie la distance parcourue du robot</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.get_distance">
+<span class="sig-name descname"><span class="pre">get_distance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.get_distance" title="Lien vers cette définition"></a></dt>
+<dd><p>Lit le capteur de distance (en mm)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.get_image">
+<span class="sig-name descname"><span class="pre">get_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.get_image" title="Lien vers cette définition"></a></dt>
+<dd><p>Capture la derniere image avec la caméra du robot
+:return: Image capturée par la caméra du robot</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.info">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">info</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.info" title="Lien vers cette définition"></a></dt>
+<dd><p>afficher les informations du robot
+:return str: informations du robot</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.rayon">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rayon</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.rayon" title="Lien vers cette définition"></a></dt>
+<dd><p>Rayon de rotation du robot</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.servo_rotate">
+<span class="sig-name descname"><span class="pre">servo_rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.servo_rotate" title="Lien vers cette définition"></a></dt>
+<dd><p>Fait tourner le servo moteur
+:param angle: Angle de rotation du servo moteur</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.set_vitesse_roue">
+<span class="sig-name descname"><span class="pre">set_vitesse_roue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_ang_roue_d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_ang_roue_g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.set_vitesse_roue" title="Lien vers cette définition"></a></dt>
+<dd><p>Modifier la vitesse des roues</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v_ang_roue_d</strong> – Modifier la vitesse angulaire de la roue droite</p></li>
+<li><p><strong>v_ang_roue_g</strong> – Modifier la vitesse angulaire de la roue gauche</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.start_recording">
+<span class="sig-name descname"><span class="pre">start_recording</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.start_recording" title="Lien vers cette définition"></a></dt>
+<dd><p>Démarre l’enregistrement des images</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.stop" title="Lien vers cette définition"></a></dt>
+<dd><p>Arreter le robot irl</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_irl.AdaptateurRobotIrl.stop_recording">
+<span class="sig-name descname"><span class="pre">stop_recording</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.adaptateur_robot_irl.AdaptateurRobotIrl.stop_recording" title="Lien vers cette définition"></a></dt>
+<dd><p>Arrête l’enregistrement des images</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-controller.adaptateur_robot_simu">
+<span id="controller-adaptateur-robot-simu-module"></span><h2>controller.adaptateur_robot_simu module<a class="headerlink" href="#module-controller.adaptateur_robot_simu" title="Lien vers cette rubrique"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">controller.adaptateur_robot_simu.</span></span><span class="sig-name descname"><span class="pre">AdaptateurRobotSimu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">robot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SimuRobot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Simulation</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Adaptateur</span></code></p>
+<p>Classe de l’adaptateur d’un robot simule “</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.active_trace">
+<span class="sig-name descname"><span class="pre">active_trace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.active_trace" title="Lien vers cette définition"></a></dt>
+<dd><p>Activer ou désactiver le tracage du robot.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.angle_parcouru">
+<span class="sig-name descname"><span class="pre">angle_parcouru</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.angle_parcouru" title="Lien vers cette définition"></a></dt>
+<dd><p>Obtenir l’angle parcouru
+:return: l’angle parcouru</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.distance_parcourue">
+<span class="sig-name descname"><span class="pre">distance_parcourue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.distance_parcourue" title="Lien vers cette définition"></a></dt>
+<dd><p>Obtenir la distance parcourue
+:return: la distance parcourue</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.get_distance">
+<span class="sig-name descname"><span class="pre">get_distance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.get_distance" title="Lien vers cette définition"></a></dt>
+<dd><p>Retourne la distance du robot et obstacle
+:return: la distance du robot</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.get_image">
+<span class="sig-name descname"><span class="pre">get_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.get_image" title="Lien vers cette définition"></a></dt>
+<dd><p>Obtenir l’image du robot</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.last_pos_x">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">last_pos_x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.last_pos_x" title="Lien vers cette définition"></a></dt>
+<dd><p>Getter de la derniere position en x enregistree depuis le dernier appel
+:return float: derniere position en x enregistree</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.last_pos_y">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">last_pos_y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.last_pos_y" title="Lien vers cette définition"></a></dt>
+<dd><p>Getter de la derniere position en y enregistree depuis le dernier appel
+:return float: derniere position en y enregistree</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.last_theta">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">last_theta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.last_theta" title="Lien vers cette définition"></a></dt>
+<dd><p>Getter dernier tetha enregistre depuis le dernier appel
+:return float: l’angle theta du robot”</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.rayon">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rayon</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.rayon" title="Lien vers cette définition"></a></dt>
+<dd><p>Rayon de rotation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.servo_rotate">
+<span class="sig-name descname"><span class="pre">servo_rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.servo_rotate" title="Lien vers cette définition"></a></dt>
+<dd><p>Faire tourner le servo moteur</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.set_affichage3d">
+<span class="sig-name descname"><span class="pre">set_affichage3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">affichage3d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.set_affichage3d" title="Lien vers cette définition"></a></dt>
+<dd><p>Setter de l’affichage 3d
+:param affichage3d: l’affichage 3d</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.set_vitesse_roue">
+<span class="sig-name descname"><span class="pre">set_vitesse_roue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_ang_roue_d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_ang_roue_g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.set_vitesse_roue" title="Lien vers cette définition"></a></dt>
+<dd><p>Modifier la vitesse des roues</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v_ang_roue_d</strong> – Modifier la vitesse angulaire de la roue droite</p></li>
+<li><p><strong>v_ang_roue_g</strong> – Modifier la vitesse angulaire de la roue gauche</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.adaptateur_robot_simu.AdaptateurRobotSimu.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.adaptateur_robot_simu.AdaptateurRobotSimu.stop" title="Lien vers cette définition"></a></dt>
+<dd><p>Arreter le robot irl
+:return: True si le robot est en arret</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-controller.ai">
+<span id="controller-ai-module"></span><h2>controller.ai module<a class="headerlink" href="#module-controller.ai" title="Lien vers cette rubrique"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="controller.ai.Go">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">controller.ai.</span></span><span class="sig-name descname"><span class="pre">Go</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adaptateur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Adaptateur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_ang_d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_ang_g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">active_trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.Go" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Strategie</span></code></p>
+<p>Classe responsable d’avancer le robot</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.Go.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.Go.start" title="Lien vers cette définition"></a></dt>
+<dd><p>Commencer la strategie</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.Go.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.Go.step" title="Lien vers cette définition"></a></dt>
+<dd><p>pas de la strategie</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.Go.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.Go.stop" title="Lien vers cette définition"></a></dt>
+<dd><p>Verifier si la strategie est fini ou non
+:return: True si la strategie est finie, False sinon</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="controller.ai.Stop">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">controller.ai.</span></span><span class="sig-name descname"><span class="pre">Stop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adaptateur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Adaptateur</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.Stop" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Strategie</span></code></p>
+<p>Strategie qui ne fait rien/ arrete le robot</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.Stop.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.Stop.start" title="Lien vers cette définition"></a></dt>
+<dd><p>commencer la strategie</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.Stop.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.Stop.step" title="Lien vers cette définition"></a></dt>
+<dd><p>pas de la strategie</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.Stop.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#controller.ai.Stop.stop" title="Lien vers cette définition"></a></dt>
+<dd><p>Verifier si la strategie est finie
+:return: True si la strategie est finie, False sinon</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="controller.ai.StrategieFor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">controller.ai.</span></span><span class="sig-name descname"><span class="pre">StrategieFor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adaptateur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Adaptateur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Strategie</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre_repetition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.StrategieFor" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Strategie</span></code></p>
+<p>Classe Strategie For permettant de répetter une stratégie un certain nombre de fois</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.StrategieFor.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.StrategieFor.start" title="Lien vers cette définition"></a></dt>
+<dd><p>commencer la strategie</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.StrategieFor.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.StrategieFor.step" title="Lien vers cette définition"></a></dt>
+<dd><p>pas de la strategie sequentielle</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.StrategieFor.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#controller.ai.StrategieFor.stop" title="Lien vers cette définition"></a></dt>
+<dd><p>Verifier si la strategie est finie
+:return: True si la strategie est finie, False sinon</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="controller.ai.StrategieIf">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">controller.ai.</span></span><span class="sig-name descname"><span class="pre">StrategieIf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adaptateur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Adaptateur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strat_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Strategie</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strat_b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Strategie</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.StrategieIf" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Strategie</span></code></p>
+<p>Classe Strategie conditionnelle faire strat_a si condition verifiée, sinon strat_b</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.StrategieIf.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.StrategieIf.start" title="Lien vers cette définition"></a></dt>
+<dd><p>commencer la strategie</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.StrategieIf.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.StrategieIf.step" title="Lien vers cette définition"></a></dt>
+<dd><p>pas de la strategie sequentielle</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.StrategieIf.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#controller.ai.StrategieIf.stop" title="Lien vers cette définition"></a></dt>
+<dd><p>Verifier si la strategie est finie
+:return: True si la strategie est finie, False sinon</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="controller.ai.StrategieSequentielle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">controller.ai.</span></span><span class="sig-name descname"><span class="pre">StrategieSequentielle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adaptateur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Adaptateur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Strategie</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.StrategieSequentielle" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Strategie</span></code></p>
+<p>Classe Strategie sequentielle permettant de faire des combinaisons de la strategie basique</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.StrategieSequentielle.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.StrategieSequentielle.start" title="Lien vers cette définition"></a></dt>
+<dd><p>commencer la strategie</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.StrategieSequentielle.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.StrategieSequentielle.step" title="Lien vers cette définition"></a></dt>
+<dd><p>pas de la strategie sequentielle</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.StrategieSequentielle.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#controller.ai.StrategieSequentielle.stop" title="Lien vers cette définition"></a></dt>
+<dd><p>Verifier si la strategie est finie
+:return: True si la strategie est finie, False sinon</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="controller.ai.StrategieTrouverBalise">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">controller.ai.</span></span><span class="sig-name descname"><span class="pre">StrategieTrouverBalise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adaptateur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Adaptateur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pas_angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seuil_cpt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.StrategieTrouverBalise" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Strategie</span></code></p>
+<p>Classe Strategie pour trouver une balise</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.StrategieTrouverBalise.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.StrategieTrouverBalise.start" title="Lien vers cette définition"></a></dt>
+<dd><p>Commencer la strategie</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.StrategieTrouverBalise.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.StrategieTrouverBalise.step" title="Lien vers cette définition"></a></dt>
+<dd><p>Pas de la stratégie</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.StrategieTrouverBalise.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#controller.ai.StrategieTrouverBalise.stop" title="Lien vers cette définition"></a></dt>
+<dd><p>Vérifier si la stratégie est finie
+:return: True si la stratégie est finie, False sinon</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="controller.ai.StrategieWhile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">controller.ai.</span></span><span class="sig-name descname"><span class="pre">StrategieWhile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adaptateur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Adaptateur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Strategie</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.StrategieWhile" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Strategie</span></code></p>
+<p>Classe Strategie while: faire strategie tant que condition verifiée</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.StrategieWhile.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.StrategieWhile.start" title="Lien vers cette définition"></a></dt>
+<dd><p>commencer la strategie</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.StrategieWhile.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.StrategieWhile.step" title="Lien vers cette définition"></a></dt>
+<dd><p>pas de la strategie sequentielle</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.StrategieWhile.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#controller.ai.StrategieWhile.stop" title="Lien vers cette définition"></a></dt>
+<dd><p>Verifier si la strategie est finie
+:return: True si la strategie est finie, False sinon</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="controller.ai.TournerDeg">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">controller.ai.</span></span><span class="sig-name descname"><span class="pre">TournerDeg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adaptateur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Adaptateur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_ang</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">active_trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.TournerDeg" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Strategie</span></code></p>
+<p>Classe qui permet de tourner le robot d’un certain degree</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.TournerDeg.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.TournerDeg.start" title="Lien vers cette définition"></a></dt>
+<dd><p>Commencer la strategie</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.TournerDeg.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.ai.TournerDeg.step" title="Lien vers cette définition"></a></dt>
+<dd><p>pas de la strategie</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.ai.TournerDeg.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#controller.ai.TournerDeg.stop" title="Lien vers cette définition"></a></dt>
+<dd><p>Verifier si la strategie est fini ou non
+:return: True si la strategie est finie ou False sinon</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-controller.controleur">
+<span id="controller-controleur-module"></span><h2>controller.controleur module<a class="headerlink" href="#module-controller.controleur" title="Lien vers cette rubrique"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="controller.controleur.Adaptateur">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">controller.controleur.</span></span><span class="sig-name descname"><span class="pre">Adaptateur</span></span><a class="headerlink" href="#controller.controleur.Adaptateur" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Classe mere d’adaptateur de robot”</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Adaptateur.active_trace">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">active_trace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.controleur.Adaptateur.active_trace" title="Lien vers cette définition"></a></dt>
+<dd><p>Activation du tracage de parcours</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Adaptateur.angle_parcouru">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">angle_parcouru</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.controleur.Adaptateur.angle_parcouru" title="Lien vers cette définition"></a></dt>
+<dd><p>Obtenir l’angle parcouru</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Adaptateur.distance_parcourue">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distance_parcourue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.controleur.Adaptateur.distance_parcourue" title="Lien vers cette définition"></a></dt>
+<dd><p>Obtenir la distance parcourue</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Adaptateur.get_distance">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_distance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.controleur.Adaptateur.get_distance" title="Lien vers cette définition"></a></dt>
+<dd><p>La distance du robot et l’obstacle</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Adaptateur.get_image">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.controleur.Adaptateur.get_image" title="Lien vers cette définition"></a></dt>
+<dd><p>Obtenir l’image du robot</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Adaptateur.rayon">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rayon</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#controller.controleur.Adaptateur.rayon" title="Lien vers cette définition"></a></dt>
+<dd><p>Rayon de rotation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Adaptateur.reconnaissance_im">
+<span class="sig-name descname"><span class="pre">reconnaissance_im</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#controller.controleur.Adaptateur.reconnaissance_im" title="Lien vers cette définition"></a></dt>
+<dd><p>Reconnaissance d’image balise</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – Image à traiter</p></li>
+<li><p><strong>num</strong> – numero de l’image</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple (bool, int) : (True, num) si la reconnaissance est un succès, sinon (False, -1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Adaptateur.servo_rotate">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">servo_rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.controleur.Adaptateur.servo_rotate" title="Lien vers cette définition"></a></dt>
+<dd><p>Faire tourner le servo moteur</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Adaptateur.set_vitesse_roue">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_vitesse_roue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_ang_roue_d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_ang_roue_g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.controleur.Adaptateur.set_vitesse_roue" title="Lien vers cette définition"></a></dt>
+<dd><p>Modifier la vitesse des roues</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="controller.controleur.Adaptateur.stop">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stop</span></span><a class="headerlink" href="#controller.controleur.Adaptateur.stop" title="Lien vers cette définition"></a></dt>
+<dd><p>Arreter le robot</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="controller.controleur.Controleur">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">controller.controleur.</span></span><span class="sig-name descname"><span class="pre">Controleur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adaptateur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#controller.controleur.Adaptateur" title="controller.controleur.Adaptateur"><span class="pre">Adaptateur</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.controleur.Controleur" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Thread</span></code></p>
+<p>classe Controleur</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Controleur.add_strat">
+<span class="sig-name descname"><span class="pre">add_strat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#controller.controleur.Strategie" title="controller.controleur.Strategie"><span class="pre">Strategie</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.controleur.Controleur.add_strat" title="Lien vers cette définition"></a></dt>
+<dd><p>Ajouter une strategie au conntroleur</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>strat</strong> – Une strategie</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Controleur.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.controleur.Controleur.run" title="Lien vers cette définition"></a></dt>
+<dd><p>Activer le controleur</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Controleur.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.controleur.Controleur.step" title="Lien vers cette définition"></a></dt>
+<dd><p>Faire la commande suivante</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Controleur.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#controller.controleur.Controleur.stop" title="Lien vers cette définition"></a></dt>
+<dd><p>Vérifie si toutes les étapes sont terminées</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="controller.controleur.Strategie">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">controller.controleur.</span></span><span class="sig-name descname"><span class="pre">Strategie</span></span><a class="headerlink" href="#controller.controleur.Strategie" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Classe mere de strategie</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Strategie.start">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.controleur.Strategie.start" title="Lien vers cette définition"></a></dt>
+<dd><p>Commencer strategie</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Strategie.step">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.controleur.Strategie.step" title="Lien vers cette définition"></a></dt>
+<dd><p>pas de la strategie</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controleur.Strategie.stop">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#controller.controleur.Strategie.stop" title="Lien vers cette définition"></a></dt>
+<dd><p>Verifier si strategie est finie</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="controller.controleur.masque_couleur">
+<span class="sig-prename descclassname"><span class="pre">controller.controleur.</span></span><span class="sig-name descname"><span class="pre">masque_couleur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.controleur.masque_couleur" title="Lien vers cette définition"></a></dt>
+<dd><p>Trouver les contours des couleurs dans l’image
+:param image: Image à traiter
+:return: Dictionnaire des contours pour chaque couleur</p>
+</dd></dl>
+
+</section>
+<section id="module-controller">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-controller" title="Lien vers cette rubrique"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="modules.html" class="btn btn-neutral float-left" title="src" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="modele.html" class="btn btn-neutral float-right" title="modele package" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, HELMS.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

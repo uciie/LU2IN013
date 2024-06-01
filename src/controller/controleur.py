@@ -105,6 +105,7 @@ class Adaptateur(ABC):
 
     def reconnaissance_im(self, image, num)->tuple[bool, int]:
         """Reconnaissance d'image balise 
+        
         :param image: Image à traiter
         :param num: numero de l'image
         :return: Tuple (bool, int) : (True, num) si la reconnaissance est un succès, sinon (False, -1)

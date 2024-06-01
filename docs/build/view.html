@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>view package &mdash; Documentation LU2IN013 Projet Robotique Documentation 1.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=7a28dfa3"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=bf059b8c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="prev" title="robot package" href="robot.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            LU2IN013 Projet Robotique Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="controller.html">controller package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modele.html">modele package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robot.html">robot package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">view package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-view.affichage2d">view.affichage2d module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#view.affichage2d.Affichage2D"><code class="docutils literal notranslate"><span class="pre">Affichage2D</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-view.class_3d">view.class_3d module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#view.class_3d.Affichage3D"><code class="docutils literal notranslate"><span class="pre">Affichage3D</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-view">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">LU2IN013 Projet Robotique Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">src</a></li>
+      <li class="breadcrumb-item active">view package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/view.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="view-package">
+<h1>view package<a class="headerlink" href="#view-package" title="Lien vers cette rubrique"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Lien vers cette rubrique"></a></h2>
+</section>
+<section id="module-view.affichage2d">
+<span id="view-affichage2d-module"></span><h2>view.affichage2d module<a class="headerlink" href="#module-view.affichage2d" title="Lien vers cette rubrique"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">view.affichage2d.</span></span><span class="sig-name descname"><span class="pre">Affichage2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Simulation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lock</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RLock</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Thread</span></code></p>
+<p>Classe view qui permet d’afficher l’interface graphique</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.check_value">
+<span class="sig-name descname"><span class="pre">check_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_entry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Entry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nom_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.check_value" title="Lien vers cette définition"></a></dt>
+<dd><p>Verifie si les valeurs saisies sont valides selon la commande demandée
+:param val: La valeur
+:param var_entry: Le champ d’entrée
+:param nom_var: Le nom de la variable
+:return bool: True si la valeur est valide, False sinon</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.controller">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">controller</span></span><a class="headerlink" href="#view.affichage2d.Affichage2D.controller" title="Lien vers cette définition"></a></dt>
+<dd><p>Renvoie le contrôleur associé.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.delete_draw">
+<span class="sig-name descname"><span class="pre">delete_draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">obj_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.delete_draw" title="Lien vers cette définition"></a></dt>
+<dd><p>Supprime un ou plusieurs dessins de l’Affichage2D.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>obj_ids</strong> – Identifiants des objets à supprimer du canevas.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.delete_parcours">
+<span class="sig-name descname"><span class="pre">delete_parcours</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parcours</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.delete_parcours" title="Lien vers cette définition"></a></dt>
+<dd><p>Supprime le parcours
+:param parcours: liste des parcours</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.draw_obj">
+<span class="sig-name descname"><span class="pre">draw_obj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#view.affichage2d.Affichage2D.draw_obj" title="Lien vers cette définition"></a></dt>
+<dd><p>Dessine un objet sur le canevas de l’Affichage2D.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>objet</strong> – objet à dessiner.</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Identifiant unique de l’objet sur le canevas.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.draw_parcours">
+<span class="sig-name descname"><span class="pre">draw_parcours</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.draw_parcours" title="Lien vers cette définition"></a></dt>
+<dd><p>Trace le parcours de l’objet</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>objet</strong> – objet</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Identifiant unique de l’objet sur le canevas.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.go_button_clicked">
+<span class="sig-name descname"><span class="pre">go_button_clicked</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.go_button_clicked" title="Lien vers cette définition"></a></dt>
+<dd><p>Handle go button click</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.go_cap_button_clicked">
+<span class="sig-name descname"><span class="pre">go_cap_button_clicked</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.go_cap_button_clicked" title="Lien vers cette définition"></a></dt>
+<dd><p>Handle go button click</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.go_cap_max_button_clicked">
+<span class="sig-name descname"><span class="pre">go_cap_max_button_clicked</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.go_cap_max_button_clicked" title="Lien vers cette définition"></a></dt>
+<dd><p>Handle go_cap_max button click</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.hide_message">
+<span class="sig-name descname"><span class="pre">hide_message</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.hide_message" title="Lien vers cette définition"></a></dt>
+<dd><p>Hide the message</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.on_closing">
+<span class="sig-name descname"><span class="pre">on_closing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.on_closing" title="Lien vers cette définition"></a></dt>
+<dd><p>Lors de la fermetura de la fenetre graphique</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.reset_button_clicked">
+<span class="sig-name descname"><span class="pre">reset_button_clicked</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.reset_button_clicked" title="Lien vers cette définition"></a></dt>
+<dd><p>Remettre à zero l’interface graphique</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.reset_entry_color">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reset_entry_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_entry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Entry</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.reset_entry_color" title="Lien vers cette définition"></a></dt>
+<dd><p>Réinitialise la couleur du champ d’entrée à sa valeur par défaut</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>var_entry</strong> – Le champ d’entrée à réinitialiser</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.run" title="Lien vers cette définition"></a></dt>
+<dd><p>Demarrage de l’interface graphique</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.show_error">
+<span class="sig-name descname"><span class="pre">show_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_entry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Entry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.show_error" title="Lien vers cette définition"></a></dt>
+<dd><p>Affiche les erreurs sur l’interface graphique</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>var_entry</strong> – La valeur de saisie</p></li>
+<li><p><strong>message</strong> – Le message d’erreur</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return void<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.test_collision_button_clicked">
+<span class="sig-name descname"><span class="pre">test_collision_button_clicked</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.test_collision_button_clicked" title="Lien vers cette définition"></a></dt>
+<dd><p>Handle tracer_carre button click</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.tracer_carre_button_clicked">
+<span class="sig-name descname"><span class="pre">tracer_carre_button_clicked</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.tracer_carre_button_clicked" title="Lien vers cette définition"></a></dt>
+<dd><p>Handle tracer_carre button click</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.turn_button_clicked">
+<span class="sig-name descname"><span class="pre">turn_button_clicked</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.turn_button_clicked" title="Lien vers cette définition"></a></dt>
+<dd><p>Handle turn button click</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.update" title="Lien vers cette définition"></a></dt>
+<dd><p>Mettre à jour le modele</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.affichage2d.Affichage2D.update_donnee_robot">
+<span class="sig-name descname"><span class="pre">update_donnee_robot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.affichage2d.Affichage2D.update_donnee_robot" title="Lien vers cette définition"></a></dt>
+<dd><p>Mettre à jour l’affichage des infos du robot</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-view.class_3d">
+<span id="view-class-3d-module"></span><h2>view.class_3d module<a class="headerlink" href="#module-view.class_3d" title="Lien vers cette rubrique"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="view.class_3d.Affichage3D">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">view.class_3d.</span></span><span class="sig-name descname"><span class="pre">Affichage3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Simulation</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">ShowBase</span></code></p>
+<p>Classe pour l’affichage 3D de la simulation</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="view.class_3d.Affichage3D.changeView">
+<span class="sig-name descname"><span class="pre">changeView</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.changeView" title="Lien vers cette définition"></a></dt>
+<dd><p>Changer de point de vue</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.class_3d.Affichage3D.createNewBlock">
+<span class="sig-name descname"><span class="pre">createNewBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_z</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.createNewBlock" title="Lien vers cette définition"></a></dt>
+<dd><p>Crée un nouveau bloc à la position spécifiée</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.class_3d.Affichage3D.generateArene">
+<span class="sig-name descname"><span class="pre">generateArene</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.generateArene" title="Lien vers cette définition"></a></dt>
+<dd><p>Génère l’arene” de la simulation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.class_3d.Affichage3D.generateBalise">
+<span class="sig-name descname"><span class="pre">generateBalise</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.generateBalise" title="Lien vers cette définition"></a></dt>
+<dd><p>Génère la balise de la simulation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.class_3d.Affichage3D.generateObstacles">
+<span class="sig-name descname"><span class="pre">generateObstacles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.generateObstacles" title="Lien vers cette définition"></a></dt>
+<dd><p>Génère les obstacles de la simulation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.class_3d.Affichage3D.loadModels">
+<span class="sig-name descname"><span class="pre">loadModels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.loadModels" title="Lien vers cette définition"></a></dt>
+<dd><p>Telecharge les modeles 3D et les ajoute a la scene</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.class_3d.Affichage3D.setupCamera">
+<span class="sig-name descname"><span class="pre">setupCamera</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.setupCamera" title="Lien vers cette définition"></a></dt>
+<dd><p>Configure la caméra de la simulation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.class_3d.Affichage3D.setupControls">
+<span class="sig-name descname"><span class="pre">setupControls</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.setupControls" title="Lien vers cette définition"></a></dt>
+<dd><p>Configure les controles de la simulation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.class_3d.Affichage3D.setupLights">
+<span class="sig-name descname"><span class="pre">setupLights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.setupLights" title="Lien vers cette définition"></a></dt>
+<dd><p>Configure les lumières de la scène</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.class_3d.Affichage3D.setupSkybox">
+<span class="sig-name descname"><span class="pre">setupSkybox</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.setupSkybox" title="Lien vers cette définition"></a></dt>
+<dd><p>Configure le ciel de la simulation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.class_3d.Affichage3D.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.update" title="Lien vers cette définition"></a></dt>
+<dd><p>Mise à jour de la simulation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.class_3d.Affichage3D.updateDico_cles">
+<span class="sig-name descname"><span class="pre">updateDico_cles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.updateDico_cles" title="Lien vers cette définition"></a></dt>
+<dd><p>Met à jour le dictionnaire de touches</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-view">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-view" title="Lien vers cette rubrique"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="robot.html" class="btn btn-neutral float-left" title="robot package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, HELMS.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
