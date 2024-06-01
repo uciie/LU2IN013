@@ -2,6 +2,7 @@ import logging
 import math
 import cv2
 from PIL import Image
+import numpy as np
 from src.controller.controleur import Adaptateur, Strategie
 
 # Configure logging to write to both terminal and file
@@ -164,7 +165,8 @@ class StrategieFor(Strategie):
     def __init__(self, adaptateur: Adaptateur, strategie: Strategie, nombre_repetition: int) -> None:
         """
         :param adaptateur: adaptateur du robot
-        :param steps: liste des steps
+        :param strategie: strategie à répéter
+        :param nombre_repetition: nombre de répétition
         """
         super().__init__()
         self.adaptateur = adaptateur
@@ -355,7 +357,7 @@ class StrategieTrouverBalise(Strategie):
         """Traite l'image capturée pour vérifier la présence de la balise
         :return: True si la balise est trouvée, False sinon"""
         if self.image is not None:
-            image_path = f"image{self.cpt}.png"
+            image_path = f"enregistrement_image/image{self.cpt}.png"
             im = Image.fromarray(self.image)
             im.save(image_path)
             image_charge = cv2.imread(image_path)

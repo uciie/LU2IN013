@@ -1,9 +1,8 @@
 import logging
-
 from src.controller.controleur import Adaptateur
 from src.modele.objets import SimuRobot
 from src.modele.simulation import Simulation
-from src.modele.utilitaire import distance, point_le_plus_loin
+from src.modele.utilitaire import distance, point_le_plus_loin, check_directory
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, filename='logs/simu.log', filemode='w',
@@ -24,7 +23,7 @@ class AdaptateurRobotSimu(Adaptateur):
         super().__init__()
         self._robot = robot
         self._simulation = simulation
-
+        self._affichage3d = None
         self._last_theta = self._robot.last_theta
         self._last_pos_x, self._last_pos_y = self._robot.last_pos_x, self._robot.last_pos_y
         self.logger = logging.getLogger(__name__)
@@ -119,11 +118,15 @@ class AdaptateurRobotSimu(Adaptateur):
         :return: la distance du robot
         """
         return self._simulation.detecte_distance(self._robot)
+    
+    def start_recording(self):
+        """Commencer l'enregistrement"""
+        check_directory()
+        self._affichage3d.recording = True
 
     def get_image(self):
         """Obtenir l'image du robot"""
-        self._affichage3d.screenshot("image.png", False)
-        return "image.png"
+        return self._affichage3d.image
     
     def servo_rotate(self, angle: int):
         """Faire tourner le servo moteur"""

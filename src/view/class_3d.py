@@ -1,7 +1,7 @@
 import logging
 # bibliotheque pour la 3d
 import os
-
+import cv2
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenImage import OnscreenImage
 from direct.interval.IntervalGlobal import Sequence
@@ -14,6 +14,8 @@ from panda3d.core import (AmbientLight, CollisionBox, CollisionHandlerQueue,
 
 from src.modele.objets import ObstacleRectangle
 from src.modele.simulation import Simulation
+from src.modele.utilitaire import check_directory
+import os
 
 path = Filename.fromOsSpecific(os.path.dirname(os.path.realpath(__file__))).getFullpath()
 loadPrcFile(path + "/modeles_3d/config.prc")
@@ -28,8 +30,9 @@ class Affichage3D(ShowBase):
         ShowBase.__init__(self)
         #configuraiton du logging 
         self.logger = logging.getLogger(__name__)
-
-        
+        check_directory() # Vérifier si le répertoire de sauvegarde des images existe
+        self.recording = False
+        self.image = None
         self.loadModels() # Chargement des modeles 3D
         self.setupLights() # Configuration des lumières
         self.generateArene() # Génération de l'arene
@@ -72,6 +75,11 @@ class Affichage3D(ShowBase):
         self.camera.setPos(self.robot_node.getX(), self.robot_node.getY(), self.camera.getZ())  # Place la caméra derrière et légèrement au-dessus du robot
         self.camera.setH(self.camera.getH())
         
+        # enregistrement de l'image si l'enregistrement est activé
+        if self.recording:
+            self.screenshot("enregistrement_image/image.png", False)
+            self.image = cv2.imread("enregistrement_image/image.png")
+
         return task.cont
 
     def setupControls(self):
@@ -99,7 +107,7 @@ class Affichage3D(ShowBase):
         # changer de point de vue 
         self.accept('escape', self.changeView)
         #
-        self.accept('s', lambda: self.screenshot("yourfile.png", False))
+        self.accept('s', lambda: self.screenshot("enregistrement_image/image.png", False))
 
     def changeView(self):
         """Changer de point de vue"""

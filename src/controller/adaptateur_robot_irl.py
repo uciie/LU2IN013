@@ -1,6 +1,7 @@
 import math
 import logging
 from .controleur import Adaptateur
+from src.modele.utilitaire import check_directory
 # Configure logging to write to both terminal and file
 logging.basicConfig(level=logging.DEBUG, filename='logs/simu.log', filemode='w',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -113,6 +114,7 @@ class AdaptateurRobotIrl(Adaptateur):
         """
         Démarre l'enregistrement des images
         """
+        check_directory()
         self._robot.start_recording()
 
     def stop_recording(self):

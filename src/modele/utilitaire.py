@@ -1,5 +1,5 @@
 import math
-
+import os
 
 def project(axes: list[float], coins: list[tuple[float, float]]) -> list[float]:
     """ Projection des coins de l'obstacle sur un axe
@@ -38,6 +38,13 @@ def point_le_plus_loin(points: list[tuple[float, float]], x_ref: float, y_ref: f
 
     return plus_loin
 
+    
+def check_directory():
+    """Vérifie si le dossier 'enregistrement_image' existe, sinon le crée"""
+    directory = "enregistrement_image"
+    if not os.path.exists(directory):
+        #creer le dossier d'enregistrement pour stocker les images
+        os.makedirs(directory)
 
 class Vecteur:
     """Classe vecteur """

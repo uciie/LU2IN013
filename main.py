@@ -30,12 +30,7 @@ class Demo:
         # Initialisation de l'self._arene, robot, obstacle
         self.arene = Arene("Simulation de déplacement du robot", largeur, hauteur, echelle)
         self.robot = SimuRobot("R", int(largeur / 2), int(hauteur / 2), dim_robot_x, dim_robot_y, 10, 150, color="red")
-        obs = ObstacleRectangle(100, 100, Vecteur(10, 10), Vecteur(20, 20), color="blue")
 
-        # Ajouter un obstacle dans l'_arene
-        #self._arene.add_obstacle(obs)
-
-        
         # Obstacle
         obs1 = ObstacleRectangle(40, 40, Vecteur(10, 10), Vecteur(20, 20), color="red")
         obs2 = ObstacleRectangle(400, 400, Vecteur(10, 10), Vecteur(20, 20), color="green")
@@ -103,8 +98,8 @@ if __name__ == '__main__':
     touner = TournerDeg(demo.adaptateur, angle, vitesse, activer_tracer)
     strat_repeter = StrategieSequentielle(demo.adaptateur, [avancer_jusqua, touner])
     tracer_carre = StrategieFor(demo.adaptateur, strat_repeter, nb_repetition)
-
+    balise = StrategieTrouverBalise(demo.adaptateur)
     #ajout de la strategie
-    demo.controller.add_strat(tracer_carre)
+    demo.controller.add_strat(balise)
     if (demo.choix == "1" or demo.choix == "2"):
         demo.view3D.run()
