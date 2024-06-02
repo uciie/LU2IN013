@@ -3,6 +3,7 @@ import logging
 import os
 import cv2
 from direct.gui.DirectButton import DirectButton
+from direct.gui.OnscreenText import OnscreenText
 from direct.gui.OnscreenImage import OnscreenImage
 from direct.interval.IntervalGlobal import Sequence
 from direct.showbase.ShowBase import ShowBase
@@ -10,7 +11,7 @@ from panda3d.core import (AmbientLight, CollisionBox, CollisionHandlerQueue,
                           CollisionNode, CollisionRay, CollisionTraverser,
                           DirectionalLight, Filename, PandaNode, Point3,
                           TransparencyAttrib, Vec4, WindowProperties,
-                          loadPrcFile)
+                          loadPrcFile, NodePath, TextNode)
 
 from src.modele.objets import ObstacleRectangle
 from src.modele.simulation import Simulation
@@ -41,6 +42,7 @@ class Affichage3D(ShowBase):
         self.setupSkybox() # Configuration du ciel
         self.setupCamera() # Configuration de la caméra
         self.setupControls() # Configuration des controles
+        self.setupInstructions() # Configuration des instructions
 
         self.taskMgr.add(self.update, 'update') # Mise à jour de la simulation
         #self.move_robot()
@@ -125,6 +127,25 @@ class Affichage3D(ShowBase):
         """Met à jour le dictionnaire de touches"""
         if key in self.dico_cles:
             self.dico_cles[key] = value
+
+    def setupInstructions(self):
+        """Configure les instructions de la simulation"""
+        instructions_text = (
+            "Haut/Bas: Inclinaison de la caméra\n"
+            "Gauche/Droite: Rotation de la caméra\n"
+            "Appuyez sur 's' pour prendre une capture d'écran\n"
+            "Appuyez sur 'ESC' pour changer de vue (2D/3D)"
+        )
+        self.instructions = OnscreenText(
+            text=instructions_text,
+            pos=(-1.3, 0.9),  # Position sur l'écran
+            scale=0.05,       # Échelle du texte
+            fg=(1, 1, 1, 1),  # Couleur du texte (blanc)
+            align=TextNode.ALeft,  # Alignement du texte à gauche
+            shadow=(0, 0, 0, 1),  # Couleur de l'ombre du texte (noir)
+            shadowOffset=(0.05, 0.05),  # Décalage de l'ombre
+            mayChange=False  # Si False, le texte ne changera pas
+        )
     
     def setupSkybox(self):
         """Configure le ciel de la simulation"""
