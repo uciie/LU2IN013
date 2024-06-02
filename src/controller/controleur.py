@@ -50,6 +50,7 @@ class Adaptateur(ABC):
     def __init__(self) -> None:
         """ Initialise l'adaptateur
         """
+        self.logger = None
         self._v_ang_roue_d = 0
         self._v_ang_roue_g = 0
 

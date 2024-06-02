@@ -125,6 +125,12 @@ class AdaptateurRobotSimu(Adaptateur):
         check_directory()
         self._affichage3d.recording = True
 
+    def stop_recording(self):
+        """
+        Arrête l'enregistrement des images
+        """
+        self._affichage3d.recording = False
+
     def get_image(self):
         """Obtenir l'image du robot"""
         return self._affichage3d.image

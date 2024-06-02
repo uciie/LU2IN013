@@ -166,12 +166,6 @@ class SimuRobot:
         :return: theta du robot"""
         return self._theta
 
-    @theta.setter
-    def theta(self, value):
-        """Setter du theta du nouveau robot 
-        :param value: theta du robot"""
-        self._theta = value
-
     @property
     def last_theta(self) -> float:
         """Le dernier theta du robot
