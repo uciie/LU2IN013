@@ -56,10 +56,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#view.affichage2d.Affichage2D"><code class="docutils literal notranslate"><span class="pre">Affichage2D</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#module-view.class_3d">view.class_3d module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#view.class_3d.Affichage3D"><code class="docutils literal notranslate"><span class="pre">Affichage3D</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="#view-class-3d-module">view.class_3d module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-view">Module contents</a></li>
 </ul>
 </li>
@@ -250,87 +247,8 @@
 </dd></dl>
 
 </section>
-<section id="module-view.class_3d">
-<span id="view-class-3d-module"></span><h2>view.class_3d module<a class="headerlink" href="#module-view.class_3d" title="Lien vers cette rubrique"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="view.class_3d.Affichage3D">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">view.class_3d.</span></span><span class="sig-name descname"><span class="pre">Affichage3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Simulation</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D" title="Lien vers cette définition"></a></dt>
-<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">ShowBase</span></code></p>
-<p>Classe pour l’affichage 3D de la simulation</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="view.class_3d.Affichage3D.changeView">
-<span class="sig-name descname"><span class="pre">changeView</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.changeView" title="Lien vers cette définition"></a></dt>
-<dd><p>Changer de point de vue</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="view.class_3d.Affichage3D.createNewBlock">
-<span class="sig-name descname"><span class="pre">createNewBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_z</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.createNewBlock" title="Lien vers cette définition"></a></dt>
-<dd><p>Crée un nouveau bloc à la position spécifiée</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="view.class_3d.Affichage3D.generateArene">
-<span class="sig-name descname"><span class="pre">generateArene</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.generateArene" title="Lien vers cette définition"></a></dt>
-<dd><p>Génère l’arene” de la simulation</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="view.class_3d.Affichage3D.generateBalise">
-<span class="sig-name descname"><span class="pre">generateBalise</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.generateBalise" title="Lien vers cette définition"></a></dt>
-<dd><p>Génère la balise de la simulation</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="view.class_3d.Affichage3D.generateObstacles">
-<span class="sig-name descname"><span class="pre">generateObstacles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.generateObstacles" title="Lien vers cette définition"></a></dt>
-<dd><p>Génère les obstacles de la simulation</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="view.class_3d.Affichage3D.loadModels">
-<span class="sig-name descname"><span class="pre">loadModels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.loadModels" title="Lien vers cette définition"></a></dt>
-<dd><p>Telecharge les modeles 3D et les ajoute a la scene</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="view.class_3d.Affichage3D.setupCamera">
-<span class="sig-name descname"><span class="pre">setupCamera</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.setupCamera" title="Lien vers cette définition"></a></dt>
-<dd><p>Configure la caméra de la simulation</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="view.class_3d.Affichage3D.setupControls">
-<span class="sig-name descname"><span class="pre">setupControls</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.setupControls" title="Lien vers cette définition"></a></dt>
-<dd><p>Configure les controles de la simulation</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="view.class_3d.Affichage3D.setupLights">
-<span class="sig-name descname"><span class="pre">setupLights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.setupLights" title="Lien vers cette définition"></a></dt>
-<dd><p>Configure les lumières de la scène</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="view.class_3d.Affichage3D.setupSkybox">
-<span class="sig-name descname"><span class="pre">setupSkybox</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.setupSkybox" title="Lien vers cette définition"></a></dt>
-<dd><p>Configure le ciel de la simulation</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="view.class_3d.Affichage3D.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.update" title="Lien vers cette définition"></a></dt>
-<dd><p>Mise à jour de la simulation</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="view.class_3d.Affichage3D.updateDico_cles">
-<span class="sig-name descname"><span class="pre">updateDico_cles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.class_3d.Affichage3D.updateDico_cles" title="Lien vers cette définition"></a></dt>
-<dd><p>Met à jour le dictionnaire de touches</p>
-</dd></dl>
-
-</dd></dl>
-
+<section id="view-class-3d-module">
+<h2>view.class_3d module<a class="headerlink" href="#view-class-3d-module" title="Lien vers cette rubrique"></a></h2>
 </section>
 <section id="module-view">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-view" title="Lien vers cette rubrique"></a></h2>
