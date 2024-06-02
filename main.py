@@ -9,7 +9,7 @@ from src.modele.objets import Arene, ObstacleRectangle, SimuRobot
 from src.modele.simulation import Simulation
 from src.modele.utilitaire import Vecteur
 from src.view.affichage2d import Affichage2D
-from src.view.class_3d import Affichage3D
+from src.view.affichage_3d import Affichage3D
 from strategies_prefaites import test_if, test_while
 
 
