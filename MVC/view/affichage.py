@@ -412,6 +412,9 @@ class Affichage(Thread):
         self.root.columnconfigure(0, weight=1)
         self.root.columnconfigure(1, weight=1)
 
+        #creation du ballon
+        
+
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
 
         self._running = True

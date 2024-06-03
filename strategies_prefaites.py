@@ -35,6 +35,16 @@ def test_avec_sans_tracer(controller):
     strat = StrategieSequentielle(controller.adaptateur, liste)
     controller.add_strat(strat)
 
+def rencontre5Obs(controller):
+    toucherObs = 0
+    tracer_parcours = True
+    for obstacle in self._arene.liste_Obstacles:
+        if (obstacle.test_collision(self._robot) & (toucherObs<5)):
+            self._robot.TournerDeg(controller.adaptateur, 90, 1000, tracer_parcours)
+            toucherObs+1
+            
+        else : sys.exit()
+
 
 def test_strat_seq_carre(controller):
     tracer_parcours = True
